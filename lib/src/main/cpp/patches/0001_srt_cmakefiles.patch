@@ -1,0 +1,12 @@
+--- CMakeLists.txt	2019-09-08 17:54:48.148603065 +0200
++++ CMakeLists.txt	2019-09-08 17:54:14.616289193 +0200
+@@ -336,6 +336,9 @@
+ elseif(CYGWIN)
+ 	add_definitions(-DCYGWIN=1)
+ 	message(STATUS "DETECTED SYSTEM: CYGWIN (posix mode); CYGWIN=1")
++elseif(ANDROID)
++	message(STATUS "DETECTED SYSTEM: ANDROID; ANDROID=1")
++	add_definitions(-DANDROID=1)
+ else()
+ 	message(FATAL_ERROR "Unsupported system: ${CMAKE_SYSTEM_NAME}")
+ endif()
