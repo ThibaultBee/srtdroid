@@ -5,9 +5,15 @@
 
 extern "C" {
 
-JNIEXPORT void JNICALL Java_com_github_thibaultbee_srtwrapper_Srt_nativeStartup(JNIEnv * env, jobject obj)
-{
-  srt_startup();
+// Library Initialization
+JNIEXPORT jint JNICALL
+Java_com_github_thibaultbee_srtwrapper_Srt_nativeStartUp(JNIEnv *env, jobject obj) {
+    return srt_startup();
+}
+
+JNIEXPORT jint JNICALL
+Java_com_github_thibaultbee_srtwrapper_Srt_nativeCleanUp(JNIEnv *env, jobject obj) {
+    return srt_cleanup();
 }
 
 }
