@@ -1,4 +1,4 @@
-package com.example.lib
+package com.github.thibaultbee.srtwrapper
 
 import org.junit.Test
 

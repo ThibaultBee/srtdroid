@@ -5,7 +5,7 @@
 
 extern "C" {
 
-JNIEXPORT void JNICALL Java_com_example_srtwrapper_SrtWrapper_startUp(JNIEnv * env, jobject obj)
+JNIEXPORT void JNICALL Java_com_github_thibaultbee_srtwrapper_Srt_nativeStartup(JNIEnv * env, jobject obj)
 {
   srt_startup();
 }
