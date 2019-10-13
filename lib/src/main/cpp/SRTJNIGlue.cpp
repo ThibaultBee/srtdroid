@@ -24,4 +24,17 @@ Java_com_github_thibaultbee_srtwrapper_Srt_nativeCleanUp(JNIEnv *env, jobject ob
     return srt_cleanup();
 }
 
+// Errors
+JNIEXPORT jstring JNICALL
+Java_com_github_thibaultbee_srtwrapper_models_Error_nativeGetLastErrorStr(JNIEnv *env,
+                                                                          jobject obj) {
+    return env->NewStringUTF(srt_getlasterror_str());
+}
+
+JNIEXPORT jint JNICALL
+Java_com_github_thibaultbee_srtwrapper_models_Error_nativeGetLastError(JNIEnv *env,
+                                                                       jobject obj) {
+    return srt_getlasterror(nullptr);
+}
+
 }
