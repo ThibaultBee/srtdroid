@@ -87,4 +87,12 @@ class SocketAndroidTest {
         assertTrue(socket.isValid())
         assertEquals(0, socket.setSockOpt(SockOpt.TRANSTYPE, Transtype.FILE))
     }
+
+    @Test
+    fun sendMsg2Test() {
+        val socket = Socket(StandardProtocolFamily.INET)
+        assertTrue(socket.isValid())
+        assertEquals(-1, socket.sendMsg2("Hello World !"))
+        assertEquals(Error.getLastErrorMessage(), "Connection does not exist.")
+    }
 }

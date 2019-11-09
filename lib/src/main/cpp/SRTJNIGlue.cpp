@@ -427,6 +427,21 @@ Java_com_github_thibaultbee_srtwrapper_models_Socket_nativeSetSockOpt(JNIEnv *en
     return res;
 }
 
+// Transmission
+JNIEXPORT jint JNICALL
+Java_com_github_thibaultbee_srtwrapper_models_Socket_nativeSendMsg2(JNIEnv *env,
+                                                                    jobject obj,
+                                                                    jint u,
+                                                                    jstring jBuf) {
+    const char *buf = env->GetStringUTFChars(jBuf, nullptr);
+
+    int res = srt_sendmsg2(u, buf, strlen(buf), nullptr);
+
+    env->ReleaseStringUTFChars(jBuf, buf);
+
+    return res;
+}
+
 // Errors
 JNIEXPORT jstring JNICALL
 Java_com_github_thibaultbee_srtwrapper_models_Error_nativeGetLastErrorStr(JNIEnv *env,
