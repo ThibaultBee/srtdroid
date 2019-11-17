@@ -18,7 +18,7 @@ import java.net.StandardProtocolFamily
  */
 
 @RunWith(AndroidJUnit4::class)
-class SocketAndroidTest {
+class SocketTest {
     private val srt = Srt()
     private lateinit var socket: Socket
 
