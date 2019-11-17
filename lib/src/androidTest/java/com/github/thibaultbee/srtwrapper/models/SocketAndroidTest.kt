@@ -20,6 +20,7 @@ import java.net.StandardProtocolFamily
 @RunWith(AndroidJUnit4::class)
 class SocketAndroidTest {
     private val srt = Srt()
+    private lateinit var socket: Socket
 
     @Before
     fun setUp() {
@@ -28,69 +29,73 @@ class SocketAndroidTest {
 
     @After
     fun tearDown() {
+        if (socket.isValid())
+            socket.close()
         assertEquals(srt.cleanUp(), 0)
     }
 
     @Test
     fun defaultConstructorTest() {
-        val socket = Socket()
+        socket = Socket()
         assertTrue(socket.isValid())
     }
 
     @Test
     fun inetConstructorTest() {
-        val socket = Socket(StandardProtocolFamily.INET)
+        socket = Socket(StandardProtocolFamily.INET)
         assertTrue(socket.isValid())
     }
 
     @Test
     fun inet6ConstructorTest() {
-        val socket = Socket(StandardProtocolFamily.INET6)
+        socket = Socket(StandardProtocolFamily.INET6)
         assertTrue(socket.isValid())
     }
 
     @Test
     fun bindTest() {
-        val socket = Socket(StandardProtocolFamily.INET)
+        socket = Socket(StandardProtocolFamily.INET)
         assertTrue(socket.isValid())
         assertEquals(0, socket.setSockOpt(SockOpt.TRANSTYPE, Transtype.FILE))
-        assertEquals(-1, socket.bind("127.0.3.1", 1234))
-        assertEquals(Error.getLastErrorMessage(), "Connection setup failure: Operation not permitted.")
+        assertEquals(0, socket.bind("127.0.3.1", 1234))
     }
 
     @Test
     fun closeTest() {
-        val socket = Socket(StandardProtocolFamily.INET)
+        socket = Socket(StandardProtocolFamily.INET)
         assertTrue(socket.isValid())
         assertEquals(0, socket.close())
+        assertFalse(socket.isValid())
     }
 
     @Test
     fun listenTest() {
-        val socket = Socket(StandardProtocolFamily.INET)
+        socket = Socket(StandardProtocolFamily.INET)
         assertTrue(socket.isValid())
         assertEquals(-1, socket.listen(3))
         assertEquals(Error.getLastErrorMessage(), "Operation not supported: Cannot do this operation on an UNBOUND socket.")
+        assertEquals(0, socket.bind("127.0.3.1", 1234))
+        assertEquals(0, socket.listen(3))
     }
 
     @Test
     fun connectTest() {
-        val socket = Socket(StandardProtocolFamily.INET)
+        socket = Socket(StandardProtocolFamily.INET)
         assertTrue(socket.isValid())
         assertEquals(-1, socket.connect("127.0.3.1", 1234))
-        assertEquals(Error.getLastErrorMessage(), "Connection setup failure: Operation not permitted.")
+        assertEquals(Error.getLastErrorMessage(), "Connection setup failure: connection time out.")
     }
 
     @Test
     fun setSockOptTest() {
-        val socket = Socket(StandardProtocolFamily.INET)
+        socket = Socket(StandardProtocolFamily.INET)
         assertTrue(socket.isValid())
         assertEquals(0, socket.setSockOpt(SockOpt.TRANSTYPE, Transtype.FILE))
     }
 
     @Test
     fun sendMsg2Test() {
-        val socket = Socket(StandardProtocolFamily.INET)
+        socket = Socket(StandardProtocolFamily.INET)
         assertTrue(socket.isValid())
         assertEquals(-1, socket.sendMsg2("Hello World !"))
         assertEquals(Error.getLastErrorMessage(), "Connection does not exist.")

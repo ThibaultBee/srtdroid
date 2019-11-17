@@ -38,7 +38,9 @@ class Socket {
     }
 
     fun close(): Int {
-        return nativeClose()
+        val res = nativeClose()
+        srtsocket = -1
+        return res
     }
 
     // Connecting
