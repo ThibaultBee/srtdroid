@@ -1,2 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.github.thibaultbee.srtwrapper" />
+    package="com.github.thibaultbee.srtwrapper">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+</manifest>
