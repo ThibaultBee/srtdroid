@@ -19,6 +19,10 @@ class Socket {
 
     private var srtsocket: Int
 
+    companion object {
+        const val INVALID_SOCK = -1
+    }
+
     constructor() {
         srtsocket = nativeCreateSocket()
     }
@@ -27,7 +31,7 @@ class Socket {
         srtsocket = nativeSocket(af, 0, 0)
     }
 
-    fun isValid() = srtsocket >= 0
+    fun isValid() = srtsocket > INVALID_SOCK
 
     fun bind(address: InetSocketAddress) : Int {
         return nativeBind(address)
@@ -39,7 +43,7 @@ class Socket {
 
     fun close(): Int {
         val res = nativeClose()
-        srtsocket = -1
+        srtsocket = INVALID_SOCK
         return res
     }
 
