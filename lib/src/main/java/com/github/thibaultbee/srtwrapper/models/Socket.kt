@@ -7,15 +7,15 @@ import java.net.StandardProtocolFamily
 class Socket {
     private external fun nativeSocket(af: StandardProtocolFamily, type: Int, protocol:  Int) : Int
     private external fun nativeCreateSocket() : Int
-    private external fun nativeBind(u: Int, address: InetSocketAddress) : Int
+    private external fun nativeBind(address: InetSocketAddress) : Int
     private external fun nativeClose() : Int
 
-    private external fun nativeListen(u: Int, backlog: Int) : Int
-    private external fun nativeConnect(u: Int, address: InetSocketAddress) : Int
+    private external fun nativeListen(backlog: Int) : Int
+    private external fun nativeConnect(address: InetSocketAddress) : Int
 
-    private external fun nativeSetSockOpt(u: Int, level: Int /*ignored*/, opt: SockOpt, value: Any) : Int
+    private external fun nativeSetSockOpt(level: Int /*ignored*/, opt: SockOpt, value: Any) : Int
 
-    private external fun nativeSendMsg2(u: Int, msg: String) : Int
+    private external fun nativeSendMsg2(msg: String) : Int
 
     private var srtsocket: Int
 
@@ -30,11 +30,11 @@ class Socket {
     fun isValid() = srtsocket >= 0
 
     fun bind(address: InetSocketAddress) : Int {
-        return nativeBind(srtsocket, address)
+        return nativeBind(address)
     }
 
     fun bind(address: String, port: Int) : Int {
-        return nativeBind(srtsocket, InetSocketAddress(address, port))
+        return nativeBind(InetSocketAddress(address, port))
     }
 
     fun close(): Int {
@@ -43,25 +43,25 @@ class Socket {
 
     // Connecting
     fun listen(backlog: Int) : Int {
-        return nativeListen(srtsocket, backlog)
+        return nativeListen(backlog)
     }
 
     fun connect(address: InetSocketAddress) : Int {
-        return nativeConnect(srtsocket, address)
+        return nativeConnect(address)
     }
 
     fun connect(address: String, port: Int) : Int {
-        return nativeConnect(srtsocket, InetSocketAddress(address, port))
+        return nativeConnect(InetSocketAddress(address, port))
     }
 
     // Options and properties
     fun setSockOpt(opt: SockOpt, value: Any) : Int {
-        return nativeSetSockOpt(srtsocket, 0, opt, value)
+        return nativeSetSockOpt(0, opt, value)
     }
 
     // Transmission
     fun sendMsg2(msg: String): Int {
-        return nativeSendMsg2(srtsocket, msg)
+        return nativeSendMsg2(msg)
     }
 
 }

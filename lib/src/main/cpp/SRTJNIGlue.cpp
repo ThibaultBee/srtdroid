@@ -299,6 +299,34 @@ srt_optval_from_java_to_native(JNIEnv *env, jobject jopval, int *optlen) {
     return res;
 }
 
+// Utils
+/**
+ * @brief Convert Java SRT Socket to SRTSOCKET for SRT library
+ *
+ * @param env Java environment
+ * @param u Java SRT Socket
+ * @return return corresponding SRTSOCKET value
+ */
+SRTSOCKET get_srt_socket(JNIEnv *env, jobject u) {
+    jclass jsocket_class = env->GetObjectClass(u);
+    if (!jsocket_class) {
+        LOGE("Can't get socket class");
+        return SRT_INVALID_SOCK;
+    }
+
+    jfieldID jsrtsocket_field = env->GetFieldID(jsocket_class, "srtsocket", "I");
+    if (!jsrtsocket_field) {
+        LOGE("Can't get srtsocket field");
+        env->DeleteLocalRef(jsocket_class);
+        return SRT_INVALID_SOCK;
+    }
+
+    jint srtsocket = env->GetIntField(u, jsrtsocket_field);
+
+    env->DeleteLocalRef(jsocket_class);
+    return srtsocket;
+}
+
 // Logger
 void srt_logger(void *opaque, int level, const char *file, int line, const char *area,
                 const char *message) {
@@ -362,11 +390,13 @@ Java_com_github_thibaultbee_srtwrapper_models_Socket_nativeCreateSocket(JNIEnv *
 }
 
 JNIEXPORT jint JNICALL
-Java_com_github_thibaultbee_srtwrapper_models_Socket_nativeBind(JNIEnv *env, jobject obj, jint u,
+Java_com_github_thibaultbee_srtwrapper_models_Socket_nativeBind(JNIEnv *env, jobject ju,
                                                                 jobject inetSocketAddress) {
+    SRTSOCKET u = get_srt_socket(env, ju);
     const struct sockaddr_in *sa = inet_socket_address_from_java_to_native(env,
                                                                            inetSocketAddress);
-    int res = srt_bind((SRTSOCKET) u, (struct sockaddr *) sa, sizeof(*sa));
+
+    int res = srt_bind(u, (struct sockaddr *) sa, sizeof(*sa));
 
     if (!sa) {
         free((void *) sa);
@@ -377,21 +407,26 @@ Java_com_github_thibaultbee_srtwrapper_models_Socket_nativeBind(JNIEnv *env, job
 
 JNIEXPORT jint JNICALL
 Java_com_github_thibaultbee_srtwrapper_models_Socket_nativeClose(JNIEnv *env,
-                                                                 jobject obj, jint u) {
+                                                                 jobject ju) {
+    SRTSOCKET u = get_srt_socket(env, ju);
+
     return srt_close((SRTSOCKET) u);
 }
 
 // Connecting
 JNIEXPORT jint JNICALL
 Java_com_github_thibaultbee_srtwrapper_models_Socket_nativeListen(JNIEnv *env,
-                                                                  jobject obj, jint u,
+                                                                  jobject ju,
                                                                   jint backlog) {
+    SRTSOCKET u = get_srt_socket(env, ju);
+
     return srt_listen((SRTSOCKET) u, (int) backlog);
 }
 
 JNIEXPORT jint JNICALL
-Java_com_github_thibaultbee_srtwrapper_models_Socket_nativeConnect(JNIEnv *env, jobject obj, jint u,
-                                                                jobject inetSocketAddress) {
+Java_com_github_thibaultbee_srtwrapper_models_Socket_nativeConnect(JNIEnv *env, jobject ju,
+                                                                   jobject inetSocketAddress) {
+    SRTSOCKET u = get_srt_socket(env, ju);
     const struct sockaddr_in *sa = inet_socket_address_from_java_to_native(env,
                                                                            inetSocketAddress);
     int res = srt_connect((SRTSOCKET) u, (struct sockaddr *) sa, sizeof(*sa));
@@ -405,34 +440,37 @@ Java_com_github_thibaultbee_srtwrapper_models_Socket_nativeConnect(JNIEnv *env, 
 
 // Options and properties
 JNIEXPORT jint JNICALL
-Java_com_github_thibaultbee_srtwrapper_models_Socket_nativeSetSockOpt(JNIEnv *env, jobject obj,
-                                                                      jint u,
+Java_com_github_thibaultbee_srtwrapper_models_Socket_nativeSetSockOpt(JNIEnv *env, jobject ju,
                                                                       jint level /*ignored*/,
                                                                       jobject jopt,
-                                                                      jobject joptval) {
+                                                                      jobject
+                                                                      joptval) {
+    SRTSOCKET u = get_srt_socket(env, ju);
     int opt = srt_sockopt_from_java_to_native(env, jopt);
     if (opt <= 0) {
         LOGE("Bad value for SRT option");
         return opt;
     }
-
     int optlen = 0;
     const void *optval = srt_optval_from_java_to_native(env, joptval, &optlen);
-    int res = srt_setsockopt((SRTSOCKET) u, level /*ignored*/, (SRT_SOCKOPT) opt, optval, optlen);
+
+    int res = srt_setsockopt((SRTSOCKET) u,
+                             level /*ignored*/, (SRT_SOCKOPT) opt, optval, optlen);
 
     if (!optval) {
         free((void *) optval);
     }
 
-    return res;
+    return
+            res;
 }
 
 // Transmission
 JNIEXPORT jint JNICALL
 Java_com_github_thibaultbee_srtwrapper_models_Socket_nativeSendMsg2(JNIEnv *env,
-                                                                    jobject obj,
-                                                                    jint u,
+                                                                    jobject ju,
                                                                     jstring jBuf) {
+    SRTSOCKET u = get_srt_socket(env, ju);
     const char *buf = env->GetStringUTFChars(jBuf, nullptr);
 
     int res = srt_sendmsg2(u, buf, strlen(buf), nullptr);
