@@ -299,6 +299,91 @@ srt_optval_from_java_to_native(JNIEnv *env, jobject jopval, int *optlen) {
     return res;
 }
 
+/**
+ * @brief Convert Java MsgCtrl to C SRT_MSGCTRL for SRT library
+ *
+ * @param env Java environment
+ * @param jopval Java MsgCtrl
+ * @return return MsgCtrl in C domain
+ */
+SRT_MSGCTRL *
+srt_msgctrl_from_java_to_native(JNIEnv *env, jobject jmsgCtrl) {
+    SRT_MSGCTRL *res = nullptr;
+
+    if (jmsgCtrl == nullptr)
+        return nullptr;
+
+    jclass jmsgctrl_class = env->GetObjectClass(jmsgCtrl);
+    if (!jmsgctrl_class) {
+        LOGE("Can't get MsgCtrl class");
+        return nullptr;
+    }
+
+    jfieldID jflags_field = env->GetFieldID(jmsgctrl_class, "flags", "I");
+    if (!jflags_field) {
+        LOGE("Can't get flags field");
+        env->DeleteLocalRef(jmsgctrl_class);
+        return nullptr;
+    }
+
+    jfieldID jttl_field = env->GetFieldID(jmsgctrl_class, "ttl", "I");
+    if (!jttl_field) {
+        LOGE("Can't get ttl field");
+        env->DeleteLocalRef(jmsgctrl_class);
+        return nullptr;
+    }
+
+    jfieldID jinOrder_field = env->GetFieldID(jmsgctrl_class, "inOrder", "Z");
+    if (!jinOrder_field) {
+        LOGE("Can't get inOrder field");
+        env->DeleteLocalRef(jmsgctrl_class);
+        return nullptr;
+    }
+
+    jfieldID jboundary_field = env->GetFieldID(jmsgctrl_class, "boundary", "I");
+    if (!jboundary_field) {
+        LOGE("Can't get boundary field");
+        env->DeleteLocalRef(jmsgctrl_class);
+        return nullptr;
+    }
+
+    jfieldID jsrcTime_field = env->GetFieldID(jmsgctrl_class, "srcTime", "J");
+    if (!jsrcTime_field) {
+        LOGE("Can't get srcTime field");
+        env->DeleteLocalRef(jmsgctrl_class);
+        return nullptr;
+    }
+
+    jfieldID jpktSeq_field = env->GetFieldID(jmsgctrl_class, "pktSeq", "I");
+    if (!jpktSeq_field) {
+        LOGE("Can't get pktSeq field");
+        env->DeleteLocalRef(jmsgctrl_class);
+        return nullptr;
+    }
+
+    jfieldID jmsgno_field = env->GetFieldID(jmsgctrl_class, "no", "I");
+    if (!jmsgno_field) {
+        LOGE("Can't get message number field");
+        env->DeleteLocalRef(jmsgctrl_class);
+        return nullptr;
+    }
+
+    res = (SRT_MSGCTRL *) malloc(sizeof(SRT_MSGCTRL));
+    if (res != nullptr) {
+        res->flags = env->GetIntField(jmsgCtrl, jflags_field);
+        res->msgttl = env->GetIntField(jmsgCtrl, jttl_field);
+        res->inorder = env->GetBooleanField(jmsgCtrl, jinOrder_field);
+        res->boundary = env->GetIntField(jmsgCtrl, jboundary_field);
+        res->srctime = (uint64_t )env->GetLongField(jmsgCtrl, jsrcTime_field);
+        res->pktseq = env->GetIntField(jmsgCtrl, jpktSeq_field);
+        res->msgno = env->GetIntField(jmsgCtrl, jmsgno_field);
+    }
+
+    env->DeleteLocalRef(jmsgctrl_class);
+
+    return res;
+}
+
 // Utils
 /**
  * @brief Convert Java SRT Socket to SRTSOCKET for SRT library
@@ -467,15 +552,52 @@ Java_com_github_thibaultbee_srtwrapper_models_Socket_nativeSetSockOpt(JNIEnv *en
 
 // Transmission
 JNIEXPORT jint JNICALL
+Java_com_github_thibaultbee_srtwrapper_models_Socket_nativeSend(JNIEnv *env,
+                                                                   jobject ju,
+                                                                   jstring jbuf
+) {
+    SRTSOCKET u = get_srt_socket(env, ju);
+    const char *buf = env->GetStringUTFChars(jbuf, nullptr);
+
+    int res = srt_send(u, buf, strlen(buf));
+
+    env->ReleaseStringUTFChars(jbuf, buf);
+
+    return res;
+}
+
+JNIEXPORT jint JNICALL
+Java_com_github_thibaultbee_srtwrapper_models_Socket_nativeSendMsg(JNIEnv *env,
+                                                                   jobject ju,
+                                                                   jstring jbuf,
+                                                                   jint jttl/* = -1*/,
+                                                                   jboolean jinorder/* = false*/
+) {
+    SRTSOCKET u = get_srt_socket(env, ju);
+    const char *buf = env->GetStringUTFChars(jbuf, nullptr);
+
+    int res = srt_sendmsg(u, buf, strlen(buf), jttl, jinorder);
+
+    env->ReleaseStringUTFChars(jbuf, buf);
+
+    return res;
+}
+
+JNIEXPORT jint JNICALL
 Java_com_github_thibaultbee_srtwrapper_models_Socket_nativeSendMsg2(JNIEnv *env,
                                                                     jobject ju,
-                                                                    jstring jBuf) {
+                                                                    jstring jbuf,
+                                                                    jobject jmsgCtrl) {
     SRTSOCKET u = get_srt_socket(env, ju);
-    const char *buf = env->GetStringUTFChars(jBuf, nullptr);
+    SRT_MSGCTRL * msgctrl = srt_msgctrl_from_java_to_native(env, jmsgCtrl);
+    const char *buf = env->GetStringUTFChars(jbuf, nullptr);
 
-    int res = srt_sendmsg2(u, buf, strlen(buf), nullptr);
+    int res = srt_sendmsg2(u, buf, strlen(buf), msgctrl);
 
-    env->ReleaseStringUTFChars(jBuf, buf);
+    env->ReleaseStringUTFChars(jbuf, buf);
+    if (msgctrl != nullptr) {
+        free(msgctrl);
+    }
 
     return res;
 }

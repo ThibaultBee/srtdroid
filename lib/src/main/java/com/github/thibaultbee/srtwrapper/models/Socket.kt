@@ -15,7 +15,9 @@ class Socket {
 
     private external fun nativeSetSockOpt(level: Int /*ignored*/, opt: SockOpt, value: Any) : Int
 
-    private external fun nativeSendMsg2(msg: String) : Int
+    private external fun nativeSend(msg: String) : Int
+    private external fun nativeSendMsg(msg: String, ttl: Int, inOrder: Boolean) : Int
+    private external fun nativeSendMsg2(msg: String, msgCtrl: MsgCtrl?) : Int
 
     private var srtsocket: Int
 
@@ -66,8 +68,16 @@ class Socket {
     }
 
     // Transmission
-    fun sendMsg2(msg: String): Int {
-        return nativeSendMsg2(msg)
+    fun sendMsg(msg: String): Int {
+        return nativeSend(msg)
+    }
+
+    fun sendMsg(msg: String, ttl: Int = -1, inOrder: Boolean = false): Int {
+        return nativeSendMsg(msg, ttl, inOrder)
+    }
+
+    fun sendMsg(msg: String, msgCtrl: MsgCtrl?): Int {
+        return nativeSendMsg2(msg, msgCtrl)
     }
 
 }

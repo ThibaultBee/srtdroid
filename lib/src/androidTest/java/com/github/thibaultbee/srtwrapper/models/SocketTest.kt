@@ -94,10 +94,28 @@ class SocketTest {
     }
 
     @Test
+    fun sendMsg1Test() {
+        socket = Socket(StandardProtocolFamily.INET)
+        assertTrue(socket.isValid())
+        assertEquals(-1, socket.sendMsg("Hello World !"))
+        assertEquals(Error.getLastErrorMessage(), "Connection does not exist.")
+    }
+
+    @Test
     fun sendMsg2Test() {
         socket = Socket(StandardProtocolFamily.INET)
         assertTrue(socket.isValid())
-        assertEquals(-1, socket.sendMsg2("Hello World !"))
+        assertEquals(-1, socket.sendMsg("Hello World !", -1, false))
+        assertEquals(Error.getLastErrorMessage(), "Connection does not exist.")
+    }
+
+    @Test
+    fun sendMsg3Test() {
+        socket = Socket(StandardProtocolFamily.INET)
+        assertTrue(socket.isValid())
+        assertEquals(-1, socket.sendMsg("Hello World !", null))
+        assertEquals(Error.getLastErrorMessage(), "Connection does not exist.")
+        assertEquals(-1, socket.sendMsg("Hello World !", MsgCtrl(flags = 0, boundary = 0, pktSeq = 0, no = 10)))
         assertEquals(Error.getLastErrorMessage(), "Connection does not exist.")
     }
 }
