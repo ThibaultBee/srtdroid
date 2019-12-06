@@ -1,10 +1,7 @@
 package com.github.thibaultbee.srtwrapper
 
-import android.Manifest.permission.ACCESS_NETWORK_STATE
-import android.util.Log
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.github.thibaultbee.srtwrapper.enums.SockOpt
-import com.github.thibaultbee.srtwrapper.models.Error
 import com.github.thibaultbee.srtwrapper.models.Socket
 import org.junit.Test
 
