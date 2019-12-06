@@ -602,6 +602,23 @@ Java_com_github_thibaultbee_srtwrapper_models_Socket_nativeSendMsg2(JNIEnv *env,
     return res;
 }
 
+JNIEXPORT jlong JNICALL
+Java_com_github_thibaultbee_srtwrapper_models_Socket_nativeSendFile(JNIEnv *env,
+                                                                    jobject ju,
+                                                                    jstring jpath,
+                                                                    jlong joffset,
+                                                                    jlong jsize,
+                                                                    jint jblock) {
+    SRTSOCKET u = get_srt_socket(env, ju);
+    const char *path = env->GetStringUTFChars(jpath, nullptr);
+    auto offset = (int64_t)joffset;
+    int64_t res = srt_sendfile(u, path, &offset, (int64_t)jsize, jblock);
+
+    env->ReleaseStringUTFChars(jpath, path);
+
+    return (jlong)res;
+}
+
 // Errors
 JNIEXPORT jstring JNICALL
 Java_com_github_thibaultbee_srtwrapper_models_Error_nativeGetLastErrorStr(JNIEnv *env,

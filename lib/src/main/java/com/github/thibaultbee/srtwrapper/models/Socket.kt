@@ -1,6 +1,7 @@
 package com.github.thibaultbee.srtwrapper.models
 
 import com.github.thibaultbee.srtwrapper.enums.SockOpt
+import java.io.File
 import java.net.InetSocketAddress
 import java.net.StandardProtocolFamily
 
@@ -18,6 +19,7 @@ class Socket {
     private external fun nativeSend(msg: String) : Int
     private external fun nativeSendMsg(msg: String, ttl: Int, inOrder: Boolean) : Int
     private external fun nativeSendMsg2(msg: String, msgCtrl: MsgCtrl?) : Int
+    private external fun nativeSendFile(path: String, offset: Long, size: Long, block: Int) : Long
 
     private var srtsocket: Int
 
@@ -80,4 +82,7 @@ class Socket {
         return nativeSendMsg2(msg, msgCtrl)
     }
 
+    fun sendFile(file: File, block: Int = 364000): Long {
+        return nativeSendFile(file.path, 0, file.totalSpace, block)
+    }
 }

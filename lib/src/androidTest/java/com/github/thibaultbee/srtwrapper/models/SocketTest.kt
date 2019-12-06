@@ -1,15 +1,17 @@
 package com.github.thibaultbee.srtwrapper.models
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry
 import com.github.thibaultbee.srtwrapper.Srt
 import com.github.thibaultbee.srtwrapper.enums.SockOpt
 import com.github.thibaultbee.srtwrapper.enums.Transtype
 import org.junit.After
-import org.junit.Before
-
 import org.junit.Assert.*
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.io.File
+import java.io.FileWriter
 import java.net.StandardProtocolFamily
 
 
@@ -116,6 +118,25 @@ class SocketTest {
         assertEquals(-1, socket.sendMsg("Hello World !", null))
         assertEquals(Error.getLastErrorMessage(), "Connection does not exist.")
         assertEquals(-1, socket.sendMsg("Hello World !", MsgCtrl(flags = 0, boundary = 0, pktSeq = 0, no = 10)))
+        assertEquals(Error.getLastErrorMessage(), "Connection does not exist.")
+    }
+
+    private fun createTestFile(): File {
+        val myFile = File(
+            InstrumentationRegistry.getInstrumentation().context.externalCacheDir,
+            "FileToSend"
+        )
+        val fw = FileWriter(myFile)
+        fw.write("Hello ! Did someone receive this message?")
+        fw.close()
+        return myFile
+    }
+
+    @Test
+    fun sendFileTest() {
+        socket = Socket(StandardProtocolFamily.INET)
+        assertTrue(socket.isValid())
+        assertEquals(-1, socket.sendFile(createTestFile()))
         assertEquals(Error.getLastErrorMessage(), "Connection does not exist.")
     }
 }
