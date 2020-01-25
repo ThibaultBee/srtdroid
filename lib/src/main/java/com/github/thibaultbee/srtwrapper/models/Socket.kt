@@ -4,6 +4,7 @@ import com.github.thibaultbee.srtwrapper.enums.SockOpt
 import java.io.File
 import java.net.InetSocketAddress
 import java.net.StandardProtocolFamily
+import android.util.Pair
 
 class Socket {
     private external fun nativeSocket(af: StandardProtocolFamily, type: Int, protocol:  Int) : Int
@@ -12,6 +13,7 @@ class Socket {
     private external fun nativeClose() : Int
 
     private external fun nativeListen(backlog: Int) : Int
+    private external fun nativeAccept() : Pair<Socket, InetSocketAddress?>
     private external fun nativeConnect(address: InetSocketAddress) : Int
 
     private external fun nativeSetSockOpt(level: Int /*ignored*/, opt: SockOpt, value: Any) : Int
@@ -35,6 +37,10 @@ class Socket {
         srtsocket = nativeSocket(af, 0, 0)
     }
 
+    private constructor(socket: Int) {
+        srtsocket = socket
+    }
+
     fun isValid() = srtsocket > INVALID_SOCK
 
     fun bind(address: InetSocketAddress) : Int {
@@ -54,6 +60,10 @@ class Socket {
     // Connecting
     fun listen(backlog: Int) : Int {
         return nativeListen(backlog)
+    }
+
+    fun accept() : Pair<Socket, InetSocketAddress?> {
+        return nativeAccept()
     }
 
     fun connect(address: InetSocketAddress) : Int {

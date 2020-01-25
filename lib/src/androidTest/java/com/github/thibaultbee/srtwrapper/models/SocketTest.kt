@@ -81,6 +81,15 @@ class SocketTest {
     }
 
     @Test
+    fun acceptTest() {
+        socket = Socket(StandardProtocolFamily.INET)
+        assertTrue(socket.isValid())
+        val pair = socket.accept()
+        assertFalse(pair.first.isValid())
+        assertEquals(Error.getLastErrorMessage(), "Operation not supported: Socket is not in listening state.")
+    }
+
+    @Test
     fun connectTest() {
         socket = Socket(StandardProtocolFamily.INET)
         assertTrue(socket.isValid())

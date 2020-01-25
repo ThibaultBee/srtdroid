@@ -13,6 +13,10 @@ extern "C" {
 
 #define ENUM_PACKAGE "com.github.thibaultbee.srtwrapper.enums"
 
+#define SRTSOCKET_CLASS "com/github/thibaultbee/srtwrapper/models/Socket"
+#define INETSOCKETADDRESS_CLASS "java/net/InetSocketAddress"
+#define PAIR_CLASS "android/util/Pair"
+
 
 #define TAG "JNIGlue"
 #define SRTLIB_TAG "SRTLIB"
@@ -209,6 +213,43 @@ inet_socket_address_from_java_to_native(JNIEnv *env, jobject jinet_socket_addres
 }
 
 /**
+ * @brief Convert sockaddr_in to Java InetSocketAddres
+ *
+ * @param env Java environment
+ * @param sockaddr socket address in C domain
+ * @param addrlen socket address length
+ * @return return Java InetSocketAddres
+ */
+jobject
+inet_socket_address_from_native_to_java(JNIEnv *env, struct sockaddr_in * sa, int addrlen) {
+    // Get InetSocketAddress class
+    jclass jinet_socket_address_class = env->FindClass(INETSOCKETADDRESS_CLASS);
+    if (!jinet_socket_address_class) {
+        LOGE("Can't get InetSocketAddress class");
+        return nullptr;
+    }
+
+    jmethodID jinit_method = env->GetMethodID(jinet_socket_address_class, "<init>", "(Ljava/lang/String;I)V");
+    if (!jinit_method) {
+        LOGE("Can't get InetSocketAddress constructor field");
+        env->DeleteLocalRef(jinet_socket_address_class);
+        return nullptr;
+    }
+
+    char ip[INET_ADDRSTRLEN];
+    if(inet_ntop(sa->sin_family, (void *)&(sa->sin_addr), ip, sizeof(ip))) {
+            LOGE("Can't convert ip");
+    }
+
+    jstring jhostname = env->NewStringUTF(ip);
+    jobject jinet_socket_address = env->NewObject(jinet_socket_address_class, jinit_method, jhostname, (jint) htons(sa->sin_port));
+
+    env->DeleteLocalRef(jinet_socket_address_class);
+
+    return jinet_socket_address;
+}
+
+/**
  * @brief Convert Java SRT Optval to C optval for SRT library
  *
  * @param env Java environment
@@ -392,8 +433,8 @@ srt_msgctrl_from_java_to_native(JNIEnv *env, jobject jmsgCtrl) {
  * @param u Java SRT Socket
  * @return return corresponding SRTSOCKET value
  */
-SRTSOCKET get_srt_socket(JNIEnv *env, jobject u) {
-    jclass jsocket_class = env->GetObjectClass(u);
+SRTSOCKET srt_socket_from_java_to_native(JNIEnv *env, jobject ju) {
+    jclass jsocket_class = env->GetObjectClass(ju);
     if (!jsocket_class) {
         LOGE("Can't get socket class");
         return SRT_INVALID_SOCK;
@@ -406,10 +447,65 @@ SRTSOCKET get_srt_socket(JNIEnv *env, jobject u) {
         return SRT_INVALID_SOCK;
     }
 
-    jint srtsocket = env->GetIntField(u, jsrtsocket_field);
+    jint srtsocket = env->GetIntField(ju, jsrtsocket_field);
 
     env->DeleteLocalRef(jsocket_class);
     return srtsocket;
+}
+
+/**
+ * @brief Convert SRTSOCKET for SRT library to Java SRT Socket
+ *
+ * @param env Java environment
+ * @param u Java SRT Socket
+ * @return return corresponding SRTSOCKET value
+ */
+jobject srt_socket_from_native_to_java(JNIEnv *env, SRTSOCKET u) {
+    jclass jsocket_class = env->FindClass(SRTSOCKET_CLASS);
+    if (!jsocket_class) {
+        LOGE("Can't find socket class");
+        return nullptr;
+    }
+
+    jmethodID jinit_method = env->GetMethodID(jsocket_class, "<init>", "(I)V");
+    if (!jinit_method) {
+        LOGE("Can't get SrtSocket constructor field");
+        env->DeleteLocalRef(jsocket_class);
+        return nullptr;
+    }
+
+    jobject ju = env->NewObject(jsocket_class, jinit_method, u);
+
+    env->DeleteLocalRef(jsocket_class);
+    return ju;
+}
+
+/**
+ * @brief Create a Pair Java object
+ *
+ * @param env Java environment
+ * @param first Pair first argument
+ * @param second Pair second argument
+ * @return return a Pair Java object containing first and second arguments
+ */
+jobject create_java_pair(JNIEnv *env, jobject first, jobject second) {
+    jclass jpair_class = env->FindClass(PAIR_CLASS);
+    if (!jpair_class) {
+        LOGE("Can't get Pair class");
+        return nullptr;
+    }
+
+    jmethodID jinit_method = env->GetMethodID(jpair_class, "<init>", "(Ljava/lang/Object;Ljava/lang/Object;)V");
+    if (!jinit_method) {
+        LOGE("Can't get Pair constructor field");
+        env->DeleteLocalRef(jpair_class);
+        return nullptr;
+    }
+
+    jobject jpair = env->NewObject(jpair_class, jinit_method, first, second);
+
+    env->DeleteLocalRef(jpair_class);
+    return jpair;
 }
 
 // Logger
@@ -477,7 +573,7 @@ Java_com_github_thibaultbee_srtwrapper_models_Socket_nativeCreateSocket(JNIEnv *
 JNIEXPORT jint JNICALL
 Java_com_github_thibaultbee_srtwrapper_models_Socket_nativeBind(JNIEnv *env, jobject ju,
                                                                 jobject inetSocketAddress) {
-    SRTSOCKET u = get_srt_socket(env, ju);
+    SRTSOCKET u = srt_socket_from_java_to_native(env, ju);
     const struct sockaddr_in *sa = inet_socket_address_from_java_to_native(env,
                                                                            inetSocketAddress);
 
@@ -493,7 +589,7 @@ Java_com_github_thibaultbee_srtwrapper_models_Socket_nativeBind(JNIEnv *env, job
 JNIEXPORT jint JNICALL
 Java_com_github_thibaultbee_srtwrapper_models_Socket_nativeClose(JNIEnv *env,
                                                                  jobject ju) {
-    SRTSOCKET u = get_srt_socket(env, ju);
+    SRTSOCKET u = srt_socket_from_java_to_native(env, ju);
 
     return srt_close((SRTSOCKET) u);
 }
@@ -503,15 +599,35 @@ JNIEXPORT jint JNICALL
 Java_com_github_thibaultbee_srtwrapper_models_Socket_nativeListen(JNIEnv *env,
                                                                   jobject ju,
                                                                   jint backlog) {
-    SRTSOCKET u = get_srt_socket(env, ju);
+    SRTSOCKET u = srt_socket_from_java_to_native(env, ju);
 
     return srt_listen((SRTSOCKET) u, (int) backlog);
+}
+
+JNIEXPORT jobject JNICALL
+Java_com_github_thibaultbee_srtwrapper_models_Socket_nativeAccept(JNIEnv *env, jobject ju) {
+    SRTSOCKET u = srt_socket_from_java_to_native(env, ju);
+    auto *sa =  (struct sockaddr_in *) malloc(sizeof(struct sockaddr));
+    int addrlen = 0;
+    jobject inetSocketAddress = nullptr;
+
+    SRTSOCKET new_u = srt_accept((SRTSOCKET) u, (struct sockaddr *) &sa, &addrlen);
+    if (addrlen != 0) {
+        inet_socket_address_from_native_to_java(env, sa, addrlen);
+    }
+    jobject res = create_java_pair(env, srt_socket_from_native_to_java(env, new_u), inetSocketAddress);
+
+    if (!sa) {
+        free((void *) sa);
+    }
+
+    return res;
 }
 
 JNIEXPORT jint JNICALL
 Java_com_github_thibaultbee_srtwrapper_models_Socket_nativeConnect(JNIEnv *env, jobject ju,
                                                                    jobject inetSocketAddress) {
-    SRTSOCKET u = get_srt_socket(env, ju);
+    SRTSOCKET u = srt_socket_from_java_to_native(env, ju);
     const struct sockaddr_in *sa = inet_socket_address_from_java_to_native(env,
                                                                            inetSocketAddress);
     int res = srt_connect((SRTSOCKET) u, (struct sockaddr *) sa, sizeof(*sa));
@@ -530,7 +646,7 @@ Java_com_github_thibaultbee_srtwrapper_models_Socket_nativeSetSockOpt(JNIEnv *en
                                                                       jobject jopt,
                                                                       jobject
                                                                       joptval) {
-    SRTSOCKET u = get_srt_socket(env, ju);
+    SRTSOCKET u = srt_socket_from_java_to_native(env, ju);
     int opt = srt_sockopt_from_java_to_native(env, jopt);
     if (opt <= 0) {
         LOGE("Bad value for SRT option");
@@ -556,7 +672,7 @@ Java_com_github_thibaultbee_srtwrapper_models_Socket_nativeSend(JNIEnv *env,
                                                                    jobject ju,
                                                                    jstring jbuf
 ) {
-    SRTSOCKET u = get_srt_socket(env, ju);
+    SRTSOCKET u = srt_socket_from_java_to_native(env, ju);
     const char *buf = env->GetStringUTFChars(jbuf, nullptr);
 
     int res = srt_send(u, buf, strlen(buf));
@@ -573,7 +689,7 @@ Java_com_github_thibaultbee_srtwrapper_models_Socket_nativeSendMsg(JNIEnv *env,
                                                                    jint jttl/* = -1*/,
                                                                    jboolean jinorder/* = false*/
 ) {
-    SRTSOCKET u = get_srt_socket(env, ju);
+    SRTSOCKET u = srt_socket_from_java_to_native(env, ju);
     const char *buf = env->GetStringUTFChars(jbuf, nullptr);
 
     int res = srt_sendmsg(u, buf, strlen(buf), jttl, jinorder);
@@ -588,7 +704,7 @@ Java_com_github_thibaultbee_srtwrapper_models_Socket_nativeSendMsg2(JNIEnv *env,
                                                                     jobject ju,
                                                                     jstring jbuf,
                                                                     jobject jmsgCtrl) {
-    SRTSOCKET u = get_srt_socket(env, ju);
+    SRTSOCKET u = srt_socket_from_java_to_native(env, ju);
     SRT_MSGCTRL * msgctrl = srt_msgctrl_from_java_to_native(env, jmsgCtrl);
     const char *buf = env->GetStringUTFChars(jbuf, nullptr);
 
@@ -609,7 +725,7 @@ Java_com_github_thibaultbee_srtwrapper_models_Socket_nativeSendFile(JNIEnv *env,
                                                                     jlong joffset,
                                                                     jlong jsize,
                                                                     jint jblock) {
-    SRTSOCKET u = get_srt_socket(env, ju);
+    SRTSOCKET u = srt_socket_from_java_to_native(env, ju);
     const char *path = env->GetStringUTFChars(jpath, nullptr);
     auto offset = (int64_t)joffset;
     int64_t res = srt_sendfile(u, path, &offset, (int64_t)jsize, jblock);
