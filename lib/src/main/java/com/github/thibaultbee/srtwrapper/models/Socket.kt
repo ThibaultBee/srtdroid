@@ -18,9 +18,9 @@ class Socket {
 
     private external fun nativeSetSockOpt(level: Int /*ignored*/, opt: SockOpt, value: Any) : Int
 
-    private external fun nativeSend(msg: String) : Int
-    private external fun nativeSendMsg(msg: String, ttl: Int, inOrder: Boolean) : Int
-    private external fun nativeSendMsg2(msg: String, msgCtrl: MsgCtrl?) : Int
+    private external fun nativeSend(msg: ByteArray) : Int
+    private external fun nativeSendMsg(msg: ByteArray, ttl: Int, inOrder: Boolean) : Int
+    private external fun nativeSendMsg2(msg: ByteArray, msgCtrl: MsgCtrl?) : Int
     private external fun nativeSendFile(path: String, offset: Long, size: Long, block: Int) : Long
 
     private var srtsocket: Int
@@ -80,16 +80,28 @@ class Socket {
     }
 
     // Transmission
-    fun sendMsg(msg: String): Int {
+    fun sendMsg(msg: ByteArray): Int {
         return nativeSend(msg)
     }
 
-    fun sendMsg(msg: String, ttl: Int = -1, inOrder: Boolean = false): Int {
+    fun sendMsg(msg: String): Int {
+        return nativeSend(msg.toByteArray())
+    }
+
+    fun sendMsg(msg: ByteArray, ttl: Int = -1, inOrder: Boolean = false): Int {
         return nativeSendMsg(msg, ttl, inOrder)
     }
 
-    fun sendMsg(msg: String, msgCtrl: MsgCtrl?): Int {
+    fun sendMsg(msg: String, ttl: Int = -1, inOrder: Boolean = false): Int {
+        return nativeSendMsg(msg.toByteArray(), ttl, inOrder)
+    }
+
+    fun sendMsg(msg: ByteArray, msgCtrl: MsgCtrl?): Int {
         return nativeSendMsg2(msg, msgCtrl)
+    }
+
+    fun sendMsg(msg: String, msgCtrl: MsgCtrl?): Int {
+        return nativeSendMsg2(msg.toByteArray(), msgCtrl)
     }
 
     fun sendFile(file: File, block: Int = 364000): Long {

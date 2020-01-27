@@ -669,15 +669,15 @@ Java_com_github_thibaultbee_srtwrapper_models_Socket_nativeSetSockOpt(JNIEnv *en
 // Transmission
 JNIEXPORT jint JNICALL
 Java_com_github_thibaultbee_srtwrapper_models_Socket_nativeSend(JNIEnv *env,
-                                                                   jobject ju,
-                                                                   jstring jbuf
-) {
+                                                                jobject ju,
+                                                                jbyteArray jbuf) {
     SRTSOCKET u = srt_socket_from_java_to_native(env, ju);
-    const char *buf = env->GetStringUTFChars(jbuf, nullptr);
+    int len = env->GetArrayLength(jbuf);
+    char *buf = (char *) env->GetByteArrayElements(jbuf, nullptr);
 
-    int res = srt_send(u, buf, strlen(buf));
+    int res = srt_send(u, buf, len);
 
-    env->ReleaseStringUTFChars(jbuf, buf);
+    env->ReleaseByteArrayElements(jbuf, (jbyte *) buf, 0);
 
     return res;
 }
@@ -685,16 +685,16 @@ Java_com_github_thibaultbee_srtwrapper_models_Socket_nativeSend(JNIEnv *env,
 JNIEXPORT jint JNICALL
 Java_com_github_thibaultbee_srtwrapper_models_Socket_nativeSendMsg(JNIEnv *env,
                                                                    jobject ju,
-                                                                   jstring jbuf,
+                                                                   jbyteArray jbuf,
                                                                    jint jttl/* = -1*/,
-                                                                   jboolean jinorder/* = false*/
-) {
+                                                                   jboolean jinorder/* = false*/) {
     SRTSOCKET u = srt_socket_from_java_to_native(env, ju);
-    const char *buf = env->GetStringUTFChars(jbuf, nullptr);
+    int len = env->GetArrayLength(jbuf);
+    char *buf = (char *) env->GetByteArrayElements(jbuf, nullptr);
 
-    int res = srt_sendmsg(u, buf, strlen(buf), jttl, jinorder);
+    int res = srt_sendmsg(u, buf, len, jttl, jinorder);
 
-    env->ReleaseStringUTFChars(jbuf, buf);
+    env->ReleaseByteArrayElements(jbuf, (jbyte *) buf, 0);
 
     return res;
 }
@@ -702,15 +702,16 @@ Java_com_github_thibaultbee_srtwrapper_models_Socket_nativeSendMsg(JNIEnv *env,
 JNIEXPORT jint JNICALL
 Java_com_github_thibaultbee_srtwrapper_models_Socket_nativeSendMsg2(JNIEnv *env,
                                                                     jobject ju,
-                                                                    jstring jbuf,
+                                                                    jbyteArray jbuf,
                                                                     jobject jmsgCtrl) {
     SRTSOCKET u = srt_socket_from_java_to_native(env, ju);
-    SRT_MSGCTRL * msgctrl = srt_msgctrl_from_java_to_native(env, jmsgCtrl);
-    const char *buf = env->GetStringUTFChars(jbuf, nullptr);
+    SRT_MSGCTRL *msgctrl = srt_msgctrl_from_java_to_native(env, jmsgCtrl);
+    int len = env->GetArrayLength(jbuf);
+    char *buf = (char *) env->GetByteArrayElements(jbuf, nullptr);
 
-    int res = srt_sendmsg2(u, buf, strlen(buf), msgctrl);
+    int res = srt_sendmsg2(u, buf, len, msgctrl);
 
-    env->ReleaseStringUTFChars(jbuf, buf);
+    env->ReleaseByteArrayElements(jbuf, (jbyte *) buf, 0);
     if (msgctrl != nullptr) {
         free(msgctrl);
     }
