@@ -130,6 +130,20 @@ class SocketTest {
         assertEquals(Error.getLastErrorMessage(), "Connection does not exist.")
     }
 
+    @Test
+    fun recvTest() {
+        socket = Socket(StandardProtocolFamily.INET)
+        assertTrue(socket.isValid())
+        assertNull(socket.recv(4 /*Int nb bytes*/))
+    }
+
+    @Test
+    fun recvMsg2Test() {
+        socket = Socket(StandardProtocolFamily.INET)
+        assertTrue(socket.isValid())
+        assertNull(socket.recvMsg2(4 /*Int nb bytes*/, MsgCtrl(flags = 0, boundary = 0, pktSeq = 0, no = 10)))
+    }
+
     private fun createTestFile(): File {
         val myFile = File(
             InstrumentationRegistry.getInstrumentation().context.externalCacheDir,

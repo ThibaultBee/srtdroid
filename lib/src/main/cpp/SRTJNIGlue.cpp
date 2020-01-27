@@ -719,6 +719,55 @@ Java_com_github_thibaultbee_srtwrapper_models_Socket_nativeSendMsg2(JNIEnv *env,
     return res;
 }
 
+JNIEXPORT jbyteArray JNICALL
+Java_com_github_thibaultbee_srtwrapper_models_Socket_nativeRecv(JNIEnv *env,
+                                                                jobject ju,
+                                                                jint len) {
+    SRTSOCKET u = srt_socket_from_java_to_native(env, ju);
+    jbyteArray jbuf = nullptr;
+    auto *buf = (char *) malloc(sizeof(char));
+    int res = srt_recv(u, buf, len);
+
+    if (res > 0) {
+        jbuf = env->NewByteArray(res);
+        env->SetByteArrayRegion(jbuf, 0, res, (jbyte *) buf);
+    }
+
+    if (buf != nullptr) {
+        free(buf);
+    }
+
+    return jbuf;
+
+}
+
+JNIEXPORT jbyteArray JNICALL
+Java_com_github_thibaultbee_srtwrapper_models_Socket_nativeRecvMsg2(JNIEnv *env,
+                                                                    jobject ju,
+                                                                    jint len,
+                                                                    jobject jmsgCtrl) {
+    SRTSOCKET u = srt_socket_from_java_to_native(env, ju);
+    SRT_MSGCTRL *msgctrl = srt_msgctrl_from_java_to_native(env, jmsgCtrl);
+    jbyteArray jbuf = nullptr;
+    auto *buf = (char *) malloc(sizeof(char));
+    int res = srt_recvmsg2(u, buf, len, msgctrl);
+
+    if (res > 0) {
+        jbuf = env->NewByteArray(res);
+        env->SetByteArrayRegion(jbuf, 0, res, (jbyte *) buf);
+    }
+
+    if (buf != nullptr) {
+        free(buf);
+    }
+    if (msgctrl != nullptr) {
+        free(msgctrl);
+    }
+
+    return jbuf;
+
+}
+
 JNIEXPORT jlong JNICALL
 Java_com_github_thibaultbee_srtwrapper_models_Socket_nativeSendFile(JNIEnv *env,
                                                                     jobject ju,
