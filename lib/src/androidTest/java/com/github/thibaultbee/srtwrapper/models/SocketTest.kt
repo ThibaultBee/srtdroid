@@ -75,7 +75,7 @@ class SocketTest {
         socket = Socket(StandardProtocolFamily.INET)
         assertTrue(socket.isValid())
         assertEquals(-1, socket.listen(3))
-        assertEquals(Error.getLastErrorMessage(), "Operation not supported: Cannot do this operation on an UNBOUND socket.")
+        assertEquals(Error.getLastErrorMessage(), "Operation not supported: Cannot do this operation on an UNBOUND socket")
         assertEquals(0, socket.bind("127.0.3.1", 1234))
         assertEquals(0, socket.listen(3))
     }
@@ -86,7 +86,7 @@ class SocketTest {
         assertTrue(socket.isValid())
         val pair = socket.accept()
         assertFalse(pair.first.isValid())
-        assertEquals(Error.getLastErrorMessage(), "Operation not supported: Socket is not in listening state.")
+        assertEquals(Error.getLastErrorMessage(), "Operation not supported: Socket is not in listening state")
     }
 
     @Test
@@ -94,7 +94,7 @@ class SocketTest {
         socket = Socket(StandardProtocolFamily.INET)
         assertTrue(socket.isValid())
         assertEquals(-1, socket.connect("127.0.3.1", 1234))
-        assertEquals(Error.getLastErrorMessage(), "Connection setup failure: connection time out.")
+        assertEquals(Error.getLastErrorMessage(), "Connection setup failure: connection time out")
     }
 
     @Test
@@ -109,7 +109,7 @@ class SocketTest {
         socket = Socket(StandardProtocolFamily.INET)
         assertTrue(socket.isValid())
         assertEquals(-1, socket.send("Hello World !"))
-        assertEquals(Error.getLastErrorMessage(), "Connection does not exist.")
+        assertEquals(Error.getLastErrorMessage(), "Connection does not exist")
     }
 
     @Test
@@ -117,7 +117,7 @@ class SocketTest {
         socket = Socket(StandardProtocolFamily.INET)
         assertTrue(socket.isValid())
         assertEquals(-1, socket.sendMsg("Hello World !", -1, false))
-        assertEquals(Error.getLastErrorMessage(), "Connection does not exist.")
+        assertEquals(Error.getLastErrorMessage(), "Connection does not exist")
     }
 
     @Test
@@ -125,9 +125,9 @@ class SocketTest {
         socket = Socket(StandardProtocolFamily.INET)
         assertTrue(socket.isValid())
         assertEquals(-1, socket.sendMsg2("Hello World !", null))
-        assertEquals(Error.getLastErrorMessage(), "Connection does not exist.")
+        assertEquals(Error.getLastErrorMessage(), "Connection does not exist")
         assertEquals(-1, socket.sendMsg2("Hello World !", MsgCtrl(flags = 0, boundary = 0, pktSeq = 0, no = 10)))
-        assertEquals(Error.getLastErrorMessage(), "Connection does not exist.")
+        assertEquals(Error.getLastErrorMessage(), "Connection does not exist")
     }
 
     @Test
@@ -160,7 +160,7 @@ class SocketTest {
         socket = Socket(StandardProtocolFamily.INET)
         assertTrue(socket.isValid())
         assertEquals(-1, socket.sendFile(createTestFile()))
-        assertEquals(Error.getLastErrorMessage(), "Connection does not exist.")
+        assertEquals(Error.getLastErrorMessage(), "Connection does not exist")
     }
 
     @Test
@@ -172,6 +172,6 @@ class SocketTest {
         socket = Socket(StandardProtocolFamily.INET)
         assertTrue(socket.isValid())
         assertEquals(-1, socket.recvFile(myFile, 0, 1024))
-        assertEquals(Error.getLastErrorMessage(), "Connection does not exist.")
+        assertEquals(Error.getLastErrorMessage(), "Connection does not exist")
     }
 }

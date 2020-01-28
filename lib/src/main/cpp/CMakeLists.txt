@@ -3,7 +3,7 @@ cmake_minimum_required (VERSION 3.6)
 include(ExternalProject)
 
 set(OPENSSL_VERSION "1.1.1c")
-set(SRT_VERSION "1.3.3")
+set(SRT_VERSION "1.4.1")
 
 
 # OpenSSL - needs few executable such as perl and mv in PATH
@@ -30,6 +30,7 @@ ExternalProject_Add(srt_project
 		GIT_TAG v${SRT_VERSION}
 		PATCH_COMMAND patch -p0 -i ${CMAKE_SOURCE_DIR}/patches/0001_srt_cmakefiles.patch
 		CMAKE_ARGS -DUSE_OPENSSL_PC=OFF
+				-DENABLE_APPS=OFF
 				-DOPENSSL_INCLUDE_DIR=${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/include
 				-DOPENSSL_CRYPTO_LIBRARY=${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/libcrypto.a
 				-DOPENSSL_SSL_LIBRARY=${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/libssl.a
