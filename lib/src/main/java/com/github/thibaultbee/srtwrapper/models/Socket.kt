@@ -84,11 +84,11 @@ class Socket {
     }
 
     // Transmission
-    fun sendMsg(msg: ByteArray): Int {
+    fun send(msg: ByteArray): Int {
         return nativeSend(msg)
     }
 
-    fun sendMsg(msg: String): Int {
+    fun send(msg: String): Int {
         return nativeSend(msg.toByteArray())
     }
 
@@ -100,11 +100,11 @@ class Socket {
         return nativeSendMsg(msg.toByteArray(), ttl, inOrder)
     }
 
-    fun sendMsg(msg: ByteArray, msgCtrl: MsgCtrl?): Int {
+    fun sendMsg2(msg: ByteArray, msgCtrl: MsgCtrl?): Int {
         return nativeSendMsg2(msg, msgCtrl)
     }
 
-    fun sendMsg(msg: String, msgCtrl: MsgCtrl?): Int {
+    fun sendMsg2(msg: String, msgCtrl: MsgCtrl?): Int {
         return nativeSendMsg2(msg.toByteArray(), msgCtrl)
     }
 

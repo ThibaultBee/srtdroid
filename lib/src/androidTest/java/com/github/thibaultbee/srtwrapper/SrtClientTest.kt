@@ -42,7 +42,7 @@ class SrtClientTest {
         assertEquals(0, socket.connect(ip, port))
 
         for (i in 1..20) {
-            assertEquals(msg.length, socket.sendMsg(msg))
+            assertEquals(msg.length, socket.send(msg))
         }
 
         sleep(1000) // If session is close too early, msg will not be receive by server
