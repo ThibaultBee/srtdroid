@@ -785,6 +785,23 @@ Java_com_github_thibaultbee_srtwrapper_models_Socket_nativeSendFile(JNIEnv *env,
     return (jlong)res;
 }
 
+JNIEXPORT jlong JNICALL
+Java_com_github_thibaultbee_srtwrapper_models_Socket_nativeRecvFile(JNIEnv *env,
+                                                                    jobject ju,
+                                                                    jstring jpath,
+                                                                    jlong joffset,
+                                                                    jlong jsize,
+                                                                    jint jblock) {
+    SRTSOCKET u = srt_socket_from_java_to_native(env, ju);
+    const char *path = env->GetStringUTFChars(jpath, nullptr);
+    auto offset = (int64_t)joffset;
+    int64_t res = srt_recvfile(u, path, &offset, (int64_t)jsize, jblock);
+
+    env->ReleaseStringUTFChars(jpath, path);
+
+    return (jlong)res;
+}
+
 // Errors
 JNIEXPORT jstring JNICALL
 Java_com_github_thibaultbee_srtwrapper_models_Error_nativeGetLastErrorStr(JNIEnv *env,

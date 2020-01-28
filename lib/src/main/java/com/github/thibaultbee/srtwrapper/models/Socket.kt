@@ -25,6 +25,7 @@ class Socket {
 
     private external fun nativeRecv(size: Int) : ByteArray
     private external fun nativeRecvMsg2(size: Int, msgCtrl: MsgCtrl?) : ByteArray
+    private external fun nativeRecvFile(path: String, offset: Long, size: Long, block: Int) : Long
 
     private var srtsocket: Int
 
@@ -115,7 +116,15 @@ class Socket {
         return nativeRecvMsg2(size, msgCtrl)
     }
 
+    fun sendFile(file: File, offset: Long, size: Long, block: Int = 364000): Long {
+        return nativeSendFile(file.path, offset, size, block)
+    }
+
     fun sendFile(file: File, block: Int = 364000): Long {
         return nativeSendFile(file.path, 0, file.totalSpace, block)
+    }
+
+    fun recvFile(file: File, offset: Long, size: Long, block: Int = 7280000): Long {
+        return nativeRecvFile(file.path, offset, size, block)
     }
 }
