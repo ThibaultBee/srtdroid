@@ -1266,7 +1266,7 @@ static JNINativeMethod socketMethods[] = {
         {"nativeSendMsg2",     "([BL" MSGCTRL_CLASS ";)I",                  (void *) &nativeSendMsg2},
         {"nativeRecv",         "(I)[B",                                     (void *) &nativeRecv},
         {"nativeRecvMsg2",     "(IL" MSGCTRL_CLASS ";)[B",                  (void *) &nativeRecvMsg2},
-        {"nativeSendFile",     "(Ljava/lang/String;JJI)J",                  (void *) &nativeRecvFile},
+        {"nativeSendFile",     "(Ljava/lang/String;JJI)J",                  (void *) &nativeSendFile},
         {"nativeRecvFile",     "(Ljava/lang/String;JJI)J",                  (void *) &nativeRecvFile}
 };
 
