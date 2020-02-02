@@ -13,6 +13,7 @@ extern "C" {
 
 #define ENUM_PACKAGE "com.github.thibaultbee.srtwrapper.enums"
 
+#define ERRORTYPE_CLASS "com/github/thibaultbee/srtwrapper/enums/ErrorType"
 #define SOCKOPT_CLASS "com/github/thibaultbee/srtwrapper/enums/SockOpt"
 #define ERROR_CLASS "com/github/thibaultbee/srtwrapper/models/Error"
 #define MSGCTRL_CLASS "com/github/thibaultbee/srtwrapper/models/MsgCtrl"
@@ -156,6 +157,264 @@ SRT_TRANSTYPE srt_transtype_from_java_to_native(JNIEnv *env, jobject jenum_srt_t
     env->ReleaseStringUTFChars(jenum_name, enum_name);
 
     return transtype;
+}
+
+/**
+ * @brief Convert Java SRT error to native SRT error
+ *
+ * @param env Java environment
+ * @param jerrorType Java SRT error
+ * @return return corresponding Java SRT error
+ */
+int error_from_java_to_native(JNIEnv *env, jobject jerrorType) {
+    jstring jenum_name = java_enum_get_value_name(env, jerrorType);
+    if (!jenum_name) {
+        LOGE("Can't get Java SRT ErrorType enum name");
+        return SRT_EUNKNOWN;
+    }
+
+    auto enum_name = (char *) env->GetStringUTFChars(jenum_name, nullptr);
+    if (!enum_name) {
+        LOGE("Can't get SRT ErrorType enum name");
+        return SRTT_INVALID;
+    }
+
+    int error_type = SRT_EUNKNOWN;
+    if (strcmp(enum_name, "EUNKNOWN") == 0) {
+        error_type = SRT_EUNKNOWN;
+    } else if (strcmp(enum_name, "SUCCESS") == 0) {
+        error_type = SRT_SUCCESS;
+    } else if (strcmp(enum_name, "ECONNSETUP") == 0) {
+        error_type = SRT_ECONNSETUP;
+    } else if (strcmp(enum_name, "ENOSERVER") == 0) {
+        error_type = SRT_ENOSERVER;
+    } else if (strcmp(enum_name, "ECONNREJ") == 0) {
+        error_type = SRT_ECONNREJ;
+    } else if (strcmp(enum_name, "ESOCKFAIL") == 0) {
+        error_type = SRT_ESOCKFAIL;
+    } else if (strcmp(enum_name, "ESECFAIL") == 0) {
+        error_type = SRT_ESECFAIL;
+    } else if (strcmp(enum_name, "ECONNFAIL") == 0) {
+        error_type = SRT_ECONNFAIL;
+    } else if (strcmp(enum_name, "ECONNLOST") == 0) {
+        error_type = SRT_ECONNLOST;
+    } else if (strcmp(enum_name, "ENOCONN") == 0) {
+        error_type = SRT_ENOCONN;
+    } else if (strcmp(enum_name, "ERESOURCE") == 0) {
+        error_type = SRT_ERESOURCE;
+    } else if (strcmp(enum_name, "ETHREAD") == 0) {
+        error_type = SRT_ETHREAD;
+    } else if (strcmp(enum_name, "ENOBUF") == 0) {
+        error_type = SRT_ENOBUF;
+    } else if (strcmp(enum_name, "EFILE") == 0) {
+        error_type = SRT_EFILE;
+    } else if (strcmp(enum_name, "EINVRDOFF") == 0) {
+        error_type = SRT_EINVRDOFF;
+    } else if (strcmp(enum_name, "ERDPERM") == 0) {
+        error_type = SRT_ERDPERM;
+    } else if (strcmp(enum_name, "EINVWROFF") == 0) {
+        error_type = SRT_EINVWROFF;
+    } else if (strcmp(enum_name, "EWRPERM") == 0) {
+        error_type = SRT_EWRPERM;
+    } else if (strcmp(enum_name, "EINVOP") == 0) {
+        error_type = SRT_EINVOP;
+    } else if (strcmp(enum_name, "EBOUNDSOCK") == 0) {
+        error_type = SRT_EBOUNDSOCK;
+    } else if (strcmp(enum_name, "ECONNSOCK") == 0) {
+        error_type = SRT_ECONNSOCK;
+    } else if (strcmp(enum_name, "EINVPARAM") == 0) {
+        error_type = SRT_EINVPARAM;
+    } else if (strcmp(enum_name, "EINVSOCK") == 0) {
+        error_type = SRT_EINVSOCK;
+    } else if (strcmp(enum_name, "EUNBOUNDSOCK") == 0) {
+        error_type = SRT_EUNBOUNDSOCK;
+    } else if (strcmp(enum_name, "ENOLISTEN") == 0) {
+        error_type = SRT_ENOLISTEN;
+    } else if (strcmp(enum_name, "ERDVNOSERV") == 0) {
+        error_type = SRT_ERDVNOSERV;
+    } else if (strcmp(enum_name, "ERDVUNBOUND") == 0) {
+        error_type = SRT_ERDVUNBOUND;
+    } else if (strcmp(enum_name, "EINVALMSGAPI") == 0) {
+        error_type = SRT_EINVALMSGAPI;
+    } else if (strcmp(enum_name, "EINVALBUFFERAPI") == 0) {
+        error_type = SRT_EINVALBUFFERAPI;
+    } else if (strcmp(enum_name, "EDUPLISTEN") == 0) {
+        error_type = SRT_EDUPLISTEN;
+    } else if (strcmp(enum_name, "ELARGEMSG") == 0) {
+        error_type = SRT_ELARGEMSG;
+    } else if (strcmp(enum_name, "EINVPOLLID") == 0) {
+        error_type = SRT_EINVPOLLID;
+    } else if (strcmp(enum_name, "EASYNCFAIL") == 0) {
+        error_type = SRT_EASYNCFAIL;
+    } else if (strcmp(enum_name, "EASYNCSND") == 0) {
+        error_type = SRT_EASYNCSND;
+    } else if (strcmp(enum_name, "EASYNCRCV") == 0) {
+        error_type = SRT_EASYNCRCV;
+    } else if (strcmp(enum_name, "ETIMEOUT") == 0) {
+        error_type = SRT_ETIMEOUT;
+    } else if (strcmp(enum_name, "ECONGEST") == 0) {
+        error_type = SRT_ECONGEST;
+    } else if (strcmp(enum_name, "EPEERERR") == 0) {
+        error_type = SRT_EPEERERR;
+    } else {
+        LOGE("Unknown value %s", enum_name);
+    }
+
+    env->ReleaseStringUTFChars(jenum_name, enum_name);
+
+    return error_type;
+}
+
+/**
+ * @brief Convert native SRT error to Java SRT error
+ *
+ * @param env Java environment
+ * @param error_type Native SRT error
+ * @return return corresponding Java SRT error
+ */
+jobject error_from_native_to_java(JNIEnv *env, int error_type) {
+    jclass errorTypeClass = env->FindClass(ERRORTYPE_CLASS);
+    if (!errorTypeClass) {
+        return nullptr;
+    }
+
+    char *error_field = nullptr;
+    switch (error_type) {
+        case SRT_EUNKNOWN:
+            error_field = strdup("EUNKNOWN");
+            break;
+        case SRT_SUCCESS:
+            error_field = strdup("SUCCESS");
+            break;
+        case SRT_ECONNSETUP:
+            error_field = strdup("ECONNSETUP");
+            break;
+        case SRT_ENOSERVER:
+            error_field = strdup("ENOSERVER");
+            break;
+        case SRT_ECONNREJ:
+            error_field = strdup("ECONNREJ");
+            break;
+        case SRT_ESOCKFAIL:
+            error_field = strdup("ESOCKFAIL");
+            break;
+        case SRT_ESECFAIL:
+            error_field = strdup("ESECFAIL");
+            break;
+        case SRT_ECONNFAIL:
+            error_field = strdup("ECONNFAIL");
+            break;
+        case SRT_ECONNLOST:
+            error_field = strdup("ECONNLOST");
+            break;
+        case SRT_ENOCONN:
+            error_field = strdup("ENOCONN");
+            break;
+        case SRT_ERESOURCE:
+            error_field = strdup("ERESOURCE");
+            break;
+        case SRT_ETHREAD:
+            error_field = strdup("ETHREAD");
+            break;
+        case SRT_ENOBUF:
+            error_field = strdup("ENOBUF");
+            break;
+        case SRT_EFILE:
+            error_field = strdup("EFILE");
+            break;
+        case SRT_EINVRDOFF:
+            error_field = strdup("EINVRDOFF");
+            break;
+        case SRT_ERDPERM:
+            error_field = strdup("ERDPERM");
+            break;
+        case SRT_EINVWROFF:
+            error_field = strdup("EINVWROFF");
+            break;
+        case SRT_EWRPERM:
+            error_field = strdup("EWRPERM");
+            break;
+        case SRT_EINVOP:
+            error_field = strdup("EINVOP");
+            break;
+        case SRT_EBOUNDSOCK:
+            error_field = strdup("EBOUNDSOCK");
+            break;
+        case SRT_ECONNSOCK:
+            error_field = strdup("ECONNSOCK");
+            break;
+        case SRT_EINVPARAM:
+            error_field = strdup("EINVPARAM");
+            break;
+        case SRT_EINVSOCK:
+            error_field = strdup("EINVSOCK");
+            break;
+        case SRT_EUNBOUNDSOCK:
+            error_field = strdup("EUNBOUNDSOCK");
+            break;
+        case SRT_ENOLISTEN:
+            error_field = strdup("ENOLISTEN");
+            break;
+        case SRT_ERDVNOSERV:
+            error_field = strdup("ERDVNOSERV");
+            break;
+        case SRT_ERDVUNBOUND:
+            error_field = strdup("ERDVUNBOUND");
+            break;
+        case SRT_EINVALMSGAPI:
+            error_field = strdup("EINVALMSGAPI");
+            break;
+        case SRT_EINVALBUFFERAPI:
+            error_field = strdup("EINVALBUFFERAPI");
+            break;
+        case SRT_EDUPLISTEN:
+            error_field = strdup("EDUPLISTEN");
+            break;
+        case SRT_ELARGEMSG:
+            error_field = strdup("ELARGEMSG");
+            break;
+        case SRT_EINVPOLLID:
+            error_field = strdup("EINVPOLLID");
+            break;
+        case SRT_EASYNCFAIL:
+            error_field = strdup("EASYNCFAIL");
+            break;
+        case SRT_EASYNCSND:
+            error_field = strdup("EASYNCSND");
+            break;
+        case SRT_EASYNCRCV:
+            error_field = strdup("EASYNCRCV");
+            break;
+        case SRT_ETIMEOUT:
+            error_field = strdup("ETIMEOUT");
+            break;
+        case SRT_ECONGEST:
+            error_field = strdup("ECONGEST");
+            break;
+        case SRT_EPEERERR:
+            error_field = strdup("EPEERERR");
+            break;
+        default:
+            error_field = strdup("EUNKNOWN");
+    }
+
+    jfieldID jErrorTypeField = env->GetStaticFieldID(errorTypeClass, error_field,
+                                                     "L" ERRORTYPE_CLASS ";");
+    if (!jErrorTypeField) {
+        LOGE("Can't get ErrorType field");
+        env->DeleteLocalRef(errorTypeClass);
+        return nullptr;
+    }
+
+    jobject jErrorType = env->GetStaticObjectField(errorTypeClass, jErrorTypeField);
+
+    if (error_field != nullptr) {
+        free(error_field);
+    }
+
+    env->DeleteLocalRef(errorTypeClass);
+
+    return jErrorType;
 }
 
 // Struct
@@ -804,9 +1063,22 @@ nativeGetLastErrorStr(JNIEnv *env, jobject obj) {
     return env->NewStringUTF(srt_getlasterror_str());
 }
 
-JNIEXPORT jint JNICALL
+JNIEXPORT jobject JNICALL
 nativeGetLastError(JNIEnv *env, jobject obj) {
-    return srt_getlasterror(nullptr);
+    int err = srt_getlasterror(nullptr);
+
+    return error_from_native_to_java(env, err);
+}
+
+JNIEXPORT jstring JNICALL
+nativeStrError(JNIEnv *env, jobject obj) {
+    int error_type = error_from_java_to_native(env, obj);
+    return env->NewStringUTF(srt_strerror(error_type, 0));
+}
+
+JNIEXPORT void JNICALL
+nativeClearLastError(JNIEnv *env, jobject obj) {
+    srt_clearlasterror();
 }
 
 // Register natives API
@@ -835,7 +1107,12 @@ static JNINativeMethod socketMethods[] = {
 
 static JNINativeMethod errorMethods[] = {
         {"nativeGetLastErrorStr", "()Ljava/lang/String;", (void *) &nativeGetLastErrorStr},
-        {"nativeGetLastError",    "()I",                  (void *) &nativeGetLastError}
+        {"nativeGetLastError", "()L" ERRORTYPE_CLASS ";", (void *) &nativeGetLastError},
+        {"nativeClearLastError", "()V", (void *) &nativeClearLastError}
+};
+
+static JNINativeMethod errorTypeMethods[] = {
+        {"nativeStrError", "()Ljava/lang/String;", (void *) &nativeStrError}
 };
 
 static int registerNativeForClassName(JNIEnv *env, const char *className,
@@ -879,6 +1156,12 @@ jint JNI_OnLoad(JavaVM *vm, void * /*reserved*/) {
     if ((registerNativeForClassName(env, ERROR_CLASS, errorMethods,
                                     sizeof(errorMethods) / sizeof(errorMethods[0])) != JNI_TRUE)) {
         LOGE("Error RegisterNatives failed");
+        return -1;
+    }
+
+    if ((registerNativeForClassName(env, ERRORTYPE_CLASS, errorTypeMethods,
+                                    sizeof(errorTypeMethods) / sizeof(errorTypeMethods[0])) != JNI_TRUE)) {
+        LOGE("ErrorType RegisterNatives failed");
         return -1;
     }
 

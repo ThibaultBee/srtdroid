@@ -3,6 +3,7 @@ package com.github.thibaultbee.srtwrapper.models
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.github.thibaultbee.srtwrapper.Srt
+import com.github.thibaultbee.srtwrapper.enums.ErrorType
 import com.github.thibaultbee.srtwrapper.enums.SockOpt
 import com.github.thibaultbee.srtwrapper.enums.Transtype
 import org.junit.After
@@ -75,7 +76,7 @@ class SocketTest {
         socket = Socket(StandardProtocolFamily.INET)
         assertTrue(socket.isValid())
         assertEquals(-1, socket.listen(3))
-        assertEquals(Error.getLastErrorMessage(), "Operation not supported: Cannot do this operation on an UNBOUND socket")
+        assertEquals(Error.getLastError(), ErrorType.EUNBOUNDSOCK)
         assertEquals(0, socket.bind("127.0.3.1", 1234))
         assertEquals(0, socket.listen(3))
     }
@@ -86,7 +87,7 @@ class SocketTest {
         assertTrue(socket.isValid())
         val pair = socket.accept()
         assertFalse(pair.first.isValid())
-        assertEquals(Error.getLastErrorMessage(), "Operation not supported: Socket is not in listening state")
+        assertEquals(Error.getLastError(), ErrorType.ENOLISTEN)
     }
 
     @Test
@@ -94,7 +95,7 @@ class SocketTest {
         socket = Socket(StandardProtocolFamily.INET)
         assertTrue(socket.isValid())
         assertEquals(-1, socket.connect("127.0.3.1", 1234))
-        assertEquals(Error.getLastErrorMessage(), "Connection setup failure: connection time out")
+        assertEquals(Error.getLastError(), ErrorType.ENOSERVER)
     }
 
     @Test
@@ -109,7 +110,7 @@ class SocketTest {
         socket = Socket(StandardProtocolFamily.INET)
         assertTrue(socket.isValid())
         assertEquals(-1, socket.send("Hello World !"))
-        assertEquals(Error.getLastErrorMessage(), "Connection does not exist")
+        assertEquals(Error.getLastError(), ErrorType.ENOCONN)
     }
 
     @Test
@@ -117,7 +118,7 @@ class SocketTest {
         socket = Socket(StandardProtocolFamily.INET)
         assertTrue(socket.isValid())
         assertEquals(-1, socket.sendMsg("Hello World !", -1, false))
-        assertEquals(Error.getLastErrorMessage(), "Connection does not exist")
+        assertEquals(Error.getLastError(), ErrorType.ENOCONN)
     }
 
     @Test
@@ -125,9 +126,9 @@ class SocketTest {
         socket = Socket(StandardProtocolFamily.INET)
         assertTrue(socket.isValid())
         assertEquals(-1, socket.sendMsg2("Hello World !", null))
-        assertEquals(Error.getLastErrorMessage(), "Connection does not exist")
+        assertEquals(Error.getLastError(), ErrorType.ENOCONN)
         assertEquals(-1, socket.sendMsg2("Hello World !", MsgCtrl(flags = 0, boundary = 0, pktSeq = 0, no = 10)))
-        assertEquals(Error.getLastErrorMessage(), "Connection does not exist")
+        assertEquals(Error.getLastError(), ErrorType.ENOCONN)
     }
 
     @Test
@@ -160,7 +161,7 @@ class SocketTest {
         socket = Socket(StandardProtocolFamily.INET)
         assertTrue(socket.isValid())
         assertEquals(-1, socket.sendFile(createTestFile()))
-        assertEquals(Error.getLastErrorMessage(), "Connection does not exist")
+        assertEquals(Error.getLastError(), ErrorType.ENOCONN)
     }
 
     @Test
@@ -172,6 +173,6 @@ class SocketTest {
         socket = Socket(StandardProtocolFamily.INET)
         assertTrue(socket.isValid())
         assertEquals(-1, socket.recvFile(myFile, 0, 1024))
-        assertEquals(Error.getLastErrorMessage(), "Connection does not exist")
+        assertEquals(Error.getLastError(), ErrorType.ENOCONN)
     }
 }

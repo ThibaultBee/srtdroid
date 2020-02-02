@@ -1,18 +1,23 @@
 package com.github.thibaultbee.srtwrapper.models
 
+import com.github.thibaultbee.srtwrapper.enums.ErrorType
+
 class Error {
     companion object {
         @JvmStatic private external fun nativeGetLastErrorStr(): String
-        @JvmStatic private external fun nativeGetLastError(): Int
+        @JvmStatic private external fun nativeGetLastError(): ErrorType
+        @JvmStatic private external fun nativeClearLastError()
 
-        @JvmStatic
         fun getLastErrorMessage(): String {
             return nativeGetLastErrorStr()
         }
 
-        @JvmStatic
-        fun getLastError(): Int {
+        fun getLastError(): ErrorType {
             return nativeGetLastError()
+        }
+
+        fun clearLastError() {
+            return nativeClearLastError()
         }
     }
 }
