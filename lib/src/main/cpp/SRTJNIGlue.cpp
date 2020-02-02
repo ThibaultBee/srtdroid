@@ -112,10 +112,110 @@ int srt_sockopt_from_java_to_native(JNIEnv *env, jobject jenum_srt_option_value)
     }
 
     int srtopt = -1;
-    if (strcmp(enum_name, "TRANSTYPE") == 0) {
-        srtopt = SRTO_TRANSTYPE;
+    if (strcmp(enum_name, "MSS") == 0) {
+        srtopt = SRTO_MSS;
+    } else if (strcmp(enum_name, "SNDSYN") == 0) {
+        srtopt = SRTO_SNDSYN;
+    } else if (strcmp(enum_name, "RCVSYN") == 0) {
+        srtopt = SRTO_RCVSYN;
+    } else if (strcmp(enum_name, "ISN") == 0) {
+        srtopt = SRTO_ISN;
+    } else if (strcmp(enum_name, "FC") == 0) {
+        srtopt = SRTO_FC;
+    } else if (strcmp(enum_name, "SNDBUF") == 0) {
+        srtopt = SRTO_SNDBUF;
+    } else if (strcmp(enum_name, "RCVBUF") == 0) {
+        srtopt = SRTO_RCVBUF;
+    } else if (strcmp(enum_name, "LINGER") == 0) {
+        srtopt = SRTO_LINGER;
+    } else if (strcmp(enum_name, "UDP_SNDBUF") == 0) {
+        srtopt = SRTO_UDP_SNDBUF;
+    } else if (strcmp(enum_name, "UDP_RCVBUF") == 0) {
+        srtopt = SRTO_UDP_RCVBUF;
+    } else if (strcmp(enum_name, "RENDEZVOUS") == 0) {
+        srtopt = SRTO_RENDEZVOUS;
+    } else if (strcmp(enum_name, "SNDTIMEO") == 0) {
+        srtopt = SRTO_SNDTIMEO;
+    } else if (strcmp(enum_name, "RCVTIMEO") == 0) {
+        srtopt = SRTO_RCVTIMEO;
+    } else if (strcmp(enum_name, "REUSEADDR") == 0) {
+        srtopt = SRTO_REUSEADDR;
+    } else if (strcmp(enum_name, "MAXBW") == 0) {
+        srtopt = SRTO_MAXBW;
+    } else if (strcmp(enum_name, "STATE") == 0) {
+        srtopt = SRTO_STATE;
+    } else if (strcmp(enum_name, "EVENT") == 0) {
+        srtopt = SRTO_EVENT;
+    } else if (strcmp(enum_name, "SNDDATA") == 0) {
+        srtopt = SRTO_SNDDATA;
+    } else if (strcmp(enum_name, "RCVDATA") == 0) {
+        srtopt = SRTO_RCVDATA;
     } else if (strcmp(enum_name, "SENDER") == 0) {
         srtopt = SRTO_SENDER;
+    } else if (strcmp(enum_name, "TSBPDMODE") == 0) {
+        srtopt = SRTO_TSBPDMODE;
+    } else if (strcmp(enum_name, "LATENCY") == 0) {
+        srtopt = SRTO_LATENCY;
+    } else if (strcmp(enum_name, "TSBPDDELAY") == 0) {
+        srtopt = SRTO_TSBPDDELAY;
+    } else if (strcmp(enum_name, "INPUTBW") == 0) {
+        srtopt = SRTO_INPUTBW;
+    } else if (strcmp(enum_name, "OHEADBW") == 0) {
+        srtopt = SRTO_OHEADBW;
+    } else if (strcmp(enum_name, "PASSPHRASE") == 0) {
+        srtopt = SRTO_PASSPHRASE;
+    } else if (strcmp(enum_name, "PBKEYLEN") == 0) {
+        srtopt = SRTO_PBKEYLEN;
+    } else if (strcmp(enum_name, "KMSTATE") == 0) {
+        srtopt = SRTO_KMSTATE;
+    } else if (strcmp(enum_name, "IPTTL") == 0) {
+        srtopt = SRTO_IPTTL;
+    } else if (strcmp(enum_name, "IPTOS") == 0) {
+        srtopt = SRTO_IPTOS;
+    } else if (strcmp(enum_name, "TLPKTDROP") == 0) {
+        srtopt = SRTO_TLPKTDROP;
+    } else if (strcmp(enum_name, "SNDDROPDELAY") == 0) {
+        srtopt = SRTO_SNDDROPDELAY;
+    } else if (strcmp(enum_name, "NAKREPORT") == 0) {
+        srtopt = SRTO_NAKREPORT;
+    } else if (strcmp(enum_name, "VERSION") == 0) {
+        srtopt = SRTO_VERSION;
+    } else if (strcmp(enum_name, "PEERVERSION") == 0) {
+        srtopt = SRTO_PEERVERSION;
+    } else if (strcmp(enum_name, "CONNTIMEO") == 0) {
+        srtopt = SRTO_CONNTIMEO;
+    } else if (strcmp(enum_name, "SNDKMSTATE") == 0) {
+        srtopt = SRTO_SNDKMSTATE;
+    } else if (strcmp(enum_name, "RCVKMSTATE") == 0) {
+        srtopt = SRTO_RCVKMSTATE;
+    } else if (strcmp(enum_name, "LOSSMAXTTL") == 0) {
+        srtopt = SRTO_LOSSMAXTTL;
+    } else if (strcmp(enum_name, "RCVLATENCY") == 0) {
+        srtopt = SRTO_RCVLATENCY;
+    } else if (strcmp(enum_name, "PEERLATENCY") == 0) {
+        srtopt = SRTO_PEERLATENCY;
+    } else if (strcmp(enum_name, "MINVERSION") == 0) {
+        srtopt = SRTO_MINVERSION;
+    } else if (strcmp(enum_name, "STREAMID") == 0) {
+        srtopt = SRTO_STREAMID;
+    } else if (strcmp(enum_name, "CONGESTION") == 0) {
+        srtopt = SRTO_CONGESTION;
+    } else if (strcmp(enum_name, "MESSAGEAPI") == 0) {
+        srtopt = SRTO_MESSAGEAPI;
+    } else if (strcmp(enum_name, "PAYLOADSIZE") == 0) {
+        srtopt = SRTO_PAYLOADSIZE;
+    } else if (strcmp(enum_name, "TRANSTYPE") == 0) {
+        srtopt = SRTO_TRANSTYPE;
+    } else if (strcmp(enum_name, "KMREFRESHRATE") == 0) {
+        srtopt = SRTO_KMREFRESHRATE;
+    } else if (strcmp(enum_name, "KMPREANNOUNCE") == 0) {
+        srtopt = SRTO_KMPREANNOUNCE;
+    } else if (strcmp(enum_name, "STRICTENC") == 0) {
+        srtopt = SRTO_STRICTENC;
+    } else if (strcmp(enum_name, "IPV6ONLY") == 0) {
+        srtopt = SRTO_IPV6ONLY;
+    } else if (strcmp(enum_name, "PEERIDLETIMEO") == 0) {
+        srtopt = SRTO_PEERIDLETIMEO;
     } else {
         LOGE("Unknown value %s", enum_name);
     }
@@ -126,10 +226,10 @@ int srt_sockopt_from_java_to_native(JNIEnv *env, jobject jenum_srt_option_value)
 }
 
 /**
- * @brief Convert Java SRT Option to native value
+ * @brief Convert Java SRT Transtype to native value
  *
  * @param env Java environment
- * @param jenum_srt_option_value Java SRT Option enumeration member
+ * @param jenum_srt_transtype_value Java SRT TransType enumeration member
  * @return return corresponding native SRT option value
  */
 SRT_TRANSTYPE srt_transtype_from_java_to_native(JNIEnv *env, jobject jenum_srt_transtype_value) {
@@ -157,6 +257,46 @@ SRT_TRANSTYPE srt_transtype_from_java_to_native(JNIEnv *env, jobject jenum_srt_t
     env->ReleaseStringUTFChars(jenum_name, enum_name);
 
     return transtype;
+}
+
+/**
+ * @brief Convert Java SRT KMState to native value
+ *
+ * @param env Java environment
+ * @param jenum_srt_kmstate_value Java SRT KMState enumeration member
+ * @return return corresponding native SRT option value
+ */
+SRT_KM_STATE srt_kmstate_from_java_to_native(JNIEnv *env, jobject jenum_srt_kmstate_value) {
+    jstring jenum_name = java_enum_get_value_name(env, jenum_srt_kmstate_value);
+    if (!jenum_name) {
+        LOGE("Can't get Java SRT KMState enum name");
+        return SRT_KM_S_UNSECURED;
+    }
+
+    auto enum_name = (char *) env->GetStringUTFChars(jenum_name, nullptr);
+    if (!enum_name) {
+        LOGE("Can't get SRT KMState enum name");
+        return SRT_KM_S_UNSECURED;
+    }
+
+    SRT_KM_STATE kmstate = SRT_KM_S_UNSECURED;
+    if (strcmp(enum_name, "KM_S_UNSECURED") == 0) {
+        kmstate = SRT_KM_S_UNSECURED;
+    } else if (strcmp(enum_name, "KM_S_SECURING") == 0) {
+        kmstate = SRT_KM_S_SECURING;
+    } else if (strcmp(enum_name, "KM_S_SECURED") == 0) {
+        kmstate = SRT_KM_S_SECURED;
+    } else if (strcmp(enum_name, "KM_S_NOSECRET") == 0) {
+        kmstate = SRT_KM_S_NOSECRET;
+    } else if (strcmp(enum_name, "KM_S_BADSECRET") == 0) {
+        kmstate = SRT_KM_S_BADSECRET;
+    } else {
+        LOGE("Unknown value %s", enum_name);
+    }
+
+    env->ReleaseStringUTFChars(jenum_name, enum_name);
+
+    return kmstate;
 }
 
 /**
@@ -584,16 +724,41 @@ srt_optval_from_java_to_native(JNIEnv *env, jobject jopval, int *optlen) {
     } else if (strcmp(class_name, ENUM_PACKAGE".Transtype") == 0) {
         SRT_TRANSTYPE transtype = srt_transtype_from_java_to_native(env, jopval);
         *optlen = sizeof(transtype);
-        res = malloc(*optlen);
-        *(int *)res = transtype;
+        res = malloc(static_cast<size_t>(*optlen));
+        *(SRT_TRANSTYPE *)res = transtype;
+    } else if (strcmp(class_name, ENUM_PACKAGE".KMState") == 0) {
+        SRT_KM_STATE kmstate = srt_kmstate_from_java_to_native(env, jopval);
+        *optlen = sizeof(kmstate);
+        res = malloc(static_cast<size_t>(*optlen));
+        *(SRT_KM_STATE *)res = kmstate;
+        LOGE(">> res %d size %d", kmstate,  *optlen);
+    } else if (strcmp(class_name, "java.lang.Long") == 0) {
+        jmethodID jlongValue_method = env->GetMethodID(jopval_class, "longValue", "()J");
+        if (!jlongValue_method) {
+            LOGE("Can't get longValue method");
+            return nullptr;
+        }
+        *optlen = sizeof(int64_t);
+        res = malloc(static_cast<size_t>(*optlen));
+        *(int64_t *)res = env->CallLongMethod(jopval, jlongValue_method);
     } else if (strcmp(class_name, "java.lang.Integer") == 0) {
         jmethodID jintValue_method = env->GetMethodID(jopval_class, "intValue", "()I");
         if (!jintValue_method) {
             LOGE("Can't get intValue method");
             return nullptr;
         }
-        res = malloc(sizeof(int));
+        *optlen = sizeof(int);
+        res = malloc(static_cast<size_t>(*optlen));
         *(int *)res = env->CallIntMethod(jopval, jintValue_method);
+    } else if (strcmp(class_name, "java.lang.Boolean") == 0) {
+        jmethodID jbooleanValue_method = env->GetMethodID(jopval_class, "booleanValue", "()Z");
+        if (!jbooleanValue_method) {
+            LOGE("Can't get booleanValue method");
+            return nullptr;
+        }
+        *optlen = sizeof(bool);
+        res = malloc(static_cast<size_t>(*optlen));
+        *(bool *)res = (env->CallBooleanMethod(jopval, jbooleanValue_method) == JNI_TRUE);
     } else {
         LOGE("Unknown class %s", class_name);
     }

@@ -103,6 +103,9 @@ class SocketTest {
         socket = Socket(StandardProtocolFamily.INET)
         assertTrue(socket.isValid())
         assertEquals(0, socket.setSockOpt(SockOpt.TRANSTYPE, Transtype.FILE))
+        assertEquals(0, socket.setSockOpt(SockOpt.RCVSYN, true))
+        assertEquals(0, socket.setSockOpt(SockOpt.SNDTIMEO, 100))
+        assertEquals(0, socket.setSockOpt(SockOpt.MAXBW, 100L))
     }
 
     @Test
