@@ -1246,10 +1246,17 @@ nativeClearLastError(JNIEnv *env, jobject obj) {
     srt_clearlasterror();
 }
 
+// Logging control
+JNIEXPORT void JNICALL
+nativeSetLogLevel(JNIEnv *env, jobject obj, jint level) {
+    srt_setloglevel((int) level);
+}
+
 // Register natives API
 static JNINativeMethod srtMethods[] = {
         {"nativeStartUp", "()I", (void *) &nativeStartUp},
-        {"nativeCleanUp", "()I", (void *) &nativeCleanUp}
+        {"nativeCleanUp", "()I", (void *) &nativeCleanUp},
+        {"nativeSetLogLevel", "(I)V", (void *) &nativeSetLogLevel}
 };
 
 static JNINativeMethod socketMethods[] = {

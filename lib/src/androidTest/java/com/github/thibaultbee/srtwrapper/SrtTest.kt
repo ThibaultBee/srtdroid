@@ -11,6 +11,7 @@ class SrtTest {
         val srt = Srt()
 
         assertEquals(0, srt.startUp())
+        srt.setLogLevel(3)
         assertEquals(0, srt.cleanUp())
     }
 }
