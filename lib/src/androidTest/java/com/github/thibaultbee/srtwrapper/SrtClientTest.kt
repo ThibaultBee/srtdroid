@@ -38,7 +38,7 @@ class SrtClientTest {
         val socket = Socket()
         assertTrue(socket.isValid())
 
-        assertEquals(0, socket.setSockOpt(SockOpt.SENDER, 1))
+        assertEquals(0, socket.setSockFlag(SockOpt.SENDER, 1))
         assertEquals(0, socket.connect(ip, port))
 
         for (i in 1..20) {

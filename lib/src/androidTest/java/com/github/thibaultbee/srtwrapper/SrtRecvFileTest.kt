@@ -45,7 +45,7 @@ class SrtRecvFileTest {
         val socket = Socket()
         assertTrue(socket.isValid())
 
-        assertEquals(0, socket.setSockOpt(SockOpt.TRANSTYPE, Transtype.FILE))
+        assertEquals(0, socket.setSockFlag(SockOpt.TRANSTYPE, Transtype.FILE))
         assertEquals(0, socket.connect(ip, port))
 
         assertEquals(

@@ -67,7 +67,7 @@ class Socket {
     fun connect(address: String, port: Int) = nativeConnect(InetSocketAddress(address, port))
 
     // Options and properties
-    fun setSockOpt(opt: SockOpt, value: Any) = nativeSetSockOpt(0, opt, value)
+    fun setSockFlag(opt: SockOpt, value: Any) = nativeSetSockOpt(0, opt, value)
 
     // Transmission
     fun send(msg: ByteArray) = nativeSend(msg)

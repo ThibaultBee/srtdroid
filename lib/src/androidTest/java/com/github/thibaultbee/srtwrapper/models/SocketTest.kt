@@ -59,7 +59,7 @@ class SocketTest {
     fun bindTest() {
         socket = Socket(StandardProtocolFamily.INET)
         assertTrue(socket.isValid())
-        assertEquals(0, socket.setSockOpt(SockOpt.TRANSTYPE, Transtype.FILE))
+        assertEquals(0, socket.setSockFlag(SockOpt.TRANSTYPE, Transtype.FILE))
         assertEquals(0, socket.bind("127.0.3.1", 1234))
     }
 
@@ -102,10 +102,10 @@ class SocketTest {
     fun setSockOptTest() {
         socket = Socket(StandardProtocolFamily.INET)
         assertTrue(socket.isValid())
-        assertEquals(0, socket.setSockOpt(SockOpt.TRANSTYPE, Transtype.FILE))
-        assertEquals(0, socket.setSockOpt(SockOpt.RCVSYN, true))
-        assertEquals(0, socket.setSockOpt(SockOpt.SNDTIMEO, 100))
-        assertEquals(0, socket.setSockOpt(SockOpt.MAXBW, 100L))
+        assertEquals(0, socket.setSockFlag(SockOpt.TRANSTYPE, Transtype.FILE))
+        assertEquals(0, socket.setSockFlag(SockOpt.RCVSYN, true))
+        assertEquals(0, socket.setSockFlag(SockOpt.SNDTIMEO, 100))
+        assertEquals(0, socket.setSockFlag(SockOpt.MAXBW, 100L))
     }
 
     @Test
