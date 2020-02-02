@@ -47,13 +47,9 @@ class Socket {
 
     fun isValid() = srtsocket > INVALID_SOCK
 
-    fun bind(address: InetSocketAddress) : Int {
-        return nativeBind(address)
-    }
+    fun bind(address: InetSocketAddress) = nativeBind(address)
 
-    fun bind(address: String, port: Int) : Int {
-        return nativeBind(InetSocketAddress(address, port))
-    }
+    fun bind(address: String, port: Int) = nativeBind(InetSocketAddress(address, port))
 
     fun close(): Int {
         val res = nativeClose()
@@ -62,69 +58,37 @@ class Socket {
     }
 
     // Connecting
-    fun listen(backlog: Int) : Int {
-        return nativeListen(backlog)
-    }
+    fun listen(backlog: Int) = nativeListen(backlog)
 
-    fun accept() : Pair<Socket, InetSocketAddress?> {
-        return nativeAccept()
-    }
+    fun accept() = nativeAccept()
 
-    fun connect(address: InetSocketAddress) : Int {
-        return nativeConnect(address)
-    }
+    fun connect(address: InetSocketAddress) = nativeConnect(address)
 
-    fun connect(address: String, port: Int) : Int {
-        return nativeConnect(InetSocketAddress(address, port))
-    }
+    fun connect(address: String, port: Int) = nativeConnect(InetSocketAddress(address, port))
 
     // Options and properties
-    fun setSockOpt(opt: SockOpt, value: Any) : Int {
-        return nativeSetSockOpt(0, opt, value)
-    }
+    fun setSockOpt(opt: SockOpt, value: Any) = nativeSetSockOpt(0, opt, value)
 
     // Transmission
-    fun send(msg: ByteArray): Int {
-        return nativeSend(msg)
-    }
+    fun send(msg: ByteArray) = nativeSend(msg)
 
-    fun send(msg: String): Int {
-        return nativeSend(msg.toByteArray())
-    }
+    fun send(msg: String) = nativeSend(msg.toByteArray())
 
-    fun sendMsg(msg: ByteArray, ttl: Int = -1, inOrder: Boolean = false): Int {
-        return nativeSendMsg(msg, ttl, inOrder)
-    }
+    fun sendMsg(msg: ByteArray, ttl: Int = -1, inOrder: Boolean = false) = nativeSendMsg(msg, ttl, inOrder)
 
-    fun sendMsg(msg: String, ttl: Int = -1, inOrder: Boolean = false): Int {
-        return nativeSendMsg(msg.toByteArray(), ttl, inOrder)
-    }
+    fun sendMsg(msg: String, ttl: Int = -1, inOrder: Boolean = false) = nativeSendMsg(msg.toByteArray(), ttl, inOrder)
 
-    fun sendMsg2(msg: ByteArray, msgCtrl: MsgCtrl?): Int {
-        return nativeSendMsg2(msg, msgCtrl)
-    }
+    fun sendMsg2(msg: ByteArray, msgCtrl: MsgCtrl?) = nativeSendMsg2(msg, msgCtrl)
 
-    fun sendMsg2(msg: String, msgCtrl: MsgCtrl?): Int {
-        return nativeSendMsg2(msg.toByteArray(), msgCtrl)
-    }
+    fun sendMsg2(msg: String, msgCtrl: MsgCtrl?) = nativeSendMsg2(msg.toByteArray(), msgCtrl)
 
-    fun recv(size: Int): ByteArray {
-        return nativeRecv(size)
-    }
+    fun recv(size: Int) = nativeRecv(size)
 
-    fun recvMsg2(size: Int, msgCtrl: MsgCtrl?): ByteArray {
-        return nativeRecvMsg2(size, msgCtrl)
-    }
+    fun recvMsg2(size: Int, msgCtrl: MsgCtrl?) = nativeRecvMsg2(size, msgCtrl)
 
-    fun sendFile(file: File, offset: Long, size: Long, block: Int = 364000): Long {
-        return nativeSendFile(file.path, offset, size, block)
-    }
+    fun sendFile(file: File, offset: Long, size: Long, block: Int = 364000) = nativeSendFile(file.path, offset, size, block)
 
-    fun sendFile(file: File, block: Int = 364000): Long {
-        return nativeSendFile(file.path, 0, file.totalSpace, block)
-    }
+    fun sendFile(file: File, block: Int = 364000) = nativeSendFile(file.path, 0, file.totalSpace, block)
 
-    fun recvFile(file: File, offset: Long, size: Long, block: Int = 7280000): Long {
-        return nativeRecvFile(file.path, offset, size, block)
-    }
+    fun recvFile(file: File, offset: Long, size: Long, block: Int = 7280000) = nativeRecvFile(file.path, offset, size, block)
 }
