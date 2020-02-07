@@ -5,11 +5,13 @@ import java.io.File
 import java.net.InetSocketAddress
 import java.net.StandardProtocolFamily
 import android.util.Pair
+import com.github.thibaultbee.srtwrapper.enums.SockStatus
 
 class Socket {
     private external fun nativeSocket(af: StandardProtocolFamily, type: Int, protocol:  Int) : Int
     private external fun nativeCreateSocket() : Int
     private external fun nativeBind(address: InetSocketAddress) : Int
+    private external fun nativeGetSockState() : SockStatus
     private external fun nativeClose() : Int
 
     private external fun nativeListen(backlog: Int) : Int
@@ -50,6 +52,8 @@ class Socket {
     fun bind(address: InetSocketAddress) = nativeBind(address)
 
     fun bind(address: String, port: Int) = nativeBind(InetSocketAddress(address, port))
+
+    fun getSockState() = nativeGetSockState()
 
     fun close(): Int {
         val res = nativeClose()

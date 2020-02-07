@@ -5,6 +5,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.github.thibaultbee.srtwrapper.Srt
 import com.github.thibaultbee.srtwrapper.enums.ErrorType
 import com.github.thibaultbee.srtwrapper.enums.SockOpt
+import com.github.thibaultbee.srtwrapper.enums.SockStatus
 import com.github.thibaultbee.srtwrapper.enums.Transtype
 import org.junit.After
 import org.junit.Assert.*
@@ -61,6 +62,15 @@ class SocketTest {
         assertTrue(socket.isValid())
         assertEquals(0, socket.setSockFlag(SockOpt.TRANSTYPE, Transtype.FILE))
         assertEquals(0, socket.bind("127.0.3.1", 1234))
+    }
+
+    @Test
+    fun sockStatusTest() {
+        socket = Socket(StandardProtocolFamily.INET)
+        assertTrue(socket.isValid())
+        assertEquals(SockStatus.INIT, socket.getSockState())
+        assertEquals(0, socket.bind("127.0.3.1", 1234))
+        assertEquals(SockStatus.OPENED, socket.getSockState())
     }
 
     @Test

@@ -15,6 +15,7 @@ extern "C" {
 
 #define ERRORTYPE_CLASS "com/github/thibaultbee/srtwrapper/enums/ErrorType"
 #define SOCKOPT_CLASS "com/github/thibaultbee/srtwrapper/enums/SockOpt"
+#define SOCKSTATUS_CLASS "com/github/thibaultbee/srtwrapper/enums/SockStatus"
 #define ERROR_CLASS "com/github/thibaultbee/srtwrapper/models/Error"
 #define MSGCTRL_CLASS "com/github/thibaultbee/srtwrapper/models/MsgCtrl"
 #define SRTSOCKET_CLASS "com/github/thibaultbee/srtwrapper/models/Socket"
@@ -298,6 +299,72 @@ SRT_KM_STATE srt_kmstate_from_java_to_native(JNIEnv *env, jobject jenum_srt_kmst
 
     return kmstate;
 }
+
+/**
+ * @brief Convert native SRT_SOCKSTATUS to Java SRT SockStatus
+ *
+ * @param env Java environment
+ * @param sock_status Native SRT_SOCKSTATUS
+ * @return return corresponding Java SRT SockStatus
+ */
+jobject srt_sock_status_from_native_to_java(JNIEnv *env, SRT_SOCKSTATUS sock_status) {
+        jclass sockStatusClass = env->FindClass(SOCKSTATUS_CLASS);
+        if (!sockStatusClass) {
+            LOGE("Can't get " SOCKSTATUS_CLASS " class");
+            return nullptr;
+        }
+
+        char *sockStatus_field = nullptr;
+        switch (sock_status) {
+            case SRTS_INIT:
+                sockStatus_field = strdup("INIT");
+                break;
+            case SRTS_OPENED:
+                sockStatus_field = strdup("OPENED");
+                break;
+            case SRTS_LISTENING:
+                sockStatus_field = strdup("LISTENING");
+                break;
+            case SRTS_CONNECTING:
+                sockStatus_field = strdup("CONNECTING");
+                break;
+            case SRTS_CONNECTED:
+                sockStatus_field = strdup("CONNECTED");
+                break;
+            case SRTS_BROKEN:
+                sockStatus_field = strdup("BROKEN");
+                break;
+            case SRTS_CLOSING:
+                sockStatus_field = strdup("CLOSING");
+                break;
+            case SRTS_CLOSED:
+                sockStatus_field = strdup("CLOSED");
+                break;
+            case SRTS_NONEXIST:
+                sockStatus_field = strdup("NONEXIST");
+                break;
+            default:
+                LOGE("Unknown value %d", sock_status);
+        }
+
+        jfieldID jSockStatusField = env->GetStaticFieldID(sockStatusClass, sockStatus_field,
+                                                         "L" SOCKSTATUS_CLASS ";");
+        if (!jSockStatusField) {
+            LOGE("Can't get SockStatus field");
+            env->DeleteLocalRef(sockStatusClass);
+            return nullptr;
+        }
+
+        jobject sockStatus = env->GetStaticObjectField(sockStatusClass, jSockStatusField);
+
+        if (sockStatus_field != nullptr) {
+            free(sockStatus_field);
+        }
+
+        env->DeleteLocalRef(sockStatusClass);
+
+        return sockStatus;
+    }
 
 /**
  * @brief Convert Java SRT error to native SRT error
@@ -1012,6 +1079,14 @@ nativeBind(JNIEnv *env, jobject ju, jobject inetSocketAddress) {
     return res;
 }
 
+JNIEXPORT jobject JNICALL
+nativeGetSockState(JNIEnv *env, jobject ju) {
+    SRTSOCKET u = srt_socket_from_java_to_native(env, ju);
+    SRT_SOCKSTATUS sock_status = srt_getsockstate((SRTSOCKET) u);
+
+    return srt_sock_status_from_native_to_java(env, sock_status);
+}
+
 JNIEXPORT jint JNICALL
 nativeClose(JNIEnv *env, jobject ju) {
     SRTSOCKET u = srt_socket_from_java_to_native(env, ju);
@@ -1263,6 +1338,7 @@ static JNINativeMethod socketMethods[] = {
         {"nativeSocket",       "(Ljava/net/StandardProtocolFamily;II)I",    (void *) &nativeSocket},
         {"nativeCreateSocket", "()I",                                       (void *) &nativeCreateSocket},
         {"nativeBind",         "(L" INETSOCKETADDRESS_CLASS ";)I",          (void *) &nativeBind},
+        {"nativeGetSockState", "()L" SOCKSTATUS_CLASS ";",                  (void *) &nativeGetSockState},
         {"nativeClose",        "()I",                                       (void *) &nativeClose},
         {"nativeListen",       "(I)I",                                      (void *) &nativeListen},
         {"nativeAccept",       "()L" PAIR_CLASS ";",                        (void *) &nativeAccept},
