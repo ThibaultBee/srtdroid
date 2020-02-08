@@ -109,6 +109,14 @@ class SocketTest {
     }
 
     @Test
+    fun rendezVousTest() {
+        socket = Socket(StandardProtocolFamily.INET)
+        assertTrue(socket.isValid())
+        assertEquals(-1, socket.rendezVous("0.0.0.0", "127.0.3.1", 1234))
+        assertEquals(Error.getLastError(), ErrorType.ENOSERVER)
+    }
+
+    @Test
     fun setSockOptTest() {
         socket = Socket(StandardProtocolFamily.INET)
         assertTrue(socket.isValid())

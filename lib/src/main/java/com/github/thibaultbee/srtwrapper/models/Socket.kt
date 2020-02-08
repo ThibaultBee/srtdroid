@@ -1,11 +1,11 @@
 package com.github.thibaultbee.srtwrapper.models
 
+import android.util.Pair
 import com.github.thibaultbee.srtwrapper.enums.SockOpt
+import com.github.thibaultbee.srtwrapper.enums.SockStatus
 import java.io.File
 import java.net.InetSocketAddress
 import java.net.StandardProtocolFamily
-import android.util.Pair
-import com.github.thibaultbee.srtwrapper.enums.SockStatus
 
 class Socket {
     private external fun nativeSocket(af: StandardProtocolFamily, type: Int, protocol:  Int) : Int
@@ -17,6 +17,10 @@ class Socket {
     private external fun nativeListen(backlog: Int) : Int
     private external fun nativeAccept() : Pair<Socket, InetSocketAddress?>
     private external fun nativeConnect(address: InetSocketAddress) : Int
+    private external fun nativeRendezVous(
+        localAddress: InetSocketAddress,
+        remoteAddress: InetSocketAddress
+    ): Int
 
     private external fun nativeSetSockOpt(level: Int /*ignored*/, opt: SockOpt, value: Any) : Int
 
@@ -69,6 +73,14 @@ class Socket {
     fun connect(address: InetSocketAddress) = nativeConnect(address)
 
     fun connect(address: String, port: Int) = nativeConnect(InetSocketAddress(address, port))
+
+    fun rendezVous(localAddress: InetSocketAddress, remoteAddress: InetSocketAddress) =
+        nativeRendezVous(localAddress, remoteAddress)
+
+    fun rendezVous(localAddress: String, remoteAddress: String, port: Int) = nativeRendezVous(
+        InetSocketAddress(localAddress, port),
+        InetSocketAddress(remoteAddress, port)
+    )
 
     // Options and properties
     fun setSockFlag(opt: SockOpt, value: Any) = nativeSetSockOpt(0, opt, value)
