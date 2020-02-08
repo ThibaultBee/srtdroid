@@ -114,20 +114,14 @@ nativeListen(JNIEnv *env, jobject ju, jint backlog) {
 JNIEXPORT jobject JNICALL
 nativeAccept(JNIEnv *env, jobject ju) {
     SRTSOCKET u = srt_socket_j2n(env, ju);
-    auto *sa = (struct sockaddr_in *) malloc(sizeof(struct sockaddr));
+    struct sockaddr_in sockaddr = {0};
     int sockaddr_len = 0;
-    jobject inetSocketAddress = nullptr;
 
-    SRTSOCKET new_u = srt_accept((SRTSOCKET) u, (struct sockaddr *) &sa, &sockaddr_len);
-    if (sockaddr_len != 0) {
-        sockaddr_inet_n2j(env, sa, sockaddr_len);
-    }
+    SRTSOCKET new_u = srt_accept((SRTSOCKET) u, (struct sockaddr *) &sockaddr, &sockaddr_len);
+    jobject inetSocketAddress = sockaddr_inet_n2j(env, &sockaddr, sockaddr_len);
+
     jobject res = new_pair(env, srt_socket_n2j(env, new_u),
                            inetSocketAddress);
-
-    if (!sa) {
-        free((void *) sa);
-    }
 
     return res;
 }

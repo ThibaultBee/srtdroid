@@ -97,6 +97,7 @@ class SocketTest {
         assertTrue(socket.isValid())
         val pair = socket.accept()
         assertFalse(pair.first.isValid())
+        assertNull(pair.second)
         assertEquals(Error.getLastError(), ErrorType.ENOLISTEN)
     }
 
