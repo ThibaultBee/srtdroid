@@ -12,9 +12,9 @@ extern "C" {
  *
  * @param env Java environment
  * @param enumValue Java enumeration member
- * @return return Java String that contains Java enum name
+ * @return return native string that contains Java enum name (to be free after usage)
  */
-jstring enums_get_field_id(JNIEnv *env, jobject enumValue) {
+const char *enums_get_field_id(JNIEnv *env, jobject enumValue) {
     jclass enumClazz = env->GetObjectClass(enumValue);
     if (!enumClazz) {
         LOGE(TAG, "Can't get enum class");
@@ -30,17 +30,29 @@ jstring enums_get_field_id(JNIEnv *env, jobject enumValue) {
 
     env->DeleteLocalRef(enumClazz);
 
-    return (jstring) env->CallObjectMethod(enumValue, enumNameMethod);
+    auto enumField = (jstring) env->CallObjectMethod(enumValue, enumNameMethod);
+    if (!enumField) {
+        LOGE(TAG, "Can't get Java enum field");
+        env->DeleteLocalRef(enumClazz);
+        return nullptr;
+    }
+
+    const char *enum_field = env->GetStringUTFChars(enumField, nullptr);
+    if (!enum_field) {
+        LOGE(TAG, "Can't get native enum field");
+        env->DeleteLocalRef(enumClazz);
+        return nullptr;
+    }
+
+    const char *dup_enum_field = strdup(enum_field);
+
+    env->ReleaseStringUTFChars(enumField, enum_field);
+
+    return dup_enum_field;
 }
 
 int address_family_j2n(JNIEnv *env, jobject addressFamily) {
-    jstring addressFamilyField = enums_get_field_id(env, addressFamily);
-    if (!addressFamilyField) {
-        LOGE(TAG, "Can't get AddressFamily field");
-        return -EFAULT;
-    }
-
-    auto address_family_field = (char *) env->GetStringUTFChars(addressFamilyField, nullptr);
+    const char *address_family_field = enums_get_field_id(env, addressFamily);
     if (!address_family_field) {
         LOGE(TAG, "Can't get address family field");
         return -EFAULT;
@@ -55,19 +67,13 @@ int address_family_j2n(JNIEnv *env, jobject addressFamily) {
         LOGE(TAG, "AddressFamily: unknown value %s", address_family_field);
     }
 
-    env->ReleaseStringUTFChars(addressFamilyField, address_family_field);
+    free((void *) address_family_field);
 
     return af;
 }
 
 int srt_sockopt_j2n(JNIEnv *env, jobject sockOpt) {
-    jstring sockOptField = enums_get_field_id(env, sockOpt);
-    if (!sockOptField) {
-        LOGE(TAG, "Can't get SockOpt field");
-        return -EFAULT;
-    }
-
-    auto srt_sockopt_field = (char *) env->GetStringUTFChars(sockOptField, nullptr);
+    const char *srt_sockopt_field = enums_get_field_id(env, sockOpt);
     if (!srt_sockopt_field) {
         LOGE(TAG, "Can't get sockopt field");
         return -EFAULT;
@@ -182,19 +188,13 @@ int srt_sockopt_j2n(JNIEnv *env, jobject sockOpt) {
         LOGE(TAG, "SockOpt: unknown value %s", srt_sockopt_field);
     }
 
-    env->ReleaseStringUTFChars(sockOptField, srt_sockopt_field);
+    free((void *) srt_sockopt_field);
 
     return srt_sockopt;
 }
 
 SRT_TRANSTYPE srt_transtype_j2n(JNIEnv *env, jobject transType) {
-    jstring transTypeField = enums_get_field_id(env, transType);
-    if (!transTypeField) {
-        LOGE(TAG, "Can't get TransType field");
-        return SRTT_INVALID;
-    }
-
-    auto transtype_field = (char *) env->GetStringUTFChars(transTypeField, nullptr);
+    const char *transtype_field = enums_get_field_id(env, transType);
     if (!transtype_field) {
         LOGE(TAG, "Can't get SRT_TRANSTYPE");
         return SRTT_INVALID;
@@ -209,19 +209,13 @@ SRT_TRANSTYPE srt_transtype_j2n(JNIEnv *env, jobject transType) {
         LOGE(TAG, "TransType: unknown value %s", transtype_field);
     }
 
-    env->ReleaseStringUTFChars(transTypeField, transtype_field);
+    free((void *) transtype_field);
 
     return transtype;
 }
 
 SRT_KM_STATE srt_kmstate_j2n(JNIEnv *env, jobject kmState) {
-    jstring kmStateField = enums_get_field_id(env, kmState);
-    if (!kmStateField) {
-        LOGE(TAG, "Can't get KMState field");
-        return SRT_KM_S_UNSECURED;
-    }
-
-    auto kmstate_field = (char *) env->GetStringUTFChars(kmStateField, nullptr);
+    const char *kmstate_field = enums_get_field_id(env, kmState);
     if (!kmstate_field) {
         LOGE(TAG, "Can't get SRT_KM_STATE");
         return SRT_KM_S_UNSECURED;
@@ -242,7 +236,7 @@ SRT_KM_STATE srt_kmstate_j2n(JNIEnv *env, jobject kmState) {
         LOGE(TAG, "KMState: unknown value %s", kmstate_field);
     }
 
-    env->ReleaseStringUTFChars(kmStateField, kmstate_field);
+    free((void *) kmstate_field);
 
     return kmstate;
 }
@@ -309,13 +303,7 @@ jobject srt_sockstatus_n2j(JNIEnv *env, SRT_SOCKSTATUS sockstatus) {
 }
 
 int srt_error_j2n(JNIEnv *env, jobject errorType) {
-    jstring errorTypeField = enums_get_field_id(env, errorType);
-    if (!errorTypeField) {
-        LOGE(TAG, "Can't get ErrorType field");
-        return SRT_EUNKNOWN;
-    }
-
-    auto error_type_field = (char *) env->GetStringUTFChars(errorTypeField, nullptr);
+    const char *error_type_field = enums_get_field_id(env, errorType);
     if (!error_type_field) {
         LOGE(TAG, "Can't get SRT Error field");
         return SRTT_INVALID;
@@ -402,7 +390,7 @@ int srt_error_j2n(JNIEnv *env, jobject errorType) {
         LOGE(TAG, "ErrorType: unknown value %s", error_type_field);
     }
 
-    env->ReleaseStringUTFChars(errorTypeField, error_type_field);
+    free((void *) error_type_field);
 
     return error_type;
 }

@@ -11,7 +11,7 @@ extern "C" {
 #define ERRORTYPE_CLASS "com/github/thibaultbee/srtwrapper/enums/ErrorType"
 #define SOCKOPT_CLASS "com/github/thibaultbee/srtwrapper/enums/SockOpt"
 #define SOCKSTATUS_CLASS "com/github/thibaultbee/srtwrapper/enums/SockStatus"
-
+    
 /**
  * @brief Convert Java address family to native value
  *
