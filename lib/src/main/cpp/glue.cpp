@@ -169,6 +169,30 @@ nativeRendezVous(JNIEnv *env, jobject ju, jobject localAddress, jobject remoteAd
 }
 
 // Options and properties
+JNIEXPORT jobject JNICALL
+nativeGetPeerName(JNIEnv *env, jobject ju) {
+    SRTSOCKET u = srt_socket_j2n(env, ju);
+    struct sockaddr_in sockaddr = {0};
+    int sockaddr_len = 0;
+
+    srt_getpeername((SRTSOCKET) u, (struct sockaddr *) &sockaddr, &sockaddr_len);
+    jobject inetSocketAddress = sockaddr_inet_n2j(env, &sockaddr, sockaddr_len);
+
+    return inetSocketAddress;
+}
+
+JNIEXPORT jobject JNICALL
+nativeGetSockName(JNIEnv *env, jobject ju) {
+    SRTSOCKET u = srt_socket_j2n(env, ju);
+    struct sockaddr_in sockaddr = {0};
+    int sockaddr_len = 0;
+
+    srt_getsockname((SRTSOCKET) u, (struct sockaddr *) &sockaddr, &sockaddr_len);
+    jobject inetSocketAddress = sockaddr_inet_n2j(env, &sockaddr, sockaddr_len);
+
+    return inetSocketAddress;
+}
+
 JNIEXPORT jint JNICALL
 nativeSetSockOpt(JNIEnv *env,
                  jobject ju,
@@ -376,6 +400,8 @@ static JNINativeMethod socketMethods[] = {
         {"nativeAccept",       "()L" PAIR_CLASS ";",                                            (void *) &nativeAccept},
         {"nativeConnect",      "(L" INETSOCKETADDRESS_CLASS ";)I",                              (void *) &nativeConnect},
         {"nativeRendezVous",   "(L" INETSOCKETADDRESS_CLASS ";L" INETSOCKETADDRESS_CLASS ";)I", (void *) &nativeRendezVous},
+        {"nativeGetPeerName",  "()L" INETSOCKETADDRESS_CLASS ";",                               (void *) &nativeGetPeerName},
+        {"nativeGetSockName",  "()L" INETSOCKETADDRESS_CLASS ";",                               (void *) &nativeGetSockName},
         {"nativeSetSockOpt",   "(IL" SOCKOPT_CLASS ";Ljava/lang/Object;)I",                     (void *) &nativeSetSockOpt},
         {"nativeSend",         "([B)I",                                                         (void *) &nativeSend},
         {"nativeSendMsg",      "([BIZ)I",                                                       (void *) &nativeSendMsg},

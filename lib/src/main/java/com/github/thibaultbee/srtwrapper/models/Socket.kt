@@ -22,6 +22,8 @@ class Socket {
         remoteAddress: InetSocketAddress
     ): Int
 
+    private external fun nativeGetPeerName(): InetSocketAddress?
+    private external fun nativeGetSockName(): InetSocketAddress?
     private external fun nativeSetSockOpt(level: Int /*ignored*/, opt: SockOpt, value: Any): Int
 
     private external fun nativeSend(msg: ByteArray): Int
@@ -83,6 +85,10 @@ class Socket {
     )
 
     // Options and properties
+    fun getPeerName() = nativeGetPeerName()
+
+    fun getSockName() = nativeGetSockName()
+
     fun setSockFlag(opt: SockOpt, value: Any) = nativeSetSockOpt(0, opt, value)
 
     // Transmission

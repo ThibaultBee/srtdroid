@@ -69,6 +69,10 @@ sockaddr_inet_j2n(JNIEnv *env, jobject inetSocketAddress) {
 
 jobject
 sockaddr_inet_n2j(JNIEnv *env, struct sockaddr_in *sockaddr, int sockaddr_len) {
+    if ((sockaddr_len == 0) || (sockaddr == nullptr)) {
+        return nullptr;
+    }
+
     // Get InetSocketAddress class
     jclass inetSocketAddressClazz = env->FindClass(INETSOCKETADDRESS_CLASS);
     if (!inetSocketAddressClazz) {

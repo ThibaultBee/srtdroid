@@ -117,6 +117,24 @@ class SocketTest {
     }
 
     @Test
+    fun getPeerNameTest() {
+        socket = Socket(StandardProtocolFamily.INET)
+        assertTrue(socket.isValid())
+        assertNull(socket.getPeerName())
+    }
+
+    @Test
+    fun getSockNameTest() {
+        socket = Socket(StandardProtocolFamily.INET)
+        assertTrue(socket.isValid())
+        assertNull(socket.getSockName())
+        assertEquals(0, socket.bind("127.0.0.1", 1234))
+        val sockAddr = socket.getSockName()
+        assertEquals(sockAddr!!.port, 1234)
+        assertEquals(sockAddr!!.hostString, "127.0.0.1")
+    }
+
+    @Test
     fun setSockOptTest() {
         socket = Socket(StandardProtocolFamily.INET)
         assertTrue(socket.isValid())
