@@ -1,23 +1,24 @@
 package com.github.thibaultbee.srtwrapper
 
+import android.Manifest.permission.INTERNET
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.rule.GrantPermissionRule
 import com.github.thibaultbee.srtwrapper.enums.SockOpt
 import com.github.thibaultbee.srtwrapper.models.Socket
-import org.junit.Test
-
-import org.junit.Assert.*
-import org.junit.runner.RunWith
-import android.Manifest.permission.INTERNET
-import androidx.test.rule.GrantPermissionRule
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Rule
+import org.junit.Test
+import org.junit.runner.RunWith
 import java.lang.Thread.sleep
 
 @RunWith(AndroidJUnit4::class)
 class SrtClientTest {
-    @Rule @JvmField
-    /*
-     * Grant android.permission.INTERNET so that SRT can use socket
-     */
+    @Rule
+    @JvmField
+            /*
+             * Grant android.permission.INTERNET so that SRT can use socket
+             */
     var socketPermissionRule = GrantPermissionRule.grant(INTERNET)
 
     private val ip = "10.0.2.2" // emulator host loopback interface

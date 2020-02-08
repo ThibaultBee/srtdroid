@@ -148,7 +148,10 @@ class SocketTest {
         assertTrue(socket.isValid())
         assertEquals(-1, socket.sendMsg2("Hello World !", null))
         assertEquals(Error.getLastError(), ErrorType.ENOCONN)
-        assertEquals(-1, socket.sendMsg2("Hello World !", MsgCtrl(flags = 0, boundary = 0, pktSeq = 0, no = 10)))
+        assertEquals(
+            -1,
+            socket.sendMsg2("Hello World !", MsgCtrl(flags = 0, boundary = 0, pktSeq = 0, no = 10))
+        )
         assertEquals(Error.getLastError(), ErrorType.ENOCONN)
     }
 
@@ -163,7 +166,12 @@ class SocketTest {
     fun recvMsg2Test() {
         socket = Socket(StandardProtocolFamily.INET)
         assertTrue(socket.isValid())
-        assertNull(socket.recvMsg2(4 /*Int nb bytes*/, MsgCtrl(flags = 0, boundary = 0, pktSeq = 0, no = 10)))
+        assertNull(
+            socket.recvMsg2(
+                4 /*Int nb bytes*/,
+                MsgCtrl(flags = 0, boundary = 0, pktSeq = 0, no = 10)
+            )
+        )
     }
 
     private fun createTestFile(): File {
