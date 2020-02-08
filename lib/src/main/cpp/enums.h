@@ -9,9 +9,11 @@ extern "C" {
 #define ENUM_PACKAGE "com.github.thibaultbee.srtwrapper.enums"
 
 #define ERRORTYPE_CLASS "com/github/thibaultbee/srtwrapper/enums/ErrorType"
+#define KMSTATE_CLASS "com/github/thibaultbee/srtwrapper/enums/KMState"
 #define SOCKOPT_CLASS "com/github/thibaultbee/srtwrapper/enums/SockOpt"
 #define SOCKSTATUS_CLASS "com/github/thibaultbee/srtwrapper/enums/SockStatus"
-    
+#define TRANSTYPE_CLASS "com/github/thibaultbee/srtwrapper/enums/Transtype"
+
 /**
  * @brief Convert Java address family to native value
  *
@@ -31,6 +33,15 @@ int address_family_j2n(JNIEnv *env, jobject addressFamily);
 int srt_sockopt_j2n(JNIEnv *env, jobject sockOpt);
 
 /**
+ * @brief Convert native SRT Transtype to Java value
+ *
+ * @param env Java environment
+ * @param transtype Native SRT TransType
+ * @return return corresponding Java SRT option value
+ */
+jobject srt_transtype_n2j(JNIEnv *env, SRT_TRANSTYPE transtype);
+
+/**
  * @brief Convert Java SRT Transtype to native value
  *
  * @param env Java environment
@@ -38,6 +49,15 @@ int srt_sockopt_j2n(JNIEnv *env, jobject sockOpt);
  * @return return corresponding native SRT option value
  */
 SRT_TRANSTYPE srt_transtype_j2n(JNIEnv *env, jobject transType);
+
+/**
+ * @brief Convert native SRT KMState to Java value
+ *
+ * @param env Java environment
+ * @param kmState Native KMState
+ * @return return corresponding Java SRT option value
+ */
+jobject srt_kmstate_n2j(JNIEnv *env, SRT_KM_STATE kmstate);
 
 /**
  * @brief Convert Java SRT KMState to native value

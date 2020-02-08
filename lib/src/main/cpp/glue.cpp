@@ -187,6 +187,18 @@ nativeGetSockName(JNIEnv *env, jobject ju) {
     return inetSocketAddress;
 }
 
+JNIEXPORT jobject JNICALL
+nativeGetSockOpt(JNIEnv *env,
+                 jobject ju,
+                 jint level /*ignored*/,
+                 jobject sockOpt) {
+    SRTSOCKET u = srt_socket_j2n(env, ju);
+
+    jobject optVal = srt_optval_n2j(env, u, level, sockOpt);
+
+    return optVal;
+}
+
 JNIEXPORT jint JNICALL
 nativeSetSockOpt(JNIEnv *env,
                  jobject ju,
@@ -196,7 +208,6 @@ nativeSetSockOpt(JNIEnv *env,
     SRTSOCKET u = srt_socket_j2n(env, ju);
     int sockopt = srt_sockopt_j2n(env, sockOpt);
     if (sockopt <= 0) {
-        LOGE(TAG, "Bad value for SRT option");
         return sockopt;
     }
     int optval_len = 0;
@@ -396,6 +407,7 @@ static JNINativeMethod socketMethods[] = {
         {"nativeRendezVous",   "(L" INETSOCKETADDRESS_CLASS ";L" INETSOCKETADDRESS_CLASS ";)I", (void *) &nativeRendezVous},
         {"nativeGetPeerName",  "()L" INETSOCKETADDRESS_CLASS ";",                               (void *) &nativeGetPeerName},
         {"nativeGetSockName",  "()L" INETSOCKETADDRESS_CLASS ";",                               (void *) &nativeGetSockName},
+        {"nativeGetSockOpt",   "(IL" SOCKOPT_CLASS ";)Ljava/lang/Object;",                      (void *) &nativeGetSockOpt},
         {"nativeSetSockOpt",   "(IL" SOCKOPT_CLASS ";Ljava/lang/Object;)I",                     (void *) &nativeSetSockOpt},
         {"nativeSend",         "([B)I",                                                         (void *) &nativeSend},
         {"nativeSendMsg",      "([BIZ)I",                                                       (void *) &nativeSendMsg},

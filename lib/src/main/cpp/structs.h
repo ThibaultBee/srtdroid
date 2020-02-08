@@ -13,6 +13,9 @@ extern "C" {
 
 #define INETSOCKETADDRESS_CLASS "java/net/InetSocketAddress"
 #define PAIR_CLASS "android/util/Pair"
+#define LONG_CLASS "java/lang/Long"
+#define BOOLEAN_CLASS "java/lang/Boolean"
+#define INT_CLASS "java/lang/Integer"
 
 /**
  * @brief Convert Java InetSocketAddres to sockaddr_in
@@ -45,6 +48,17 @@ sockaddr_inet_n2j(JNIEnv *env, struct sockaddr_in *sa, int sockaddr_len);
  */
 void *
 srt_optval_j2n(JNIEnv *env, jobject optVal, int *optval_len);
+
+/**
+ * @brief Convert Native SRT Optval to Java optval object
+ *
+ * @param env Java environment
+ * @param u socket to get optval
+ * @param level ignored
+ * @param sockOpt Java option to set
+ * @return return a Java OptVal object
+ */
+jobject srt_optval_n2j(JNIEnv *env, int u, int level, jobject sockOpt);
 
 /**
  * @brief Convert Java MsgCtrl to C SRT_MSGCTRL for SRT library

@@ -3,10 +3,7 @@ package com.github.thibaultbee.srtwrapper.models
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.github.thibaultbee.srtwrapper.Srt
-import com.github.thibaultbee.srtwrapper.enums.ErrorType
-import com.github.thibaultbee.srtwrapper.enums.SockOpt
-import com.github.thibaultbee.srtwrapper.enums.SockStatus
-import com.github.thibaultbee.srtwrapper.enums.Transtype
+import com.github.thibaultbee.srtwrapper.enums.*
 import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
@@ -136,6 +133,18 @@ class SocketTest {
     }
 
     @Test
+    fun getSockOptTest() {
+        socket = Socket(StandardProtocolFamily.INET)
+        assertTrue(socket.isValid())
+        assertNull(socket.getSockFlag(SockOpt.TRANSTYPE))
+        assertEquals(true, socket.getSockFlag(SockOpt.RCVSYN))
+        assertEquals(-1, socket.getSockFlag(SockOpt.SNDTIMEO))
+        assertEquals(-1L, socket.getSockFlag(SockOpt.MAXBW))
+        assertEquals(KMState.KM_S_UNSECURED, socket.getSockFlag(SockOpt.RCVKMSTATE))
+        assertEquals("", socket.getSockFlag(SockOpt.STREAMID))
+    }
+
+    @Test
     fun setSockOptTest() {
         socket = Socket(StandardProtocolFamily.INET)
         assertTrue(socket.isValid())
@@ -143,6 +152,7 @@ class SocketTest {
         assertEquals(0, socket.setSockFlag(SockOpt.RCVSYN, true))
         assertEquals(0, socket.setSockFlag(SockOpt.SNDTIMEO, 100))
         assertEquals(0, socket.setSockFlag(SockOpt.MAXBW, 100L))
+        assertEquals(0, socket.setSockFlag(SockOpt.STREAMID, "Hello"))
     }
 
     @Test

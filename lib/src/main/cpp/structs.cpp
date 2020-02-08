@@ -236,6 +236,142 @@ srt_optval_j2n(JNIEnv *env, jobject optVal, int *optval_len) {
     return srt_optval;
 }
 
+jobject new_long(JNIEnv *env, int64_t val) {
+    jclass longClazz = env->FindClass(LONG_CLASS);
+    if (!longClazz) {
+        LOGE(TAG, "Can't find Long class");
+        return nullptr;
+    }
+    jmethodID longConstructorMethod = env->GetMethodID(longClazz, "<init>", "(J)V");
+    if (!longConstructorMethod) {
+        LOGE(TAG, "Can't find Long constructor");
+        return nullptr;
+    }
+    return env->NewObject(longClazz, longConstructorMethod, val);
+}
+
+jobject new_bool(JNIEnv *env, bool val) {
+    jclass boolClazz = env->FindClass(BOOLEAN_CLASS);
+    if (!boolClazz) {
+        LOGE(TAG, "Can't find Boolean class");
+        return nullptr;
+    }
+    jmethodID booleanConstructorMethod = env->GetMethodID(boolClazz, "<init>", "(Z)V");
+    if (!booleanConstructorMethod) {
+        LOGE(TAG, "Can't find Boolean constructor");
+        return nullptr;
+    }
+    return env->NewObject(boolClazz, booleanConstructorMethod, val);
+}
+
+jobject new_int(JNIEnv *env, int val) {
+    jclass intClazz = env->FindClass(INT_CLASS);
+    if (!intClazz) {
+        LOGE(TAG, "Can't find Integer class");
+        return nullptr;
+    }
+    jmethodID integerConstructorMethod = env->GetMethodID(intClazz, "<init>", "(I)V");
+    if (!integerConstructorMethod) {
+        LOGE(TAG, "Can't find Integer constructor");
+        return nullptr;
+    }
+    return env->NewObject(intClazz, integerConstructorMethod, val);
+}
+
+jobject srt_optval_n2j(JNIEnv *env, int u, int level, jobject sockOpt) {
+    jobject optVal = nullptr;
+
+    int sockopt = srt_sockopt_j2n(env, sockOpt);
+    if (sockopt < 0) {
+        return nullptr;
+    }
+
+    switch (sockopt) {
+        case SRTO_INPUTBW:
+        case SRTO_MAXBW: {
+            // Int64
+            int64_t optval = 0;
+            int optlen = sizeof(optval);
+            if (srt_getsockopt(u, level, (SRT_SOCKOPT) sockopt, &optval, &optlen) != 0) {
+                LOGE(TAG, "Can't execute long getsockopt");
+                return nullptr;
+            }
+            optVal = new_long(env, optval);
+            break;
+        }
+        case SRTO_MESSAGEAPI:
+        case SRTO_NAKREPORT:
+        case SRTO_RCVSYN:
+        case SRTO_RENDEZVOUS:
+        case SRTO_REUSEADDR:
+        case SRTO_SENDER:
+        case SRTO_SNDSYN:
+        case SRTO_ENFORCEDENCRYPTION:
+        case SRTO_TLPKTDROP:
+        case SRTO_TSBPDMODE: {
+            // Boolean
+            bool optval = false;
+            int optlen = sizeof(bool);
+            if (srt_getsockopt(u, level, (SRT_SOCKOPT) sockopt, (void *) &optval, &optlen) != 0) {
+                LOGE(TAG, "Can't execute bool getsockopt");
+                return nullptr;
+            }
+            optVal = new_bool(env, optval);
+            break;
+        }
+        case SRTO_PACKETFILTER:
+        case SRTO_PASSPHRASE:
+        case SRTO_STREAMID: {
+            // String
+            const char optval[512] = {0};
+            int optlen = sizeof(optval);
+            if (srt_getsockopt(u, level, (SRT_SOCKOPT) sockopt, (void *) &optval, &optlen) != 0) {
+                LOGE(TAG, "Can't execute string getsockopt");
+                return nullptr;
+            }
+            optVal = env->NewStringUTF(optval);
+            break;
+        }
+        case SRTO_KMSTATE:
+        case SRTO_RCVKMSTATE:
+        case SRTO_SNDKMSTATE: {
+            // KMState
+            SRT_KM_STATE optval;
+            int optlen = sizeof(SRT_KM_STATE);
+            if (srt_getsockopt(u, level, (SRT_SOCKOPT) sockopt, (void *) &optval, &optlen) != 0) {
+                LOGE(TAG, "Can't execute SRT_KM_STATE getsockopt");
+                return nullptr;
+            }
+            optVal = srt_kmstate_n2j(env, optval);
+            break;
+        }
+        case SRTO_TRANSTYPE: {
+            // Transtype
+            SRT_TRANSTYPE optval;
+            int optlen = sizeof(SRT_TRANSTYPE);
+            if (srt_getsockopt(u, level, (SRT_SOCKOPT) sockopt, (void *) &optval, &optlen) != 0) {
+                LOGE(TAG, "Can't execute SRT_TRANSTYPE getsockopt");
+                return nullptr;
+            }
+            optVal = srt_transtype_n2j(env, optval);
+            break;
+        }
+        default: {
+            // Int
+            int optval = 0;
+            int optlen = sizeof(int);
+            if (srt_getsockopt(u, level, (SRT_SOCKOPT) sockopt, (void *) &optval, &optlen) != 0) {
+                LOGE(TAG, "Can't execute int getsockopt");
+                return nullptr;
+            }
+            optVal = new_int(env, optval);
+            break;
+        }
+    }
+
+    return optVal;
+}
+
 SRT_MSGCTRL *
 srt_msgctrl_j2n(JNIEnv *env, jobject msgCtrl) {
     SRT_MSGCTRL *srt_msgctrl = nullptr;

@@ -193,6 +193,49 @@ int srt_sockopt_j2n(JNIEnv *env, jobject sockOpt) {
     return srt_sockopt;
 }
 
+jobject srt_transtype_n2j(JNIEnv *env, SRT_TRANSTYPE transtype) {
+    jclass transTypeClazz = env->FindClass(TRANSTYPE_CLASS);
+    if (!transTypeClazz) {
+        LOGE(TAG, "Can't get "
+                TRANSTYPE_CLASS
+                " class");
+        return nullptr;
+    }
+
+    char *transtype_field = nullptr;
+    switch (transtype) {
+        case SRTT_LIVE:
+            transtype_field = strdup("LIVE");
+            break;
+        case SRTT_FILE:
+            transtype_field = strdup("FILE");
+            break;
+        case SRTT_INVALID:
+            transtype_field = strdup("INVALID");
+            break;
+        default:
+            LOGE(TAG, "SRT_TRANSTYPE: unknown value %d", transtype);
+    }
+
+    jfieldID transTypeField = env->GetStaticFieldID(transTypeClazz, transtype_field,
+                                                    "L" TRANSTYPE_CLASS ";");
+    if (!transTypeField) {
+        LOGE(TAG, "Can't get Transtype field");
+        env->DeleteLocalRef(transTypeClazz);
+        return nullptr;
+    }
+
+    jobject transType = env->GetStaticObjectField(transTypeClazz, transTypeField);
+
+    if (transtype_field != nullptr) {
+        free(transtype_field);
+    }
+
+    env->DeleteLocalRef(transTypeClazz);
+
+    return transType;
+}
+
 SRT_TRANSTYPE srt_transtype_j2n(JNIEnv *env, jobject transType) {
     const char *transtype_field = enums_get_field_id(env, transType);
     if (!transtype_field) {
@@ -212,6 +255,55 @@ SRT_TRANSTYPE srt_transtype_j2n(JNIEnv *env, jobject transType) {
     free((void *) transtype_field);
 
     return transtype;
+}
+
+jobject srt_kmstate_n2j(JNIEnv *env, SRT_KM_STATE kmstate) {
+    jclass kmStateClazz = env->FindClass(KMSTATE_CLASS);
+    if (!kmStateClazz) {
+        LOGE(TAG, "Can't get "
+                KMSTATE_CLASS
+                " class");
+        return nullptr;
+    }
+
+    char *kmstate_field = nullptr;
+    switch (kmstate) {
+        case SRT_KM_S_UNSECURED:
+            kmstate_field = strdup("KM_S_UNSECURED");
+            break;
+        case SRT_KM_S_SECURING:
+            kmstate_field = strdup("KM_S_SECURING");
+            break;
+        case SRT_KM_S_SECURED:
+            kmstate_field = strdup("KM_S_SECURED");
+            break;
+        case SRT_KM_S_NOSECRET:
+            kmstate_field = strdup("KM_S_NOSECRET");
+            break;
+        case SRT_KM_S_BADSECRET:
+            kmstate_field = strdup("KM_S_BADSECRET");
+            break;
+        default:
+            LOGE(TAG, "SRT_KM_STATE: unknown value %d", kmstate);
+    }
+
+    jfieldID kmStateField = env->GetStaticFieldID(kmStateClazz, kmstate_field,
+                                                  "L" KMSTATE_CLASS ";");
+    if (!kmStateField) {
+        LOGE(TAG, "Can't get KMState field");
+        env->DeleteLocalRef(kmStateClazz);
+        return nullptr;
+    }
+
+    jobject kmState = env->GetStaticObjectField(kmStateClazz, kmStateField);
+
+    if (kmstate_field != nullptr) {
+        free(kmstate_field);
+    }
+
+    env->DeleteLocalRef(kmStateClazz);
+
+    return kmState;
 }
 
 SRT_KM_STATE srt_kmstate_j2n(JNIEnv *env, jobject kmState) {
