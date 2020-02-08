@@ -104,6 +104,66 @@ sockaddr_inet_n2j(JNIEnv *env, struct sockaddr_in *sockaddr, int sockaddr_len) {
     return inetSocketAddress;
 }
 
+const char *
+get_class_name(JNIEnv *env, jobject object) {
+    jclass objectClazz = env->GetObjectClass(object);
+    if (!objectClazz) {
+        LOGE(TAG, "Can't get object class");
+        return nullptr;
+    }
+
+    // As object could be an Int, String,... First step is to get class object.
+    jmethodID objectGetClassMethod = env->GetMethodID(objectClazz, "getClass",
+                                                      "()Ljava/lang/Class;");
+    if (!objectGetClassMethod) {
+        LOGE(TAG, "Can't get getClass method");
+        env->DeleteLocalRef(objectClazz);
+        return nullptr;
+    }
+
+    jobject objectClazzObject = env->CallObjectMethod(object, objectGetClassMethod);
+    if (!objectClazzObject) {
+        LOGE(TAG, "Can't get class object");
+        env->DeleteLocalRef(objectClazz);
+        return nullptr;
+    }
+
+    jclass clazzClazz = env->GetObjectClass(objectClazzObject);
+    if (!clazzClazz) {
+        LOGE(TAG, "Can't get class");
+        env->DeleteLocalRef(objectClazz);
+        return nullptr;
+    }
+
+    // Then get class name
+    jmethodID objectClazzGetNameMethod = env->GetMethodID(clazzClazz, "getName",
+                                                          "()Ljava/lang/String;");
+    if (!objectClazzGetNameMethod) {
+        LOGE(TAG, "Can't get getName method");
+        env->DeleteLocalRef(objectClazz);
+        env->DeleteLocalRef(clazzClazz);
+        return nullptr;
+    }
+
+    auto className = (jstring) env->CallObjectMethod(objectClazzObject, objectClazzGetNameMethod);
+    if (!className) {
+        LOGE(TAG, "Can't get class name");
+        env->DeleteLocalRef(objectClazz);
+        env->DeleteLocalRef(clazzClazz);
+        return nullptr;
+    }
+
+    const char *class_name = env->GetStringUTFChars(className, nullptr);
+    const char *dup_class_name = strdup(class_name);
+
+    env->ReleaseStringUTFChars(className, class_name);
+
+    env->DeleteLocalRef(objectClazz);
+    env->DeleteLocalRef(clazzClazz);
+
+    return dup_class_name;
+}
+
 void *
 srt_optval_j2n(JNIEnv *env, jobject optVal, int *optval_len) {
     void *srt_optval = nullptr;
@@ -119,48 +179,11 @@ srt_optval_j2n(JNIEnv *env, jobject optVal, int *optval_len) {
         return nullptr;
     }
 
-    // As optVal could be an Int, String,... First step is to get class object.
-    jmethodID optValGetClassMethod = env->GetMethodID(optValClazz, "getClass",
-                                                      "()Ljava/lang/Class;");
-    if (!optValGetClassMethod) {
-        LOGE(TAG, "Can't get getClass method");
-        env->DeleteLocalRef(optValClazz);
+    const char *class_name = get_class_name(env, optVal);
+    if (class_name == nullptr) {
         return nullptr;
     }
 
-    jobject optValClazzObject = env->CallObjectMethod(optVal, optValGetClassMethod);
-    if (!optValClazzObject) {
-        LOGE(TAG, "Can't get class object");
-        env->DeleteLocalRef(optValClazz);
-        return nullptr;
-    }
-
-    jclass objectClazz = env->GetObjectClass(optValClazzObject);
-    if (!objectClazz) {
-        LOGE(TAG, "Can't get class");
-        env->DeleteLocalRef(optValClazz);
-        return nullptr;
-    }
-
-    // Then get class name
-    jmethodID objectClazzGetNameMethod = env->GetMethodID(objectClazz, "getName",
-                                                          "()Ljava/lang/String;");
-    if (!objectClazzGetNameMethod) {
-        LOGE(TAG, "Can't get getName method");
-        env->DeleteLocalRef(objectClazz);
-        env->DeleteLocalRef(optValClazz);
-        return nullptr;
-    }
-
-    auto className = (jstring) env->CallObjectMethod(optValClazzObject, objectClazzGetNameMethod);
-    if (!className) {
-        LOGE(TAG, "Can't get class name");
-        env->DeleteLocalRef(objectClazz);
-        env->DeleteLocalRef(optValClazz);
-        return nullptr;
-    }
-
-    const char *class_name = env->GetStringUTFChars(className, nullptr);
     if (strcmp(class_name, "java.lang.String;") == 0) {
         const char *optval = env->GetStringUTFChars((jstring) optVal, nullptr);
         *optval_len = strlen(optval);
@@ -207,8 +230,7 @@ srt_optval_j2n(JNIEnv *env, jobject optVal, int *optval_len) {
         LOGE(TAG, "OptVal: unknown class %s", class_name);
     }
 
-    env->ReleaseStringUTFChars(className, class_name);
-    env->DeleteLocalRef(objectClazz);
+    free((void *) class_name);
     env->DeleteLocalRef(optValClazz);
 
     return srt_optval;
