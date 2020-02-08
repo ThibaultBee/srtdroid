@@ -1,11 +1,8 @@
-#include <jni.h>
 #include <string>
 #include <cerrno>
 #include <cstring>
 #include <sys/socket.h>
 #include <cstdlib>
-
-#include "srt/srt.h"
 
 #include "log.h"
 #include "enums.h"
@@ -18,329 +15,341 @@ extern "C" {
 #define TAG "SRTJniStructs"
 
 struct sockaddr_in *
-inet_socket_address_from_java_to_native(JNIEnv *env, jobject jinet_socket_address) {
+sockaddr_inet_j2n(JNIEnv *env, jobject inetSocketAddress) {
     // Get InetSocketAddress class
-    jclass jinet_socket_address_class = env->GetObjectClass(jinet_socket_address);
-    if (!jinet_socket_address_class) {
+    jclass inetSocketAddressClazz = env->GetObjectClass(inetSocketAddress);
+    if (!inetSocketAddressClazz) {
         LOGE(TAG, "Can't get InetSocketAddress class");
         return nullptr;
     }
 
     // Port
-    jmethodID jgetPort_method = env->GetMethodID(jinet_socket_address_class, "getPort", "()I");
-    if (!jgetPort_method) {
+    jmethodID inetSocketAddressGetPortMethod = env->GetMethodID(inetSocketAddressClazz, "getPort",
+                                                                "()I");
+    if (!inetSocketAddressGetPortMethod) {
         LOGE(TAG, "Can't get getPort method");
-        env->DeleteLocalRef(jinet_socket_address_class);
+        env->DeleteLocalRef(inetSocketAddressClazz);
         return nullptr;
     }
-    int port = env->CallIntMethod(jinet_socket_address, jgetPort_method);
+    int port = env->CallIntMethod(inetSocketAddress, inetSocketAddressGetPortMethod);
 
     // Hostname
-    jmethodID jgetHostName_method = env->GetMethodID(jinet_socket_address_class, "getHostString",
-                                                     "()Ljava/lang/String;");
-    if (!jgetHostName_method) {
+    jmethodID inetSocketAddressGetHostStringMethod = env->GetMethodID(inetSocketAddressClazz,
+                                                                      "getHostString",
+                                                                      "()Ljava/lang/String;");
+    if (!inetSocketAddressGetHostStringMethod) {
         LOGE(TAG, "Can't get getHostString method");
-        env->DeleteLocalRef(jinet_socket_address_class);
+        env->DeleteLocalRef(inetSocketAddressClazz);
         return nullptr;
     }
 
-    auto jhostname = (jstring) env->CallObjectMethod(jinet_socket_address,
-                                                     jgetHostName_method);
-    if (!jhostname) {
+    auto hostName = (jstring) env->CallObjectMethod(inetSocketAddress,
+                                                    inetSocketAddressGetHostStringMethod);
+    if (!hostName) {
         LOGE(TAG, "Can't get Hostname");
-        env->DeleteLocalRef(jinet_socket_address_class);
+        env->DeleteLocalRef(inetSocketAddressClazz);
         return nullptr;
     }
 
-    const char *hostname = env->GetStringUTFChars(jhostname, nullptr);
+    const char *hostname = env->GetStringUTFChars(hostName, nullptr);
 
     auto *sa = (struct sockaddr_in *) malloc(sizeof(struct sockaddr_in));
 
     sa->sin_port = htons(port);
     sa->sin_family = AF_INET;
-    if(inet_pton(sa->sin_family, hostname, &sa->sin_addr) != 1) {
+    if (inet_pton(sa->sin_family, hostname, &sa->sin_addr) != 1) {
         LOGE(TAG, "Can't convert sock addr");
     }
 
-    env->ReleaseStringUTFChars(jhostname, hostname);
-    env->DeleteLocalRef(jinet_socket_address_class);
+    env->ReleaseStringUTFChars(hostName, hostname);
+    env->DeleteLocalRef(inetSocketAddressClazz);
 
     return sa;
 }
 
 jobject
-inet_socket_address_from_native_to_java(JNIEnv *env, struct sockaddr_in * sa, int addrlen) {
+sockaddr_inet_n2j(JNIEnv *env, struct sockaddr_in *sockaddr, int sockaddr_len) {
     // Get InetSocketAddress class
-    jclass jinet_socket_address_class = env->FindClass(INETSOCKETADDRESS_CLASS);
-    if (!jinet_socket_address_class) {
+    jclass inetSocketAddressClazz = env->FindClass(INETSOCKETADDRESS_CLASS);
+    if (!inetSocketAddressClazz) {
         LOGE(TAG, "Can't get InetSocketAddress class");
         return nullptr;
     }
 
-    jmethodID jinit_method = env->GetMethodID(jinet_socket_address_class, "<init>", "(Ljava/lang/String;I)V");
-    if (!jinit_method) {
-        LOGE(TAG, "Can't get InetSocketAddress constructor field");
-        env->DeleteLocalRef(jinet_socket_address_class);
+    jmethodID inetSocketAddressConstructorMethod = env->GetMethodID(inetSocketAddressClazz,
+                                                                    "<init>",
+                                                                    "(Ljava/lang/String;I)V");
+    if (!inetSocketAddressConstructorMethod) {
+        LOGE(TAG, "Can't get InetSocketAddress constructor");
+        env->DeleteLocalRef(inetSocketAddressClazz);
         return nullptr;
     }
 
     char ip[INET_ADDRSTRLEN];
-    if(inet_ntop(sa->sin_family, (void *)&(sa->sin_addr), ip, sizeof(ip))) {
-            LOGE(TAG, "Can't convert ip");
+    if (inet_ntop(sockaddr->sin_family, (void *) &(sockaddr->sin_addr), ip, sizeof(ip))) {
+        LOGE(TAG, "Can't convert ip");
     }
 
-    jstring jhostname = env->NewStringUTF(ip);
-    jobject jinet_socket_address = env->NewObject(jinet_socket_address_class, jinit_method, jhostname, (jint) htons(sa->sin_port));
+    jstring hostName = env->NewStringUTF(ip);
+    jobject inetSocketAddress = env->NewObject(inetSocketAddressClazz,
+                                               inetSocketAddressConstructorMethod, hostName,
+                                               (jint) htons(sockaddr->sin_port));
 
-    env->DeleteLocalRef(jinet_socket_address_class);
+    env->DeleteLocalRef(inetSocketAddressClazz);
 
-    return jinet_socket_address;
+    return inetSocketAddress;
 }
 
 void *
-srt_optval_from_java_to_native(JNIEnv *env, jobject jopval, int *optlen) {
-    void *res = nullptr;
+srt_optval_j2n(JNIEnv *env, jobject optVal, int *optval_len) {
+    void *srt_optval = nullptr;
 
-    if (optlen == nullptr) {
+    if (optval_len == nullptr) {
         LOGE(TAG, "Can't get optlen");
         return nullptr;
     }
 
-    jclass jopval_class = env->GetObjectClass(jopval);
-    if (!jopval_class) {
-        LOGE(TAG, "Can't get optval class");
+    jclass optValClazz = env->GetObjectClass(optVal);
+    if (!optValClazz) {
+        LOGE(TAG, "Can't get OptVal class");
         return nullptr;
     }
 
-    // As joptval could be an Int, String,... First step is to get class object.
-    // First get the class object
-    jmethodID jgetClass_method = env->GetMethodID(jopval_class, "getClass", "()Ljava/lang/Class;");
-    if (!jgetClass_method) {
+    // As optVal could be an Int, String,... First step is to get class object.
+    jmethodID optValGetClassMethod = env->GetMethodID(optValClazz, "getClass",
+                                                      "()Ljava/lang/Class;");
+    if (!optValGetClassMethod) {
         LOGE(TAG, "Can't get getClass method");
-        env->DeleteLocalRef(jopval_class);
+        env->DeleteLocalRef(optValClazz);
         return nullptr;
     }
 
-    jobject jclassObject = env->CallObjectMethod(jopval, jgetClass_method);
-    if (!jclassObject) {
-        LOGE(TAG, "Can't get object class");
-        env->DeleteLocalRef(jopval_class);
+    jobject optValClazzObject = env->CallObjectMethod(optVal, optValGetClassMethod);
+    if (!optValClazzObject) {
+        LOGE(TAG, "Can't get class object");
+        env->DeleteLocalRef(optValClazz);
         return nullptr;
     }
 
-    jclass jclassClass = env->GetObjectClass(jclassObject);
-    if (!jclassClass) {
+    jclass objectClazz = env->GetObjectClass(optValClazzObject);
+    if (!objectClazz) {
         LOGE(TAG, "Can't get class");
-        env->DeleteLocalRef(jopval_class);
+        env->DeleteLocalRef(optValClazz);
         return nullptr;
     }
 
     // Then get class name
-    jmethodID jgetName_method = env->GetMethodID(jclassClass, "getName", "()Ljava/lang/String;");
-    if (!jgetName_method) {
+    jmethodID objectClazzGetNameMethod = env->GetMethodID(objectClazz, "getName",
+                                                          "()Ljava/lang/String;");
+    if (!objectClazzGetNameMethod) {
         LOGE(TAG, "Can't get getName method");
-        env->DeleteLocalRef(jopval_class);
+        env->DeleteLocalRef(objectClazz);
+        env->DeleteLocalRef(optValClazz);
         return nullptr;
     }
 
-    auto jclassName = (jstring) env->CallObjectMethod(jclassObject, jgetName_method);
-    if (!jclassName) {
+    auto className = (jstring) env->CallObjectMethod(optValClazzObject, objectClazzGetNameMethod);
+    if (!className) {
         LOGE(TAG, "Can't get class name");
-        env->DeleteLocalRef(jopval_class);
+        env->DeleteLocalRef(objectClazz);
+        env->DeleteLocalRef(optValClazz);
         return nullptr;
     }
 
-    const char *class_name = env->GetStringUTFChars(jclassName, nullptr);
-
+    const char *class_name = env->GetStringUTFChars(className, nullptr);
     if (strcmp(class_name, "java.lang.String;") == 0) {
-        const char *optval = env->GetStringUTFChars((jstring) jopval, nullptr);
-        *optlen = strlen(optval);
-        res = strdup(optval);
-        env->ReleaseStringUTFChars((jstring) jopval, optval);
+        const char *optval = env->GetStringUTFChars((jstring) optVal, nullptr);
+        *optval_len = strlen(optval);
+        srt_optval = strdup(optval);
+        env->ReleaseStringUTFChars((jstring) optVal, optval);
     } else if (strcmp(class_name, ENUM_PACKAGE".Transtype") == 0) {
-        SRT_TRANSTYPE transtype = srt_transtype_from_java_to_native(env, jopval);
-        *optlen = sizeof(transtype);
-        res = malloc(static_cast<size_t>(*optlen));
-        *(SRT_TRANSTYPE *)res = transtype;
+        SRT_TRANSTYPE transtype = srt_transtype_j2n(env, optVal);
+        *optval_len = sizeof(transtype);
+        srt_optval = malloc(static_cast<size_t>(*optval_len));
+        *(SRT_TRANSTYPE *) srt_optval = transtype;
     } else if (strcmp(class_name, ENUM_PACKAGE".KMState") == 0) {
-        SRT_KM_STATE kmstate = srt_kmstate_from_java_to_native(env, jopval);
-        *optlen = sizeof(kmstate);
-        res = malloc(static_cast<size_t>(*optlen));
-        *(SRT_KM_STATE *)res = kmstate;
-        LOGE(TAG, ">> res %d size %d", kmstate,  *optlen);
+        SRT_KM_STATE kmstate = srt_kmstate_j2n(env, optVal);
+        *optval_len = sizeof(kmstate);
+        srt_optval = malloc(static_cast<size_t>(*optval_len));
+        *(SRT_KM_STATE *) srt_optval = kmstate;
     } else if (strcmp(class_name, "java.lang.Long") == 0) {
-        jmethodID jlongValue_method = env->GetMethodID(jopval_class, "longValue", "()J");
-        if (!jlongValue_method) {
+        jmethodID longValueMethod = env->GetMethodID(optValClazz, "longValue", "()J");
+        if (!longValueMethod) {
             LOGE(TAG, "Can't get longValue method");
             return nullptr;
         }
-        *optlen = sizeof(int64_t);
-        res = malloc(static_cast<size_t>(*optlen));
-        *(int64_t *)res = env->CallLongMethod(jopval, jlongValue_method);
+        *optval_len = sizeof(int64_t);
+        srt_optval = malloc(static_cast<size_t>(*optval_len));
+        *(int64_t *) srt_optval = env->CallLongMethod(optVal, longValueMethod);
     } else if (strcmp(class_name, "java.lang.Integer") == 0) {
-        jmethodID jintValue_method = env->GetMethodID(jopval_class, "intValue", "()I");
-        if (!jintValue_method) {
+        jmethodID intValueMethod = env->GetMethodID(optValClazz, "intValue", "()I");
+        if (!intValueMethod) {
             LOGE(TAG, "Can't get intValue method");
             return nullptr;
         }
-        *optlen = sizeof(int);
-        res = malloc(static_cast<size_t>(*optlen));
-        *(int *)res = env->CallIntMethod(jopval, jintValue_method);
+        *optval_len = sizeof(int);
+        srt_optval = malloc(static_cast<size_t>(*optval_len));
+        *(int *) srt_optval = env->CallIntMethod(optVal, intValueMethod);
     } else if (strcmp(class_name, "java.lang.Boolean") == 0) {
-        jmethodID jbooleanValue_method = env->GetMethodID(jopval_class, "booleanValue", "()Z");
-        if (!jbooleanValue_method) {
+        jmethodID booleanValueMethod = env->GetMethodID(optValClazz, "booleanValue", "()Z");
+        if (!booleanValueMethod) {
             LOGE(TAG, "Can't get booleanValue method");
             return nullptr;
         }
-        *optlen = sizeof(bool);
-        res = malloc(static_cast<size_t>(*optlen));
-        *(bool *)res = (env->CallBooleanMethod(jopval, jbooleanValue_method) == JNI_TRUE);
+        *optval_len = sizeof(bool);
+        srt_optval = malloc(static_cast<size_t>(*optval_len));
+        *(bool *) srt_optval = (env->CallBooleanMethod(optVal, booleanValueMethod) == JNI_TRUE);
     } else {
-        LOGE(TAG, "Unknown class %s", class_name);
+        LOGE(TAG, "OptVal: unknown class %s", class_name);
     }
 
-    env->ReleaseStringUTFChars(jclassName, class_name);
-    env->DeleteLocalRef(jopval_class);
+    env->ReleaseStringUTFChars(className, class_name);
+    env->DeleteLocalRef(objectClazz);
+    env->DeleteLocalRef(optValClazz);
 
-    return res;
+    return srt_optval;
 }
 
 SRT_MSGCTRL *
-srt_msgctrl_from_java_to_native(JNIEnv *env, jobject jmsgCtrl) {
-    SRT_MSGCTRL *res = nullptr;
+srt_msgctrl_j2n(JNIEnv *env, jobject msgCtrl) {
+    SRT_MSGCTRL *srt_msgctrl = nullptr;
 
-    if (jmsgCtrl == nullptr)
+    if (msgCtrl == nullptr)
         return nullptr;
 
-    jclass jmsgctrl_class = env->GetObjectClass(jmsgCtrl);
-    if (!jmsgctrl_class) {
+    jclass msgCtrlClazz = env->GetObjectClass(msgCtrl);
+    if (!msgCtrlClazz) {
         LOGE(TAG, "Can't get MsgCtrl class");
         return nullptr;
     }
 
-    jfieldID jflags_field = env->GetFieldID(jmsgctrl_class, "flags", "I");
-    if (!jflags_field) {
+    jfieldID msgCtrlFlagsField = env->GetFieldID(msgCtrlClazz, "flags", "I");
+    if (!msgCtrlFlagsField) {
         LOGE(TAG, "Can't get flags field");
-        env->DeleteLocalRef(jmsgctrl_class);
+        env->DeleteLocalRef(msgCtrlClazz);
         return nullptr;
     }
 
-    jfieldID jttl_field = env->GetFieldID(jmsgctrl_class, "ttl", "I");
-    if (!jttl_field) {
+    jfieldID msgCtrlTtlField = env->GetFieldID(msgCtrlClazz, "ttl", "I");
+    if (!msgCtrlTtlField) {
         LOGE(TAG, "Can't get ttl field");
-        env->DeleteLocalRef(jmsgctrl_class);
+        env->DeleteLocalRef(msgCtrlClazz);
         return nullptr;
     }
 
-    jfieldID jinOrder_field = env->GetFieldID(jmsgctrl_class, "inOrder", "Z");
-    if (!jinOrder_field) {
+    jfieldID msgCtrlInOrderField = env->GetFieldID(msgCtrlClazz, "inOrder", "Z");
+    if (!msgCtrlInOrderField) {
         LOGE(TAG, "Can't get inOrder field");
-        env->DeleteLocalRef(jmsgctrl_class);
+        env->DeleteLocalRef(msgCtrlClazz);
         return nullptr;
     }
 
-    jfieldID jboundary_field = env->GetFieldID(jmsgctrl_class, "boundary", "I");
-    if (!jboundary_field) {
+    jfieldID msgCtrlBondaryField = env->GetFieldID(msgCtrlClazz, "boundary", "I");
+    if (!msgCtrlBondaryField) {
         LOGE(TAG, "Can't get boundary field");
-        env->DeleteLocalRef(jmsgctrl_class);
+        env->DeleteLocalRef(msgCtrlClazz);
         return nullptr;
     }
 
-    jfieldID jsrcTime_field = env->GetFieldID(jmsgctrl_class, "srcTime", "J");
-    if (!jsrcTime_field) {
+    jfieldID msgCtrlSrcTimeField = env->GetFieldID(msgCtrlClazz, "srcTime", "J");
+    if (!msgCtrlSrcTimeField) {
         LOGE(TAG, "Can't get srcTime field");
-        env->DeleteLocalRef(jmsgctrl_class);
+        env->DeleteLocalRef(msgCtrlClazz);
         return nullptr;
     }
 
-    jfieldID jpktSeq_field = env->GetFieldID(jmsgctrl_class, "pktSeq", "I");
-    if (!jpktSeq_field) {
+    jfieldID msgCtrlPktSeqField = env->GetFieldID(msgCtrlClazz, "pktSeq", "I");
+    if (!msgCtrlPktSeqField) {
         LOGE(TAG, "Can't get pktSeq field");
-        env->DeleteLocalRef(jmsgctrl_class);
+        env->DeleteLocalRef(msgCtrlClazz);
         return nullptr;
     }
 
-    jfieldID jmsgno_field = env->GetFieldID(jmsgctrl_class, "no", "I");
-    if (!jmsgno_field) {
+    jfieldID msgCtrlNoField = env->GetFieldID(msgCtrlClazz, "no", "I");
+    if (!msgCtrlNoField) {
         LOGE(TAG, "Can't get message number field");
-        env->DeleteLocalRef(jmsgctrl_class);
+        env->DeleteLocalRef(msgCtrlClazz);
         return nullptr;
     }
 
-    res = (SRT_MSGCTRL *) malloc(sizeof(SRT_MSGCTRL));
-    if (res != nullptr) {
-        res->flags = env->GetIntField(jmsgCtrl, jflags_field);
-        res->msgttl = env->GetIntField(jmsgCtrl, jttl_field);
-        res->inorder = env->GetBooleanField(jmsgCtrl, jinOrder_field);
-        res->boundary = env->GetIntField(jmsgCtrl, jboundary_field);
-        res->srctime = (uint64_t )env->GetLongField(jmsgCtrl, jsrcTime_field);
-        res->pktseq = env->GetIntField(jmsgCtrl, jpktSeq_field);
-        res->msgno = env->GetIntField(jmsgCtrl, jmsgno_field);
+    srt_msgctrl = (SRT_MSGCTRL *) malloc(sizeof(SRT_MSGCTRL));
+    if (srt_msgctrl != nullptr) {
+        srt_msgctrl->flags = env->GetIntField(msgCtrl, msgCtrlFlagsField);
+        srt_msgctrl->msgttl = env->GetIntField(msgCtrl, msgCtrlTtlField);
+        srt_msgctrl->inorder = env->GetBooleanField(msgCtrl, msgCtrlInOrderField);
+        srt_msgctrl->boundary = env->GetIntField(msgCtrl, msgCtrlBondaryField);
+        srt_msgctrl->srctime = (uint64_t) env->GetLongField(msgCtrl, msgCtrlSrcTimeField);
+        srt_msgctrl->pktseq = env->GetIntField(msgCtrl, msgCtrlPktSeqField);
+        srt_msgctrl->msgno = env->GetIntField(msgCtrl, msgCtrlNoField);
     }
 
-    env->DeleteLocalRef(jmsgctrl_class);
+    env->DeleteLocalRef(msgCtrlClazz);
 
-    return res;
+    return srt_msgctrl;
 }
 
-SRTSOCKET srt_socket_from_java_to_native(JNIEnv *env, jobject ju) {
-    jclass jsocket_class = env->GetObjectClass(ju);
-    if (!jsocket_class) {
-        LOGE(TAG, "Can't get socket class");
+SRTSOCKET srt_socket_j2n(JNIEnv *env, jobject SrtSocket) {
+    jclass socketClazz = env->GetObjectClass(SrtSocket);
+    if (!socketClazz) {
+        LOGE(TAG, "Can't get Socket class");
         return SRT_INVALID_SOCK;
     }
 
-    jfieldID jsrtsocket_field = env->GetFieldID(jsocket_class, "srtsocket", "I");
-    if (!jsrtsocket_field) {
+    jfieldID srtSocketField = env->GetFieldID(socketClazz, "srtsocket", "I");
+    if (!srtSocketField) {
         LOGE(TAG, "Can't get srtsocket field");
-        env->DeleteLocalRef(jsocket_class);
+        env->DeleteLocalRef(socketClazz);
         return SRT_INVALID_SOCK;
     }
 
-    jint srtsocket = env->GetIntField(ju, jsrtsocket_field);
+    jint srtsocket = env->GetIntField(SrtSocket, srtSocketField);
 
-    env->DeleteLocalRef(jsocket_class);
+    env->DeleteLocalRef(socketClazz);
+
     return srtsocket;
 }
 
-jobject srt_socket_from_native_to_java(JNIEnv *env, SRTSOCKET u) {
-    jclass jsocket_class = env->FindClass(SRTSOCKET_CLASS);
-    if (!jsocket_class) {
-        LOGE(TAG, "Can't find socket class");
+jobject srt_socket_n2j(JNIEnv *env, SRTSOCKET srtsocket) {
+    jclass srtSocketClazz = env->FindClass(SRTSOCKET_CLASS);
+    if (!srtSocketClazz) {
+        LOGE(TAG, "Can't find Srt Socket class");
         return nullptr;
     }
 
-    jmethodID jinit_method = env->GetMethodID(jsocket_class, "<init>", "(I)V");
-    if (!jinit_method) {
-        LOGE(TAG, "Can't get SrtSocket constructor field");
-        env->DeleteLocalRef(jsocket_class);
+    jmethodID srtSocketConstructorMethod = env->GetMethodID(srtSocketClazz, "<init>", "(I)V");
+    if (!srtSocketConstructorMethod) {
+        LOGE(TAG, "Can't get SrtSocket constructor");
+        env->DeleteLocalRef(srtSocketClazz);
         return nullptr;
     }
 
-    jobject ju = env->NewObject(jsocket_class, jinit_method, u);
+    jobject srtSocket = env->NewObject(srtSocketClazz, srtSocketConstructorMethod, srtsocket);
 
-    env->DeleteLocalRef(jsocket_class);
-    return ju;
+    env->DeleteLocalRef(srtSocketClazz);
+
+    return srtSocket;
 }
 
-jobject create_java_pair(JNIEnv *env, jobject first, jobject second) {
-    jclass jpair_class = env->FindClass(PAIR_CLASS);
-    if (!jpair_class) {
+jobject new_pair(JNIEnv *env, jobject first, jobject second) {
+    jclass pairClazz = env->FindClass(PAIR_CLASS);
+    if (!pairClazz) {
         LOGE(TAG, "Can't get Pair class");
         return nullptr;
     }
 
-    jmethodID jinit_method = env->GetMethodID(jpair_class, "<init>", "(Ljava/lang/Object;Ljava/lang/Object;)V");
-    if (!jinit_method) {
-        LOGE(TAG, "Can't get Pair constructor field");
-        env->DeleteLocalRef(jpair_class);
+    jmethodID pairConstructorMethod = env->GetMethodID(pairClazz, "<init>",
+                                                       "(Ljava/lang/Object;Ljava/lang/Object;)V");
+    if (!pairConstructorMethod) {
+        LOGE(TAG, "Can't get Pair constructor");
+        env->DeleteLocalRef(pairClazz);
         return nullptr;
     }
 
-    jobject jpair = env->NewObject(jpair_class, jinit_method, first, second);
+    jobject pair = env->NewObject(pairClazz, pairConstructorMethod, first, second);
 
-    env->DeleteLocalRef(jpair_class);
-    return jpair;
+    env->DeleteLocalRef(pairClazz);
+
+    return pair;
 }
 
 #ifdef __cplusplus

@@ -1,12 +1,3 @@
-#include <jni.h>
-#include <string>
-#include <cerrno>
-#include <cstring>
-#include <sys/socket.h>
-#include <cstdlib>
-
-#include "srt/srt.h"
-
 #include "log.h"
 #include "enums.h"
 
@@ -20,540 +11,548 @@ extern "C" {
  * @brief Get the name of a Java enumeration member
  *
  * @param env Java environment
- * @param jenum_value Java enumeration member
+ * @param enumValue Java enumeration member
  * @return return Java String that contains Java enum name
  */
-jstring java_enum_get_value_name(JNIEnv *env, jobject jenum_value) {
-    jclass jenum_class = env->GetObjectClass(jenum_value);
-    if (!jenum_class) {
+jstring enums_get_field_id(JNIEnv *env, jobject enumValue) {
+    jclass enumClazz = env->GetObjectClass(enumValue);
+    if (!enumClazz) {
+        LOGE(TAG, "Can't get enum class");
         return nullptr;
     }
 
-    jmethodID jenum_name_method = env->GetMethodID(jenum_class, "name", "()Ljava/lang/String;");
-    if (!jenum_name_method) {
+    jmethodID enumNameMethod = env->GetMethodID(enumClazz, "name", "()Ljava/lang/String;");
+    if (!enumNameMethod) {
+        LOGE(TAG, "Can't get enum name method");
+        env->DeleteLocalRef(enumClazz);
         return nullptr;
     }
 
-    env->DeleteLocalRef(jenum_class);
+    env->DeleteLocalRef(enumClazz);
 
-    return (jstring) env->CallObjectMethod(jenum_value, jenum_name_method);
+    return (jstring) env->CallObjectMethod(enumValue, enumNameMethod);
 }
 
-int address_family_from_java_to_native(JNIEnv *env, jobject jenum_af_value) {
-    jstring jenum_name = java_enum_get_value_name(env, jenum_af_value);
-    if (!jenum_name) {
-        LOGE(TAG, "Can't get Java address family enum name");
+int address_family_j2n(JNIEnv *env, jobject addressFamily) {
+    jstring addressFamilyField = enums_get_field_id(env, addressFamily);
+    if (!addressFamilyField) {
+        LOGE(TAG, "Can't get AddressFamily field");
         return -EFAULT;
     }
 
-    auto enum_name = (char *) env->GetStringUTFChars(jenum_name, nullptr);
-    if (!enum_name) {
-        LOGE(TAG, "Can't get address family enum name");
+    auto address_family_field = (char *) env->GetStringUTFChars(addressFamilyField, nullptr);
+    if (!address_family_field) {
+        LOGE(TAG, "Can't get address family field");
         return -EFAULT;
     }
 
     int af = AF_UNSPEC;
-    if (strcmp(enum_name, "INET") == 0) {
+    if (strcmp(address_family_field, "INET") == 0) {
         af = AF_INET;
-    } else if (strcmp(enum_name, "INET6") == 0) {
+    } else if (strcmp(address_family_field, "INET6") == 0) {
         af = AF_INET6;
     } else {
-        LOGE(TAG, "Unknown value %s", enum_name);
+        LOGE(TAG, "AddressFamily: unknown value %s", address_family_field);
     }
 
-    env->ReleaseStringUTFChars(jenum_name, enum_name);
+    env->ReleaseStringUTFChars(addressFamilyField, address_family_field);
 
     return af;
 }
 
-int srt_sockopt_from_java_to_native(JNIEnv *env, jobject jenum_srt_option_value) {
-    jstring jenum_name = java_enum_get_value_name(env, jenum_srt_option_value);
-    if (!jenum_name) {
-        LOGE(TAG, "Can't get Java SRT option enum name");
+int srt_sockopt_j2n(JNIEnv *env, jobject sockOpt) {
+    jstring sockOptField = enums_get_field_id(env, sockOpt);
+    if (!sockOptField) {
+        LOGE(TAG, "Can't get SockOpt field");
         return -EFAULT;
     }
 
-    auto enum_name = (char *) env->GetStringUTFChars(jenum_name, nullptr);
-    if (!enum_name) {
-        LOGE(TAG, "Can't get SRT option enum name");
+    auto srt_sockopt_field = (char *) env->GetStringUTFChars(sockOptField, nullptr);
+    if (!srt_sockopt_field) {
+        LOGE(TAG, "Can't get sockopt field");
         return -EFAULT;
     }
 
-    int srtopt = -1;
-    if (strcmp(enum_name, "MSS") == 0) {
-        srtopt = SRTO_MSS;
-    } else if (strcmp(enum_name, "SNDSYN") == 0) {
-        srtopt = SRTO_SNDSYN;
-    } else if (strcmp(enum_name, "RCVSYN") == 0) {
-        srtopt = SRTO_RCVSYN;
-    } else if (strcmp(enum_name, "ISN") == 0) {
-        srtopt = SRTO_ISN;
-    } else if (strcmp(enum_name, "FC") == 0) {
-        srtopt = SRTO_FC;
-    } else if (strcmp(enum_name, "SNDBUF") == 0) {
-        srtopt = SRTO_SNDBUF;
-    } else if (strcmp(enum_name, "RCVBUF") == 0) {
-        srtopt = SRTO_RCVBUF;
-    } else if (strcmp(enum_name, "LINGER") == 0) {
-        srtopt = SRTO_LINGER;
-    } else if (strcmp(enum_name, "UDP_SNDBUF") == 0) {
-        srtopt = SRTO_UDP_SNDBUF;
-    } else if (strcmp(enum_name, "UDP_RCVBUF") == 0) {
-        srtopt = SRTO_UDP_RCVBUF;
-    } else if (strcmp(enum_name, "RENDEZVOUS") == 0) {
-        srtopt = SRTO_RENDEZVOUS;
-    } else if (strcmp(enum_name, "SNDTIMEO") == 0) {
-        srtopt = SRTO_SNDTIMEO;
-    } else if (strcmp(enum_name, "RCVTIMEO") == 0) {
-        srtopt = SRTO_RCVTIMEO;
-    } else if (strcmp(enum_name, "REUSEADDR") == 0) {
-        srtopt = SRTO_REUSEADDR;
-    } else if (strcmp(enum_name, "MAXBW") == 0) {
-        srtopt = SRTO_MAXBW;
-    } else if (strcmp(enum_name, "STATE") == 0) {
-        srtopt = SRTO_STATE;
-    } else if (strcmp(enum_name, "EVENT") == 0) {
-        srtopt = SRTO_EVENT;
-    } else if (strcmp(enum_name, "SNDDATA") == 0) {
-        srtopt = SRTO_SNDDATA;
-    } else if (strcmp(enum_name, "RCVDATA") == 0) {
-        srtopt = SRTO_RCVDATA;
-    } else if (strcmp(enum_name, "SENDER") == 0) {
-        srtopt = SRTO_SENDER;
-    } else if (strcmp(enum_name, "TSBPDMODE") == 0) {
-        srtopt = SRTO_TSBPDMODE;
-    } else if (strcmp(enum_name, "LATENCY") == 0) {
-        srtopt = SRTO_LATENCY;
-    } else if (strcmp(enum_name, "TSBPDDELAY") == 0) {
-        srtopt = SRTO_TSBPDDELAY;
-    } else if (strcmp(enum_name, "INPUTBW") == 0) {
-        srtopt = SRTO_INPUTBW;
-    } else if (strcmp(enum_name, "OHEADBW") == 0) {
-        srtopt = SRTO_OHEADBW;
-    } else if (strcmp(enum_name, "PASSPHRASE") == 0) {
-        srtopt = SRTO_PASSPHRASE;
-    } else if (strcmp(enum_name, "PBKEYLEN") == 0) {
-        srtopt = SRTO_PBKEYLEN;
-    } else if (strcmp(enum_name, "KMSTATE") == 0) {
-        srtopt = SRTO_KMSTATE;
-    } else if (strcmp(enum_name, "IPTTL") == 0) {
-        srtopt = SRTO_IPTTL;
-    } else if (strcmp(enum_name, "IPTOS") == 0) {
-        srtopt = SRTO_IPTOS;
-    } else if (strcmp(enum_name, "TLPKTDROP") == 0) {
-        srtopt = SRTO_TLPKTDROP;
-    } else if (strcmp(enum_name, "SNDDROPDELAY") == 0) {
-        srtopt = SRTO_SNDDROPDELAY;
-    } else if (strcmp(enum_name, "NAKREPORT") == 0) {
-        srtopt = SRTO_NAKREPORT;
-    } else if (strcmp(enum_name, "VERSION") == 0) {
-        srtopt = SRTO_VERSION;
-    } else if (strcmp(enum_name, "PEERVERSION") == 0) {
-        srtopt = SRTO_PEERVERSION;
-    } else if (strcmp(enum_name, "CONNTIMEO") == 0) {
-        srtopt = SRTO_CONNTIMEO;
-    } else if (strcmp(enum_name, "SNDKMSTATE") == 0) {
-        srtopt = SRTO_SNDKMSTATE;
-    } else if (strcmp(enum_name, "RCVKMSTATE") == 0) {
-        srtopt = SRTO_RCVKMSTATE;
-    } else if (strcmp(enum_name, "LOSSMAXTTL") == 0) {
-        srtopt = SRTO_LOSSMAXTTL;
-    } else if (strcmp(enum_name, "RCVLATENCY") == 0) {
-        srtopt = SRTO_RCVLATENCY;
-    } else if (strcmp(enum_name, "PEERLATENCY") == 0) {
-        srtopt = SRTO_PEERLATENCY;
-    } else if (strcmp(enum_name, "MINVERSION") == 0) {
-        srtopt = SRTO_MINVERSION;
-    } else if (strcmp(enum_name, "STREAMID") == 0) {
-        srtopt = SRTO_STREAMID;
-    } else if (strcmp(enum_name, "CONGESTION") == 0) {
-        srtopt = SRTO_CONGESTION;
-    } else if (strcmp(enum_name, "MESSAGEAPI") == 0) {
-        srtopt = SRTO_MESSAGEAPI;
-    } else if (strcmp(enum_name, "PAYLOADSIZE") == 0) {
-        srtopt = SRTO_PAYLOADSIZE;
-    } else if (strcmp(enum_name, "TRANSTYPE") == 0) {
-        srtopt = SRTO_TRANSTYPE;
-    } else if (strcmp(enum_name, "KMREFRESHRATE") == 0) {
-        srtopt = SRTO_KMREFRESHRATE;
-    } else if (strcmp(enum_name, "KMPREANNOUNCE") == 0) {
-        srtopt = SRTO_KMPREANNOUNCE;
-    } else if (strcmp(enum_name, "STRICTENC") == 0) {
-        srtopt = SRTO_STRICTENC;
-    } else if (strcmp(enum_name, "IPV6ONLY") == 0) {
-        srtopt = SRTO_IPV6ONLY;
-    } else if (strcmp(enum_name, "PEERIDLETIMEO") == 0) {
-        srtopt = SRTO_PEERIDLETIMEO;
+    int srt_sockopt = -1;
+    if (strcmp(srt_sockopt_field, "MSS") == 0) {
+        srt_sockopt = SRTO_MSS;
+    } else if (strcmp(srt_sockopt_field, "SNDSYN") == 0) {
+        srt_sockopt = SRTO_SNDSYN;
+    } else if (strcmp(srt_sockopt_field, "RCVSYN") == 0) {
+        srt_sockopt = SRTO_RCVSYN;
+    } else if (strcmp(srt_sockopt_field, "ISN") == 0) {
+        srt_sockopt = SRTO_ISN;
+    } else if (strcmp(srt_sockopt_field, "FC") == 0) {
+        srt_sockopt = SRTO_FC;
+    } else if (strcmp(srt_sockopt_field, "SNDBUF") == 0) {
+        srt_sockopt = SRTO_SNDBUF;
+    } else if (strcmp(srt_sockopt_field, "RCVBUF") == 0) {
+        srt_sockopt = SRTO_RCVBUF;
+    } else if (strcmp(srt_sockopt_field, "LINGER") == 0) {
+        srt_sockopt = SRTO_LINGER;
+    } else if (strcmp(srt_sockopt_field, "UDP_SNDBUF") == 0) {
+        srt_sockopt = SRTO_UDP_SNDBUF;
+    } else if (strcmp(srt_sockopt_field, "UDP_RCVBUF") == 0) {
+        srt_sockopt = SRTO_UDP_RCVBUF;
+    } else if (strcmp(srt_sockopt_field, "RENDEZVOUS") == 0) {
+        srt_sockopt = SRTO_RENDEZVOUS;
+    } else if (strcmp(srt_sockopt_field, "SNDTIMEO") == 0) {
+        srt_sockopt = SRTO_SNDTIMEO;
+    } else if (strcmp(srt_sockopt_field, "RCVTIMEO") == 0) {
+        srt_sockopt = SRTO_RCVTIMEO;
+    } else if (strcmp(srt_sockopt_field, "REUSEADDR") == 0) {
+        srt_sockopt = SRTO_REUSEADDR;
+    } else if (strcmp(srt_sockopt_field, "MAXBW") == 0) {
+        srt_sockopt = SRTO_MAXBW;
+    } else if (strcmp(srt_sockopt_field, "STATE") == 0) {
+        srt_sockopt = SRTO_STATE;
+    } else if (strcmp(srt_sockopt_field, "EVENT") == 0) {
+        srt_sockopt = SRTO_EVENT;
+    } else if (strcmp(srt_sockopt_field, "SNDDATA") == 0) {
+        srt_sockopt = SRTO_SNDDATA;
+    } else if (strcmp(srt_sockopt_field, "RCVDATA") == 0) {
+        srt_sockopt = SRTO_RCVDATA;
+    } else if (strcmp(srt_sockopt_field, "SENDER") == 0) {
+        srt_sockopt = SRTO_SENDER;
+    } else if (strcmp(srt_sockopt_field, "TSBPDMODE") == 0) {
+        srt_sockopt = SRTO_TSBPDMODE;
+    } else if (strcmp(srt_sockopt_field, "LATENCY") == 0) {
+        srt_sockopt = SRTO_LATENCY;
+    } else if (strcmp(srt_sockopt_field, "TSBPDDELAY") == 0) {
+        srt_sockopt = SRTO_TSBPDDELAY;
+    } else if (strcmp(srt_sockopt_field, "INPUTBW") == 0) {
+        srt_sockopt = SRTO_INPUTBW;
+    } else if (strcmp(srt_sockopt_field, "OHEADBW") == 0) {
+        srt_sockopt = SRTO_OHEADBW;
+    } else if (strcmp(srt_sockopt_field, "PASSPHRASE") == 0) {
+        srt_sockopt = SRTO_PASSPHRASE;
+    } else if (strcmp(srt_sockopt_field, "PBKEYLEN") == 0) {
+        srt_sockopt = SRTO_PBKEYLEN;
+    } else if (strcmp(srt_sockopt_field, "KMSTATE") == 0) {
+        srt_sockopt = SRTO_KMSTATE;
+    } else if (strcmp(srt_sockopt_field, "IPTTL") == 0) {
+        srt_sockopt = SRTO_IPTTL;
+    } else if (strcmp(srt_sockopt_field, "IPTOS") == 0) {
+        srt_sockopt = SRTO_IPTOS;
+    } else if (strcmp(srt_sockopt_field, "TLPKTDROP") == 0) {
+        srt_sockopt = SRTO_TLPKTDROP;
+    } else if (strcmp(srt_sockopt_field, "SNDDROPDELAY") == 0) {
+        srt_sockopt = SRTO_SNDDROPDELAY;
+    } else if (strcmp(srt_sockopt_field, "NAKREPORT") == 0) {
+        srt_sockopt = SRTO_NAKREPORT;
+    } else if (strcmp(srt_sockopt_field, "VERSION") == 0) {
+        srt_sockopt = SRTO_VERSION;
+    } else if (strcmp(srt_sockopt_field, "PEERVERSION") == 0) {
+        srt_sockopt = SRTO_PEERVERSION;
+    } else if (strcmp(srt_sockopt_field, "CONNTIMEO") == 0) {
+        srt_sockopt = SRTO_CONNTIMEO;
+    } else if (strcmp(srt_sockopt_field, "SNDKMSTATE") == 0) {
+        srt_sockopt = SRTO_SNDKMSTATE;
+    } else if (strcmp(srt_sockopt_field, "RCVKMSTATE") == 0) {
+        srt_sockopt = SRTO_RCVKMSTATE;
+    } else if (strcmp(srt_sockopt_field, "LOSSMAXTTL") == 0) {
+        srt_sockopt = SRTO_LOSSMAXTTL;
+    } else if (strcmp(srt_sockopt_field, "RCVLATENCY") == 0) {
+        srt_sockopt = SRTO_RCVLATENCY;
+    } else if (strcmp(srt_sockopt_field, "PEERLATENCY") == 0) {
+        srt_sockopt = SRTO_PEERLATENCY;
+    } else if (strcmp(srt_sockopt_field, "MINVERSION") == 0) {
+        srt_sockopt = SRTO_MINVERSION;
+    } else if (strcmp(srt_sockopt_field, "STREAMID") == 0) {
+        srt_sockopt = SRTO_STREAMID;
+    } else if (strcmp(srt_sockopt_field, "CONGESTION") == 0) {
+        srt_sockopt = SRTO_CONGESTION;
+    } else if (strcmp(srt_sockopt_field, "MESSAGEAPI") == 0) {
+        srt_sockopt = SRTO_MESSAGEAPI;
+    } else if (strcmp(srt_sockopt_field, "PAYLOADSIZE") == 0) {
+        srt_sockopt = SRTO_PAYLOADSIZE;
+    } else if (strcmp(srt_sockopt_field, "TRANSTYPE") == 0) {
+        srt_sockopt = SRTO_TRANSTYPE;
+    } else if (strcmp(srt_sockopt_field, "KMREFRESHRATE") == 0) {
+        srt_sockopt = SRTO_KMREFRESHRATE;
+    } else if (strcmp(srt_sockopt_field, "KMPREANNOUNCE") == 0) {
+        srt_sockopt = SRTO_KMPREANNOUNCE;
+    } else if (strcmp(srt_sockopt_field, "STRICTENC") == 0) {
+        srt_sockopt = SRTO_STRICTENC;
+    } else if (strcmp(srt_sockopt_field, "IPV6ONLY") == 0) {
+        srt_sockopt = SRTO_IPV6ONLY;
+    } else if (strcmp(srt_sockopt_field, "PEERIDLETIMEO") == 0) {
+        srt_sockopt = SRTO_PEERIDLETIMEO;
     } else {
-        LOGE(TAG, "Unknown value %s", enum_name);
+        LOGE(TAG, "SockOpt: unknown value %s", srt_sockopt_field);
     }
 
-    env->ReleaseStringUTFChars(jenum_name, enum_name);
+    env->ReleaseStringUTFChars(sockOptField, srt_sockopt_field);
 
-    return srtopt;
+    return srt_sockopt;
 }
 
-SRT_TRANSTYPE srt_transtype_from_java_to_native(JNIEnv *env, jobject jenum_srt_transtype_value) {
-    jstring jenum_name = java_enum_get_value_name(env, jenum_srt_transtype_value);
-    if (!jenum_name) {
-        LOGE(TAG, "Can't get Java SRT transtype enum name");
+SRT_TRANSTYPE srt_transtype_j2n(JNIEnv *env, jobject transType) {
+    jstring transTypeField = enums_get_field_id(env, transType);
+    if (!transTypeField) {
+        LOGE(TAG, "Can't get TransType field");
         return SRTT_INVALID;
     }
 
-    auto enum_name = (char *) env->GetStringUTFChars(jenum_name, nullptr);
-    if (!enum_name) {
-        LOGE(TAG, "Can't get SRT transtype enum name");
+    auto transtype_field = (char *) env->GetStringUTFChars(transTypeField, nullptr);
+    if (!transtype_field) {
+        LOGE(TAG, "Can't get SRT_TRANSTYPE");
         return SRTT_INVALID;
     }
 
     SRT_TRANSTYPE transtype = SRTT_INVALID;
-    if (strcmp(enum_name, "LIVE") == 0) {
+    if (strcmp(transtype_field, "LIVE") == 0) {
         transtype = SRTT_LIVE;
-    } else if (strcmp(enum_name, "FILE") == 0) {
+    } else if (strcmp(transtype_field, "FILE") == 0) {
         transtype = SRTT_FILE;
     } else {
-        LOGE(TAG, "Unknown value %s", enum_name);
+        LOGE(TAG, "TransType: unknown value %s", transtype_field);
     }
 
-    env->ReleaseStringUTFChars(jenum_name, enum_name);
+    env->ReleaseStringUTFChars(transTypeField, transtype_field);
 
     return transtype;
 }
 
-SRT_KM_STATE srt_kmstate_from_java_to_native(JNIEnv *env, jobject jenum_srt_kmstate_value) {
-    jstring jenum_name = java_enum_get_value_name(env, jenum_srt_kmstate_value);
-    if (!jenum_name) {
-        LOGE(TAG, "Can't get Java SRT KMState enum name");
+SRT_KM_STATE srt_kmstate_j2n(JNIEnv *env, jobject kmState) {
+    jstring kmStateField = enums_get_field_id(env, kmState);
+    if (!kmStateField) {
+        LOGE(TAG, "Can't get KMState field");
         return SRT_KM_S_UNSECURED;
     }
 
-    auto enum_name = (char *) env->GetStringUTFChars(jenum_name, nullptr);
-    if (!enum_name) {
-        LOGE(TAG, "Can't get SRT KMState enum name");
+    auto kmstate_field = (char *) env->GetStringUTFChars(kmStateField, nullptr);
+    if (!kmstate_field) {
+        LOGE(TAG, "Can't get SRT_KM_STATE");
         return SRT_KM_S_UNSECURED;
     }
 
     SRT_KM_STATE kmstate = SRT_KM_S_UNSECURED;
-    if (strcmp(enum_name, "KM_S_UNSECURED") == 0) {
+    if (strcmp(kmstate_field, "KM_S_UNSECURED") == 0) {
         kmstate = SRT_KM_S_UNSECURED;
-    } else if (strcmp(enum_name, "KM_S_SECURING") == 0) {
+    } else if (strcmp(kmstate_field, "KM_S_SECURING") == 0) {
         kmstate = SRT_KM_S_SECURING;
-    } else if (strcmp(enum_name, "KM_S_SECURED") == 0) {
+    } else if (strcmp(kmstate_field, "KM_S_SECURED") == 0) {
         kmstate = SRT_KM_S_SECURED;
-    } else if (strcmp(enum_name, "KM_S_NOSECRET") == 0) {
+    } else if (strcmp(kmstate_field, "KM_S_NOSECRET") == 0) {
         kmstate = SRT_KM_S_NOSECRET;
-    } else if (strcmp(enum_name, "KM_S_BADSECRET") == 0) {
+    } else if (strcmp(kmstate_field, "KM_S_BADSECRET") == 0) {
         kmstate = SRT_KM_S_BADSECRET;
     } else {
-        LOGE(TAG, "Unknown value %s", enum_name);
+        LOGE(TAG, "KMState: unknown value %s", kmstate_field);
     }
 
-    env->ReleaseStringUTFChars(jenum_name, enum_name);
+    env->ReleaseStringUTFChars(kmStateField, kmstate_field);
 
     return kmstate;
 }
 
-jobject srt_sock_status_from_native_to_java(JNIEnv *env, SRT_SOCKSTATUS sock_status) {
-        jclass sockStatusClass = env->FindClass(SOCKSTATUS_CLASS);
-        if (!sockStatusClass) {
-            LOGE(TAG, "Can't get " SOCKSTATUS_CLASS " class");
-            return nullptr;
-        }
-
-        char *sockStatus_field = nullptr;
-        switch (sock_status) {
-            case SRTS_INIT:
-                sockStatus_field = strdup("INIT");
-                break;
-            case SRTS_OPENED:
-                sockStatus_field = strdup("OPENED");
-                break;
-            case SRTS_LISTENING:
-                sockStatus_field = strdup("LISTENING");
-                break;
-            case SRTS_CONNECTING:
-                sockStatus_field = strdup("CONNECTING");
-                break;
-            case SRTS_CONNECTED:
-                sockStatus_field = strdup("CONNECTED");
-                break;
-            case SRTS_BROKEN:
-                sockStatus_field = strdup("BROKEN");
-                break;
-            case SRTS_CLOSING:
-                sockStatus_field = strdup("CLOSING");
-                break;
-            case SRTS_CLOSED:
-                sockStatus_field = strdup("CLOSED");
-                break;
-            case SRTS_NONEXIST:
-                sockStatus_field = strdup("NONEXIST");
-                break;
-            default:
-                LOGE(TAG, "Unknown value %d", sock_status);
-        }
-
-        jfieldID jSockStatusField = env->GetStaticFieldID(sockStatusClass, sockStatus_field,
-                                                         "L" SOCKSTATUS_CLASS ";");
-        if (!jSockStatusField) {
-            LOGE(TAG, "Can't get SockStatus field");
-            env->DeleteLocalRef(sockStatusClass);
-            return nullptr;
-        }
-
-        jobject sockStatus = env->GetStaticObjectField(sockStatusClass, jSockStatusField);
-
-        if (sockStatus_field != nullptr) {
-            free(sockStatus_field);
-        }
-
-        env->DeleteLocalRef(sockStatusClass);
-
-        return sockStatus;
+jobject srt_sockstatus_n2j(JNIEnv *env, SRT_SOCKSTATUS sockstatus) {
+    jclass sockStatusClazz = env->FindClass(SOCKSTATUS_CLASS);
+    if (!sockStatusClazz) {
+        LOGE(TAG, "Can't get "
+                SOCKSTATUS_CLASS
+                " class");
+        return nullptr;
     }
 
-int error_from_java_to_native(JNIEnv *env, jobject jerrorType) {
-    jstring jenum_name = java_enum_get_value_name(env, jerrorType);
-    if (!jenum_name) {
-        LOGE(TAG, "Can't get Java SRT ErrorType enum name");
+    char *sockstatus_field = nullptr;
+    switch (sockstatus) {
+        case SRTS_INIT:
+            sockstatus_field = strdup("INIT");
+            break;
+        case SRTS_OPENED:
+            sockstatus_field = strdup("OPENED");
+            break;
+        case SRTS_LISTENING:
+            sockstatus_field = strdup("LISTENING");
+            break;
+        case SRTS_CONNECTING:
+            sockstatus_field = strdup("CONNECTING");
+            break;
+        case SRTS_CONNECTED:
+            sockstatus_field = strdup("CONNECTED");
+            break;
+        case SRTS_BROKEN:
+            sockstatus_field = strdup("BROKEN");
+            break;
+        case SRTS_CLOSING:
+            sockstatus_field = strdup("CLOSING");
+            break;
+        case SRTS_CLOSED:
+            sockstatus_field = strdup("CLOSED");
+            break;
+        case SRTS_NONEXIST:
+            sockstatus_field = strdup("NONEXIST");
+            break;
+        default:
+            LOGE(TAG, "SRT_SOCKSTATUS: unknown value %d", sockstatus);
+    }
+
+    jfieldID sockStatusField = env->GetStaticFieldID(sockStatusClazz, sockstatus_field,
+                                                     "L" SOCKSTATUS_CLASS ";");
+    if (!sockStatusField) {
+        LOGE(TAG, "Can't get SockStatus field");
+        env->DeleteLocalRef(sockStatusClazz);
+        return nullptr;
+    }
+
+    jobject sockStatus = env->GetStaticObjectField(sockStatusClazz, sockStatusField);
+
+    if (sockstatus_field != nullptr) {
+        free(sockstatus_field);
+    }
+
+    env->DeleteLocalRef(sockStatusClazz);
+
+    return sockStatus;
+}
+
+int srt_error_j2n(JNIEnv *env, jobject errorType) {
+    jstring errorTypeField = enums_get_field_id(env, errorType);
+    if (!errorTypeField) {
+        LOGE(TAG, "Can't get ErrorType field");
         return SRT_EUNKNOWN;
     }
 
-    auto enum_name = (char *) env->GetStringUTFChars(jenum_name, nullptr);
-    if (!enum_name) {
-        LOGE(TAG, "Can't get SRT ErrorType enum name");
+    auto error_type_field = (char *) env->GetStringUTFChars(errorTypeField, nullptr);
+    if (!error_type_field) {
+        LOGE(TAG, "Can't get SRT Error field");
         return SRTT_INVALID;
     }
 
     int error_type = SRT_EUNKNOWN;
-    if (strcmp(enum_name, "EUNKNOWN") == 0) {
+    if (strcmp(error_type_field, "EUNKNOWN") == 0) {
         error_type = SRT_EUNKNOWN;
-    } else if (strcmp(enum_name, "SUCCESS") == 0) {
+    } else if (strcmp(error_type_field, "SUCCESS") == 0) {
         error_type = SRT_SUCCESS;
-    } else if (strcmp(enum_name, "ECONNSETUP") == 0) {
+    } else if (strcmp(error_type_field, "ECONNSETUP") == 0) {
         error_type = SRT_ECONNSETUP;
-    } else if (strcmp(enum_name, "ENOSERVER") == 0) {
+    } else if (strcmp(error_type_field, "ENOSERVER") == 0) {
         error_type = SRT_ENOSERVER;
-    } else if (strcmp(enum_name, "ECONNREJ") == 0) {
+    } else if (strcmp(error_type_field, "ECONNREJ") == 0) {
         error_type = SRT_ECONNREJ;
-    } else if (strcmp(enum_name, "ESOCKFAIL") == 0) {
+    } else if (strcmp(error_type_field, "ESOCKFAIL") == 0) {
         error_type = SRT_ESOCKFAIL;
-    } else if (strcmp(enum_name, "ESECFAIL") == 0) {
+    } else if (strcmp(error_type_field, "ESECFAIL") == 0) {
         error_type = SRT_ESECFAIL;
-    } else if (strcmp(enum_name, "ECONNFAIL") == 0) {
+    } else if (strcmp(error_type_field, "ECONNFAIL") == 0) {
         error_type = SRT_ECONNFAIL;
-    } else if (strcmp(enum_name, "ECONNLOST") == 0) {
+    } else if (strcmp(error_type_field, "ECONNLOST") == 0) {
         error_type = SRT_ECONNLOST;
-    } else if (strcmp(enum_name, "ENOCONN") == 0) {
+    } else if (strcmp(error_type_field, "ENOCONN") == 0) {
         error_type = SRT_ENOCONN;
-    } else if (strcmp(enum_name, "ERESOURCE") == 0) {
+    } else if (strcmp(error_type_field, "ERESOURCE") == 0) {
         error_type = SRT_ERESOURCE;
-    } else if (strcmp(enum_name, "ETHREAD") == 0) {
+    } else if (strcmp(error_type_field, "ETHREAD") == 0) {
         error_type = SRT_ETHREAD;
-    } else if (strcmp(enum_name, "ENOBUF") == 0) {
+    } else if (strcmp(error_type_field, "ENOBUF") == 0) {
         error_type = SRT_ENOBUF;
-    } else if (strcmp(enum_name, "EFILE") == 0) {
+    } else if (strcmp(error_type_field, "EFILE") == 0) {
         error_type = SRT_EFILE;
-    } else if (strcmp(enum_name, "EINVRDOFF") == 0) {
+    } else if (strcmp(error_type_field, "EINVRDOFF") == 0) {
         error_type = SRT_EINVRDOFF;
-    } else if (strcmp(enum_name, "ERDPERM") == 0) {
+    } else if (strcmp(error_type_field, "ERDPERM") == 0) {
         error_type = SRT_ERDPERM;
-    } else if (strcmp(enum_name, "EINVWROFF") == 0) {
+    } else if (strcmp(error_type_field, "EINVWROFF") == 0) {
         error_type = SRT_EINVWROFF;
-    } else if (strcmp(enum_name, "EWRPERM") == 0) {
+    } else if (strcmp(error_type_field, "EWRPERM") == 0) {
         error_type = SRT_EWRPERM;
-    } else if (strcmp(enum_name, "EINVOP") == 0) {
+    } else if (strcmp(error_type_field, "EINVOP") == 0) {
         error_type = SRT_EINVOP;
-    } else if (strcmp(enum_name, "EBOUNDSOCK") == 0) {
+    } else if (strcmp(error_type_field, "EBOUNDSOCK") == 0) {
         error_type = SRT_EBOUNDSOCK;
-    } else if (strcmp(enum_name, "ECONNSOCK") == 0) {
+    } else if (strcmp(error_type_field, "ECONNSOCK") == 0) {
         error_type = SRT_ECONNSOCK;
-    } else if (strcmp(enum_name, "EINVPARAM") == 0) {
+    } else if (strcmp(error_type_field, "EINVPARAM") == 0) {
         error_type = SRT_EINVPARAM;
-    } else if (strcmp(enum_name, "EINVSOCK") == 0) {
+    } else if (strcmp(error_type_field, "EINVSOCK") == 0) {
         error_type = SRT_EINVSOCK;
-    } else if (strcmp(enum_name, "EUNBOUNDSOCK") == 0) {
+    } else if (strcmp(error_type_field, "EUNBOUNDSOCK") == 0) {
         error_type = SRT_EUNBOUNDSOCK;
-    } else if (strcmp(enum_name, "ENOLISTEN") == 0) {
+    } else if (strcmp(error_type_field, "ENOLISTEN") == 0) {
         error_type = SRT_ENOLISTEN;
-    } else if (strcmp(enum_name, "ERDVNOSERV") == 0) {
+    } else if (strcmp(error_type_field, "ERDVNOSERV") == 0) {
         error_type = SRT_ERDVNOSERV;
-    } else if (strcmp(enum_name, "ERDVUNBOUND") == 0) {
+    } else if (strcmp(error_type_field, "ERDVUNBOUND") == 0) {
         error_type = SRT_ERDVUNBOUND;
-    } else if (strcmp(enum_name, "EINVALMSGAPI") == 0) {
+    } else if (strcmp(error_type_field, "EINVALMSGAPI") == 0) {
         error_type = SRT_EINVALMSGAPI;
-    } else if (strcmp(enum_name, "EINVALBUFFERAPI") == 0) {
+    } else if (strcmp(error_type_field, "EINVALBUFFERAPI") == 0) {
         error_type = SRT_EINVALBUFFERAPI;
-    } else if (strcmp(enum_name, "EDUPLISTEN") == 0) {
+    } else if (strcmp(error_type_field, "EDUPLISTEN") == 0) {
         error_type = SRT_EDUPLISTEN;
-    } else if (strcmp(enum_name, "ELARGEMSG") == 0) {
+    } else if (strcmp(error_type_field, "ELARGEMSG") == 0) {
         error_type = SRT_ELARGEMSG;
-    } else if (strcmp(enum_name, "EINVPOLLID") == 0) {
+    } else if (strcmp(error_type_field, "EINVPOLLID") == 0) {
         error_type = SRT_EINVPOLLID;
-    } else if (strcmp(enum_name, "EASYNCFAIL") == 0) {
+    } else if (strcmp(error_type_field, "EASYNCFAIL") == 0) {
         error_type = SRT_EASYNCFAIL;
-    } else if (strcmp(enum_name, "EASYNCSND") == 0) {
+    } else if (strcmp(error_type_field, "EASYNCSND") == 0) {
         error_type = SRT_EASYNCSND;
-    } else if (strcmp(enum_name, "EASYNCRCV") == 0) {
+    } else if (strcmp(error_type_field, "EASYNCRCV") == 0) {
         error_type = SRT_EASYNCRCV;
-    } else if (strcmp(enum_name, "ETIMEOUT") == 0) {
+    } else if (strcmp(error_type_field, "ETIMEOUT") == 0) {
         error_type = SRT_ETIMEOUT;
-    } else if (strcmp(enum_name, "ECONGEST") == 0) {
+    } else if (strcmp(error_type_field, "ECONGEST") == 0) {
         error_type = SRT_ECONGEST;
-    } else if (strcmp(enum_name, "EPEERERR") == 0) {
+    } else if (strcmp(error_type_field, "EPEERERR") == 0) {
         error_type = SRT_EPEERERR;
     } else {
-        LOGE(TAG, "Unknown value %s", enum_name);
+        LOGE(TAG, "ErrorType: unknown value %s", error_type_field);
     }
 
-    env->ReleaseStringUTFChars(jenum_name, enum_name);
+    env->ReleaseStringUTFChars(errorTypeField, error_type_field);
 
     return error_type;
 }
 
-jobject error_from_native_to_java(JNIEnv *env, int error_type) {
-    jclass errorTypeClass = env->FindClass(ERRORTYPE_CLASS);
-    if (!errorTypeClass) {
+jobject srt_error_n2j(JNIEnv *env, int error_type) {
+    jclass errorTypeClazz = env->FindClass(ERRORTYPE_CLASS);
+    if (!errorTypeClazz) {
+        LOGE(TAG, "Can't get "
+                ERRORTYPE_CLASS
+                " class");
         return nullptr;
     }
 
-    char *error_field = nullptr;
+    char *error_type_field = nullptr;
     switch (error_type) {
         case SRT_EUNKNOWN:
-            error_field = strdup("EUNKNOWN");
+            error_type_field = strdup("EUNKNOWN");
             break;
         case SRT_SUCCESS:
-            error_field = strdup("SUCCESS");
+            error_type_field = strdup("SUCCESS");
             break;
         case SRT_ECONNSETUP:
-            error_field = strdup("ECONNSETUP");
+            error_type_field = strdup("ECONNSETUP");
             break;
         case SRT_ENOSERVER:
-            error_field = strdup("ENOSERVER");
+            error_type_field = strdup("ENOSERVER");
             break;
         case SRT_ECONNREJ:
-            error_field = strdup("ECONNREJ");
+            error_type_field = strdup("ECONNREJ");
             break;
         case SRT_ESOCKFAIL:
-            error_field = strdup("ESOCKFAIL");
+            error_type_field = strdup("ESOCKFAIL");
             break;
         case SRT_ESECFAIL:
-            error_field = strdup("ESECFAIL");
+            error_type_field = strdup("ESECFAIL");
             break;
         case SRT_ECONNFAIL:
-            error_field = strdup("ECONNFAIL");
+            error_type_field = strdup("ECONNFAIL");
             break;
         case SRT_ECONNLOST:
-            error_field = strdup("ECONNLOST");
+            error_type_field = strdup("ECONNLOST");
             break;
         case SRT_ENOCONN:
-            error_field = strdup("ENOCONN");
+            error_type_field = strdup("ENOCONN");
             break;
         case SRT_ERESOURCE:
-            error_field = strdup("ERESOURCE");
+            error_type_field = strdup("ERESOURCE");
             break;
         case SRT_ETHREAD:
-            error_field = strdup("ETHREAD");
+            error_type_field = strdup("ETHREAD");
             break;
         case SRT_ENOBUF:
-            error_field = strdup("ENOBUF");
+            error_type_field = strdup("ENOBUF");
             break;
         case SRT_EFILE:
-            error_field = strdup("EFILE");
+            error_type_field = strdup("EFILE");
             break;
         case SRT_EINVRDOFF:
-            error_field = strdup("EINVRDOFF");
+            error_type_field = strdup("EINVRDOFF");
             break;
         case SRT_ERDPERM:
-            error_field = strdup("ERDPERM");
+            error_type_field = strdup("ERDPERM");
             break;
         case SRT_EINVWROFF:
-            error_field = strdup("EINVWROFF");
+            error_type_field = strdup("EINVWROFF");
             break;
         case SRT_EWRPERM:
-            error_field = strdup("EWRPERM");
+            error_type_field = strdup("EWRPERM");
             break;
         case SRT_EINVOP:
-            error_field = strdup("EINVOP");
+            error_type_field = strdup("EINVOP");
             break;
         case SRT_EBOUNDSOCK:
-            error_field = strdup("EBOUNDSOCK");
+            error_type_field = strdup("EBOUNDSOCK");
             break;
         case SRT_ECONNSOCK:
-            error_field = strdup("ECONNSOCK");
+            error_type_field = strdup("ECONNSOCK");
             break;
         case SRT_EINVPARAM:
-            error_field = strdup("EINVPARAM");
+            error_type_field = strdup("EINVPARAM");
             break;
         case SRT_EINVSOCK:
-            error_field = strdup("EINVSOCK");
+            error_type_field = strdup("EINVSOCK");
             break;
         case SRT_EUNBOUNDSOCK:
-            error_field = strdup("EUNBOUNDSOCK");
+            error_type_field = strdup("EUNBOUNDSOCK");
             break;
         case SRT_ENOLISTEN:
-            error_field = strdup("ENOLISTEN");
+            error_type_field = strdup("ENOLISTEN");
             break;
         case SRT_ERDVNOSERV:
-            error_field = strdup("ERDVNOSERV");
+            error_type_field = strdup("ERDVNOSERV");
             break;
         case SRT_ERDVUNBOUND:
-            error_field = strdup("ERDVUNBOUND");
+            error_type_field = strdup("ERDVUNBOUND");
             break;
         case SRT_EINVALMSGAPI:
-            error_field = strdup("EINVALMSGAPI");
+            error_type_field = strdup("EINVALMSGAPI");
             break;
         case SRT_EINVALBUFFERAPI:
-            error_field = strdup("EINVALBUFFERAPI");
+            error_type_field = strdup("EINVALBUFFERAPI");
             break;
         case SRT_EDUPLISTEN:
-            error_field = strdup("EDUPLISTEN");
+            error_type_field = strdup("EDUPLISTEN");
             break;
         case SRT_ELARGEMSG:
-            error_field = strdup("ELARGEMSG");
+            error_type_field = strdup("ELARGEMSG");
             break;
         case SRT_EINVPOLLID:
-            error_field = strdup("EINVPOLLID");
+            error_type_field = strdup("EINVPOLLID");
             break;
         case SRT_EASYNCFAIL:
-            error_field = strdup("EASYNCFAIL");
+            error_type_field = strdup("EASYNCFAIL");
             break;
         case SRT_EASYNCSND:
-            error_field = strdup("EASYNCSND");
+            error_type_field = strdup("EASYNCSND");
             break;
         case SRT_EASYNCRCV:
-            error_field = strdup("EASYNCRCV");
+            error_type_field = strdup("EASYNCRCV");
             break;
         case SRT_ETIMEOUT:
-            error_field = strdup("ETIMEOUT");
+            error_type_field = strdup("ETIMEOUT");
             break;
         case SRT_ECONGEST:
-            error_field = strdup("ECONGEST");
+            error_type_field = strdup("ECONGEST");
             break;
         case SRT_EPEERERR:
-            error_field = strdup("EPEERERR");
+            error_type_field = strdup("EPEERERR");
             break;
         default:
-            error_field = strdup("EUNKNOWN");
+            error_type_field = strdup("EUNKNOWN");
     }
 
-    jfieldID jErrorTypeField = env->GetStaticFieldID(errorTypeClass, error_field,
-                                                     "L" ERRORTYPE_CLASS ";");
-    if (!jErrorTypeField) {
+    jfieldID errorTypeField = env->GetStaticFieldID(errorTypeClazz, error_type_field,
+                                                    "L" ERRORTYPE_CLASS ";");
+    if (!errorTypeField) {
         LOGE(TAG, "Can't get ErrorType field");
-        env->DeleteLocalRef(errorTypeClass);
+        env->DeleteLocalRef(errorTypeClazz);
         return nullptr;
     }
 
-    jobject jErrorType = env->GetStaticObjectField(errorTypeClass, jErrorTypeField);
+    jobject errorType = env->GetStaticObjectField(errorTypeClazz, errorTypeField);
 
-    if (error_field != nullptr) {
-        free(error_field);
+    if (error_type_field != nullptr) {
+        free(error_type_field);
     }
 
-    env->DeleteLocalRef(errorTypeClass);
+    env->DeleteLocalRef(errorTypeClazz);
 
-    return jErrorType;
+    return errorType;
 }
 
 #ifdef __cplusplus
