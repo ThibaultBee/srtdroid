@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clipToPadding="false"
+    android:paddingVertical="10dp"
+    android:paddingStart="15dp"
+    android:paddingEnd="60dp">
+
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="15dp"
+        android:paddingBottom="4dp"
+        android:text="" />
+
+    <TextView
+        android:id="@+id/messageBody"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/name"
+        android:layout_alignStart="@+id/name"
+        android:background="@drawable/list_row_their_message"
+        android:elevation="2dp"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="12dp"
+        android:text=""
+        android:textSize="18sp" />
+</RelativeLayout>
