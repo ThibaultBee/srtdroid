@@ -450,8 +450,8 @@ srt_msgctrl_j2n(JNIEnv *env, jobject msgCtrl) {
     return srt_msgctrl;
 }
 
-SRTSOCKET srt_socket_j2n(JNIEnv *env, jobject SrtSocket) {
-    jclass socketClazz = env->GetObjectClass(SrtSocket);
+SRTSOCKET srt_socket_j2n(JNIEnv *env, jobject srtSocket) {
+    jclass socketClazz = env->GetObjectClass(srtSocket);
     if (!socketClazz) {
         LOGE(TAG, "Can't get Socket class");
         return SRT_INVALID_SOCK;
@@ -464,7 +464,7 @@ SRTSOCKET srt_socket_j2n(JNIEnv *env, jobject SrtSocket) {
         return SRT_INVALID_SOCK;
     }
 
-    jint srtsocket = env->GetIntField(SrtSocket, srtSocketField);
+    jint srtsocket = env->GetIntField(srtSocket, srtSocketField);
 
     env->DeleteLocalRef(socketClazz);
 

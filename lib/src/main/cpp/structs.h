@@ -64,7 +64,7 @@ jobject srt_optval_n2j(JNIEnv *env, int u, int level, jobject sockOpt);
  * @brief Convert Java MsgCtrl to C SRT_MSGCTRL for SRT library
  *
  * @param env Java environment
- * @param jopval Java MsgCtrl
+ * @param msgCtrl Java MsgCtrl
  * @return return MsgCtrl in C domain
  */
 SRT_MSGCTRL *
@@ -75,17 +75,17 @@ srt_msgctrl_j2n(JNIEnv *env, jobject msgCtrl);
  * @brief Convert Java SRT Socket to SRTSOCKET for SRT library
  *
  * @param env Java environment
- * @param u Java SRT Socket
+ * @param srtSocket Java SRT Socket
  * @return return corresponding SRTSOCKET value
  */
-SRTSOCKET srt_socket_j2n(JNIEnv *env, jobject SrtSocket);
+SRTSOCKET srt_socket_j2n(JNIEnv *env, jobject srtSocket);
 
 /**
  * @brief Convert SRTSOCKET for SRT library to Java SRT Socket
  *
  * @param env Java environment
- * @param srtsocket Java SRT Socket
- * @return return corresponding SRTSOCKET value
+ * @param srtsocket Native SRTSOCKET value
+ * @return return corresponding Java SRT Socket
  */
 jobject srt_socket_n2j(JNIEnv *env, SRTSOCKET srtsocket);
 
