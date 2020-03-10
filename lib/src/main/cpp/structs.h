@@ -6,6 +6,8 @@
 extern "C" {
 #endif
 
+#define EPOLL_CLASS "com/github/thibaultbee/srtwrapper/models/Epoll"
+#define EPOLLEVENT_CLASS "com/github/thibaultbee/srtwrapper/models/EpollEvent"
 #define ERROR_CLASS "com/github/thibaultbee/srtwrapper/models/Error"
 #define MSGCTRL_CLASS "com/github/thibaultbee/srtwrapper/models/MsgCtrl"
 #define SRTSOCKET_CLASS "com/github/thibaultbee/srtwrapper/models/Socket"
@@ -88,6 +90,71 @@ SRTSOCKET srt_socket_j2n(JNIEnv *env, jobject srtSocket);
  * @return return corresponding Java SRT Socket
  */
 jobject srt_socket_n2j(JNIEnv *env, SRTSOCKET srtsocket);
+
+/**
+ * @brief Convert Java Socket object array to a native array of SRTSOCKET
+ *
+ * @param env Java environment
+ * @param srtSockets Java Array of Socket
+ * @param nSockets Size of Java Socket array
+ * @return return native array of SRTSOCKET
+ */
+SRTSOCKET *srt_sockets_j2n(JNIEnv *env, jobjectArray srtSockets, int *nSockets);
+
+/**
+ * @brief Convert Java Epoll to int for SRT library
+ *
+ * @param env Java environment
+ * @param epoll Java Epoll
+ * @return return corresponding int value
+ */
+int srt_epoll_j2n(JNIEnv *env, jobject epoll);
+
+/**
+ * @brief Convert eid for SRT library to Java Epoll
+ *
+ * @param env Java environment
+ * @param eid Native eid
+ * @return return corresponding Java Epoll
+ */
+jobject srt_epoll_n2j(JNIEnv *env, int eid);
+
+/**
+ * @brief Convert EpollEvent object array to events set
+ *
+ * @param env Java environment
+ * @param epollEvents Java Array of epoll events
+ * @return return epoll events set
+ */
+int srt_epoll_opts_j2n(JNIEnv *env, jobjectArray epollEvents);
+
+/**
+ * @brief Convert EpollFlag object array to flags set
+ *
+ * @param env Java environment
+ * @param epollFlags Java Array of epoll flags
+ * @return return epoll flags set
+ */
+int srt_epoll_flags_j2n(JNIEnv *env, jobjectArray epollFlags);
+
+/**
+ * @brief Convert native epoll flags set to an EpollFlag object array
+ *
+ * @param env Java environment
+ * @param epoll_flags native epoll flags set
+ * @return return EpollFlag object array
+ */
+jobjectArray srt_epoll_flags_n2j(JNIEnv *env, int epoll_flags);
+
+/**
+ * @brief Convert EpollEvent object array to a SRT_EPOLL_EVENT array
+ *
+ * @param env Java environment
+ * @param epollEvents Java EpollEvent object array
+ * @param nEvents Size of Java EpollEvent array
+ * @return return a pointer to an array of SRT_EPOLL_EVENT
+ */
+SRT_EPOLL_EVENT *srt_epoll_events_j2n(JNIEnv *env, jobjectArray epollEvents, int *nEvents);
 
 /**
  * @brief Create a Pair Java object

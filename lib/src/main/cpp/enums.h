@@ -8,6 +8,8 @@ extern "C" {
 
 #define ENUM_PACKAGE "com.github.thibaultbee.srtwrapper.enums"
 
+#define EPOLLFLAG_CLASS "com/github/thibaultbee/srtwrapper/enums/EpollFlag"
+#define EPOLLOPT_CLASS "com/github/thibaultbee/srtwrapper/enums/EpollOpt"
 #define ERRORTYPE_CLASS "com/github/thibaultbee/srtwrapper/enums/ErrorType"
 #define KMSTATE_CLASS "com/github/thibaultbee/srtwrapper/enums/KMState"
 #define SOCKOPT_CLASS "com/github/thibaultbee/srtwrapper/enums/SockOpt"
@@ -94,6 +96,42 @@ int srt_error_j2n(JNIEnv *env, jobject errorType);
  * @return return corresponding Java SRT error
  */
 jobject srt_error_n2j(JNIEnv *env, int error_type);
+
+/**
+ * @brief Convert Java EpollEvent to native epoll event
+ *
+ * @param env Java environment
+ * @param epollEvent Java EpollEvent
+ * @return return corresponding native epoll event
+ */
+int32_t srt_epoll_opt_j2n(JNIEnv *env, jobject epollEvent);
+
+/**
+ * @brief Convert native epoll event to Java EpollEvent
+ *
+ * @param env Java environment
+ * @param event native epoll event
+ * @return return corresponding Java EpollEvent
+ */
+jobject srt_epoll_opt_n2j(JNIEnv *env, uint32_t event);
+
+/**
+ * @brief Convert Java EpollFlag to native epoll flag
+ *
+ * @param env Java environment
+ * @param epollFlag Java EpollFlag
+ * @return return corresponding native epoll flag
+ */
+int32_t srt_epoll_flag_j2n(JNIEnv *env, jobject epollFlag);
+
+/**
+ * @brief Convert native epoll flag to Java EpollFlag
+ *
+ * @param env Java environment
+ * @param flag native epoll flag
+ * @return return corresponding Java EpollFlag
+ */
+jobject srt_epoll_flag_n2j(JNIEnv *env, int flag);
 
 #ifdef __cplusplus
 }

@@ -382,6 +382,122 @@ nativeClearLastError(JNIEnv *env, jobject obj) {
     srt_clearlasterror();
 }
 
+// Asynchronous operations (epoll)
+JNIEXPORT jint JNICALL
+nativeEpollCreate(JNIEnv *env, jobject epoll) {
+    return srt_epoll_create();
+}
+
+JNIEXPORT jint JNICALL
+nativeEpollAddUSock(JNIEnv *env, jobject epoll, jobject ju, jobjectArray epollEvents) {
+    int eid = srt_epoll_j2n(env, epoll);
+    SRTSOCKET u = srt_socket_j2n(env, ju);
+
+    if (epollEvents) {
+        int events = srt_epoll_opts_j2n(env, epollEvents);
+        return srt_epoll_add_usock(eid, u, &events);
+    } else {
+        return srt_epoll_add_usock(eid, u, nullptr);
+    }
+}
+
+JNIEXPORT jint JNICALL
+nativeEpollUpdateUSock(JNIEnv *env, jobject epoll, jobject ju, jobjectArray epollEvents) {
+    int eid = srt_epoll_j2n(env, epoll);
+    SRTSOCKET u = srt_socket_j2n(env, ju);
+
+    if (epollEvents) {
+        int events = srt_epoll_opts_j2n(env, epollEvents);
+        return srt_epoll_update_usock(eid, u, &events);
+    } else {
+        return srt_epoll_update_usock(eid, u, nullptr);
+    }
+}
+
+JNIEXPORT jint JNICALL
+nativeEpollRemoveUSock(JNIEnv *env, jobject epoll, jobject ju) {
+    int eid = srt_epoll_j2n(env, epoll);
+    SRTSOCKET u = srt_socket_j2n(env, ju);
+
+    return srt_epoll_remove_usock(eid, u);
+}
+
+JNIEXPORT jint JNICALL
+nativeEpollWait(JNIEnv *env, jobject epoll, jobjectArray readFds, jobjectArray writeFds,
+                jlong timeOut) {
+    int eid = srt_epoll_j2n(env, epoll);
+    int nReadFds = 0;
+    int nWriteFds = 0;
+    SRTSOCKET *readfds = nullptr;
+    SRTSOCKET *writefds = nullptr;
+
+    if (readFds) {
+        readfds = srt_sockets_j2n(env, readFds, &nReadFds);
+    }
+    if (writeFds) {
+        writefds = srt_sockets_j2n(env, writeFds, &nWriteFds);
+    }
+
+    int res = srt_epoll_wait(eid, readfds, &nReadFds, writefds, &nWriteFds, timeOut, nullptr, 0,
+                             nullptr, 0);
+
+    if (readfds != nullptr) {
+        free(readfds);
+    }
+    if (writefds != nullptr) {
+        free(writefds);
+    }
+
+    return res;
+}
+
+JNIEXPORT jint JNICALL
+nativeEpollUWait(JNIEnv *env, jobject epoll, jobjectArray fdsSet, jlong timeOut) {
+    int eid = srt_epoll_j2n(env, epoll);
+    SRT_EPOLL_EVENT *epoll_events = nullptr;
+    int nEpollEvents = 0;
+
+    if (fdsSet) {
+        epoll_events = srt_epoll_events_j2n(env, fdsSet, &nEpollEvents);
+    }
+
+    int res = srt_epoll_uwait(eid, epoll_events, nEpollEvents, timeOut);
+
+    if (epoll_events != nullptr) {
+        free(epoll_events);
+    }
+
+    return res;
+}
+
+
+JNIEXPORT jobject JNICALL
+nativeEpollSet(JNIEnv *env, jobject epoll, jobjectArray epollFlags) {
+    int eid = srt_epoll_j2n(env, epoll);
+    int32_t flags = srt_epoll_flags_j2n(env, epollFlags);
+
+    flags = srt_epoll_set(eid, flags);
+
+    return srt_epoll_flags_n2j(env, flags);
+}
+
+JNIEXPORT jobject JNICALL
+nativeEpollGet(JNIEnv *env, jobject epoll) {
+    int eid = srt_epoll_j2n(env, epoll);
+
+    int32_t flags = srt_epoll_set(eid, -1);
+
+    return srt_epoll_flags_n2j(env, flags);
+}
+
+JNIEXPORT jint JNICALL
+nativeEpollRelease(JNIEnv *env, jobject epoll) {
+    int eid = srt_epoll_j2n(env, epoll);
+
+    return srt_epoll_release(eid);
+}
+
+
 // Logging control
 JNIEXPORT void JNICALL
 nativeSetLogLevel(JNIEnv *env, jobject obj, jint level) {
@@ -426,6 +542,19 @@ static JNINativeMethod errorMethods[] = {
 
 static JNINativeMethod errorTypeMethods[] = {
         {"nativeStrError", "()Ljava/lang/String;", (void *) &nativeStrError}
+};
+
+static JNINativeMethod epollMethods[] = {
+        {"nativeEpollCreate",      "()I",                                              (void *) &nativeEpollCreate},
+        {"nativeEpollAddUSock",    "(L" SRTSOCKET_CLASS ";[L" EPOLLOPT_CLASS ";)I",    (void *) &nativeEpollAddUSock},
+        {"nativeEpollUpdateUSock", "(L" SRTSOCKET_CLASS ";[L" EPOLLOPT_CLASS ";)I",    (void *) &nativeEpollUpdateUSock},
+        {"nativeEpollRemoveUSock", "(L" SRTSOCKET_CLASS ";)I",                         (void *) &nativeEpollRemoveUSock},
+        {"nativeEpollWait",        "([L" SRTSOCKET_CLASS ";[L" SRTSOCKET_CLASS ";J)I", (void *) &nativeEpollWait},
+        {"nativeEpollUWait",       "([L" EPOLLEVENT_CLASS ";J)I",                      (void *) &nativeEpollUWait},
+        {"nativeEpollSet",         "([L" EPOLLFLAG_CLASS ";)[L" EPOLLFLAG_CLASS ";",   (void *) &nativeEpollSet},
+        {"nativeEpollGet",         "()[L" EPOLLFLAG_CLASS ";",                         (void *) &nativeEpollGet},
+        {"nativeEpollRelease",     "()I",                                              (void *) &nativeEpollRelease}
+
 };
 
 static int registerNativeForClassName(JNIEnv *env, const char *className,
@@ -476,6 +605,13 @@ jint JNI_OnLoad(JavaVM *vm, void * /*reserved*/) {
                                     sizeof(errorTypeMethods) / sizeof(errorTypeMethods[0])) !=
          JNI_TRUE)) {
         LOGE(TAG, "ErrorType RegisterNatives failed");
+        return -1;
+    }
+
+    if ((registerNativeForClassName(env, EPOLL_CLASS, epollMethods,
+                                    sizeof(epollMethods) / sizeof(epollMethods[0])) !=
+         JNI_TRUE)) {
+        LOGE(TAG, "Epoll RegisterNatives failed");
         return -1;
     }
 

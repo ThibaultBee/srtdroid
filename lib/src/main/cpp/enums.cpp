@@ -635,6 +635,143 @@ jobject srt_error_n2j(JNIEnv *env, int error_type) {
     return errorType;
 }
 
+jobject srt_epoll_flag_n2j(JNIEnv *env, int flag) {
+    jclass epollFlagClazz = env->FindClass(EPOLLFLAG_CLASS);
+    if (!epollFlagClazz) {
+        LOGE(TAG, "Can't get "
+                EPOLLFLAG_CLASS
+                " class");
+        return nullptr;
+    }
+
+    char *epoll_flag_field = nullptr;
+    switch (flag) {
+        case 0:
+            epoll_flag_field = strdup("CLEAR_ALL");
+            break;
+        case SRT_EPOLL_ENABLE_EMPTY:
+            epoll_flag_field = strdup("ENABLE_EMPTY");
+            break;
+        case SRT_EPOLL_ENABLE_OUTPUTCHECK:
+            epoll_flag_field = strdup("ENABLE_OUTPUTCHECK");
+            break;
+        default:
+            LOGE(TAG, "Epoll Flag: unknown value %d", flag);
+    }
+
+    jfieldID epollFlagField = env->GetStaticFieldID(epollFlagClazz, epoll_flag_field,
+                                                    "L" EPOLLFLAG_CLASS ";");
+    if (!epollFlagField) {
+        LOGE(TAG, "Can't get EpollFlag field");
+        env->DeleteLocalRef(epollFlagClazz);
+        return nullptr;
+    }
+
+    jobject epollFlag = env->GetStaticObjectField(epollFlagClazz, epollFlagField);
+
+    if (epoll_flag_field != nullptr) {
+        free(epoll_flag_field);
+    }
+
+    env->DeleteLocalRef(epollFlagClazz);
+
+    return epollFlag;
+}
+
+int32_t srt_epoll_flag_j2n(JNIEnv *env, jobject epollFlag) {
+    const char *epoll_flag_field = enums_get_field_id(env, epollFlag);
+    if (!epoll_flag_field) {
+        LOGE(TAG, "Can't get EpollFlag");
+        return -1;
+    }
+
+    int32_t flag = -1;
+    if (strcmp(epoll_flag_field, "CLEAR_ALL") == 0) {
+        flag = 0;
+    } else if (strcmp(epoll_flag_field, "ENABLE_EMPTY") == 0) {
+        flag = SRT_EPOLL_ENABLE_EMPTY;
+    } else if (strcmp(epoll_flag_field, "ENABLE_OUTPUTCHECK") == 0) {
+        flag = SRT_EPOLL_ENABLE_OUTPUTCHECK;
+    } else {
+        LOGE(TAG, "EpollFlag: unknown value %s", epoll_flag_field);
+    }
+
+    free((void *) epoll_flag_field);
+
+    return flag;
+}
+
+jobject srt_epoll_opt_n2j(JNIEnv *env, uint32_t event) {
+    jclass epollEventClazz = env->FindClass(EPOLLOPT_CLASS);
+    if (!epollEventClazz) {
+        LOGE(TAG, "Can't get "
+                EPOLLOPT_CLASS
+                " class");
+        return nullptr;
+    }
+
+    char *epoll_event_field = nullptr;
+    switch (event) {
+        case SRT_EPOLL_IN:
+            epoll_event_field = strdup("IN");
+            break;
+        case SRT_EPOLL_OUT:
+            epoll_event_field = strdup("OUT");
+            break;
+        case SRT_EPOLL_ERR:
+            epoll_event_field = strdup("ERR");
+            break;
+        case SRT_EPOLL_ET:
+            epoll_event_field = strdup("ET");
+            break;
+        default:
+            LOGE(TAG, "Epoll Event: unknown value %d", event);
+    }
+
+    jfieldID epollEventField = env->GetStaticFieldID(epollEventClazz, epoll_event_field,
+                                                     "L" EPOLLOPT_CLASS ";");
+    if (!epollEventField) {
+        LOGE(TAG, "Can't get EpollEvent field");
+        env->DeleteLocalRef(epollEventClazz);
+        return nullptr;
+    }
+
+    jobject epollEvent = env->GetStaticObjectField(epollEventClazz, epollEventField);
+
+    if (epoll_event_field != nullptr) {
+        free(epoll_event_field);
+    }
+
+    env->DeleteLocalRef(epollEventClazz);
+
+    return epollEvent;
+}
+
+int32_t srt_epoll_opt_j2n(JNIEnv *env, jobject epollEvent) {
+    const char *epoll_event_field = enums_get_field_id(env, epollEvent);
+    if (!epoll_event_field) {
+        LOGE(TAG, "Can't get EpollEvent");
+        return -1;
+    }
+
+    int32_t event = -1;
+    if (strcmp(epoll_event_field, "IN") == 0) {
+        event = SRT_EPOLL_IN;
+    } else if (strcmp(epoll_event_field, "OUT") == 0) {
+        event = SRT_EPOLL_OUT;
+    } else if (strcmp(epoll_event_field, "ERR") == 0) {
+        event = SRT_EPOLL_ERR;
+    } else if (strcmp(epoll_event_field, "ET") == 0) {
+        event = SRT_EPOLL_ET;
+    } else {
+        LOGE(TAG, "EpollEvent: unknown value %s", epoll_event_field);
+    }
+
+    free((void *) epoll_event_field);
+
+    return event;
+}
+
 #ifdef __cplusplus
 }
 #endif

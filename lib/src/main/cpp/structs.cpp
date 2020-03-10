@@ -492,6 +492,174 @@ jobject srt_socket_n2j(JNIEnv *env, SRTSOCKET srtsocket) {
     return srtSocket;
 }
 
+SRTSOCKET *srt_sockets_j2n(JNIEnv *env, jobjectArray srtSockets, int *nSockets) {
+    *nSockets = env->GetArrayLength(srtSockets);
+    if (*nSockets == 0)
+        return nullptr;
+
+    SRTSOCKET *srtsocket = (SRTSOCKET *) malloc(
+            reinterpret_cast<size_t>(*nSockets * sizeof(SRTSOCKET)));
+
+    for (int i = 0; i < *nSockets; i++) {
+        jobject srtSocket = env->GetObjectArrayElement(srtSockets, i);
+        srtsocket[i] = srt_socket_j2n(env, srtSocket);
+    }
+
+    return srtsocket;
+}
+
+int srt_epoll_j2n(JNIEnv *env, jobject epoll) {
+    jclass epollClazz = env->GetObjectClass(epoll);
+    if (!epollClazz) {
+        LOGE(TAG, "Can't get Epoll class");
+        return -1;
+    }
+
+    jfieldID eidField = env->GetFieldID(epollClazz, "eid", "I");
+    if (!eidField) {
+        LOGE(TAG, "Can't get eid field");
+        env->DeleteLocalRef(epollClazz);
+        return -1;
+    }
+
+    jint eid = env->GetIntField(epoll, eidField);
+
+    env->DeleteLocalRef(epollClazz);
+
+    return eid;
+}
+
+jobject srt_epoll_n2j(JNIEnv *env, int eid) {
+    jclass epollClazz = env->FindClass(EPOLL_CLASS);
+    if (!epollClazz) {
+        LOGE(TAG, "Can't find Epoll class");
+        return nullptr;
+    }
+
+    jmethodID epollConstructorMethod = env->GetMethodID(epollClazz, "<init>", "(I)V");
+    if (!epollConstructorMethod) {
+        LOGE(TAG, "Can't get Epoll constructor");
+        env->DeleteLocalRef(epollClazz);
+        return nullptr;
+    }
+
+    jobject epoll = env->NewObject(epollClazz, epollConstructorMethod, eid);
+
+    env->DeleteLocalRef(epollClazz);
+
+    return epoll;
+}
+
+int srt_epoll_opts_j2n(JNIEnv *env, jobjectArray epollEvents) {
+    int nEvents = env->GetArrayLength(epollEvents);
+    int events = 0;
+
+    for (int i = 0; i < nEvents; i++) {
+        jobject epollEvent = env->GetObjectArrayElement(epollEvents, i);
+        events |= srt_epoll_opt_j2n(env, epollEvent);
+    }
+
+    return events;
+}
+
+int srt_epoll_flags_j2n(JNIEnv *env, jobjectArray epollFlags) {
+    int nFlags = env->GetArrayLength(epollFlags);
+    int flags = 0;
+
+    for (int i = 0; i < nFlags; i++) {
+        jobject epollFlag = env->GetObjectArrayElement(epollFlags, i);
+        flags |= srt_epoll_flag_j2n(env, epollFlag);
+    }
+
+    return flags;
+}
+
+jobjectArray srt_epoll_flags_n2j(JNIEnv *env, int epoll_flags) {
+    int max = SRT_EPOLL_ENABLE_OUTPUTCHECK;
+    int nFlags = 0;
+    int epoll_flag;
+
+    // Find EpollFlag array size
+    for (int i = 0; i < max; i++) {
+        epoll_flag = epoll_flags & 1 << i;
+        if (epoll_flag != 0) {
+            nFlags++;
+        }
+    }
+
+    jclass epollFlagClazz = env->FindClass(EPOLLFLAG_CLASS);
+    if (!epollFlagClazz) {
+        LOGE(TAG, "Can't find EpollFlag class");
+        return nullptr;
+    }
+
+    jobjectArray epollFlags = env->NewObjectArray(nFlags, epollFlagClazz, nullptr);
+    if (!epollFlags) {
+        LOGE(TAG, "Can't create EpollFlag Array");
+        env->DeleteLocalRef(epollFlagClazz);
+        return nullptr;
+    }
+
+    jobject epollFlag;
+
+    for (int i = 0; i < max; i++) {
+        epoll_flag = epoll_flags & 1 << i;
+        if (epoll_flag != 0) {
+            epollFlag = srt_epoll_flag_n2j(env, epoll_flag);
+            env->SetObjectArrayElement(epollFlags, i, epollFlag);
+        }
+    }
+
+    env->DeleteLocalRef(epollFlagClazz);
+
+    return epollFlags;
+}
+
+SRT_EPOLL_EVENT *srt_epoll_event_j2n(JNIEnv *env, jobject epollEvent, SRT_EPOLL_EVENT *srt_event) {
+    jclass epollEventClazz = env->GetObjectClass(epollEvent);
+    if (!epollEventClazz) {
+        LOGE(TAG, "Can't get EpollEvent class");
+        return nullptr;
+    }
+
+    jfieldID socketField = env->GetFieldID(epollEventClazz, "socket", "L" SRTSOCKET_CLASS ";");
+    if (!socketField) {
+        LOGE(TAG, "Can't get Socket field");
+        env->DeleteLocalRef(epollEventClazz);
+        return nullptr;
+    }
+    jobject srtSocket = env->GetObjectField(epollEvent, socketField);
+    srt_event->fd = srt_socket_j2n(env, srtSocket);
+
+    jfieldID epollOptsField = env->GetFieldID(epollEventClazz, "events", "[L" EPOLLOPT_CLASS ";");
+    if (!epollOptsField) {
+        LOGE(TAG, "Can't get events field");
+        env->DeleteLocalRef(epollEventClazz);
+        return nullptr;
+    }
+    jobjectArray epollOpts = static_cast<jobjectArray>(env->GetObjectField(epollEvent,
+                                                                           epollOptsField));
+    srt_event->events = srt_epoll_opts_j2n(env, epollOpts);
+
+    env->DeleteLocalRef(epollEventClazz);
+
+    return srt_event;
+}
+
+SRT_EPOLL_EVENT *srt_epoll_events_j2n(JNIEnv *env, jobjectArray epollEvents, int *nEvents) {
+    *nEvents = env->GetArrayLength(epollEvents);
+
+    SRT_EPOLL_EVENT *epoll_events = static_cast<SRT_EPOLL_EVENT *>(malloc(
+            *nEvents * sizeof(SRT_EPOLL_EVENT)));
+
+    for (int i = 0; i < *nEvents; i++) {
+        jobject epollEvent = env->GetObjectArrayElement(epollEvents, i);
+        srt_epoll_event_j2n(env, epollEvent, &epoll_events[i]);
+    }
+
+    return epoll_events;
+}
+
 jobject new_pair(JNIEnv *env, jobject first, jobject second) {
     jclass pairClazz = env->FindClass(PAIR_CLASS);
     if (!pairClazz) {
