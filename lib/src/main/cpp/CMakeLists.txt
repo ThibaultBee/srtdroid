@@ -7,22 +7,26 @@ set(SRT_VERSION "1.4.1")
 
 find_program(GIT "git")
 
-# OpenSSL - needs few executable such as perl and mv in PATH
+# Configure script to build openssl
+set(CLANG_PATH ${CMAKE_C_COMPILER_EXTERNAL_TOOLCHAIN}/bin)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/build-openssl.sh.in ${CMAKE_CURRENT_BINARY_DIR}/build-openssl.sh @ONLY)
+
 ExternalProject_Add(openssl_project
         URL https://www.openssl.org/source/openssl-${OPENSSL_VERSION}.tar.gz
-        CONFIGURE_COMMAND PATH=${CMAKE_C_COMPILER_EXTERNAL_TOOLCHAIN}/bin:$ENV{PATH} CC=${CMAKE_C_COMPILER} ANDROID_NDK_HOME=${ANDROID_NDK} <SOURCE_DIR>/Configure android-${ANDROID_ARCH_NAME} -D__ANDROID_API__=${ANDROID_NATIVE_API_LEVEL} --openssldir=${CMAKE_LIBRARY_OUTPUT_DIRECTORY} --libdir="" --prefix=${CMAKE_LIBRARY_OUTPUT_DIRECTORY}
-        BUILD_BYPRODUCTS ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/libssl.so ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/libcrypto.so
-        BUILD_COMMAND PATH=${CMAKE_C_COMPILER_EXTERNAL_TOOLCHAIN}/bin:$ENV{PATH} ANDROID_NDK_HOME=${ANDROID_NDK} make #FIXME use ninja instead
+        CONFIGURE_COMMAND ""
+        BUILD_COMMAND ${CMAKE_CURRENT_BINARY_DIR}/build-openssl.sh <SOURCE_DIR>
+        INSTALL_COMMAND ""
+        BUILD_BYPRODUCTS ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/libssl.a ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/libcrypto.a
         BUILD_IN_SOURCE 1
         )
 
 add_library(ssl SHARED IMPORTED)
 add_dependencies(ssl openssl_project)
-set_target_properties(ssl PROPERTIES IMPORTED_LOCATION ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/libssl.so)
+set_target_properties(ssl PROPERTIES IMPORTED_LOCATION ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/libssl.a)
 
 add_library(crypto SHARED IMPORTED)
 add_dependencies(crypto openssl_project)
-set_target_properties(crypto PROPERTIES IMPORTED_LOCATION ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/libcrypto.so)
+set_target_properties(crypto PROPERTIES IMPORTED_LOCATION ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/libcrypto.a)
 
 
 # SRT

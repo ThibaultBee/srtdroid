@@ -1,0 +1,11 @@
+#!/bin/bash
+
+SOURCE_DIR=$1
+
+export PATH=${PATH}:@CLANG_PATH@
+export CC=@CMAKE_C_COMPILER@
+export ANDROID_NDK_HOME=@ANDROID_NDK@
+
+${SOURCE_DIR}/Configure android-@ANDROID_ARCH_NAME@ -D__ANDROID_API__=@ANDROID_NATIVE_API_LEVEL@ --openssldir=@CMAKE_LIBRARY_OUTPUT_DIRECTORY@ --libdir=\"\" --prefix=@CMAKE_LIBRARY_OUTPUT_DIRECTORY@
+make
+make install
