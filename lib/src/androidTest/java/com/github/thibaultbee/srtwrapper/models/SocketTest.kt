@@ -26,45 +26,35 @@ class SocketTest {
     @Before
     fun setUp() {
         assertEquals(srt.startUp(), 0)
+        socket = Socket()
+        assertTrue(socket.isValid())
     }
 
     @After
     fun tearDown() {
         if (socket.isValid())
-            socket.close()
+            assertEquals(socket.close(), 0)
         assertEquals(srt.cleanUp(), 0)
     }
 
     @Test
-    fun defaultConstructorTest() {
-        socket = Socket()
-        assertTrue(socket.isValid())
-    }
-
-    @Test
     fun inetConstructorTest() {
-        socket = Socket(StandardProtocolFamily.INET)
-        assertTrue(socket.isValid())
+        assertTrue(Socket(StandardProtocolFamily.INET).isValid())
     }
 
     @Test
     fun inet6ConstructorTest() {
-        socket = Socket(StandardProtocolFamily.INET6)
-        assertTrue(socket.isValid())
+        assertTrue(Socket(StandardProtocolFamily.INET6).isValid())
     }
 
     @Test
     fun bindTest() {
-        socket = Socket(StandardProtocolFamily.INET)
-        assertTrue(socket.isValid())
         assertEquals(0, socket.setSockFlag(SockOpt.TRANSTYPE, Transtype.FILE))
         assertEquals(0, socket.bind("127.0.3.1", 1234))
     }
 
     @Test
     fun sockStatusTest() {
-        socket = Socket(StandardProtocolFamily.INET)
-        assertTrue(socket.isValid())
         assertEquals(SockStatus.INIT, socket.getSockState())
         assertEquals(0, socket.bind("127.0.3.1", 1234))
         assertEquals(SockStatus.OPENED, socket.getSockState())
@@ -72,16 +62,12 @@ class SocketTest {
 
     @Test
     fun closeTest() {
-        socket = Socket(StandardProtocolFamily.INET)
-        assertTrue(socket.isValid())
         assertEquals(0, socket.close())
         assertFalse(socket.isValid())
     }
 
     @Test
     fun listenTest() {
-        socket = Socket(StandardProtocolFamily.INET)
-        assertTrue(socket.isValid())
         assertEquals(-1, socket.listen(3))
         assertEquals(Error.getLastError(), ErrorType.EUNBOUNDSOCK)
         assertEquals(0, socket.bind("127.0.3.1", 1234))
@@ -90,8 +76,6 @@ class SocketTest {
 
     @Test
     fun acceptTest() {
-        socket = Socket(StandardProtocolFamily.INET)
-        assertTrue(socket.isValid())
         val pair = socket.accept()
         assertFalse(pair.first.isValid())
         assertNull(pair.second)
@@ -100,31 +84,23 @@ class SocketTest {
 
     @Test
     fun connectTest() {
-        socket = Socket(StandardProtocolFamily.INET)
-        assertTrue(socket.isValid())
         assertEquals(-1, socket.connect("127.0.3.1", 1234))
         assertEquals(Error.getLastError(), ErrorType.ENOSERVER)
     }
 
     @Test
     fun rendezVousTest() {
-        socket = Socket(StandardProtocolFamily.INET)
-        assertTrue(socket.isValid())
         assertEquals(-1, socket.rendezVous("0.0.0.0", "127.0.3.1", 1234))
         assertEquals(Error.getLastError(), ErrorType.ENOSERVER)
     }
 
     @Test
     fun getPeerNameTest() {
-        socket = Socket(StandardProtocolFamily.INET)
-        assertTrue(socket.isValid())
         assertNull(socket.getPeerName())
     }
 
     @Test
     fun getSockNameTest() {
-        socket = Socket(StandardProtocolFamily.INET)
-        assertTrue(socket.isValid())
         assertNull(socket.getSockName())
         assertEquals(0, socket.bind("127.0.0.1", 1234))
         val sockAddr = socket.getSockName()
@@ -134,8 +110,6 @@ class SocketTest {
 
     @Test
     fun getSockOptTest() {
-        socket = Socket(StandardProtocolFamily.INET)
-        assertTrue(socket.isValid())
         assertNull(socket.getSockFlag(SockOpt.TRANSTYPE))
         assertEquals(true, socket.getSockFlag(SockOpt.RCVSYN))
         assertEquals(-1, socket.getSockFlag(SockOpt.SNDTIMEO))
@@ -146,8 +120,6 @@ class SocketTest {
 
     @Test
     fun setSockOptTest() {
-        socket = Socket(StandardProtocolFamily.INET)
-        assertTrue(socket.isValid())
         assertEquals(0, socket.setSockFlag(SockOpt.TRANSTYPE, Transtype.FILE))
         assertEquals(0, socket.setSockFlag(SockOpt.RCVSYN, true))
         assertEquals(0, socket.setSockFlag(SockOpt.SNDTIMEO, 100))
@@ -157,24 +129,18 @@ class SocketTest {
 
     @Test
     fun sendMsg1Test() {
-        socket = Socket(StandardProtocolFamily.INET)
-        assertTrue(socket.isValid())
         assertEquals(-1, socket.send("Hello World !"))
         assertEquals(Error.getLastError(), ErrorType.ENOCONN)
     }
 
     @Test
     fun sendMsg2Test() {
-        socket = Socket(StandardProtocolFamily.INET)
-        assertTrue(socket.isValid())
         assertEquals(-1, socket.sendMsg("Hello World !", -1, false))
         assertEquals(Error.getLastError(), ErrorType.ENOCONN)
     }
 
     @Test
     fun sendMsg3Test() {
-        socket = Socket(StandardProtocolFamily.INET)
-        assertTrue(socket.isValid())
         assertEquals(-1, socket.sendMsg2("Hello World !", null))
         assertEquals(Error.getLastError(), ErrorType.ENOCONN)
         assertEquals(
@@ -186,15 +152,11 @@ class SocketTest {
 
     @Test
     fun recvTest() {
-        socket = Socket(StandardProtocolFamily.INET)
-        assertTrue(socket.isValid())
         assertNull(socket.recv(4 /*Int nb bytes*/))
     }
 
     @Test
     fun recvMsg2Test() {
-        socket = Socket(StandardProtocolFamily.INET)
-        assertTrue(socket.isValid())
         assertNull(
             socket.recvMsg2(
                 4 /*Int nb bytes*/,
@@ -216,8 +178,6 @@ class SocketTest {
 
     @Test
     fun sendFileTest() {
-        socket = Socket(StandardProtocolFamily.INET)
-        assertTrue(socket.isValid())
         assertEquals(-1, socket.sendFile(createTestFile()))
         assertEquals(Error.getLastError(), ErrorType.ENOCONN)
     }
@@ -228,23 +188,17 @@ class SocketTest {
             InstrumentationRegistry.getInstrumentation().context.externalCacheDir,
             "FileToRecv"
         )
-        socket = Socket(StandardProtocolFamily.INET)
-        assertTrue(socket.isValid())
         assertEquals(-1, socket.recvFile(myFile, 0, 1024))
         assertEquals(Error.getLastError(), ErrorType.ENOCONN)
     }
 
     @Test
     fun bstatsTest() {
-        socket = Socket(StandardProtocolFamily.INET)
-        assertTrue(socket.isValid())
         socket.bstats(true)
     }
 
     @Test
     fun bistatsTest() {
-        socket = Socket(StandardProtocolFamily.INET)
-        assertTrue(socket.isValid())
         socket.bistats(clear = true, instantaneous = false)
     }
 }
