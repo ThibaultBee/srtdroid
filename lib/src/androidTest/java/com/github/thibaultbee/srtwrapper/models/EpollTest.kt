@@ -37,7 +37,7 @@ class EpollTest {
     fun addUSockTest() {
         socket = Socket()
         assertTrue(socket.isValid())
-        assertEquals(0, epoll.addUSock(socket, null))
+        assertEquals(0, epoll.addUSock(socket))
         val epollOpt = listOf(EpollOpt.ERR, EpollOpt.ET)
         assertEquals(0, epoll.addUSock(socket, epollOpt))
     }
@@ -46,7 +46,7 @@ class EpollTest {
     fun updateUSockTest() {
         socket = Socket()
         assertTrue(socket.isValid())
-        assertEquals(0, epoll.updateUSock(socket, null))
+        assertEquals(0, epoll.updateUSock(socket))
         val epollOpt = listOf(EpollOpt.ERR, EpollOpt.ET)
         assertEquals(0, epoll.updateUSock(socket, epollOpt))
     }

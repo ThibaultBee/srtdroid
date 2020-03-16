@@ -5,12 +5,12 @@ import com.github.thibaultbee.srtwrapper.enums.EpollOpt
 
 class Epoll {
     private external fun nativeEpollCreate(): Int
-    private external fun nativeEpollAddUSock(socket: Socket, events: Array<EpollOpt>?): Int
-    private external fun nativeEpollUpdateUSock(socket: Socket, events: Array<EpollOpt>?): Int
+    private external fun nativeEpollAddUSock(socket: Socket, events: Array<EpollOpt>): Int
+    private external fun nativeEpollUpdateUSock(socket: Socket, events: Array<EpollOpt>): Int
     private external fun nativeEpollRemoveUSock(socket: Socket): Int
     private external fun nativeEpollWait(
-        readFds: Array<Socket>?,
-        writeFds: Array<Socket>?,
+        readFds: Array<Socket>,
+        writeFds: Array<Socket>,
         timeOut: Long
     ): Int
 
@@ -31,16 +31,20 @@ class Epoll {
 
     fun isValid() = eid > INVALID_EPOLL
 
-    fun addUSock(socket: Socket, events: List<EpollOpt>?) =
-        nativeEpollAddUSock(socket, events?.toTypedArray())
+    fun addUSock(socket: Socket, events: List<EpollOpt> = emptyList()) =
+        nativeEpollAddUSock(socket, events.toTypedArray())
 
-    fun updateUSock(socket: Socket, events: List<EpollOpt>?) =
-        nativeEpollUpdateUSock(socket, events?.toTypedArray())
+    fun updateUSock(socket: Socket, events: List<EpollOpt> = emptyList()) =
+        nativeEpollUpdateUSock(socket, events.toTypedArray())
 
     fun removeUSock(socket: Socket) = nativeEpollRemoveUSock(socket)
 
-    fun wait(readFds: List<Socket>? = null, writeFds: List<Socket>? = null, timeOut: Long) =
-        nativeEpollWait(readFds?.toTypedArray(), writeFds?.toTypedArray(), timeOut)
+    fun wait(
+        readFds: List<Socket> = emptyList(),
+        writeFds: List<Socket> = emptyList(),
+        timeOut: Long
+    ) =
+        nativeEpollWait(readFds.toTypedArray(), writeFds.toTypedArray(), timeOut)
 
     fun uWait(fdsSet: List<EpollEvent>, timeOut: Long) =
         nativeEpollUWait(fdsSet.toTypedArray(), timeOut)
