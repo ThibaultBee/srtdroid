@@ -6,15 +6,23 @@ set(OPENSSL_VERSION "1.1.1c")
 set(SRT_VERSION "1.4.1")
 
 find_program(GIT "git")
+# Needed for openssl. Just to be sure you have it
+find_program(MAKE "make")
+find_program(PERL "perl")
 
-# Configure script to build openssl
 set(CLANG_PATH ${CMAKE_C_COMPILER_EXTERNAL_TOOLCHAIN}/bin)
-configure_file(${CMAKE_CURRENT_SOURCE_DIR}/build-openssl.sh.in ${CMAKE_CURRENT_BINARY_DIR}/build-openssl.sh @ONLY)
+if (CMAKE_HOST_WIN32)
+    set(SCRIPT_EXT bat)
+else ()
+    set(SCRIPT_EXT sh)
+endif ()
+# Configure script to build openssl
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/build-openssl.${SCRIPT_EXT}.in ${CMAKE_CURRENT_BINARY_DIR}/build-openssl.${SCRIPT_EXT} @ONLY)
 
 ExternalProject_Add(openssl_project
         URL https://www.openssl.org/source/openssl-${OPENSSL_VERSION}.tar.gz
         CONFIGURE_COMMAND ""
-        BUILD_COMMAND ${CMAKE_CURRENT_BINARY_DIR}/build-openssl.sh <SOURCE_DIR>
+        BUILD_COMMAND ${CMAKE_CURRENT_BINARY_DIR}/build-openssl.${SCRIPT_EXT} <SOURCE_DIR>
         INSTALL_COMMAND ""
         BUILD_BYPRODUCTS ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/libssl.a ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/libcrypto.a
         BUILD_IN_SOURCE 1
