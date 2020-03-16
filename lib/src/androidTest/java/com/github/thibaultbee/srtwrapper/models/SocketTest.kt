@@ -233,4 +233,18 @@ class SocketTest {
         assertEquals(-1, socket.recvFile(myFile, 0, 1024))
         assertEquals(Error.getLastError(), ErrorType.ENOCONN)
     }
+
+    @Test
+    fun bstatsTest() {
+        socket = Socket(StandardProtocolFamily.INET)
+        assertTrue(socket.isValid())
+        socket.bstats(true)
+    }
+
+    @Test
+    fun bistatsTest() {
+        socket = Socket(StandardProtocolFamily.INET)
+        assertTrue(socket.isValid())
+        socket.bistats(clear = true, instantaneous = false)
+    }
 }

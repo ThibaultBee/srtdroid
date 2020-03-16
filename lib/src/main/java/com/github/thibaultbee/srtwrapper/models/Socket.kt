@@ -36,6 +36,9 @@ class Socket {
     private external fun nativeRecvMsg2(size: Int, msgCtrl: MsgCtrl?): ByteArray
     private external fun nativeRecvFile(path: String, offset: Long, size: Long, block: Int): Long
 
+    private external fun nativebstats(clear: Boolean): Stats
+    private external fun nativebistats(clear: Boolean, instantaneous: Boolean): Stats
+
     private var srtsocket: Int
 
     companion object {
@@ -121,4 +124,9 @@ class Socket {
 
     fun recvFile(file: File, offset: Long, size: Long, block: Int = 7280000) =
         nativeRecvFile(file.path, offset, size, block)
+
+    // Performance tracking
+    fun bstats(clear: Boolean): Stats = nativebstats(clear)
+
+    fun bistats(clear: Boolean, instantaneous: Boolean): Stats = nativebistats(clear, instantaneous)
 }

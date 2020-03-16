@@ -11,6 +11,7 @@ extern "C" {
 #define ERROR_CLASS "com/github/thibaultbee/srtwrapper/models/Error"
 #define MSGCTRL_CLASS "com/github/thibaultbee/srtwrapper/models/MsgCtrl"
 #define SRTSOCKET_CLASS "com/github/thibaultbee/srtwrapper/models/Socket"
+#define STATS_CLASS "com/github/thibaultbee/srtwrapper/models/Stats"
 #define SRT_CLASS "com/github/thibaultbee/srtwrapper/Srt"
 
 #define INETSOCKETADDRESS_CLASS "java/net/InetSocketAddress"
@@ -90,6 +91,15 @@ SRTSOCKET srt_socket_j2n(JNIEnv *env, jobject srtSocket);
  * @return return corresponding Java SRT Socket
  */
 jobject srt_socket_n2j(JNIEnv *env, SRTSOCKET srtsocket);
+
+/**
+ * @brief Convert Stats from SRT library SRT_TRACEBSTATS to Java Stats
+ *
+ * @param env Java environment
+ * @param tracebstats Native SRT_TRACEBSTATS structure
+ * @return return corresponding Java Stats
+ */
+jobject srt_stats_n2j(JNIEnv *env, SRT_TRACEBSTATS tracebstats);
 
 /**
  * @brief Convert Java Socket object array to a native array of SRTSOCKET

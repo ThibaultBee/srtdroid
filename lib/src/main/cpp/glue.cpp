@@ -382,6 +382,27 @@ nativeClearLastError(JNIEnv *env, jobject obj) {
     srt_clearlasterror();
 }
 
+// Performance tracking
+JNIEXPORT jobject JNICALL
+nativebstats(JNIEnv *env, jobject ju, jboolean clear) {
+    SRTSOCKET u = srt_socket_j2n(env, ju);
+    SRT_TRACEBSTATS tracebstats;
+
+    srt_bstats(u, &tracebstats, clear);
+
+    return srt_stats_n2j(env, tracebstats);
+}
+
+JNIEXPORT jobject JNICALL
+nativebistats(JNIEnv *env, jobject ju, jboolean clear, jboolean instantaneous) {
+    SRTSOCKET u = srt_socket_j2n(env, ju);
+    SRT_TRACEBSTATS tracebstats;
+
+    srt_bistats(u, &tracebstats, clear, instantaneous);
+
+    return srt_stats_n2j(env, tracebstats);
+}
+
 // Asynchronous operations (epoll)
 JNIEXPORT jint JNICALL
 nativeEpollCreate(JNIEnv *env, jobject epoll) {
@@ -531,7 +552,9 @@ static JNINativeMethod socketMethods[] = {
         {"nativeRecv",         "(I)[B",                                                         (void *) &nativeRecv},
         {"nativeRecvMsg2",     "(IL" MSGCTRL_CLASS ";)[B",                                      (void *) &nativeRecvMsg2},
         {"nativeSendFile",     "(Ljava/lang/String;JJI)J",                                      (void *) &nativeSendFile},
-        {"nativeRecvFile",     "(Ljava/lang/String;JJI)J",                                      (void *) &nativeRecvFile}
+        {"nativeRecvFile",     "(Ljava/lang/String;JJI)J",                                      (void *) &nativeRecvFile},
+        {"nativebstats",       "(Z)L" STATS_CLASS ";",                                          (void *) &nativebstats},
+        {"nativebistats",      "(ZZ)L" STATS_CLASS ";",                                         (void *) &nativebistats}
 };
 
 static JNINativeMethod errorMethods[] = {
