@@ -552,7 +552,7 @@ jobject srt_epoll_n2j(JNIEnv *env, int eid) {
 
 int srt_epoll_opts_j2n(JNIEnv *env, jobjectArray epollEvents) {
     int nEvents = env->GetArrayLength(epollEvents);
-    int events = 0;
+    int events = SRT_EPOLL_OPT_NONE;
 
     for (int i = 0; i < nEvents; i++) {
         jobject epollEvent = env->GetObjectArrayElement(epollEvents, i);
