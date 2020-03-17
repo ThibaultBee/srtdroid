@@ -11,12 +11,13 @@ diff --git a/CMakeLists.txt b/CMakeLists.txt
 index 7fafe77..e4f83c9 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists.txt
-@@ -393,6 +393,9 @@ elseif(CYGWIN)
+@@ -393,6 +393,10 @@ elseif(CYGWIN)
  elseif(GNU)
  	add_definitions(-DGNU=1)
  	message(STATUS "DETECTED SYSTEM: GNU;  GNU=1" )
 +elseif(ANDROID)
 +	add_definitions(-DANDROID=1)
++	add_definitions(-DLINUX=1)
 +	message(STATUS "DETECTED SYSTEM: ANDROID; ANDROID=1")
  else()
  	message(FATAL_ERROR "Unsupported system: ${CMAKE_SYSTEM_NAME}")
