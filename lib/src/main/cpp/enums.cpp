@@ -178,8 +178,6 @@ int srt_sockopt_j2n(JNIEnv *env, jobject sockOpt) {
         srt_sockopt = SRTO_KMREFRESHRATE;
     } else if (strcmp(srt_sockopt_field, "KMPREANNOUNCE") == 0) {
         srt_sockopt = SRTO_KMPREANNOUNCE;
-    } else if (strcmp(srt_sockopt_field, "STRICTENC") == 0) {
-        srt_sockopt = SRTO_STRICTENC;
     } else if (strcmp(srt_sockopt_field, "IPV6ONLY") == 0) {
         srt_sockopt = SRTO_IPV6ONLY;
     } else if (strcmp(srt_sockopt_field, "PEERIDLETIMEO") == 0) {
