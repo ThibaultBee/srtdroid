@@ -5,24 +5,12 @@ import com.github.thibaultbee.srtwrapper.enums.ErrorType
 class Error {
     companion object {
         @JvmStatic
-        private external fun nativeGetLastErrorStr(): String
+        external fun getLastErrorMessage(): String
 
         @JvmStatic
-        private external fun nativeGetLastError(): ErrorType
+        external fun getLastError(): ErrorType
 
         @JvmStatic
-        private external fun nativeClearLastError()
-
-        fun getLastErrorMessage(): String {
-            return nativeGetLastErrorStr()
-        }
-
-        fun getLastError(): ErrorType {
-            return nativeGetLastError()
-        }
-
-        fun clearLastError() {
-            return nativeClearLastError()
-        }
+        external fun clearLastError()
     }
 }

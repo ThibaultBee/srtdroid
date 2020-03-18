@@ -568,13 +568,13 @@ static JNINativeMethod socketMethods[] = {
 };
 
 static JNINativeMethod errorMethods[] = {
-        {"nativeGetLastErrorStr", "()Ljava/lang/String;",    (void *) &nativeGetLastErrorStr},
-        {"nativeGetLastError",    "()L" ERRORTYPE_CLASS ";", (void *) &nativeGetLastError},
-        {"nativeClearLastError",  "()V",                     (void *) &nativeClearLastError}
+        {"getLastErrorMessage", "()Ljava/lang/String;",    (void *) &nativeGetLastErrorStr},
+        {"getLastError",        "()L" ERRORTYPE_CLASS ";", (void *) &nativeGetLastError},
+        {"clearLastError",      "()V",                     (void *) &nativeClearLastError}
 };
 
 static JNINativeMethod errorTypeMethods[] = {
-        {"nativeStrError", "()Ljava/lang/String;", (void *) &nativeStrError}
+        {"toString", "()Ljava/lang/String;", (void *) &nativeStrError}
 };
 
 static JNINativeMethod epollMethods[] = {

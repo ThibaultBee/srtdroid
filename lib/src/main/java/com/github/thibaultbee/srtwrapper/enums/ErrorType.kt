@@ -47,9 +47,5 @@ enum class ErrorType {
 
     EPEERERR;
 
-    private external fun nativeStrError(): String
-
-    override fun toString(): String {
-        return nativeStrError()
-    }
+    external override fun toString(): String
 }
