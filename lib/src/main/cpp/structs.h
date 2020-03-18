@@ -120,6 +120,15 @@ jobject srt_stats_n2j(JNIEnv *env, SRT_TRACEBSTATS tracebstats);
 SRTSOCKET *srt_sockets_j2n(JNIEnv *env, jobjectArray srtSockets, int *nSockets);
 
 /**
+ * @brief Set Epoll object eid field
+ *
+ * @param env Java environment
+ * @param epoll Java Epoll object
+ * @param eid Native srt epoll value
+ */
+void srt_epoll_set_eid(JNIEnv *env, jobject epoll, int eid);
+
+/**
  * @brief Convert Java Epoll to int for SRT library
  *
  * @param env Java environment

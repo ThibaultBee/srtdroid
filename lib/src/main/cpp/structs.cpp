@@ -632,6 +632,25 @@ jobject srt_stats_n2j(JNIEnv *env, SRT_TRACEBSTATS tracebstats) {
     return srtSocket;
 }
 
+void srt_epoll_set_eid(JNIEnv *env, jobject epoll, int eid) {
+    jclass epollClazz = env->GetObjectClass(epoll);
+    if (!epollClazz) {
+        LOGE(TAG, "Can't get Epoll class");
+        return;
+    }
+
+    jfieldID eidField = env->GetFieldID(epollClazz, "eid", "I");
+    if (!eidField) {
+        LOGE(TAG, "Can't get eid field");
+        env->DeleteLocalRef(epollClazz);
+        return;
+    }
+
+    env->SetIntField(epoll, eidField, eid);
+
+    env->DeleteLocalRef(epollClazz);
+}
+
 int srt_epoll_j2n(JNIEnv *env, jobject epoll) {
     jclass epollClazz = env->GetObjectClass(epoll);
     if (!epollClazz) {

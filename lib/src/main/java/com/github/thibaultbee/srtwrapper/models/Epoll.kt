@@ -4,58 +4,49 @@ import com.github.thibaultbee.srtwrapper.enums.EpollFlag
 import com.github.thibaultbee.srtwrapper.enums.EpollOpt
 
 class Epoll {
-    private external fun nativeEpollCreate(): Int
-    private external fun nativeEpollAddUSock(socket: Socket, events: Array<EpollOpt>): Int
-    private external fun nativeEpollUpdateUSock(socket: Socket, events: Array<EpollOpt>): Int
-    private external fun nativeEpollRemoveUSock(socket: Socket): Int
-    private external fun nativeEpollWait(
+    private var eid: Int
+
+    private external fun create(): Int
+    constructor() {
+        eid = create()
+    }
+
+    external fun isValid(): Boolean
+
+    private external fun addUSock(socket: Socket, events: Array<EpollOpt>): Int
+    fun addUSock(socket: Socket, events: List<EpollOpt> = emptyList()) =
+        addUSock(socket, events.toTypedArray())
+
+    private external fun updateUSock(socket: Socket, events: Array<EpollOpt>): Int
+    fun updateUSock(socket: Socket, events: List<EpollOpt> = emptyList()) =
+        updateUSock(socket, events.toTypedArray())
+
+    external fun removeUSock(socket: Socket): Int
+
+    private external fun wait(
         readFds: Array<Socket>,
         writeFds: Array<Socket>,
         timeOut: Long
     ): Int
-
-    private external fun nativeEpollUWait(fdsSet: Array<EpollEvent>, timeOut: Long): Int
-    private external fun nativeEpollSet(events: Array<EpollFlag>): Array<EpollFlag>
-    private external fun nativeEpollGet(): Array<EpollFlag>
-    private external fun nativeEpollRelease(): Int
-
-    private var eid: Int
-
-    companion object {
-        const val INVALID_EPOLL = -1
-    }
-
-    constructor() {
-        eid = nativeEpollCreate()
-    }
-
-    fun isValid() = eid > INVALID_EPOLL
-
-    fun addUSock(socket: Socket, events: List<EpollOpt> = emptyList()) =
-        nativeEpollAddUSock(socket, events.toTypedArray())
-
-    fun updateUSock(socket: Socket, events: List<EpollOpt> = emptyList()) =
-        nativeEpollUpdateUSock(socket, events.toTypedArray())
-
-    fun removeUSock(socket: Socket) = nativeEpollRemoveUSock(socket)
-
     fun wait(
         readFds: List<Socket> = emptyList(),
         writeFds: List<Socket> = emptyList(),
         timeOut: Long
-    ) =
-        nativeEpollWait(readFds.toTypedArray(), writeFds.toTypedArray(), timeOut)
+    ) = wait(readFds.toTypedArray(), writeFds.toTypedArray(), timeOut)
 
+    private external fun uWait(fdsSet: Array<EpollEvent>, timeOut: Long): Int
     fun uWait(fdsSet: List<EpollEvent>, timeOut: Long) =
-        nativeEpollUWait(fdsSet.toTypedArray(), timeOut)
+        uWait(fdsSet.toTypedArray(), timeOut)
 
+    private external fun set(events: Array<EpollFlag>): Array<EpollFlag>
     fun set(flags: List<EpollFlag>): List<EpollFlag> {
-        return nativeEpollSet(flags.toTypedArray()).toList()
+        return set(flags.toTypedArray()).toList()
     }
 
+    private external fun getArray(): Array<EpollFlag>
     fun get(): List<EpollFlag> {
-        return nativeEpollGet().toList()
+        return getArray().toList()
     }
 
-    fun release() = nativeEpollRelease()
+    external fun release(): Int
 }

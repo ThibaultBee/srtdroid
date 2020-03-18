@@ -413,6 +413,13 @@ nativebistats(JNIEnv *env, jobject ju, jboolean clear, jboolean instantaneous) {
 }
 
 // Asynchronous operations (epoll)
+JNIEXPORT jboolean JNICALL
+nativeEpollIsValid(JNIEnv *env, jobject epoll) {
+    int eid = srt_epoll_j2n(env, epoll);
+
+    return static_cast<jboolean>(eid != -1);
+}
+
 JNIEXPORT jint JNICALL
 nativeEpollCreate(JNIEnv *env, jobject epoll) {
     return srt_epoll_create();
@@ -524,7 +531,10 @@ JNIEXPORT jint JNICALL
 nativeEpollRelease(JNIEnv *env, jobject epoll) {
     int eid = srt_epoll_j2n(env, epoll);
 
-    return srt_epoll_release(eid);
+    int res = srt_epoll_release(eid);
+    srt_epoll_set_eid(env, epoll, -1);
+
+    return res;
 }
 
 
@@ -578,16 +588,16 @@ static JNINativeMethod errorTypeMethods[] = {
 };
 
 static JNINativeMethod epollMethods[] = {
-        {"nativeEpollCreate",      "()I",                                              (void *) &nativeEpollCreate},
-        {"nativeEpollAddUSock",    "(L" SRTSOCKET_CLASS ";[L" EPOLLOPT_CLASS ";)I",    (void *) &nativeEpollAddUSock},
-        {"nativeEpollUpdateUSock", "(L" SRTSOCKET_CLASS ";[L" EPOLLOPT_CLASS ";)I",    (void *) &nativeEpollUpdateUSock},
-        {"nativeEpollRemoveUSock", "(L" SRTSOCKET_CLASS ";)I",                         (void *) &nativeEpollRemoveUSock},
-        {"nativeEpollWait",        "([L" SRTSOCKET_CLASS ";[L" SRTSOCKET_CLASS ";J)I", (void *) &nativeEpollWait},
-        {"nativeEpollUWait",       "([L" EPOLLEVENT_CLASS ";J)I",                      (void *) &nativeEpollUWait},
-        {"nativeEpollSet",         "([L" EPOLLFLAG_CLASS ";)[L" EPOLLFLAG_CLASS ";",   (void *) &nativeEpollSet},
-        {"nativeEpollGet",         "()[L" EPOLLFLAG_CLASS ";",                         (void *) &nativeEpollGet},
-        {"nativeEpollRelease",     "()I",                                              (void *) &nativeEpollRelease}
-
+        {"isValid",     "()Z",                                              (void *) &nativeEpollIsValid},
+        {"create",      "()I",                                              (void *) &nativeEpollCreate},
+        {"addUSock",    "(L" SRTSOCKET_CLASS ";[L" EPOLLOPT_CLASS ";)I",    (void *) &nativeEpollAddUSock},
+        {"updateUSock", "(L" SRTSOCKET_CLASS ";[L" EPOLLOPT_CLASS ";)I",    (void *) &nativeEpollUpdateUSock},
+        {"removeUSock", "(L" SRTSOCKET_CLASS ";)I",                         (void *) &nativeEpollRemoveUSock},
+        {"wait",        "([L" SRTSOCKET_CLASS ";[L" SRTSOCKET_CLASS ";J)I", (void *) &nativeEpollWait},
+        {"uWait",       "([L" EPOLLEVENT_CLASS ";J)I",                      (void *) &nativeEpollUWait},
+        {"set",         "([L" EPOLLFLAG_CLASS ";)[L" EPOLLFLAG_CLASS ";",   (void *) &nativeEpollSet},
+        {"getArray",    "()[L" EPOLLFLAG_CLASS ";",                         (void *) &nativeEpollGet},
+        {"release",     "()I",                                              (void *) &nativeEpollRelease}
 };
 
 static int registerNativeForClassName(JNIEnv *env, const char *className,
