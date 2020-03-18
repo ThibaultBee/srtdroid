@@ -5,8 +5,7 @@ import com.github.thibaultbee.srtwrapper.enums.EpollFlag
 import com.github.thibaultbee.srtwrapper.enums.EpollOpt
 import com.github.thibaultbee.srtwrapper.enums.ErrorType
 import org.junit.After
-import org.junit.Assert.assertEquals
-import org.junit.Assert.assertTrue
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 
@@ -100,5 +99,12 @@ class EpollTest {
         assertEquals(listOf<EpollFlag>(), epoll.get())
         assertEquals(listOf<EpollFlag>(), epoll.set(listOf(EpollFlag.ENABLE_EMPTY)))
         assertEquals(listOf(EpollFlag.ENABLE_EMPTY), epoll.get())
+    }
+
+    @Test
+    fun releaseTest() {
+        assertTrue(epoll.isValid())
+        assertEquals(epoll.release(), 0)
+        assertFalse(epoll.isValid())
     }
 }
