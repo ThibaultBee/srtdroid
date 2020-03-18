@@ -8,125 +8,85 @@ import java.net.InetSocketAddress
 import java.net.StandardProtocolFamily
 
 class Socket {
-    private external fun nativeSocket(af: StandardProtocolFamily, type: Int, protocol: Int): Int
-    private external fun nativeCreateSocket(): Int
-    private external fun nativeBind(address: InetSocketAddress): Int
-    private external fun nativeGetSockState(): SockStatus
-    private external fun nativeClose(): Int
-
-    private external fun nativeListen(backlog: Int): Int
-    private external fun nativeAccept(): Pair<Socket, InetSocketAddress?>
-    private external fun nativeConnect(address: InetSocketAddress): Int
-    private external fun nativeRendezVous(
-        localAddress: InetSocketAddress,
-        remoteAddress: InetSocketAddress
-    ): Int
-
-    private external fun nativeGetPeerName(): InetSocketAddress?
-    private external fun nativeGetSockName(): InetSocketAddress?
-    private external fun nativeGetSockOpt(level: Int /*ignored*/, opt: SockOpt): Any
-    private external fun nativeSetSockOpt(level: Int /*ignored*/, opt: SockOpt, value: Any): Int
-
-    private external fun nativeSend(msg: ByteArray): Int
-    private external fun nativeSendMsg(msg: ByteArray, ttl: Int, inOrder: Boolean): Int
-    private external fun nativeSendMsg2(msg: ByteArray, msgCtrl: MsgCtrl?): Int
-    private external fun nativeSendFile(path: String, offset: Long, size: Long, block: Int): Long
-
-    private external fun nativeRecv(size: Int): ByteArray
-    private external fun nativeRecvMsg2(size: Int, msgCtrl: MsgCtrl?): ByteArray
-    private external fun nativeRecvFile(path: String, offset: Long, size: Long, block: Int): Long
-
-    private external fun nativebstats(clear: Boolean): Stats
-    private external fun nativebistats(clear: Boolean, instantaneous: Boolean): Stats
-
     private var srtsocket: Int
 
-    companion object {
-        const val INVALID_SOCK = -1
-    }
-
-    constructor() {
-        srtsocket = nativeCreateSocket()
-    }
-
+    private external fun socket(af: StandardProtocolFamily, type: Int, protocol: Int): Int
     constructor(af: StandardProtocolFamily) {
-        srtsocket = nativeSocket(af, 0, 0)
+        srtsocket = socket(af, 0, 0)
+    }
+
+    private external fun createSocket(): Int
+    constructor() {
+        srtsocket = createSocket()
     }
 
     private constructor(socket: Int) {
         srtsocket = socket
     }
 
-    fun isValid() = srtsocket > INVALID_SOCK
+    external fun isValid(): Boolean
 
-    fun bind(address: InetSocketAddress) = nativeBind(address)
+    external fun bind(address: InetSocketAddress): Int
+    fun bind(address: String, port: Int) = bind(InetSocketAddress(address, port))
 
-    fun bind(address: String, port: Int) = nativeBind(InetSocketAddress(address, port))
+    external fun getSockState(): SockStatus
 
-    fun getSockState() = nativeGetSockState()
-
-    fun close(): Int {
-        val res = nativeClose()
-        srtsocket = INVALID_SOCK
-        return res
-    }
+    external fun close(): Int
 
     // Connecting
-    fun listen(backlog: Int) = nativeListen(backlog)
+    external fun listen(backlog: Int): Int
 
-    fun accept() = nativeAccept()
+    external fun accept(): Pair<Socket, InetSocketAddress?>
 
-    fun connect(address: InetSocketAddress) = nativeConnect(address)
+    external fun connect(address: InetSocketAddress): Int
+    fun connect(address: String, port: Int) = connect(InetSocketAddress(address, port))
 
-    fun connect(address: String, port: Int) = nativeConnect(InetSocketAddress(address, port))
+    external fun rendezVous(
+        localAddress: InetSocketAddress,
+        remoteAddress: InetSocketAddress
+    ): Int
 
-    fun rendezVous(localAddress: InetSocketAddress, remoteAddress: InetSocketAddress) =
-        nativeRendezVous(localAddress, remoteAddress)
-
-    fun rendezVous(localAddress: String, remoteAddress: String, port: Int) = nativeRendezVous(
+    fun rendezVous(localAddress: String, remoteAddress: String, port: Int) = rendezVous(
         InetSocketAddress(localAddress, port),
         InetSocketAddress(remoteAddress, port)
     )
 
     // Options and properties
-    fun getPeerName() = nativeGetPeerName()
+    external fun getPeerName(): InetSocketAddress?
 
-    fun getSockName() = nativeGetSockName()
+    external fun getSockName(): InetSocketAddress?
 
-    fun getSockFlag(opt: SockOpt) = nativeGetSockOpt(0, opt)
+    external fun getSockFlag(opt: SockOpt): Any
 
-    fun setSockFlag(opt: SockOpt, value: Any) = nativeSetSockOpt(0, opt, value)
+    external fun setSockFlag(opt: SockOpt, value: Any): Int
 
     // Transmission
-    fun send(msg: ByteArray) = nativeSend(msg)
+    external fun send(msg: ByteArray): Int
+    fun send(msg: String) = send(msg.toByteArray())
 
-    fun send(msg: String) = nativeSend(msg.toByteArray())
-
-    fun sendMsg(msg: ByteArray, ttl: Int = -1, inOrder: Boolean = false) =
-        nativeSendMsg(msg, ttl, inOrder)
-
+    external fun sendMsg(msg: ByteArray, ttl: Int = -1, inOrder: Boolean = false): Int
     fun sendMsg(msg: String, ttl: Int = -1, inOrder: Boolean = false) =
-        nativeSendMsg(msg.toByteArray(), ttl, inOrder)
+        sendMsg(msg.toByteArray(), ttl, inOrder)
 
-    fun sendMsg2(msg: ByteArray, msgCtrl: MsgCtrl?) = nativeSendMsg2(msg, msgCtrl)
+    external fun sendMsg2(msg: ByteArray, msgCtrl: MsgCtrl?): Int
+    fun sendMsg2(msg: String, msgCtrl: MsgCtrl?) = sendMsg2(msg.toByteArray(), msgCtrl)
 
-    fun sendMsg2(msg: String, msgCtrl: MsgCtrl?) = nativeSendMsg2(msg.toByteArray(), msgCtrl)
+    external fun recv(size: Int): ByteArray
 
-    fun recv(size: Int) = nativeRecv(size)
+    external fun recvMsg2(size: Int, msgCtrl: MsgCtrl?): ByteArray
 
-    fun recvMsg2(size: Int, msgCtrl: MsgCtrl?) = nativeRecvMsg2(size, msgCtrl)
-
+    external fun sendFile(path: String, offset: Long, size: Long, block: Int = 364000): Long
     fun sendFile(file: File, offset: Long, size: Long, block: Int = 364000) =
-        nativeSendFile(file.path, offset, size, block)
-
+        sendFile(file.path, offset, size, block)
     fun sendFile(file: File, block: Int = 364000) =
-        nativeSendFile(file.path, 0, file.totalSpace, block)
+        sendFile(file.path, 0, file.totalSpace, block)
 
+    external fun recvFile(path: String, offset: Long, size: Long, block: Int = 7280000): Long
     fun recvFile(file: File, offset: Long, size: Long, block: Int = 7280000) =
-        nativeRecvFile(file.path, offset, size, block)
+        recvFile(file.path, offset, size, block)
 
     // Performance tracking
-    fun bstats(clear: Boolean): Stats = nativebstats(clear)
+    external fun bstats(clear: Boolean): Stats
 
-    fun bistats(clear: Boolean, instantaneous: Boolean): Stats = nativebistats(clear, instantaneous)
+    external fun bistats(clear: Boolean, instantaneous: Boolean): Stats
 }

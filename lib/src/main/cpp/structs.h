@@ -73,7 +73,15 @@ jobject srt_optval_n2j(JNIEnv *env, int u, int level, jobject sockOpt);
 SRT_MSGCTRL *
 srt_msgctrl_j2n(JNIEnv *env, jobject msgCtrl);
 
-// Utils
+/**
+ * @brief Set Socket object srtsocket field
+ *
+ * @param env Java environment
+ * @param srtSocket Java Socket object
+ * @param srtsocket Native srt socket value
+ */
+void srt_socket_set(JNIEnv *env, jobject srtSocket, SRTSOCKET srtsocket);
+
 /**
  * @brief Convert Java SRT Socket to SRTSOCKET for SRT library
  *
