@@ -527,9 +527,9 @@ nativeSetLogLevel(JNIEnv *env, jobject obj, jint level) {
 
 // Register natives API
 static JNINativeMethod srtMethods[] = {
-        {"nativeStartUp",     "()I",  (void *) &nativeStartUp},
-        {"nativeCleanUp",     "()I",  (void *) &nativeCleanUp},
-        {"nativeSetLogLevel", "(I)V", (void *) &nativeSetLogLevel}
+        {"startUp",     "()I",  (void *) &nativeStartUp},
+        {"cleanUp",     "()I",  (void *) &nativeCleanUp},
+        {"setLogLevel", "(I)V", (void *) &nativeSetLogLevel}
 };
 
 static JNINativeMethod socketMethods[] = {

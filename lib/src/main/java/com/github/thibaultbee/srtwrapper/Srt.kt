@@ -1,10 +1,6 @@
 package com.github.thibaultbee.srtwrapper
 
 class Srt {
-    private external fun nativeStartUp() : Int
-    private external fun nativeCleanUp() : Int
-    private external fun nativeSetLogLevel(level: Int)
-
     init {
         System.loadLibrary("crypto")
         System.loadLibrary("ssl")
@@ -12,7 +8,7 @@ class Srt {
         System.loadLibrary("jnisrt")
     }
 
-    fun startUp() : Int = nativeStartUp()
-    fun cleanUp() : Int = nativeCleanUp()
-    fun setLogLevel(level: Int) = nativeSetLogLevel(level)
+    external fun startUp(): Int
+    external fun cleanUp(): Int
+    external fun setLogLevel(level: Int)
 }
