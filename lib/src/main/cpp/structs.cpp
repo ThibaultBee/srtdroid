@@ -68,13 +68,16 @@ sockaddr_inet_j2n(JNIEnv *env, jobject inetSocketAddress) {
 }
 
 jobject
-sockaddr_inet_n2j(JNIEnv *env, struct sockaddr_in *sockaddr, int sockaddr_len) {
-    if ((sockaddr_len == 0) || (sockaddr == nullptr)) {
+sockaddr_inet_n2j(JNIEnv *env, jclass clazz, struct sockaddr_in *sockaddr) {
+    if (sockaddr == nullptr) {
         return nullptr;
     }
 
     // Get InetSocketAddress class
-    jclass inetSocketAddressClazz = env->FindClass(INETSOCKETADDRESS_CLASS);
+    jclass inetSocketAddressClazz = clazz;
+    if (!inetSocketAddressClazz) {
+        inetSocketAddressClazz = env->FindClass(INETSOCKETADDRESS_CLASS);
+    }
     if (!inetSocketAddressClazz) {
         LOGE(TAG, "Can't get InetSocketAddress class");
         return nullptr;
@@ -99,7 +102,9 @@ sockaddr_inet_n2j(JNIEnv *env, struct sockaddr_in *sockaddr, int sockaddr_len) {
                                                inetSocketAddressConstructorMethod, hostName,
                                                (jint) htons(sockaddr->sin_port));
 
-    env->DeleteLocalRef(inetSocketAddressClazz);
+    if (clazz == nullptr) {
+        env->DeleteLocalRef(inetSocketAddressClazz);
+    }
 
     return inetSocketAddress;
 }
@@ -490,8 +495,12 @@ SRTSOCKET srt_socket_j2n(JNIEnv *env, jobject srtSocket) {
     return srtsocket;
 }
 
-jobject srt_socket_n2j(JNIEnv *env, SRTSOCKET srtsocket) {
-    jclass srtSocketClazz = env->FindClass(SRTSOCKET_CLASS);
+jobject srt_socket_n2j(JNIEnv *env, jclass clazz, SRTSOCKET srtsocket) {
+    jclass srtSocketClazz = clazz;
+    if (!srtSocketClazz) {
+        srtSocketClazz = env->FindClass(SRTSOCKET_CLASS);
+    }
+
     if (!srtSocketClazz) {
         LOGE(TAG, "Can't find Srt Socket class");
         return nullptr;
@@ -506,7 +515,9 @@ jobject srt_socket_n2j(JNIEnv *env, SRTSOCKET srtsocket) {
 
     jobject srtSocket = env->NewObject(srtSocketClazz, srtSocketConstructorMethod, srtsocket);
 
-    env->DeleteLocalRef(srtSocketClazz);
+    if (clazz == nullptr) {
+        env->DeleteLocalRef(srtSocketClazz);
+    }
 
     return srtSocket;
 }

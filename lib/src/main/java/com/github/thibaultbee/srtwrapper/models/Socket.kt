@@ -3,11 +3,13 @@ package com.github.thibaultbee.srtwrapper.models
 import android.util.Pair
 import com.github.thibaultbee.srtwrapper.enums.SockOpt
 import com.github.thibaultbee.srtwrapper.enums.SockStatus
+import com.github.thibaultbee.srtwrapper.interfaces.SocketInterface
 import java.io.File
 import java.net.InetSocketAddress
 import java.net.StandardProtocolFamily
 
 class Socket {
+    var socketInterface: SocketInterface? = null
     private var srtsocket: Int
 
     private external fun socket(af: StandardProtocolFamily, type: Int, protocol: Int): Int
@@ -34,6 +36,15 @@ class Socket {
     external fun close(): Int
 
     // Connecting
+    fun onListen(
+        ns: Socket,
+        hsVersion: Int,
+        peerAddress: InetSocketAddress,
+        streamId: String
+    ): Int {
+        return socketInterface?.onListen(ns, hsVersion, peerAddress, streamId)
+            ?: 0 // By default, accept incoming connection
+    }
     external fun listen(backlog: Int): Int
 
     external fun accept(): Pair<Socket, InetSocketAddress?>

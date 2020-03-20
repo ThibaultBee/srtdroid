@@ -34,12 +34,12 @@ sockaddr_inet_j2n(JNIEnv *env, jobject inetSocketAddress);
  * @brief Convert sockaddr_in to Java InetSocketAddres
  *
  * @param env Java environment
+ * @param clazz SockAddrInet class if already known
  * @param sockaddr socket address in C domain
- * @param sockaddr_len socket address length
  * @return return Java InetSocketAddres
  */
 jobject
-sockaddr_inet_n2j(JNIEnv *env, struct sockaddr_in *sa, int sockaddr_len);
+sockaddr_inet_n2j(JNIEnv *env, jclass clazz, struct sockaddr_in *sa);
 
 /**
  * @brief Convert Java SRT Optval to C optval for SRT library
@@ -95,10 +95,11 @@ SRTSOCKET srt_socket_j2n(JNIEnv *env, jobject srtSocket);
  * @brief Convert SRTSOCKET for SRT library to Java SRT Socket
  *
  * @param env Java environment
+ * @param clazz SrtSocket class if already known
  * @param srtsocket Native SRTSOCKET value
  * @return return corresponding Java SRT Socket
  */
-jobject srt_socket_n2j(JNIEnv *env, SRTSOCKET srtsocket);
+jobject srt_socket_n2j(JNIEnv *env, jclass clazz, SRTSOCKET srtsocket);
 
 /**
  * @brief Convert Stats from SRT library SRT_TRACEBSTATS to Java Stats

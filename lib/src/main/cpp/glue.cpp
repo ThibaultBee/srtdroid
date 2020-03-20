@@ -13,6 +13,68 @@ extern "C" {
 
 #define TAG "SRTJniGlue"
 
+typedef struct callback_context {
+    JavaVM *vm;
+    jobject callingSocket;
+    jclass sockAddrClazz;
+} CallbackContext;
+
+int onListenCallback(JNIEnv *env, jobject ju, jclass sockAddrClazz, SRTSOCKET ns, int hs_version,
+                     const struct sockaddr *peeraddr, const char *streamid) {
+    jclass socketClazz = env->GetObjectClass(ju);
+    if (!socketClazz) {
+        LOGE(TAG, "Can't get Socket class");
+        return 0;
+    }
+
+    jmethodID onListenID = env->GetMethodID(socketClazz, "onListen",
+                                            "(L" SRTSOCKET_CLASS ";IL" INETSOCKETADDRESS_CLASS ";Ljava/lang/String;)I");
+    if (!onListenID) {
+        LOGE(TAG, "Can't get onListen methodID");
+        env->DeleteLocalRef(socketClazz);
+        return 0;
+    }
+
+    jobject nsSocket = srt_socket_n2j(env, socketClazz, ns);
+    jobject peerAddress = sockaddr_inet_n2j(env, sockAddrClazz, (sockaddr_in *) peeraddr);
+    jstring streamId = env->NewStringUTF(streamid);
+
+    int res = env->CallIntMethod(ju, onListenID, nsSocket, (jint) hs_version, peerAddress,
+                                 streamId);
+
+    env->DeleteLocalRef(socketClazz);
+
+    return res;
+}
+
+int srt_listen_cb(void *opaque, SRTSOCKET ns, int hs_version,
+                  const struct sockaddr *peeraddr, const char *streamid) {
+    CallbackContext *cbCtx = static_cast<CallbackContext *>(opaque);
+
+    if (cbCtx == nullptr) {
+        LOGE(TAG, "Failed to get CallbackContext");
+        return 0;
+    }
+
+    JavaVM *vm = cbCtx->vm;
+    JNIEnv *env = nullptr;
+    if (vm->GetEnv((void **) &env, JNI_VERSION_1_6) == JNI_EDETACHED) {
+        if (vm->AttachCurrentThread(&env, NULL) != JNI_OK) {
+            LOGE(TAG, "Failed to attach current thread");
+        }
+    } else {
+        LOGE(TAG, "Failed to get env");
+    }
+
+
+    int res = onListenCallback(env, cbCtx->callingSocket, cbCtx->sockAddrClazz, ns, hs_version,
+                               peeraddr, streamid);
+
+    vm->DetachCurrentThread();
+
+    return res;
+}
+
 // SRT Logger callback
 void srt_logger_cb(void *opaque, int level, const char *file, int line, const char *area,
                    const char *message) {
@@ -119,6 +181,12 @@ JNIEXPORT jint JNICALL
 nativeListen(JNIEnv *env, jobject ju, jint backlog) {
     SRTSOCKET u = srt_socket_j2n(env, ju);
 
+    CallbackContext *cbCtx = static_cast<CallbackContext *>(malloc(sizeof(CallbackContext)));
+    env->GetJavaVM(&(cbCtx->vm));
+    cbCtx->sockAddrClazz = env->FindClass(INETSOCKETADDRESS_CLASS);
+    cbCtx->callingSocket = env->NewGlobalRef(ju);
+    srt_listen_callback(u, srt_listen_cb,
+                        (void *) cbCtx); // TODO: free cbCtx but could not find a way to free callback opaque parameter
     return srt_listen((SRTSOCKET) u, (int) backlog);
 }
 
@@ -127,11 +195,14 @@ nativeAccept(JNIEnv *env, jobject ju) {
     SRTSOCKET u = srt_socket_j2n(env, ju);
     struct sockaddr_in sockaddr = {0};
     int sockaddr_len = 0;
+    jobject inetSocketAddress = nullptr;
 
     SRTSOCKET new_u = srt_accept((SRTSOCKET) u, (struct sockaddr *) &sockaddr, &sockaddr_len);
-    jobject inetSocketAddress = sockaddr_inet_n2j(env, &sockaddr, sockaddr_len);
+    if (sockaddr_len != 0) {
+        inetSocketAddress = sockaddr_inet_n2j(env, nullptr, &sockaddr);
+    }
 
-    jobject res = new_pair(env, srt_socket_n2j(env, new_u),
+    jobject res = new_pair(env, srt_socket_n2j(env, nullptr, new_u),
                            inetSocketAddress);
 
     return res;
@@ -179,9 +250,12 @@ nativeGetPeerName(JNIEnv *env, jobject ju) {
     SRTSOCKET u = srt_socket_j2n(env, ju);
     struct sockaddr_in sockaddr = {0};
     int sockaddr_len = 0;
+    jobject inetSocketAddress = nullptr;
 
     srt_getpeername((SRTSOCKET) u, (struct sockaddr *) &sockaddr, &sockaddr_len);
-    jobject inetSocketAddress = sockaddr_inet_n2j(env, &sockaddr, sockaddr_len);
+    if (sockaddr_len != 0) {
+        inetSocketAddress = sockaddr_inet_n2j(env, nullptr, &sockaddr);
+    }
 
     return inetSocketAddress;
 }
@@ -191,9 +265,12 @@ nativeGetSockName(JNIEnv *env, jobject ju) {
     SRTSOCKET u = srt_socket_j2n(env, ju);
     struct sockaddr_in sockaddr = {0};
     int sockaddr_len = 0;
+    jobject inetSocketAddress = nullptr;
 
     srt_getsockname((SRTSOCKET) u, (struct sockaddr *) &sockaddr, &sockaddr_len);
-    jobject inetSocketAddress = sockaddr_inet_n2j(env, &sockaddr, sockaddr_len);
+    if (sockaddr_len != 0) {
+        inetSocketAddress = sockaddr_inet_n2j(env, nullptr, &sockaddr);
+    }
 
     return inetSocketAddress;
 }
@@ -620,7 +697,7 @@ jint JNI_OnLoad(JavaVM *vm, void * /*reserved*/) {
     JNIEnv *env = nullptr;
     jint result;
 
-    if ((result = vm->GetEnv((void **) &env, JNI_VERSION_1_4)) != JNI_OK) {
+    if ((result = vm->GetEnv((void **) &env, JNI_VERSION_1_6)) != JNI_OK) {
         LOGE(TAG, "GetEnv failed");
         return result;
     }
