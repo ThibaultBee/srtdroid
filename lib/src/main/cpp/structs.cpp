@@ -14,6 +14,87 @@ extern "C" {
 
 #define TAG "SRTJniStructs"
 
+// List utils
+jobject list_new(JNIEnv *env) {
+    jclass listClazz = env->FindClass("java/util/ArrayList");
+    if (!listClazz) {
+        LOGE(TAG, "Can't get List class");
+        return nullptr;
+    }
+
+    jmethodID emptyListMethodID = env->GetMethodID(listClazz, "<init>", "()V");
+    if (!emptyListMethodID) {
+        LOGE(TAG, "Can't get emptyList()");
+        env->DeleteLocalRef(listClazz);
+        return nullptr;
+    }
+
+    jobject list = env->NewObject(listClazz, emptyListMethodID);
+
+    env->DeleteLocalRef(listClazz);
+
+    return list;
+}
+
+int list_get_size(JNIEnv *env, jobject list) {
+    jclass listClazz = env->GetObjectClass(list);
+    if (!listClazz) {
+        LOGE(TAG, "Can't get List object class");
+        return 0;
+    }
+
+    jmethodID listSizeMethodID = env->GetMethodID(listClazz, "size", "()I");
+    if (!listSizeMethodID) {
+        LOGE(TAG, "Can't get List size methodID");
+        env->DeleteLocalRef(listClazz);
+        return 0;
+    }
+
+    env->DeleteLocalRef(listClazz);
+
+    return reinterpret_cast<int>(env->CallIntMethod(list, listSizeMethodID));
+}
+
+jobject list_get(JNIEnv *env, jobject list, int i) {
+    jclass listClazz = env->GetObjectClass(list);
+    if (!listClazz) {
+        LOGE(TAG, "Can't get List object class");
+        return nullptr;
+    }
+
+    jmethodID listGetMethodID = env->GetMethodID(listClazz, "get", "(I)Ljava/lang/Object;");
+    if (!listGetMethodID) {
+        LOGE(TAG, "Can't get List get method");
+        env->DeleteLocalRef(listClazz);
+        return nullptr;
+    }
+
+    env->DeleteLocalRef(listClazz);
+
+    return env->CallObjectMethod(list, listGetMethodID, i);
+}
+
+jboolean list_add(JNIEnv *env, jobject list, jobject object) {
+    jclass listClazz = env->GetObjectClass(list);
+    if (!listClazz) {
+        LOGE(TAG, "Can't get List object class");
+        return static_cast<jboolean>(false);
+    }
+
+    jmethodID listAddMethodID = env->GetMethodID(listClazz, "add", "(Ljava/lang/Object;)Z");
+    if (!listAddMethodID) {
+        LOGE(TAG, "Can't get List add method");
+        env->DeleteLocalRef(listClazz);
+        return static_cast<jboolean>(false);
+    }
+
+    env->DeleteLocalRef(listClazz);
+
+    return env->CallBooleanMethod(list, listAddMethodID, object);
+}
+
+
+// SRT objects
 struct sockaddr_in *
 sockaddr_inet_j2n(JNIEnv *env, jobject inetSocketAddress) {
     // Get InetSocketAddress class
@@ -522,8 +603,8 @@ jobject srt_socket_n2j(JNIEnv *env, jclass clazz, SRTSOCKET srtsocket) {
     return srtSocket;
 }
 
-SRTSOCKET *srt_sockets_j2n(JNIEnv *env, jobjectArray srtSockets, int *nSockets) {
-    *nSockets = env->GetArrayLength(srtSockets);
+SRTSOCKET *srt_sockets_j2n(JNIEnv *env, jobject srtSocketList, int *nSockets) {
+    *nSockets = list_get_size(env, srtSocketList);
     if (*nSockets == 0)
         return nullptr;
 
@@ -531,7 +612,7 @@ SRTSOCKET *srt_sockets_j2n(JNIEnv *env, jobjectArray srtSockets, int *nSockets) 
             reinterpret_cast<size_t>(*nSockets * sizeof(SRTSOCKET)));
 
     for (int i = 0; i < *nSockets; i++) {
-        jobject srtSocket = env->GetObjectArrayElement(srtSockets, i);
+        jobject srtSocket = list_get(env, srtSocketList, i);
         srtsocket[i] = srt_socket_j2n(env, srtSocket);
     }
 
@@ -704,42 +785,33 @@ jobject srt_epoll_n2j(JNIEnv *env, int eid) {
     return epoll;
 }
 
-int srt_epoll_opts_j2n(JNIEnv *env, jobjectArray epollEvents) {
-    int nEvents = env->GetArrayLength(epollEvents);
+int srt_epoll_opts_j2n(JNIEnv *env, jobject epollEventList) {
+    int nEvents = list_get_size(env, epollEventList);
     int events = SRT_EPOLL_OPT_NONE;
 
     for (int i = 0; i < nEvents; i++) {
-        jobject epollEvent = env->GetObjectArrayElement(epollEvents, i);
+        jobject epollEvent = list_get(env, epollEventList, i);
         events |= srt_epoll_opt_j2n(env, epollEvent);
     }
 
     return events;
 }
 
-int srt_epoll_flags_j2n(JNIEnv *env, jobjectArray epollFlags) {
-    int nFlags = env->GetArrayLength(epollFlags);
+int srt_epoll_flags_j2n(JNIEnv *env, jobject epollFlagList) {
+    int nFlags = list_get_size(env, epollFlagList);
     int flags = 0;
 
     for (int i = 0; i < nFlags; i++) {
-        jobject epollFlag = env->GetObjectArrayElement(epollFlags, i);
+        jobject epollFlag = list_get(env, epollFlagList, i);
         flags |= srt_epoll_flag_j2n(env, epollFlag);
     }
 
     return flags;
 }
 
-jobjectArray srt_epoll_flags_n2j(JNIEnv *env, int epoll_flags) {
+jobject srt_epoll_flags_n2j(JNIEnv *env, int epoll_flags) {
     int max = SRT_EPOLL_ENABLE_OUTPUTCHECK;
-    int nFlags = 0;
     int epoll_flag;
-
-    // Find EpollFlag array size
-    for (int i = 0; i < max; i++) {
-        epoll_flag = epoll_flags & 1 << i;
-        if (epoll_flag != 0) {
-            nFlags++;
-        }
-    }
 
     jclass epollFlagClazz = env->FindClass(EPOLLFLAG_CLASS);
     if (!epollFlagClazz) {
@@ -747,9 +819,9 @@ jobjectArray srt_epoll_flags_n2j(JNIEnv *env, int epoll_flags) {
         return nullptr;
     }
 
-    jobjectArray epollFlags = env->NewObjectArray(nFlags, epollFlagClazz, nullptr);
-    if (!epollFlags) {
-        LOGE(TAG, "Can't create EpollFlag Array");
+    jobject epollFlagList = list_new(env);
+    if (!epollFlagList) {
+        LOGE(TAG, "Can't create EpollFlag List");
         env->DeleteLocalRef(epollFlagClazz);
         return nullptr;
     }
@@ -760,13 +832,15 @@ jobjectArray srt_epoll_flags_n2j(JNIEnv *env, int epoll_flags) {
         epoll_flag = epoll_flags & 1 << i;
         if (epoll_flag != 0) {
             epollFlag = srt_epoll_flag_n2j(env, epoll_flag);
-            env->SetObjectArrayElement(epollFlags, i, epollFlag);
+            if (list_add(env, epollFlagList, epollFlag) == 0) {
+                LOGE(TAG, "Can't add epollFlag %d", i);
+            }
         }
     }
 
     env->DeleteLocalRef(epollFlagClazz);
 
-    return epollFlags;
+    return epollFlagList;
 }
 
 SRT_EPOLL_EVENT *srt_epoll_event_j2n(JNIEnv *env, jobject epollEvent, SRT_EPOLL_EVENT *srt_event) {
@@ -785,14 +859,13 @@ SRT_EPOLL_EVENT *srt_epoll_event_j2n(JNIEnv *env, jobject epollEvent, SRT_EPOLL_
     jobject srtSocket = env->GetObjectField(epollEvent, socketField);
     srt_event->fd = srt_socket_j2n(env, srtSocket);
 
-    jfieldID epollOptsField = env->GetFieldID(epollEventClazz, "events", "[L" EPOLLOPT_CLASS ";");
+    jfieldID epollOptsField = env->GetFieldID(epollEventClazz, "events", "L" LIST_CLASS ";");
     if (!epollOptsField) {
         LOGE(TAG, "Can't get events field");
         env->DeleteLocalRef(epollEventClazz);
         return nullptr;
     }
-    jobjectArray epollOpts = static_cast<jobjectArray>(env->GetObjectField(epollEvent,
-                                                                           epollOptsField));
+    jobject epollOpts = static_cast<jobjectArray>(env->GetObjectField(epollEvent, epollOptsField));
     srt_event->events = srt_epoll_opts_j2n(env, epollOpts);
 
     env->DeleteLocalRef(epollEventClazz);
@@ -800,21 +873,35 @@ SRT_EPOLL_EVENT *srt_epoll_event_j2n(JNIEnv *env, jobject epollEvent, SRT_EPOLL_
     return srt_event;
 }
 
-SRT_EPOLL_EVENT *srt_epoll_events_j2n(JNIEnv *env, jobjectArray epollEvents, int *nEvents) {
-    *nEvents = env->GetArrayLength(epollEvents);
+SRT_EPOLL_EVENT *srt_epoll_events_j2n(JNIEnv *env, jobject epollEventList, int *nEvents) {
+    jclass listClazz = env->GetObjectClass(epollEventList);
+    if (!listClazz) {
+        LOGE(TAG, "Can't get List object class");
+        return nullptr;
+    }
+
+    jmethodID listSizeID = env->GetMethodID(listClazz, "size", "()I");
+    if (!listSizeID) {
+        LOGE(TAG, "Can't get size method field");
+        env->DeleteLocalRef(listClazz);
+        return nullptr;
+    }
+    *nEvents = reinterpret_cast<int>(env->CallIntMethod(epollEventList, listSizeID));
+
+    *nEvents = list_get_size(env, epollEventList);
 
     SRT_EPOLL_EVENT *epoll_events = static_cast<SRT_EPOLL_EVENT *>(malloc(
             *nEvents * sizeof(SRT_EPOLL_EVENT)));
 
     for (int i = 0; i < *nEvents; i++) {
-        jobject epollEvent = env->GetObjectArrayElement(epollEvents, i);
+        jobject epollEvent = list_get(env, epollEventList, i);
         srt_epoll_event_j2n(env, epollEvent, &epoll_events[i]);
     }
 
     return epoll_events;
 }
 
-jobject new_pair(JNIEnv *env, jobject first, jobject second) {
+jobject pair_new(JNIEnv *env, jobject first, jobject second) {
     jclass pairClazz = env->FindClass(PAIR_CLASS);
     if (!pairClazz) {
         LOGE(TAG, "Can't get Pair class");

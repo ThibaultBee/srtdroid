@@ -16,6 +16,7 @@ extern "C" {
 
 #define INETSOCKETADDRESS_CLASS "java/net/InetSocketAddress"
 #define PAIR_CLASS "android/util/Pair"
+#define LIST_CLASS "java/util/List"
 #define LONG_CLASS "java/lang/Long"
 #define BOOLEAN_CLASS "java/lang/Boolean"
 #define INT_CLASS "java/lang/Integer"
@@ -111,14 +112,14 @@ jobject srt_socket_n2j(JNIEnv *env, jclass clazz, SRTSOCKET srtsocket);
 jobject srt_stats_n2j(JNIEnv *env, SRT_TRACEBSTATS tracebstats);
 
 /**
- * @brief Convert Java Socket object array to a native array of SRTSOCKET
+ * @brief Convert Java Socket List to a native set of SRTSOCKET
  *
  * @param env Java environment
- * @param srtSockets Java Array of Socket
- * @param nSockets Size of Java Socket array
- * @return return native array of SRTSOCKET
+ * @param srtSocketList List of Socket
+ * @param nSockets Size of Java Socket List
+ * @return return native set of SRTSOCKET
  */
-SRTSOCKET *srt_sockets_j2n(JNIEnv *env, jobjectArray srtSockets, int *nSockets);
+SRTSOCKET *srt_sockets_j2n(JNIEnv *env, jobject srtSocketList, int *nSockets);
 
 /**
  * @brief Set Epoll object eid field
@@ -148,41 +149,41 @@ int srt_epoll_j2n(JNIEnv *env, jobject epoll);
 jobject srt_epoll_n2j(JNIEnv *env, int eid);
 
 /**
- * @brief Convert EpollEvent object array to events set
+ * @brief Convert EpollEvent object List to events set
  *
  * @param env Java environment
- * @param epollEvents Java Array of epoll events
+ * @param epollEventList Java List of epoll events
  * @return return epoll events set
  */
-int srt_epoll_opts_j2n(JNIEnv *env, jobjectArray epollEvents);
+int srt_epoll_opts_j2n(JNIEnv *env, jobject epollEventList);
 
 /**
- * @brief Convert EpollFlag object array to flags set
+ * @brief Convert EpollFlag object List to flags set
  *
  * @param env Java environment
- * @param epollFlags Java Array of epoll flags
+ * @param epollFlags Java List of epoll flags
  * @return return epoll flags set
  */
-int srt_epoll_flags_j2n(JNIEnv *env, jobjectArray epollFlags);
+int srt_epoll_flags_j2n(JNIEnv *env, jobject epollFlagList);
 
 /**
- * @brief Convert native epoll flags set to an EpollFlag object array
+ * @brief Convert native epoll flags set to an EpollFlag object List
  *
  * @param env Java environment
  * @param epoll_flags native epoll flags set
- * @return return EpollFlag object array
+ * @return return EpollFlag object List
  */
-jobjectArray srt_epoll_flags_n2j(JNIEnv *env, int epoll_flags);
+jobject srt_epoll_flags_n2j(JNIEnv *env, int epoll_flags);
 
 /**
- * @brief Convert EpollEvent object array to a SRT_EPOLL_EVENT array
+ * @brief Convert EpollEvent object List to a SRT_EPOLL_EVENT set
  *
  * @param env Java environment
- * @param epollEvents Java EpollEvent object array
- * @param nEvents Size of Java EpollEvent array
- * @return return a pointer to an array of SRT_EPOLL_EVENT
+ * @param epollEvents Java EpollEvent List
+ * @param nEvents Size of Java EpollEvent List
+ * @return return a pointer to an set of SRT_EPOLL_EVENT
  */
-SRT_EPOLL_EVENT *srt_epoll_events_j2n(JNIEnv *env, jobjectArray epollEvents, int *nEvents);
+SRT_EPOLL_EVENT *srt_epoll_events_j2n(JNIEnv *env, jobject epollEventList, int *nEvents);
 
 /**
  * @brief Create a Pair Java object
@@ -192,7 +193,7 @@ SRT_EPOLL_EVENT *srt_epoll_events_j2n(JNIEnv *env, jobjectArray epollEvents, int
  * @param second Pair second argument
  * @return return a Pair Java object containing first and second arguments
  */
-jobject new_pair(JNIEnv *env, jobject first, jobject second);
+jobject pair_new(JNIEnv *env, jobject first, jobject second);
 
 #ifdef __cplusplus
 }

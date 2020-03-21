@@ -13,40 +13,23 @@ class Epoll {
 
     external fun isValid(): Boolean
 
-    private external fun addUSock(socket: Socket, events: Array<EpollOpt>): Int
-    fun addUSock(socket: Socket, events: List<EpollOpt> = emptyList()) =
-        addUSock(socket, events.toTypedArray())
+    external fun addUSock(socket: Socket, events: List<EpollOpt> = emptyList()): Int
 
-    private external fun updateUSock(socket: Socket, events: Array<EpollOpt>): Int
-    fun updateUSock(socket: Socket, events: List<EpollOpt> = emptyList()) =
-        updateUSock(socket, events.toTypedArray())
+    external fun updateUSock(socket: Socket, events: List<EpollOpt> = emptyList()): Int
 
     external fun removeUSock(socket: Socket): Int
 
-    private external fun wait(
-        readFds: Array<Socket>,
-        writeFds: Array<Socket>,
-        timeOut: Long
-    ): Int
-    fun wait(
+    external fun wait(
         readFds: List<Socket> = emptyList(),
         writeFds: List<Socket> = emptyList(),
         timeOut: Long
-    ) = wait(readFds.toTypedArray(), writeFds.toTypedArray(), timeOut)
+    ): Int
 
-    private external fun uWait(fdsSet: Array<EpollEvent>, timeOut: Long): Int
-    fun uWait(fdsSet: List<EpollEvent>, timeOut: Long) =
-        uWait(fdsSet.toTypedArray(), timeOut)
+    external fun uWait(fdsSet: List<EpollEvent>, timeOut: Long): Int
 
-    private external fun set(events: Array<EpollFlag>): Array<EpollFlag>
-    fun set(flags: List<EpollFlag>): List<EpollFlag> {
-        return set(flags.toTypedArray()).toList()
-    }
+    external fun set(events: List<EpollFlag>): List<EpollFlag>
 
-    private external fun getArray(): Array<EpollFlag>
-    fun get(): List<EpollFlag> {
-        return getArray().toList()
-    }
+    external fun get(): List<EpollFlag>
 
     external fun release(): Int
 }

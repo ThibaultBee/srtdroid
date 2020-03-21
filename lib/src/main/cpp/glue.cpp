@@ -202,7 +202,7 @@ nativeAccept(JNIEnv *env, jobject ju) {
         inetSocketAddress = sockaddr_inet_n2j(env, nullptr, &sockaddr);
     }
 
-    jobject res = new_pair(env, srt_socket_n2j(env, nullptr, new_u),
+    jobject res = pair_new(env, srt_socket_n2j(env, nullptr, new_u),
                            inetSocketAddress);
 
     return res;
@@ -503,12 +503,12 @@ nativeEpollCreate(JNIEnv *env, jobject epoll) {
 }
 
 JNIEXPORT jint JNICALL
-nativeEpollAddUSock(JNIEnv *env, jobject epoll, jobject ju, jobjectArray epollEvents) {
+nativeEpollAddUSock(JNIEnv *env, jobject epoll, jobject ju, jobject epollEventList) {
     int eid = srt_epoll_j2n(env, epoll);
     SRTSOCKET u = srt_socket_j2n(env, ju);
 
-    if (epollEvents) {
-        int events = srt_epoll_opts_j2n(env, epollEvents);
+    if (epollEventList) {
+        int events = srt_epoll_opts_j2n(env, epollEventList);
         return srt_epoll_add_usock(eid, u, &events);
     } else {
         return srt_epoll_add_usock(eid, u, nullptr);
@@ -516,12 +516,12 @@ nativeEpollAddUSock(JNIEnv *env, jobject epoll, jobject ju, jobjectArray epollEv
 }
 
 JNIEXPORT jint JNICALL
-nativeEpollUpdateUSock(JNIEnv *env, jobject epoll, jobject ju, jobjectArray epollEvents) {
+nativeEpollUpdateUSock(JNIEnv *env, jobject epoll, jobject ju, jobject epollEventList) {
     int eid = srt_epoll_j2n(env, epoll);
     SRTSOCKET u = srt_socket_j2n(env, ju);
 
-    if (epollEvents) {
-        int events = srt_epoll_opts_j2n(env, epollEvents);
+    if (epollEventList) {
+        int events = srt_epoll_opts_j2n(env, epollEventList);
         return srt_epoll_update_usock(eid, u, &events);
     } else {
         return srt_epoll_update_usock(eid, u, nullptr);
@@ -537,7 +537,7 @@ nativeEpollRemoveUSock(JNIEnv *env, jobject epoll, jobject ju) {
 }
 
 JNIEXPORT jint JNICALL
-nativeEpollWait(JNIEnv *env, jobject epoll, jobjectArray readFds, jobjectArray writeFds,
+nativeEpollWait(JNIEnv *env, jobject epoll, jobject readFdsList, jobject writeFdsList,
                 jlong timeOut) {
     int eid = srt_epoll_j2n(env, epoll);
     int nReadFds = 0;
@@ -545,11 +545,11 @@ nativeEpollWait(JNIEnv *env, jobject epoll, jobjectArray readFds, jobjectArray w
     SRTSOCKET *readfds = nullptr;
     SRTSOCKET *writefds = nullptr;
 
-    if (readFds) {
-        readfds = srt_sockets_j2n(env, readFds, &nReadFds);
+    if (readFdsList) {
+        readfds = srt_sockets_j2n(env, readFdsList, &nReadFds);
     }
-    if (writeFds) {
-        writefds = srt_sockets_j2n(env, writeFds, &nWriteFds);
+    if (writeFdsList) {
+        writefds = srt_sockets_j2n(env, writeFdsList, &nWriteFds);
     }
 
     int res = srt_epoll_wait(eid, readfds, &nReadFds, writefds, &nWriteFds, timeOut, nullptr, 0,
@@ -566,13 +566,13 @@ nativeEpollWait(JNIEnv *env, jobject epoll, jobjectArray readFds, jobjectArray w
 }
 
 JNIEXPORT jint JNICALL
-nativeEpollUWait(JNIEnv *env, jobject epoll, jobjectArray fdsSet, jlong timeOut) {
+nativeEpollUWait(JNIEnv *env, jobject epoll, jobject fdsList, jlong timeOut) {
     int eid = srt_epoll_j2n(env, epoll);
     SRT_EPOLL_EVENT *epoll_events = nullptr;
     int nEpollEvents = 0;
 
-    if (fdsSet) {
-        epoll_events = srt_epoll_events_j2n(env, fdsSet, &nEpollEvents);
+    if (fdsList) {
+        epoll_events = srt_epoll_events_j2n(env, fdsList, &nEpollEvents);
     }
 
     int res = srt_epoll_uwait(eid, epoll_events, nEpollEvents, timeOut);
@@ -586,9 +586,9 @@ nativeEpollUWait(JNIEnv *env, jobject epoll, jobjectArray fdsSet, jlong timeOut)
 
 
 JNIEXPORT jobject JNICALL
-nativeEpollSet(JNIEnv *env, jobject epoll, jobjectArray epollFlags) {
+nativeEpollSet(JNIEnv *env, jobject epoll, jobject epollFlagList) {
     int eid = srt_epoll_j2n(env, epoll);
-    int32_t flags = srt_epoll_flags_j2n(env, epollFlags);
+    int32_t flags = srt_epoll_flags_j2n(env, epollFlagList);
 
     flags = srt_epoll_set(eid, flags);
 
@@ -665,16 +665,16 @@ static JNINativeMethod errorTypeMethods[] = {
 };
 
 static JNINativeMethod epollMethods[] = {
-        {"isValid",     "()Z",                                              (void *) &nativeEpollIsValid},
-        {"create",      "()I",                                              (void *) &nativeEpollCreate},
-        {"addUSock",    "(L" SRTSOCKET_CLASS ";[L" EPOLLOPT_CLASS ";)I",    (void *) &nativeEpollAddUSock},
-        {"updateUSock", "(L" SRTSOCKET_CLASS ";[L" EPOLLOPT_CLASS ";)I",    (void *) &nativeEpollUpdateUSock},
-        {"removeUSock", "(L" SRTSOCKET_CLASS ";)I",                         (void *) &nativeEpollRemoveUSock},
-        {"wait",        "([L" SRTSOCKET_CLASS ";[L" SRTSOCKET_CLASS ";J)I", (void *) &nativeEpollWait},
-        {"uWait",       "([L" EPOLLEVENT_CLASS ";J)I",                      (void *) &nativeEpollUWait},
-        {"set",         "([L" EPOLLFLAG_CLASS ";)[L" EPOLLFLAG_CLASS ";",   (void *) &nativeEpollSet},
-        {"getArray",    "()[L" EPOLLFLAG_CLASS ";",                         (void *) &nativeEpollGet},
-        {"release",     "()I",                                              (void *) &nativeEpollRelease}
+        {"isValid",     "()Z",                                      (void *) &nativeEpollIsValid},
+        {"create",      "()I",                                      (void *) &nativeEpollCreate},
+        {"addUSock",    "(L" SRTSOCKET_CLASS ";L" LIST_CLASS ";)I", (void *) &nativeEpollAddUSock},
+        {"updateUSock", "(L" SRTSOCKET_CLASS ";L" LIST_CLASS ";)I", (void *) &nativeEpollUpdateUSock},
+        {"removeUSock", "(L" SRTSOCKET_CLASS ";)I",                 (void *) &nativeEpollRemoveUSock},
+        {"wait",        "(L" LIST_CLASS ";L" LIST_CLASS ";J)I",     (void *) &nativeEpollWait},
+        {"uWait",       "(L" LIST_CLASS ";J)I",                     (void *) &nativeEpollUWait},
+        {"set",         "(L" LIST_CLASS ";)L" LIST_CLASS ";",       (void *) &nativeEpollSet},
+        {"get",         "()L" LIST_CLASS ";",                       (void *) &nativeEpollGet},
+        {"release",     "()I",                                      (void *) &nativeEpollRelease}
 };
 
 static int registerNativeForClassName(JNIEnv *env, const char *className,
