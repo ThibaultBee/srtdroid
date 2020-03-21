@@ -36,7 +36,8 @@ int onListenCallback(JNIEnv *env, jobject ju, jclass sockAddrClazz, SRTSOCKET ns
     }
 
     jobject nsSocket = srt_socket_n2j(env, socketClazz, ns);
-    jobject peerAddress = sockaddr_inet_n2j(env, sockAddrClazz, (sockaddr_in *) peeraddr);
+    jobject peerAddress = sockaddr_inet_n2j(env, sockAddrClazz,
+                                            (sockaddr_storage *) peeraddr);
     jstring streamId = env->NewStringUTF(streamid);
 
     int res = env->CallIntMethod(ju, onListenID, nsSocket, (jint) hs_version, peerAddress,
@@ -145,13 +146,13 @@ nativeCreateSocket(JNIEnv *env, jobject obj) {
 JNIEXPORT jint JNICALL
 nativeBind(JNIEnv *env, jobject ju, jobject inetSocketAddress) {
     SRTSOCKET u = srt_socket_j2n(env, ju);
-    const struct sockaddr_in *sa = sockaddr_inet_j2n(env,
-                                                     inetSocketAddress);
+    int size = 0;
+    const struct sockaddr_storage *ss = sockaddr_inet_j2n(env, inetSocketAddress, &size);
 
-    int res = srt_bind(u, (struct sockaddr *) sa, sizeof(*sa));
+    int res = srt_bind(u, reinterpret_cast<const struct sockaddr *>(ss), size);
 
-    if (!sa) {
-        free((void *) sa);
+    if (!ss) {
+        free((void *) ss);
     }
 
     return res;
@@ -193,13 +194,14 @@ nativeListen(JNIEnv *env, jobject ju, jint backlog) {
 JNIEXPORT jobject JNICALL
 nativeAccept(JNIEnv *env, jobject ju) {
     SRTSOCKET u = srt_socket_j2n(env, ju);
-    struct sockaddr_in sockaddr = {0};
+    struct sockaddr_storage ss = {0};
     int sockaddr_len = 0;
     jobject inetSocketAddress = nullptr;
 
-    SRTSOCKET new_u = srt_accept((SRTSOCKET) u, (struct sockaddr *) &sockaddr, &sockaddr_len);
+    SRTSOCKET new_u = srt_accept((SRTSOCKET) u, reinterpret_cast<struct sockaddr *>(&ss),
+                                 &sockaddr_len);
     if (sockaddr_len != 0) {
-        inetSocketAddress = sockaddr_inet_n2j(env, nullptr, &sockaddr);
+        inetSocketAddress = sockaddr_inet_n2j(env, nullptr, &ss);
     }
 
     jobject res = pair_new(env, srt_socket_n2j(env, nullptr, new_u),
@@ -211,12 +213,13 @@ nativeAccept(JNIEnv *env, jobject ju) {
 JNIEXPORT jint JNICALL
 nativeConnect(JNIEnv *env, jobject ju, jobject inetSocketAddress) {
     SRTSOCKET u = srt_socket_j2n(env, ju);
-    const struct sockaddr_in *sa = sockaddr_inet_j2n(env,
-                                                     inetSocketAddress);
-    int res = srt_connect((SRTSOCKET) u, (struct sockaddr *) sa, sizeof(*sa));
+    int size = 0;
+    const struct sockaddr_storage *ss = sockaddr_inet_j2n(env, inetSocketAddress, &size);
 
-    if (!sa) {
-        free((void *) sa);
+    int res = srt_connect((SRTSOCKET) u, reinterpret_cast<const sockaddr *>(ss), size);
+
+    if (!ss) {
+        free((void *) ss);
     }
 
     return res;
@@ -225,20 +228,21 @@ nativeConnect(JNIEnv *env, jobject ju, jobject inetSocketAddress) {
 JNIEXPORT jint JNICALL
 nativeRendezVous(JNIEnv *env, jobject ju, jobject localAddress, jobject remoteAddress) {
     SRTSOCKET u = srt_socket_j2n(env, ju);
-    const struct sockaddr_in *local_address = sockaddr_inet_j2n(env,
-                                                                localAddress);
-    const struct sockaddr_in *remote_address = sockaddr_inet_j2n(env,
-                                                                 remoteAddress);
-    int res = srt_rendezvous((SRTSOCKET) u, (struct sockaddr *) local_address,
-                             sizeof(*local_address), (struct sockaddr *) remote_address,
-                             sizeof(*remote_address));
+    int local_addr_size = 0, remote_addr_size = 0;
+    const struct sockaddr_storage *local_ss = sockaddr_inet_j2n(env, localAddress,
+                                                                &local_addr_size);
+    const struct sockaddr_storage *remote_ss = sockaddr_inet_j2n(env, remoteAddress,
+                                                                 &remote_addr_size);
+    int res = srt_rendezvous((SRTSOCKET) u, reinterpret_cast<const sockaddr *>(local_ss),
+                             local_addr_size, reinterpret_cast<const sockaddr *>(remote_ss),
+                             remote_addr_size);
 
-    if (!local_address) {
-        free((void *) local_address);
+    if (!local_ss) {
+        free((void *) local_ss);
     }
 
-    if (!remote_address) {
-        free((void *) remote_address);
+    if (!remote_ss) {
+        free((void *) remote_ss);
     }
 
     return res;
@@ -248,13 +252,13 @@ nativeRendezVous(JNIEnv *env, jobject ju, jobject localAddress, jobject remoteAd
 JNIEXPORT jobject JNICALL
 nativeGetPeerName(JNIEnv *env, jobject ju) {
     SRTSOCKET u = srt_socket_j2n(env, ju);
-    struct sockaddr_in sockaddr = {0};
+    struct sockaddr_storage ss = {0};
     int sockaddr_len = 0;
     jobject inetSocketAddress = nullptr;
 
-    srt_getpeername((SRTSOCKET) u, (struct sockaddr *) &sockaddr, &sockaddr_len);
+    srt_getpeername((SRTSOCKET) u, reinterpret_cast<struct sockaddr *>(&ss), &sockaddr_len);
     if (sockaddr_len != 0) {
-        inetSocketAddress = sockaddr_inet_n2j(env, nullptr, &sockaddr);
+        inetSocketAddress = sockaddr_inet_n2j(env, nullptr, &ss);
     }
 
     return inetSocketAddress;
@@ -263,13 +267,13 @@ nativeGetPeerName(JNIEnv *env, jobject ju) {
 JNIEXPORT jobject JNICALL
 nativeGetSockName(JNIEnv *env, jobject ju) {
     SRTSOCKET u = srt_socket_j2n(env, ju);
-    struct sockaddr_in sockaddr = {0};
+    struct sockaddr_storage ss = {0};
     int sockaddr_len = 0;
     jobject inetSocketAddress = nullptr;
 
-    srt_getsockname((SRTSOCKET) u, (struct sockaddr *) &sockaddr, &sockaddr_len);
+    srt_getsockname((SRTSOCKET) u, reinterpret_cast<struct sockaddr *>(&ss), &sockaddr_len);
     if (sockaddr_len != 0) {
-        inetSocketAddress = sockaddr_inet_n2j(env, nullptr, &sockaddr);
+        inetSocketAddress = sockaddr_inet_n2j(env, nullptr, &ss);
     }
 
     return inetSocketAddress;

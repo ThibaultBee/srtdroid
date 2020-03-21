@@ -22,17 +22,17 @@ extern "C" {
 #define INT_CLASS "java/lang/Integer"
 
 /**
- * @brief Convert Java InetSocketAddres to sockaddr_in
+ * @brief Convert Java InetSocketAddres to sockaddr_storage
  *
  * @param env Java environment
  * @param inetSocketAddress Java InetSocketAddres
  * @return return sockaddress in C domain
  */
-struct sockaddr_in *
-sockaddr_inet_j2n(JNIEnv *env, jobject inetSocketAddress);
+struct sockaddr_storage *
+sockaddr_inet_j2n(JNIEnv *env, jobject inetSocketAddress, int *size);
 
 /**
- * @brief Convert sockaddr_in to Java InetSocketAddres
+ * @brief Convert sockaddr_storage to Java InetSocketAddres
  *
  * @param env Java environment
  * @param clazz SockAddrInet class if already known
@@ -40,7 +40,7 @@ sockaddr_inet_j2n(JNIEnv *env, jobject inetSocketAddress);
  * @return return Java InetSocketAddres
  */
 jobject
-sockaddr_inet_n2j(JNIEnv *env, jclass clazz, struct sockaddr_in *sa);
+sockaddr_inet_n2j(JNIEnv *env, jclass clazz, struct sockaddr_storage *sa);
 
 /**
  * @brief Convert Java SRT Optval to C optval for SRT library

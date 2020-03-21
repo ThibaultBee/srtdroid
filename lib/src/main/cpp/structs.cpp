@@ -3,6 +3,7 @@
 #include <cstring>
 #include <sys/socket.h>
 #include <cstdlib>
+#include <netdb.h>
 
 #include "log.h"
 #include "enums.h"
@@ -95,8 +96,8 @@ jboolean list_add(JNIEnv *env, jobject list, jobject object) {
 
 
 // SRT objects
-struct sockaddr_in *
-sockaddr_inet_j2n(JNIEnv *env, jobject inetSocketAddress) {
+struct sockaddr_storage *
+sockaddr_inet_j2n(JNIEnv *env, jobject inetSocketAddress, int *size) {
     // Get InetSocketAddress class
     jclass inetSocketAddressClazz = env->GetObjectClass(inetSocketAddress);
     if (!inetSocketAddressClazz) {
@@ -134,23 +135,44 @@ sockaddr_inet_j2n(JNIEnv *env, jobject inetSocketAddress) {
 
     const char *hostname = env->GetStringUTFChars(hostName, nullptr);
 
-    auto *sa = (struct sockaddr_in *) malloc(sizeof(struct sockaddr_in));
+    // Get hostname type: IPv4 or IPv6
+    struct addrinfo hint = {0};
+    struct addrinfo *ai = nullptr;
+    hint.ai_family = PF_UNSPEC;
+    hint.ai_flags = AI_NUMERICHOST;
+    char service[11] = {0};
+    sprintf(service, "%d", port);
 
-    sa->sin_port = htons(port);
-    sa->sin_family = AF_INET;
-    if (inet_pton(sa->sin_family, hostname, &sa->sin_addr) != 1) {
-        LOGE(TAG, "Can't convert sock addr");
+    if (getaddrinfo(hostname, service, &hint, &ai)) {
+        LOGE(TAG, "Invalid address %s", hostname);
+        env->ReleaseStringUTFChars(hostName, hostname);
+        env->DeleteLocalRef(inetSocketAddressClazz);
+        return nullptr;
     }
+
+    if ((ai->ai_family != AF_INET) && (ai->ai_family != AF_INET6)) {
+        LOGE(TAG, "Unknown family %d", ai->ai_family);
+        env->ReleaseStringUTFChars(hostName, hostname);
+        env->DeleteLocalRef(inetSocketAddressClazz);
+        return nullptr;
+    }
+
+    struct sockaddr_storage *ss = static_cast<sockaddr_storage *>(malloc(
+            static_cast<size_t>(ai->ai_addrlen)));
+    *size = ai->ai_addrlen;
+    memcpy(ss, ai->ai_addr, static_cast<size_t>(ai->ai_addrlen));
+
+    freeaddrinfo(ai);
 
     env->ReleaseStringUTFChars(hostName, hostname);
     env->DeleteLocalRef(inetSocketAddressClazz);
 
-    return sa;
+    return ss;
 }
 
 jobject
-sockaddr_inet_n2j(JNIEnv *env, jclass clazz, struct sockaddr_in *sockaddr) {
-    if (sockaddr == nullptr) {
+sockaddr_inet_n2j(JNIEnv *env, jclass clazz, struct sockaddr_storage *ss) {
+    if (ss == nullptr) {
         return nullptr;
     }
 
@@ -173,15 +195,31 @@ sockaddr_inet_n2j(JNIEnv *env, jclass clazz, struct sockaddr_in *sockaddr) {
         return nullptr;
     }
 
-    char ip[INET_ADDRSTRLEN];
-    if (inet_ntop(sockaddr->sin_family, (void *) &(sockaddr->sin_addr), ip, sizeof(ip))) {
-        LOGE(TAG, "Can't convert ip");
+    char ip[INET6_ADDRSTRLEN] = {0};
+    int port = 0;
+    if (ss->ss_family == AF_INET) {
+        struct sockaddr_in *sa = (struct sockaddr_in *) ss;
+        if (inet_ntop(sa->sin_family, (void *) &(sa->sin_addr), ip, sizeof(ip)) ==
+            nullptr) {
+            LOGE(TAG, "Can't convert ipv4");
+        }
+        port = ntohs(sa->sin_port);
+    } else if (ss->ss_family == AF_INET6) {
+        struct sockaddr_in6 *sa = (struct sockaddr_in6 *) ss;
+        if (inet_ntop(sa->sin6_family, (void *) &(sa->sin6_addr), ip, sizeof(ip)) ==
+            nullptr) {
+            LOGE(TAG, "Can't convert ipv6");
+        }
+        port = ntohs(sa->sin6_port);
+    } else {
+        LOGE(TAG, "Unknown socket family %d", ss->ss_family);
     }
 
     jstring hostName = env->NewStringUTF(ip);
     jobject inetSocketAddress = env->NewObject(inetSocketAddressClazz,
                                                inetSocketAddressConstructorMethod, hostName,
-                                               (jint) htons(sockaddr->sin_port));
+                                               (jint) port);
+
 
     if (clazz == nullptr) {
         env->DeleteLocalRef(inetSocketAddressClazz);
