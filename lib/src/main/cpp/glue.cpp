@@ -105,26 +105,26 @@ void srt_logger_cb(void *opaque, int level, const char *file, int line, const ch
 }
 
 // Library Initialization
-JNIEXPORT jint JNICALL
+jint JNICALL
 nativeStartUp(JNIEnv *env, jobject obj) {
     srt_setloghandler(nullptr, srt_logger_cb);
     return srt_startup();
 }
 
-JNIEXPORT jint JNICALL
+jint JNICALL
 nativeCleanUp(JNIEnv *env, jobject obj) {
     return srt_cleanup();
 }
 
 // Creating and configuring sockets
-JNIEXPORT jboolean JNICALL
+jboolean JNICALL
 nativeIsValid(JNIEnv *env, jobject ju) {
     SRTSOCKET u = srt_socket_j2n(env, ju);
 
     return static_cast<jboolean>(u != SRT_INVALID_SOCK);
 }
 
-JNIEXPORT jint JNICALL
+jint JNICALL
 nativeSocket(JNIEnv *env, jobject obj,
              jobject addressFamily,
              jint type,
@@ -138,12 +138,12 @@ nativeSocket(JNIEnv *env, jobject obj,
     return srt_socket(af, type, protocol);
 }
 
-JNIEXPORT jint JNICALL
+jint JNICALL
 nativeCreateSocket(JNIEnv *env, jobject obj) {
     return srt_create_socket();
 }
 
-JNIEXPORT jint JNICALL
+jint JNICALL
 nativeBind(JNIEnv *env, jobject ju, jobject inetSocketAddress) {
     SRTSOCKET u = srt_socket_j2n(env, ju);
     int size = 0;
@@ -158,7 +158,7 @@ nativeBind(JNIEnv *env, jobject ju, jobject inetSocketAddress) {
     return res;
 }
 
-JNIEXPORT jobject JNICALL
+jobject JNICALL
 nativeGetSockState(JNIEnv *env, jobject ju) {
     SRTSOCKET u = srt_socket_j2n(env, ju);
     SRT_SOCKSTATUS sock_status = srt_getsockstate((SRTSOCKET) u);
@@ -166,7 +166,7 @@ nativeGetSockState(JNIEnv *env, jobject ju) {
     return srt_sockstatus_n2j(env, sock_status);
 }
 
-JNIEXPORT jint JNICALL
+jint JNICALL
 nativeClose(JNIEnv *env, jobject ju) {
     SRTSOCKET u = srt_socket_j2n(env, ju);
 
@@ -178,7 +178,7 @@ nativeClose(JNIEnv *env, jobject ju) {
 }
 
 // Connecting
-JNIEXPORT jint JNICALL
+jint JNICALL
 nativeListen(JNIEnv *env, jobject ju, jint backlog) {
     SRTSOCKET u = srt_socket_j2n(env, ju);
 
@@ -191,7 +191,7 @@ nativeListen(JNIEnv *env, jobject ju, jint backlog) {
     return srt_listen((SRTSOCKET) u, (int) backlog);
 }
 
-JNIEXPORT jobject JNICALL
+jobject JNICALL
 nativeAccept(JNIEnv *env, jobject ju) {
     SRTSOCKET u = srt_socket_j2n(env, ju);
     struct sockaddr_storage ss = {0};
@@ -210,7 +210,7 @@ nativeAccept(JNIEnv *env, jobject ju) {
     return res;
 }
 
-JNIEXPORT jint JNICALL
+jint JNICALL
 nativeConnect(JNIEnv *env, jobject ju, jobject inetSocketAddress) {
     SRTSOCKET u = srt_socket_j2n(env, ju);
     int size = 0;
@@ -225,7 +225,7 @@ nativeConnect(JNIEnv *env, jobject ju, jobject inetSocketAddress) {
     return res;
 }
 
-JNIEXPORT jint JNICALL
+jint JNICALL
 nativeRendezVous(JNIEnv *env, jobject ju, jobject localAddress, jobject remoteAddress) {
     SRTSOCKET u = srt_socket_j2n(env, ju);
     int local_addr_size = 0, remote_addr_size = 0;
@@ -249,7 +249,7 @@ nativeRendezVous(JNIEnv *env, jobject ju, jobject localAddress, jobject remoteAd
 }
 
 // Options and properties
-JNIEXPORT jobject JNICALL
+jobject JNICALL
 nativeGetPeerName(JNIEnv *env, jobject ju) {
     SRTSOCKET u = srt_socket_j2n(env, ju);
     struct sockaddr_storage ss = {0};
@@ -264,7 +264,7 @@ nativeGetPeerName(JNIEnv *env, jobject ju) {
     return inetSocketAddress;
 }
 
-JNIEXPORT jobject JNICALL
+jobject JNICALL
 nativeGetSockName(JNIEnv *env, jobject ju) {
     SRTSOCKET u = srt_socket_j2n(env, ju);
     struct sockaddr_storage ss = {0};
@@ -279,7 +279,7 @@ nativeGetSockName(JNIEnv *env, jobject ju) {
     return inetSocketAddress;
 }
 
-JNIEXPORT jobject JNICALL
+jobject JNICALL
 nativeGetSockOpt(JNIEnv *env,
                  jobject ju,
                  jobject sockOpt) {
@@ -290,7 +290,7 @@ nativeGetSockOpt(JNIEnv *env,
     return optVal;
 }
 
-JNIEXPORT jint JNICALL
+jint JNICALL
 nativeSetSockOpt(JNIEnv *env,
                  jobject ju,
                  jobject sockOpt,
@@ -315,7 +315,7 @@ nativeSetSockOpt(JNIEnv *env,
 }
 
 // Transmission
-JNIEXPORT jint JNICALL
+jint JNICALL
 nativeSend(JNIEnv *env, jobject ju, jbyteArray byteArray) {
     SRTSOCKET u = srt_socket_j2n(env, ju);
     int len = env->GetArrayLength(byteArray);
@@ -328,7 +328,7 @@ nativeSend(JNIEnv *env, jobject ju, jbyteArray byteArray) {
     return res;
 }
 
-JNIEXPORT jint JNICALL
+jint JNICALL
 nativeSendMsg(JNIEnv *env,
               jobject ju,
               jbyteArray byteArray,
@@ -345,7 +345,7 @@ nativeSendMsg(JNIEnv *env,
     return res;
 }
 
-JNIEXPORT jint JNICALL
+jint JNICALL
 nativeSendMsg2(JNIEnv *env,
                jobject ju,
                jbyteArray byteArray,
@@ -365,7 +365,7 @@ nativeSendMsg2(JNIEnv *env,
     return res;
 }
 
-JNIEXPORT jbyteArray JNICALL
+jbyteArray JNICALL
 nativeRecv(JNIEnv *env, jobject ju, jint len) {
     SRTSOCKET u = srt_socket_j2n(env, ju);
     jbyteArray byteArray = nullptr;
@@ -386,7 +386,7 @@ nativeRecv(JNIEnv *env, jobject ju, jint len) {
 
 }
 
-JNIEXPORT jbyteArray JNICALL
+jbyteArray JNICALL
 nativeRecvMsg2(JNIEnv *env,
                jobject ju,
                jint len,
@@ -414,7 +414,7 @@ nativeRecvMsg2(JNIEnv *env,
 
 }
 
-JNIEXPORT jlong JNICALL
+jlong JNICALL
 nativeSendFile(JNIEnv *env,
                jobject ju,
                jstring filePath,
@@ -431,7 +431,7 @@ nativeSendFile(JNIEnv *env,
     return (jlong) res;
 }
 
-JNIEXPORT jlong JNICALL
+jlong JNICALL
 nativeRecvFile(JNIEnv *env,
                jobject ju,
                jstring filePath,
@@ -449,31 +449,31 @@ nativeRecvFile(JNIEnv *env,
 }
 
 // Errors
-JNIEXPORT jstring JNICALL
+jstring JNICALL
 nativeGetLastErrorStr(JNIEnv *env, jobject obj) {
     return env->NewStringUTF(srt_getlasterror_str());
 }
 
-JNIEXPORT jobject JNICALL
+jobject JNICALL
 nativeGetLastError(JNIEnv *env, jobject obj) {
     int err = srt_getlasterror(nullptr);
 
     return srt_error_n2j(env, err);
 }
 
-JNIEXPORT jstring JNICALL
+jstring JNICALL
 nativeStrError(JNIEnv *env, jobject obj) {
     int error_type = srt_error_j2n(env, obj);
     return env->NewStringUTF(srt_strerror(error_type, 0));
 }
 
-JNIEXPORT void JNICALL
+void JNICALL
 nativeClearLastError(JNIEnv *env, jobject obj) {
     srt_clearlasterror();
 }
 
 // Performance tracking
-JNIEXPORT jobject JNICALL
+jobject JNICALL
 nativebstats(JNIEnv *env, jobject ju, jboolean clear) {
     SRTSOCKET u = srt_socket_j2n(env, ju);
     SRT_TRACEBSTATS tracebstats;
@@ -483,7 +483,7 @@ nativebstats(JNIEnv *env, jobject ju, jboolean clear) {
     return srt_stats_n2j(env, tracebstats);
 }
 
-JNIEXPORT jobject JNICALL
+jobject JNICALL
 nativebistats(JNIEnv *env, jobject ju, jboolean clear, jboolean instantaneous) {
     SRTSOCKET u = srt_socket_j2n(env, ju);
     SRT_TRACEBSTATS tracebstats;
@@ -494,19 +494,19 @@ nativebistats(JNIEnv *env, jobject ju, jboolean clear, jboolean instantaneous) {
 }
 
 // Asynchronous operations (epoll)
-JNIEXPORT jboolean JNICALL
+jboolean JNICALL
 nativeEpollIsValid(JNIEnv *env, jobject epoll) {
     int eid = srt_epoll_j2n(env, epoll);
 
     return static_cast<jboolean>(eid != -1);
 }
 
-JNIEXPORT jint JNICALL
+jint JNICALL
 nativeEpollCreate(JNIEnv *env, jobject epoll) {
     return srt_epoll_create();
 }
 
-JNIEXPORT jint JNICALL
+jint JNICALL
 nativeEpollAddUSock(JNIEnv *env, jobject epoll, jobject ju, jobject epollEventList) {
     int eid = srt_epoll_j2n(env, epoll);
     SRTSOCKET u = srt_socket_j2n(env, ju);
@@ -519,7 +519,7 @@ nativeEpollAddUSock(JNIEnv *env, jobject epoll, jobject ju, jobject epollEventLi
     }
 }
 
-JNIEXPORT jint JNICALL
+jint JNICALL
 nativeEpollUpdateUSock(JNIEnv *env, jobject epoll, jobject ju, jobject epollEventList) {
     int eid = srt_epoll_j2n(env, epoll);
     SRTSOCKET u = srt_socket_j2n(env, ju);
@@ -532,7 +532,7 @@ nativeEpollUpdateUSock(JNIEnv *env, jobject epoll, jobject ju, jobject epollEven
     }
 }
 
-JNIEXPORT jint JNICALL
+jint JNICALL
 nativeEpollRemoveUSock(JNIEnv *env, jobject epoll, jobject ju) {
     int eid = srt_epoll_j2n(env, epoll);
     SRTSOCKET u = srt_socket_j2n(env, ju);
@@ -540,7 +540,7 @@ nativeEpollRemoveUSock(JNIEnv *env, jobject epoll, jobject ju) {
     return srt_epoll_remove_usock(eid, u);
 }
 
-JNIEXPORT jint JNICALL
+jint JNICALL
 nativeEpollWait(JNIEnv *env, jobject epoll, jobject readFdsList, jobject writeFdsList,
                 jlong timeOut) {
     int eid = srt_epoll_j2n(env, epoll);
@@ -569,7 +569,7 @@ nativeEpollWait(JNIEnv *env, jobject epoll, jobject readFdsList, jobject writeFd
     return res;
 }
 
-JNIEXPORT jint JNICALL
+jint JNICALL
 nativeEpollUWait(JNIEnv *env, jobject epoll, jobject fdsList, jlong timeOut) {
     int eid = srt_epoll_j2n(env, epoll);
     SRT_EPOLL_EVENT *epoll_events = nullptr;
@@ -589,7 +589,7 @@ nativeEpollUWait(JNIEnv *env, jobject epoll, jobject fdsList, jlong timeOut) {
 }
 
 
-JNIEXPORT jobject JNICALL
+jobject JNICALL
 nativeEpollSet(JNIEnv *env, jobject epoll, jobject epollFlagList) {
     int eid = srt_epoll_j2n(env, epoll);
     int32_t flags = srt_epoll_flags_j2n(env, epollFlagList);
@@ -599,7 +599,7 @@ nativeEpollSet(JNIEnv *env, jobject epoll, jobject epollFlagList) {
     return srt_epoll_flags_n2j(env, flags);
 }
 
-JNIEXPORT jobject JNICALL
+jobject JNICALL
 nativeEpollGet(JNIEnv *env, jobject epoll) {
     int eid = srt_epoll_j2n(env, epoll);
 
@@ -608,7 +608,7 @@ nativeEpollGet(JNIEnv *env, jobject epoll) {
     return srt_epoll_flags_n2j(env, flags);
 }
 
-JNIEXPORT jint JNICALL
+jint JNICALL
 nativeEpollRelease(JNIEnv *env, jobject epoll) {
     int eid = srt_epoll_j2n(env, epoll);
 
@@ -620,7 +620,7 @@ nativeEpollRelease(JNIEnv *env, jobject epoll) {
 
 
 // Logging control
-JNIEXPORT void JNICALL
+void JNICALL
 nativeSetLogLevel(JNIEnv *env, jobject obj, jint level) {
     srt_setloglevel((int) level);
 }
