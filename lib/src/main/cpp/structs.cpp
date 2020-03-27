@@ -360,7 +360,7 @@ srt_optval_j2n(JNIEnv *env, jobject optVal, int *optval_len) {
     return srt_optval;
 }
 
-jobject new_long(JNIEnv *env, int64_t val) {
+jobject long_new(JNIEnv *env, int64_t val) {
     jclass longClazz = env->FindClass(LONG_CLASS);
     if (!longClazz) {
         LOGE(TAG, "Can't find Long class");
@@ -374,7 +374,7 @@ jobject new_long(JNIEnv *env, int64_t val) {
     return env->NewObject(longClazz, longConstructorMethod, val);
 }
 
-jobject new_bool(JNIEnv *env, bool val) {
+jobject bool_new(JNIEnv *env, bool val) {
     jclass boolClazz = env->FindClass(BOOLEAN_CLASS);
     if (!boolClazz) {
         LOGE(TAG, "Can't find Boolean class");
@@ -388,7 +388,7 @@ jobject new_bool(JNIEnv *env, bool val) {
     return env->NewObject(boolClazz, booleanConstructorMethod, val);
 }
 
-jobject new_int(JNIEnv *env, int val) {
+jobject int_new(JNIEnv *env, int val) {
     jclass intClazz = env->FindClass(INT_CLASS);
     if (!intClazz) {
         LOGE(TAG, "Can't find Integer class");
@@ -420,7 +420,7 @@ jobject srt_optval_n2j(JNIEnv *env, int u, int level, jobject sockOpt) {
                 LOGE(TAG, "Can't execute long getsockopt");
                 return nullptr;
             }
-            optVal = new_long(env, optval);
+            optVal = long_new(env, optval);
             break;
         }
         case SRTO_MESSAGEAPI:
@@ -440,7 +440,7 @@ jobject srt_optval_n2j(JNIEnv *env, int u, int level, jobject sockOpt) {
                 LOGE(TAG, "Can't execute bool getsockopt");
                 return nullptr;
             }
-            optVal = new_bool(env, optval);
+            optVal = bool_new(env, optval);
             break;
         }
         case SRTO_PACKETFILTER:
@@ -488,7 +488,7 @@ jobject srt_optval_n2j(JNIEnv *env, int u, int level, jobject sockOpt) {
                 LOGE(TAG, "Can't execute int getsockopt");
                 return nullptr;
             }
-            optVal = new_int(env, optval);
+            optVal = int_new(env, optval);
             break;
         }
     }

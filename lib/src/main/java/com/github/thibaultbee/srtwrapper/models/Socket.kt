@@ -82,9 +82,9 @@ class Socket {
     external fun sendMsg2(msg: ByteArray, msgCtrl: MsgCtrl?): Int
     fun sendMsg2(msg: String, msgCtrl: MsgCtrl?) = sendMsg2(msg.toByteArray(), msgCtrl)
 
-    external fun recv(size: Int): ByteArray
+    external fun recv(size: Int): Pair<Int, ByteArray>
 
-    external fun recvMsg2(size: Int, msgCtrl: MsgCtrl?): ByteArray
+    external fun recvMsg2(size: Int, msgCtrl: MsgCtrl?): Pair<Int, ByteArray>
 
     external fun sendFile(path: String, offset: Long, size: Long, block: Int = 364000): Long
     fun sendFile(file: File, offset: Long, size: Long, block: Int = 364000) =

@@ -366,7 +366,7 @@ nativeSendMsg2(JNIEnv *env,
     return res;
 }
 
-jbyteArray JNICALL
+jobject JNICALL
 nativeRecv(JNIEnv *env, jobject ju, jint len) {
     SRTSOCKET u = srt_socket_j2n(env, ju);
     jbyteArray byteArray = nullptr;
@@ -383,11 +383,10 @@ nativeRecv(JNIEnv *env, jobject ju, jint len) {
         free(buf);
     }
 
-    return byteArray;
-
+    return pair_new(env, int_new(env, res), byteArray);
 }
 
-jbyteArray JNICALL
+jobject JNICALL
 nativeRecvMsg2(JNIEnv *env,
                jobject ju,
                jint len,
@@ -411,8 +410,7 @@ nativeRecvMsg2(JNIEnv *env,
         free(msgctrl);
     }
 
-    return byteArray;
-
+    return pair_new(env, int_new(env, res), byteArray);
 }
 
 jlong JNICALL
@@ -646,17 +644,17 @@ static JNINativeMethod socketMethods[] = {
         {"rendezVous",   "(L" INETSOCKETADDRESS_CLASS ";L" INETSOCKETADDRESS_CLASS ";)I", (void *) &nativeRendezVous},
         {"getPeerName",  "()L" INETSOCKETADDRESS_CLASS ";",                               (void *) &nativeGetPeerName},
         {"getSockName",  "()L" INETSOCKETADDRESS_CLASS ";",                               (void *) &nativeGetSockName},
-        {"getSockFlag",  "(L" SOCKOPT_CLASS ";)Ljava/lang/Object;",                       (void *) &nativeGetSockOpt},
-        {"setSockFlag",  "(L" SOCKOPT_CLASS ";Ljava/lang/Object;)I",                      (void *) &nativeSetSockOpt},
-        {"send",         "([B)I",                                                         (void *) &nativeSend},
-        {"sendMsg",      "([BIZ)I",                                                       (void *) &nativeSendMsg},
-        {"sendMsg2",     "([BL" MSGCTRL_CLASS ";)I",                                      (void *) &nativeSendMsg2},
-        {"recv",         "(I)[B",                                                         (void *) &nativeRecv},
-        {"recvMsg2",     "(IL" MSGCTRL_CLASS ";)[B",                                      (void *) &nativeRecvMsg2},
-        {"sendFile",     "(Ljava/lang/String;JJI)J",                                      (void *) &nativeSendFile},
-        {"recvFile",     "(Ljava/lang/String;JJI)J",                                      (void *) &nativeRecvFile},
-        {"bstats",       "(Z)L" STATS_CLASS ";",                                          (void *) &nativebstats},
-        {"bistats",      "(ZZ)L" STATS_CLASS ";",                                         (void *) &nativebistats}
+        {"getSockFlag",  "(L" SOCKOPT_CLASS ";)Ljava/lang/Object;",  (void *) &nativeGetSockOpt},
+        {"setSockFlag",  "(L" SOCKOPT_CLASS ";Ljava/lang/Object;)I", (void *) &nativeSetSockOpt},
+        {"send",         "([B)I",                                    (void *) &nativeSend},
+        {"sendMsg",      "([BIZ)I",                                  (void *) &nativeSendMsg},
+        {"sendMsg2",     "([BL" MSGCTRL_CLASS ";)I",                 (void *) &nativeSendMsg2},
+        {"recv",         "(I)L" PAIR_CLASS ";",                      (void *) &nativeRecv},
+        {"recvMsg2",     "(IL" MSGCTRL_CLASS ";)L" PAIR_CLASS ";",   (void *) &nativeRecvMsg2},
+        {"sendFile",     "(Ljava/lang/String;JJI)J",                 (void *) &nativeSendFile},
+        {"recvFile",     "(Ljava/lang/String;JJI)J",                 (void *) &nativeRecvFile},
+        {"bstats",       "(Z)L" STATS_CLASS ";",                     (void *) &nativebstats},
+        {"bistats",      "(ZZ)L" STATS_CLASS ";",                    (void *) &nativebistats}
 };
 
 static JNINativeMethod errorMethods[] = {

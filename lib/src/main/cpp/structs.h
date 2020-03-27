@@ -43,6 +43,15 @@ jobject
 sockaddr_inet_n2j(JNIEnv *env, jclass clazz, struct sockaddr_storage *sa);
 
 /**
+ * @brief From a C int create a Java Integer object
+ *
+ * @param env Java environment
+ * @param val C integer
+ * @return return Java Integer object
+ */
+jobject int_new(JNIEnv *env, int val);
+
+/**
  * @brief Convert Java SRT Optval to C optval for SRT library
  *
  * @param env Java environment

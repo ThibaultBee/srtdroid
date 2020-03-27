@@ -152,7 +152,7 @@ class SocketTest {
 
     @Test
     fun recvTest() {
-        assertNull(socket.recv(4 /*Int nb bytes*/))
+        assertNull(socket.recv(4 /*Int nb bytes*/).second)
     }
 
     @Test
@@ -161,7 +161,7 @@ class SocketTest {
             socket.recvMsg2(
                 4 /*Int nb bytes*/,
                 MsgCtrl(flags = 0, boundary = 0, pktSeq = 0, no = 10)
-            )
+            ).second
         )
     }
 

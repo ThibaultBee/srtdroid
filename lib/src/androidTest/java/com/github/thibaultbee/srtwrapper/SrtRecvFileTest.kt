@@ -1,19 +1,19 @@
 package com.github.thibaultbee.srtwrapper
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.github.thibaultbee.srtwrapper.enums.SockOpt
-import com.github.thibaultbee.srtwrapper.models.Socket
-import org.junit.Test
-
-import org.junit.Assert.*
-import org.junit.runner.RunWith
 import android.Manifest.permission.INTERNET
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.rule.GrantPermissionRule
+import com.github.thibaultbee.srtwrapper.enums.SockOpt
 import com.github.thibaultbee.srtwrapper.enums.Transtype
+import com.github.thibaultbee.srtwrapper.models.Socket
 import com.google.common.primitives.Ints
 import com.google.common.primitives.Longs
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Rule
+import org.junit.Test
+import org.junit.runner.RunWith
 import java.io.File
 
 @RunWith(AndroidJUnit4::class)
@@ -54,7 +54,7 @@ class SrtRecvFileTest {
         )
         assertEquals(serverFile.length, socket.sendMsg(serverFile))
 
-        val fileSize = Longs.fromByteArray(socket.recv(Longs.BYTES).reversedArray())
+        val fileSize = Longs.fromByteArray(socket.recv(Longs.BYTES).second.reversedArray())
         assert(fileSize > 0)
 
         // Where file will be written
