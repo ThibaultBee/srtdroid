@@ -184,7 +184,8 @@ nativeListen(JNIEnv *env, jobject ju, jint backlog) {
 
     CallbackContext *cbCtx = static_cast<CallbackContext *>(malloc(sizeof(CallbackContext)));
     env->GetJavaVM(&(cbCtx->vm));
-    cbCtx->sockAddrClazz = env->FindClass(INETSOCKETADDRESS_CLASS);
+    cbCtx->sockAddrClazz = static_cast<jclass>(env->NewGlobalRef(
+            env->FindClass(INETSOCKETADDRESS_CLASS)));
     cbCtx->callingSocket = env->NewGlobalRef(ju);
     srt_listen_callback(u, srt_listen_cb,
                         (void *) cbCtx); // TODO: free cbCtx but could not find a way to free callback opaque parameter
