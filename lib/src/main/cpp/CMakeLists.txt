@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.6)
 
 include(ExternalProject)
 
-set(OPENSSL_VERSION "1.1.1e")
+set(OPENSSL_VERSION "1.1.1f")
 set(SRT_VERSION "1.4.1")
 
 find_program(GIT "git")
