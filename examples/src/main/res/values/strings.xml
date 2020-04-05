@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Examples</string>
+    <string name="testclient">TestClient</string>
+    <string name="testserver">TestServer</string>
+    <string name="launch_test">Launch test</string>
+    <string name="ip">IP</string>
+    <string name="port">Port</string>
+    <string name="default_port">9000</string>
+    <string name="default_server_ip">0.0.0.0</string>
+    <string name="default_client_ip">192.168.1.10</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="client_tests">Client tests</string>
+    <string name="server_tests">Server tests</string>
+    <string name="recvfile">RecvFile</string>
+    <string name="sendfile">SendFile</string>
+</resources>

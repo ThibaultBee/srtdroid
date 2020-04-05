@@ -1,2 +1,2 @@
-include ':chat', ':lib'
+include ':chat', ':lib', ":examples"
 rootProject.name='SRTWrapper'

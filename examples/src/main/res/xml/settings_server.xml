@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory android:title="Server">
+
+    <EditTextPreference
+        android:defaultValue="@string/default_server_ip"
+        android:dialogTitle="IP"
+        android:key="ip_server_key"
+        android:title="@string/ip"
+        app:useSimpleSummaryProvider="true" />
+
+    <EditTextPreference
+        android:defaultValue="@string/default_port"
+        android:dialogTitle="Port"
+        android:key="port_server_key"
+        android:title="@string/port"
+        app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+
+</androidx.preference.PreferenceScreen>
