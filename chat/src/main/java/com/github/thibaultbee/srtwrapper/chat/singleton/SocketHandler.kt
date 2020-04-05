@@ -31,9 +31,8 @@ object SocketHandler {
                 it.close()
                 throw Exception(ErrorUtils.getMessage())
             }
-            Log.e(">>> TEST", "Wait for accept")
+
             val peer = it.accept()
-            Log.e(">>> TEST", "Out of accept")
             clientSocket = peer.first
             if (!clientSocket.isValid()) {
                 it.close()
