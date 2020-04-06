@@ -6,13 +6,23 @@ Low level API for SRT library on Android. SRT is an open source transport techno
 
 Get SRT Wrapper lastest artifacts on [jitpack.io](https://jitpack.io/#ThibaultBee/SRTWrapper)
 
-## Sample
+## Samples
 
-Check the SRT chat application in chat folder.
-You need 2 Android devices: one client and one server.
-On the server side, configure listening IP to "0.0.0.0"
+To test Android SR Wrapper, you will need 2 Android devices: one client and one server.
+On the server side, configure listening IP to "0.0.0.0" or to server ethernet IP.
 On the client side, configure connecting IP to server IP.
-The port must be set to the same value for both.
+The port must be the same value for both.
+
+### Examples
+
+In examples folder.
+Examples are the SRT Android Wrapper counterpart of [SRT examples folder](https://github.com/Haivision/srt/tree/master/examples).
+You will find both client and server examples.
+
+### Chat
+
+In chat folder.
+Chat is an SRT utility to send and receive messages. It provides both a client and a server.
 
 ## API
 
