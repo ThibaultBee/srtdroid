@@ -90,7 +90,7 @@ class Socket {
     fun sendFile(file: File, offset: Long, size: Long, block: Int = 364000) =
         sendFile(file.path, offset, size, block)
     fun sendFile(file: File, block: Int = 364000) =
-        sendFile(file.path, 0, file.totalSpace, block)
+        sendFile(file.path, 0, file.length(), block)
 
     external fun recvFile(path: String, offset: Long, size: Long, block: Int = 7280000): Long
     fun recvFile(file: File, offset: Long, size: Long, block: Int = 7280000) =
