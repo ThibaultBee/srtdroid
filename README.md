@@ -62,4 +62,9 @@ For Android > 6.0, you have to request permissions at runtime.
 ## Build
 
 As it downloads and builds SRT, OpenSSL (ssl and crypto) libraries, first compilation will take a while.
-Android SRT Wrapper is designed to build on a Linux platform. As OpenSSL is really tricky to cross-compile on Windows, you can't build on Windows.
+Android SRT Wrapper is designed to build on a Linux platform. As you requires `make`, you need to install:
+```bash
+sudo apt-get install build-essential
+```
+
+As OpenSSL is really tricky to cross-compile on Windows, you can't build on Windows.
