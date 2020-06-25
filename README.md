@@ -49,7 +49,7 @@ You must create a [Srt object](https://github.com/ThibaultBee/SRTWrapper/blob/ma
 
 You need to add the INTERNET permission in your AndroidManifest.xml:
 ```xml
-	<uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET" />
 ```
 
 To use, sendFile and recvFile, you might also add READ_EXTERNAL_STORAGE and WRITE_EXTERNAL_STORAGE
