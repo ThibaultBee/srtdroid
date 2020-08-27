@@ -304,12 +304,13 @@ nativeSetSockOpt(JNIEnv *env,
     int optval_len = 0;
     const void *optval = srt_optval_j2n(env, optVal, &optval_len);
 
+    if (!optval) {
+        return -EFAULT;
+    }
+
     int res = srt_setsockopt((SRTSOCKET) u,
                              0 /*level: ignored*/, (SRT_SOCKOPT) sockopt, optval, optval_len);
-
-    if (!optval) {
-        free((void *) optval);
-    }
+    free((void *) optval);
 
     return
             res;
