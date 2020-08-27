@@ -308,7 +308,7 @@ srt_optval_j2n(JNIEnv *env, jobject optVal, int *optval_len) {
         return nullptr;
     }
 
-    if (strcmp(class_name, "java.lang.String;") == 0) {
+    if (strcmp(class_name, "java.lang.String") == 0) {
         const char *optval = env->GetStringUTFChars((jstring) optVal, nullptr);
         *optval_len = strlen(optval);
         srt_optval = strdup(optval);
