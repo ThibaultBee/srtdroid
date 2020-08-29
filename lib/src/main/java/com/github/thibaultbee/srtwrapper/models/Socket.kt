@@ -5,6 +5,7 @@ import com.github.thibaultbee.srtwrapper.enums.SockOpt
 import com.github.thibaultbee.srtwrapper.enums.SockStatus
 import com.github.thibaultbee.srtwrapper.interfaces.SocketInterface
 import java.io.File
+import java.net.InetAddress
 import java.net.InetSocketAddress
 import java.net.StandardProtocolFamily
 
@@ -30,6 +31,7 @@ class Socket {
 
     external fun bind(address: InetSocketAddress): Int
     fun bind(address: String, port: Int) = bind(InetSocketAddress(address, port))
+    fun bind(address: InetAddress, port: Int) = bind(InetSocketAddress(address, port))
 
     external fun getSockState(): SockStatus
 
@@ -51,6 +53,7 @@ class Socket {
 
     external fun connect(address: InetSocketAddress): Int
     fun connect(address: String, port: Int) = connect(InetSocketAddress(address, port))
+    fun connect(address: InetAddress, port: Int) = connect(InetSocketAddress(address, port))
 
     external fun rendezVous(
         localAddress: InetSocketAddress,
@@ -74,6 +77,11 @@ class Socket {
     // Transmission
     external fun send(msg: ByteArray): Int
     fun send(msg: String) = send(msg.toByteArray())
+    fun send(msg: ByteArray, offset: Int, size: Int): Int {
+        val buffer = ByteArray(size - offset)
+        msg.copyInto(buffer, 0, offset, offset + size)
+        return send(buffer)
+    }
 
     external fun sendMsg(msg: ByteArray, ttl: Int = -1, inOrder: Boolean = false): Int
     fun sendMsg(msg: String, ttl: Int = -1, inOrder: Boolean = false) =
