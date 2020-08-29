@@ -1,6 +1,9 @@
 package com.github.thibaultbee.srtwrapper.enums
 
+import java.net.SocketOptions
+
 enum class SockOpt {
+    UNKNOWN,
     MSS,             // the Maximum Transfer Unit
     SNDSYN,          // if sending is blocking
     RCVSYN,          // if receiving is blocking
@@ -52,5 +55,19 @@ enum class SockOpt {
     KMPREANNOUNCE,  // How many packets before key flip the new key is annnounced and after key flip the old one decommissioned
     STRICTENC,      // Connection to be rejected or quickly broken when one side encryption set or bad password
     IPV6ONLY,       // IPV6_V6ONLY mode
-    PEERIDLETIMEO  // Peer-idle timeout (max time of silence heard from peer) in [ms]
+    PEERIDLETIMEO;  // Peer-idle timeout (max time of silence heard from peer) in [ms]re
+
+    companion object {
+        fun fromSocketOption(socketOption: Int): SockOpt {
+            return when (socketOption) {
+                SocketOptions.IP_TOS -> IPTOS
+                SocketOptions.SO_LINGER -> LINGER
+                SocketOptions.SO_RCVBUF -> RCVBUF
+                SocketOptions.SO_REUSEADDR -> REUSEADDR
+                SocketOptions.SO_SNDBUF -> SNDBUF
+                SocketOptions.SO_TIMEOUT -> SockOpt.RCVTIMEO
+                else -> UNKNOWN
+            }
+        }
+    }
 }
