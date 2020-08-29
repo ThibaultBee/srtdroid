@@ -79,7 +79,7 @@ int srt_sockopt_j2n(JNIEnv *env, jobject sockOpt) {
         return -EFAULT;
     }
 
-    int srt_sockopt = -1;
+    int srt_sockopt = -EINVAL;
     if (strcmp(srt_sockopt_field, "MSS") == 0) {
         srt_sockopt = SRTO_MSS;
     } else if (strcmp(srt_sockopt_field, "SNDSYN") == 0) {
