@@ -151,7 +151,7 @@ nativeBind(JNIEnv *env, jobject ju, jobject inetSocketAddress) {
 
     int res = srt_bind(u, reinterpret_cast<const struct sockaddr *>(ss), size);
 
-    if (!ss) {
+    if (ss) {
         free((void *) ss);
     }
 
@@ -219,7 +219,7 @@ nativeConnect(JNIEnv *env, jobject ju, jobject inetSocketAddress) {
 
     int res = srt_connect((SRTSOCKET) u, reinterpret_cast<const sockaddr *>(ss), size);
 
-    if (!ss) {
+    if (ss) {
         free((void *) ss);
     }
 
@@ -238,11 +238,11 @@ nativeRendezVous(JNIEnv *env, jobject ju, jobject localAddress, jobject remoteAd
                              local_addr_size, reinterpret_cast<const sockaddr *>(remote_ss),
                              remote_addr_size);
 
-    if (!local_ss) {
+    if (local_ss) {
         free((void *) local_ss);
     }
 
-    if (!remote_ss) {
+    if (remote_ss) {
         free((void *) remote_ss);
     }
 
