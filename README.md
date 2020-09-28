@@ -17,7 +17,7 @@ allprojects {
 }
 
 dependencies {
-    implementation 'com.github.ThibaultBee:SRTWrapper:0.8.1'
+    implementation 'com.github.ThibaultBee:SRTWrapper:0.8.2'
 }
 ```
 
