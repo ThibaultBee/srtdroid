@@ -124,8 +124,6 @@ int srt_sockopt_j2n(JNIEnv *env, jobject sockOpt) {
         srt_sockopt = SRTO_TSBPDMODE;
     } else if (strcmp(srt_sockopt_field, "LATENCY") == 0) {
         srt_sockopt = SRTO_LATENCY;
-    } else if (strcmp(srt_sockopt_field, "TSBPDDELAY") == 0) {
-        srt_sockopt = SRTO_TSBPDDELAY;
     } else if (strcmp(srt_sockopt_field, "INPUTBW") == 0) {
         srt_sockopt = SRTO_INPUTBW;
     } else if (strcmp(srt_sockopt_field, "OHEADBW") == 0) {
@@ -152,6 +150,8 @@ int srt_sockopt_j2n(JNIEnv *env, jobject sockOpt) {
         srt_sockopt = SRTO_PEERVERSION;
     } else if (strcmp(srt_sockopt_field, "CONNTIMEO") == 0) {
         srt_sockopt = SRTO_CONNTIMEO;
+    } else if (strcmp(srt_sockopt_field, "DRIFTTRACER") == 0) {
+        srt_sockopt = SRTO_DRIFTTRACER;
     } else if (strcmp(srt_sockopt_field, "SNDKMSTATE") == 0) {
         srt_sockopt = SRTO_SNDKMSTATE;
     } else if (strcmp(srt_sockopt_field, "RCVKMSTATE") == 0) {
@@ -178,10 +178,18 @@ int srt_sockopt_j2n(JNIEnv *env, jobject sockOpt) {
         srt_sockopt = SRTO_KMREFRESHRATE;
     } else if (strcmp(srt_sockopt_field, "KMPREANNOUNCE") == 0) {
         srt_sockopt = SRTO_KMPREANNOUNCE;
+    } else if (strcmp(srt_sockopt_field, "ENFORCEDENCRYPTION") == 0) {
+        srt_sockopt = SRTO_ENFORCEDENCRYPTION;
     } else if (strcmp(srt_sockopt_field, "IPV6ONLY") == 0) {
         srt_sockopt = SRTO_IPV6ONLY;
     } else if (strcmp(srt_sockopt_field, "PEERIDLETIMEO") == 0) {
         srt_sockopt = SRTO_PEERIDLETIMEO;
+    } else if (strcmp(srt_sockopt_field, "BINDTODEVICE") == 0) {
+        srt_sockopt = SRTO_BINDTODEVICE;
+    } else if (strcmp(srt_sockopt_field, "PACKETFILTER") == 0) {
+        srt_sockopt = SRTO_PACKETFILTER;
+    } else if (strcmp(srt_sockopt_field, "RETRANSMITALGO") == 0) {
+        srt_sockopt = SRTO_RETRANSMITALGO;
     } else {
         LOGE(TAG, "SockOpt: unknown value %s", srt_sockopt_field);
     }

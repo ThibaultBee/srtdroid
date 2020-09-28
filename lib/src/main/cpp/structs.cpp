@@ -432,6 +432,7 @@ jobject srt_optval_n2j(JNIEnv *env, int u, int level, jobject sockOpt) {
         case SRTO_SNDSYN:
         case SRTO_ENFORCEDENCRYPTION:
         case SRTO_TLPKTDROP:
+        case SRTO_DRIFTTRACER:
         case SRTO_TSBPDMODE: {
             // Boolean
             bool optval = false;
@@ -445,6 +446,7 @@ jobject srt_optval_n2j(JNIEnv *env, int u, int level, jobject sockOpt) {
         }
         case SRTO_PACKETFILTER:
         case SRTO_PASSPHRASE:
+        case SRTO_BINDTODEVICE:
         case SRTO_STREAMID: {
             // String
             const char optval[512] = {0};
