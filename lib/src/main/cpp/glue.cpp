@@ -116,6 +116,11 @@ nativeCleanUp(JNIEnv *env, jobject obj) {
     return srt_cleanup();
 }
 
+jint JNICALL
+nativeGetVersion(JNIEnv *env, jobject obj) {
+    return srt_getversion();
+}
+
 // Creating and configuring sockets
 jboolean JNICALL
 nativeIsValid(JNIEnv *env, jobject ju) {
@@ -629,6 +634,7 @@ nativeSetLogLevel(JNIEnv *env, jobject obj, jint level) {
 static JNINativeMethod srtMethods[] = {
         {"startUp",     "()I",  (void *) &nativeStartUp},
         {"cleanUp",     "()I",  (void *) &nativeCleanUp},
+        {"getVersion",  "()I",  (void *) &nativeGetVersion},
         {"setLogLevel", "(I)V", (void *) &nativeSetLogLevel}
 };
 

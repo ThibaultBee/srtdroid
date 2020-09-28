@@ -10,5 +10,6 @@ class Srt {
 
     external fun startUp(): Int
     external fun cleanUp(): Int
+    external fun getVersion(): Int
     external fun setLogLevel(level: Int)
 }

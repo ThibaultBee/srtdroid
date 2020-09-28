@@ -14,4 +14,13 @@ class SrtTest {
         srt.setLogLevel(3)
         assertEquals(0, srt.cleanUp())
     }
+
+    @Test
+    fun getVersionTest() {
+        val srt = Srt()
+
+        assertEquals(0, srt.startUp())
+        assert(srt.getVersion() > 0)
+        assertEquals(0, srt.cleanUp())
+    }
 }
