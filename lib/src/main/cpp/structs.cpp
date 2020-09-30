@@ -667,7 +667,7 @@ jobject srt_stats_n2j(JNIEnv *env, SRT_TRACEBSTATS tracebstats) {
     }
 
     jmethodID statsConstructorMethod = env->GetMethodID(statsClazz, "<init>",
-                                                        "(JJJIIIIIIIJIIIJJJJJJJJJIIIIIIIIDDJIDJIIIJJJJJJJDIIIDDIIDIIIIIIIIIIIIIIIIII)V");
+                                                        "(JJJIIIIIIIJIIIJJJJJJJJJIIIIIIIIDDJIDJIIIJJJJJJJDIIIDDIIDIIIIIIIIIIIIIIIIIIJJJJJJJJ)V");
     if (!statsConstructorMethod) {
         LOGE(TAG, "Can't get Stats constructor");
         env->DeleteLocalRef(statsClazz);
@@ -756,7 +756,17 @@ jobject srt_stats_n2j(JNIEnv *env, SRT_TRACEBSTATS tracebstats) {
                                        tracebstats.pktRcvFilterExtra,
                                        tracebstats.pktRcvFilterSupply,
                                        tracebstats.pktRcvFilterLoss,
-                                       tracebstats.pktReorderTolerance
+                                       tracebstats.pktReorderTolerance,
+
+                                       (jlong) tracebstats.pktSentUniqueTotal,
+                                       (jlong) tracebstats.pktRecvUniqueTotal,
+                                       (jlong) tracebstats.byteSentUniqueTotal,
+                                       (jlong) tracebstats.byteRecvUniqueTotal,
+
+                                       (jlong) tracebstats.pktSentUnique,
+                                       (jlong) tracebstats.pktRecvUnique,
+                                       (jlong) tracebstats.byteSentUnique,
+                                       (jlong) tracebstats.byteRecvUnique
     );
 
     env->DeleteLocalRef(statsClazz);
