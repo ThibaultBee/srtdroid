@@ -108,4 +108,7 @@ class Socket {
     external fun bstats(clear: Boolean): Stats
 
     external fun bistats(clear: Boolean, instantaneous: Boolean): Stats
+
+    // Time access
+    external fun connectionTime(): Long
 }

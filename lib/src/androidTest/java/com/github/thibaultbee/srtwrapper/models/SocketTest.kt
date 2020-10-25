@@ -201,4 +201,9 @@ class SocketTest {
     fun bistatsTest() {
         socket.bistats(clear = true, instantaneous = false)
     }
+
+    @Test
+    fun connectionTimeTest() {
+        socket.connectionTime()
+    }
 }
