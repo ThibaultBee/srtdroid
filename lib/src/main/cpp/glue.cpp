@@ -129,7 +129,7 @@ nativeIsValid(JNIEnv *env, jobject ju) {
     return static_cast<jboolean>(u != SRT_INVALID_SOCK);
 }
 
-jint JNICALL
+jint JNICALL SRT_ATR_DEPRECATED
 nativeSocket(JNIEnv *env, jobject obj,
              jobject addressFamily,
              jint type,

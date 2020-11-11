@@ -14,6 +14,7 @@ class Socket {
     private var srtsocket: Int
 
     private external fun socket(af: StandardProtocolFamily, type: Int, protocol: Int): Int
+    @Deprecated(message = "Use Socket() instead", replaceWith = ReplaceWith("Socket()"))
     constructor(af: StandardProtocolFamily) {
         srtsocket = socket(af, 0, 0)
     }
