@@ -2,9 +2,6 @@ package com.github.thibaultbee.srtwrapper
 
 class Srt {
     init {
-        System.loadLibrary("crypto")
-        System.loadLibrary("ssl")
-        System.loadLibrary("srt")
         System.loadLibrary("jnisrt")
     }
 
