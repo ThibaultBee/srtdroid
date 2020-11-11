@@ -1,9 +1,14 @@
 package com.github.thibaultbee.srtwrapper.models
 
 import android.util.Pair
+import com.github.thibaultbee.srtwrapper.enums.RejectReasonCode
 import com.github.thibaultbee.srtwrapper.enums.SockOpt
 import com.github.thibaultbee.srtwrapper.enums.SockStatus
 import com.github.thibaultbee.srtwrapper.interfaces.SocketInterface
+import com.github.thibaultbee.srtwrapper.models.rejectreason.InternalRejectReason
+import com.github.thibaultbee.srtwrapper.models.rejectreason.PredefinedRejectReason
+import com.github.thibaultbee.srtwrapper.models.rejectreason.RejectReason
+import com.github.thibaultbee.srtwrapper.models.rejectreason.UserDefinedRejectReason
 import java.io.File
 import java.net.InetAddress
 import java.net.InetSocketAddress
@@ -106,9 +111,32 @@ class Socket {
         recvFile(file.path, offset, size, block)
 
     // Reject reason
-    external fun getRejectReason(): Int
+    private external fun nativeGetRejectReason(): Int
+    fun getRejectReason(): RejectReason {
+        val code = nativeGetRejectReason()
+        return when {
+            code < RejectReasonCode.PREDEFINED_OFFSET -> InternalRejectReason(RejectReasonCode.values()[code])
+            code < RejectReasonCode.USERDEFINED_OFFSET -> PredefinedRejectReason(code - RejectReasonCode.PREDEFINED_OFFSET)
+            else -> UserDefinedRejectReason(code - RejectReasonCode.USERDEFINED_OFFSET)
+        }
+    }
 
-    external fun setRejectReason(reason: Int): Int
+    private external fun setRejectReason(rejectReason: Int): Int
+    fun setRejectReason(rejectReason: RejectReason): Int {
+        val code = when (rejectReason) {
+            is InternalRejectReason -> { // Forbidden by SRT
+                rejectReason.code.ordinal
+            }
+            is PredefinedRejectReason -> {
+                rejectReason.code + RejectReasonCode.PREDEFINED_OFFSET
+            }
+            is UserDefinedRejectReason -> {
+                rejectReason.code + RejectReasonCode.USERDEFINED_OFFSET
+            }
+            else -> RejectReasonCode.UNKNOWN.ordinal
+        }
+        return setRejectReason(code)
+    }
 
     // Performance tracking
     external fun bstats(clear: Boolean): Stats

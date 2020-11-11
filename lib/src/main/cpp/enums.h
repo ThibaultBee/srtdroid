@@ -12,7 +12,7 @@ extern "C" {
 #define EPOLLOPT_CLASS "com/github/thibaultbee/srtwrapper/enums/EpollOpt"
 #define ERRORTYPE_CLASS "com/github/thibaultbee/srtwrapper/enums/ErrorType"
 #define KMSTATE_CLASS "com/github/thibaultbee/srtwrapper/enums/KMState"
-#define REJECT_REASON_CLASS "com/github/thibaultbee/srtwrapper/enums/RejectReason"
+#define REJECT_REASON_CLASS "com/github/thibaultbee/srtwrapper/enums/RejectReasonCode"
 #define SOCKOPT_CLASS "com/github/thibaultbee/srtwrapper/enums/SockOpt"
 #define SOCKSTATUS_CLASS "com/github/thibaultbee/srtwrapper/enums/SockStatus"
 #define TRANSTYPE_CLASS "com/github/thibaultbee/srtwrapper/enums/Transtype"

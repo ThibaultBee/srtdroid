@@ -1,6 +1,6 @@
 package com.github.thibaultbee.srtwrapper.enums
 
-enum class RejectReason {
+enum class RejectReasonCode {
     UNKNOWN,     // initial set when in progress
     SYSTEM,      // broken due to system function error
     PEER,        // connection was rejected by peer

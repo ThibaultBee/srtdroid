@@ -6,7 +6,7 @@ import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 
-class RejectReasonTest {
+class RejectReasonCodeTest {
 
     private val srt = Srt()
 
@@ -22,7 +22,7 @@ class RejectReasonTest {
 
     @Test
     fun toStringTest() {
-        RejectReason.values().forEach {
+        RejectReasonCode.values().forEach {
             assertNotNull(it.toString())
         }
     }
