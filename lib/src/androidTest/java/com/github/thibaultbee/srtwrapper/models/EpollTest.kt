@@ -16,7 +16,7 @@ class EpollTest {
 
     @Before
     fun setUp() {
-        assertEquals(srt.startUp(), 0)
+        assert(srt.startUp() >= 0)
         epoll = Epoll()
         assertTrue(epoll.isValid())
     }
