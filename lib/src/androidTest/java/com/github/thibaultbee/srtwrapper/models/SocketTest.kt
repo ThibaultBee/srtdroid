@@ -86,6 +86,7 @@ class SocketTest {
     fun connectTest() {
         assertEquals(-1, socket.connect("127.0.3.1", 1234))
         assertEquals(Error.getLastError(), ErrorType.ENOSERVER)
+        assertEquals(RejectReason.TIMEOUT.ordinal, socket.getRejectReason())
     }
 
     @Test
@@ -190,6 +191,17 @@ class SocketTest {
         )
         assertEquals(-1, socket.recvFile(myFile, 0, 1024))
         assertEquals(Error.getLastError(), ErrorType.ENOCONN)
+    }
+
+    @Test
+    fun getRejectReasonTest() {
+        assertEquals(RejectReason.UNKNOWN.ordinal, socket.getRejectReason())
+    }
+
+    @Test
+    fun setRejectReasonTest() {
+        assertEquals(0, socket.setRejectReason(RejectReason.USERDEFINED_OFFSET + 2))
+        assertEquals(0, socket.setRejectReason(RejectReason.PREDEFINED_OFFSET + 1))
     }
 
     @Test

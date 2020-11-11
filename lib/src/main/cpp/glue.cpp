@@ -453,6 +453,7 @@ nativeRecvFile(JNIEnv *env,
     return (jlong) res;
 }
 
+
 // Errors
 jstring JNICALL
 nativeGetLastErrorStr(JNIEnv *env, jobject obj) {
@@ -476,6 +477,27 @@ void JNICALL
 nativeClearLastError(JNIEnv *env, jobject obj) {
     srt_clearlasterror();
 }
+
+
+// Reject reason
+jint JNICALL
+nativeGetRejectReason(JNIEnv *env, jobject ju) {
+    SRTSOCKET u = srt_socket_j2n(env, ju);
+    return srt_getrejectreason(u);
+}
+
+jstring JNICALL
+nativeRejectReasonStr(JNIEnv *env, jobject obj) {
+    int reject_reason = srt_reject_reason_j2n(env, obj);
+    return env->NewStringUTF(srt_rejectreason_str(reject_reason));
+}
+
+jint JNICALL
+nativeSetRejectReason(JNIEnv *env, jobject ju, jint rejectReason) {
+    SRTSOCKET u = srt_socket_j2n(env, ju);
+    return srt_setrejectreason(u, rejectReason);
+}
+
 
 // Performance tracking
 jobject JNICALL
@@ -655,30 +677,36 @@ static JNINativeMethod srtMethods[] = {
 };
 
 static JNINativeMethod socketMethods[] = {
-        {"isValid",        "()Z",                                                           (void *) &nativeIsValid},
-        {"socket",         "(Ljava/net/StandardProtocolFamily;II)I",                        (void *) &nativeSocket},
-        {"createSocket",   "()I",                                                           (void *) &nativeCreateSocket},
-        {"bind",           "(L" INETSOCKETADDRESS_CLASS ";)I",                              (void *) &nativeBind},
-        {"getSockState",   "()L" SOCKSTATUS_CLASS ";",                                      (void *) &nativeGetSockState},
-        {"close",          "()I",                                                           (void *) &nativeClose},
-        {"listen",         "(I)I",                                                          (void *) &nativeListen},
-        {"accept",         "()L" PAIR_CLASS ";",                                            (void *) &nativeAccept},
-        {"connect",        "(L" INETSOCKETADDRESS_CLASS ";)I",                              (void *) &nativeConnect},
-        {"rendezVous",     "(L" INETSOCKETADDRESS_CLASS ";L" INETSOCKETADDRESS_CLASS ";)I", (void *) &nativeRendezVous},
-        {"getPeerName",    "()L" INETSOCKETADDRESS_CLASS ";",                               (void *) &nativeGetPeerName},
-        {"getSockName",    "()L" INETSOCKETADDRESS_CLASS ";",                               (void *) &nativeGetSockName},
-        {"getSockFlag",    "(L" SOCKOPT_CLASS ";)Ljava/lang/Object;",                       (void *) &nativeGetSockOpt},
-        {"setSockFlag",    "(L" SOCKOPT_CLASS ";Ljava/lang/Object;)I",                      (void *) &nativeSetSockOpt},
-        {"send",           "([B)I",                                                         (void *) &nativeSend},
-        {"sendMsg",        "([BIZ)I",                                                       (void *) &nativeSendMsg},
-        {"sendMsg2",       "([BL" MSGCTRL_CLASS ";)I",                                      (void *) &nativeSendMsg2},
-        {"recv",           "(I)L" PAIR_CLASS ";",                                           (void *) &nativeRecv},
-        {"recvMsg2",       "(IL" MSGCTRL_CLASS ";)L" PAIR_CLASS ";",                        (void *) &nativeRecvMsg2},
-        {"sendFile",       "(Ljava/lang/String;JJI)J",                                      (void *) &nativeSendFile},
-        {"recvFile",       "(Ljava/lang/String;JJI)J",                                      (void *) &nativeRecvFile},
-        {"bstats",         "(Z)L" STATS_CLASS ";",                                          (void *) &nativebstats},
-        {"bistats",        "(ZZ)L" STATS_CLASS ";",                                         (void *) &nativebistats},
-        {"connectionTime", "()J",                                                           (void *) &nativeConnectionTime}
+        {"isValid",         "()Z",                                                           (void *) &nativeIsValid},
+        {"socket",          "(Ljava/net/StandardProtocolFamily;II)I",                        (void *) &nativeSocket},
+        {"createSocket",    "()I",                                                           (void *) &nativeCreateSocket},
+        {"bind",            "(L" INETSOCKETADDRESS_CLASS ";)I",                              (void *) &nativeBind},
+        {"getSockState",    "()L" SOCKSTATUS_CLASS ";",                                      (void *) &nativeGetSockState},
+        {"close",           "()I",                                                           (void *) &nativeClose},
+        {"listen",          "(I)I",                                                          (void *) &nativeListen},
+        {"accept",          "()L" PAIR_CLASS ";",                                            (void *) &nativeAccept},
+        {"connect",         "(L" INETSOCKETADDRESS_CLASS ";)I",                              (void *) &nativeConnect},
+        {"rendezVous",      "(L" INETSOCKETADDRESS_CLASS ";L" INETSOCKETADDRESS_CLASS ";)I", (void *) &nativeRendezVous},
+        {"getPeerName",     "()L" INETSOCKETADDRESS_CLASS ";",                               (void *) &nativeGetPeerName},
+        {"getSockName",     "()L" INETSOCKETADDRESS_CLASS ";",                               (void *) &nativeGetSockName},
+        {"getSockFlag",     "(L" SOCKOPT_CLASS ";)Ljava/lang/Object;",                       (void *) &nativeGetSockOpt},
+        {"setSockFlag",     "(L" SOCKOPT_CLASS ";Ljava/lang/Object;)I",                      (void *) &nativeSetSockOpt},
+        {"send",            "([B)I",                                                         (void *) &nativeSend},
+        {"sendMsg",         "([BIZ)I",                                                       (void *) &nativeSendMsg},
+        {"sendMsg2",        "([BL" MSGCTRL_CLASS ";)I",                                      (void *) &nativeSendMsg2},
+        {"recv",            "(I)L" PAIR_CLASS ";",                                           (void *) &nativeRecv},
+        {"recvMsg2",        "(IL" MSGCTRL_CLASS ";)L" PAIR_CLASS ";",                        (void *) &nativeRecvMsg2},
+        {"sendFile",        "(Ljava/lang/String;JJI)J",                                      (void *) &nativeSendFile},
+        {"recvFile",        "(Ljava/lang/String;JJI)J",                                      (void *) &nativeRecvFile},
+        {"getRejectReason", "()I",                                                           (void *) &nativeGetRejectReason},
+        {"setRejectReason", "(I)I",                                                          (void *) &nativeSetRejectReason},
+        {"bstats",          "(Z)L" STATS_CLASS ";",                                          (void *) &nativebstats},
+        {"bistats",         "(ZZ)L" STATS_CLASS ";",                                         (void *) &nativebistats},
+        {"connectionTime",  "()J",                                                           (void *) &nativeConnectionTime}
+};
+
+static JNINativeMethod rejectReasonMethods[] = {
+        {"toString", "()Ljava/lang/String;", (void *) &nativeRejectReasonStr}
 };
 
 static JNINativeMethod errorMethods[] = {
@@ -743,6 +771,13 @@ jint JNI_OnLoad(JavaVM *vm, void * /*reserved*/) {
                                     sizeof(socketMethods) / sizeof(socketMethods[0])) !=
          JNI_TRUE)) {
         LOGE(TAG, "Socket RegisterNatives failed");
+        return -1;
+    }
+
+    if ((registerNativeForClassName(env, REJECT_REASON_CLASS, rejectReasonMethods,
+                                    sizeof(rejectReasonMethods) / sizeof(rejectReasonMethods[0])) !=
+         JNI_TRUE)) {
+        LOGE(TAG, "RejectReason RegisterNatives failed");
         return -1;
     }
 

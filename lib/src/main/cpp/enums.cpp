@@ -400,6 +400,57 @@ jobject srt_sockstatus_n2j(JNIEnv *env, SRT_SOCKSTATUS sockstatus) {
     return sockStatus;
 }
 
+int srt_reject_reason_j2n(JNIEnv *env, jobject rejectReason) {
+    const char *reject_reason_field = enums_get_field_id(env, rejectReason);
+    if (!reject_reason_field) {
+        LOGE(TAG, "Can't get SRT reject reason field");
+        return SRT_REJ_UNKNOWN;
+    }
+
+    int reject_reason = SRT_REJ_UNKNOWN;
+    if (strcmp(reject_reason_field, "UNKNOWN") == 0) {
+        reject_reason = SRT_REJ_UNKNOWN;
+    } else if (strcmp(reject_reason_field, "SYSTEM") == 0) {
+        reject_reason = SRT_REJ_SYSTEM;
+    } else if (strcmp(reject_reason_field, "PEER") == 0) {
+        reject_reason = SRT_REJ_PEER;
+    } else if (strcmp(reject_reason_field, "RESOURCE") == 0) {
+        reject_reason = SRT_REJ_RESOURCE;
+    } else if (strcmp(reject_reason_field, "ROGUE") == 0) {
+        reject_reason = SRT_REJ_ROGUE;
+    } else if (strcmp(reject_reason_field, "BACKLOG") == 0) {
+        reject_reason = SRT_REJ_BACKLOG;
+    } else if (strcmp(reject_reason_field, "IPE") == 0) {
+        reject_reason = SRT_REJ_IPE;
+    } else if (strcmp(reject_reason_field, "CLOSE") == 0) {
+        reject_reason = SRT_REJ_CLOSE;
+    } else if (strcmp(reject_reason_field, "VERSION") == 0) {
+        reject_reason = SRT_REJ_VERSION;
+    } else if (strcmp(reject_reason_field, "RDVCOOKIE") == 0) {
+        reject_reason = SRT_REJ_RDVCOOKIE;
+    } else if (strcmp(reject_reason_field, "BADSECRET") == 0) {
+        reject_reason = SRT_REJ_BADSECRET;
+    } else if (strcmp(reject_reason_field, "UNSECURE") == 0) {
+        reject_reason = SRT_REJ_UNSECURE;
+    } else if (strcmp(reject_reason_field, "MESSAGEAPI") == 0) {
+        reject_reason = SRT_REJ_MESSAGEAPI;
+    } else if (strcmp(reject_reason_field, "CONGESTION") == 0) {
+        reject_reason = SRT_REJ_CONGESTION;
+    } else if (strcmp(reject_reason_field, "FILTER") == 0) {
+        reject_reason = SRT_REJ_FILTER;
+    } else if (strcmp(reject_reason_field, "GROUP") == 0) {
+        reject_reason = SRT_REJ_GROUP;
+    } else if (strcmp(reject_reason_field, "TIMEOUT") == 0) {
+        reject_reason = SRT_REJ_TIMEOUT;
+    } else {
+        LOGE(TAG, "RejectReason: unknown value %s", reject_reason_field);
+    }
+
+    free((void *) reject_reason_field);
+
+    return reject_reason;
+}
+
 int srt_error_j2n(JNIEnv *env, jobject errorType) {
     const char *error_type_field = enums_get_field_id(env, errorType);
     if (!error_type_field) {

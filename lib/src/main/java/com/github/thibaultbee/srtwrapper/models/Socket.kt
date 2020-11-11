@@ -105,6 +105,11 @@ class Socket {
     fun recvFile(file: File, offset: Long, size: Long, block: Int = 7280000) =
         recvFile(file.path, offset, size, block)
 
+    // Reject reason
+    external fun getRejectReason(): Int
+
+    external fun setRejectReason(reason: Int): Int
+
     // Performance tracking
     external fun bstats(clear: Boolean): Stats
 
