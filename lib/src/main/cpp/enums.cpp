@@ -455,7 +455,7 @@ int srt_error_j2n(JNIEnv *env, jobject errorType) {
     const char *error_type_field = enums_get_field_id(env, errorType);
     if (!error_type_field) {
         LOGE(TAG, "Can't get SRT Error field");
-        return SRTT_INVALID;
+        return SRT_EUNKNOWN;
     }
 
     int error_type = SRT_EUNKNOWN;
