@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.6)
 include(ExternalProject)
 
 set(OPENSSL_VERSION "1.1.1f")
-set(SRT_VERSION "1.4.1")
+set(SRT_VERSION "1.4.2")
 
 find_program(GIT "git")
 
@@ -31,6 +31,7 @@ ExternalProject_Add(srt_project
         GIT_TAG v${SRT_VERSION}
         PATCH_COMMAND ${GIT} apply ${CMAKE_SOURCE_DIR}/patches/0001_srt_cmakefiles.patch
         CMAKE_ARGS -DUSE_OPENSSL_PC=OFF
+        -DENABLE_MONOTONIC_CLOCK=ON
         -DENABLE_APPS=OFF
         -DOPENSSL_INCLUDE_DIR=${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/include
         -DOPENSSL_CRYPTO_LIBRARY=${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/libcrypto.a

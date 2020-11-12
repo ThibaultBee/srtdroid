@@ -82,5 +82,15 @@ data class Stats(
     val pktRcvFilterExtra: Int,
     val pktRcvFilterSupply: Int,
     val pktRcvFilterLoss: Int,
-    val pktReorderTolerance: Int
+    val pktReorderTolerance: Int,
+
+    val pktSentUniqueTotal: Long,
+    val pktRecvUniqueTotal: Long,
+    val byteSentUniqueTotal: Long,
+    val byteRecvUniqueTotal: Long,
+
+    val pktSentUnique: Long,
+    val pktRecvUnique: Long,
+    val byteSentUnique: Long,
+    val byteRecvUnique: Long
 )

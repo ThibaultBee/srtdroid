@@ -124,8 +124,6 @@ int srt_sockopt_j2n(JNIEnv *env, jobject sockOpt) {
         srt_sockopt = SRTO_TSBPDMODE;
     } else if (strcmp(srt_sockopt_field, "LATENCY") == 0) {
         srt_sockopt = SRTO_LATENCY;
-    } else if (strcmp(srt_sockopt_field, "TSBPDDELAY") == 0) {
-        srt_sockopt = SRTO_TSBPDDELAY;
     } else if (strcmp(srt_sockopt_field, "INPUTBW") == 0) {
         srt_sockopt = SRTO_INPUTBW;
     } else if (strcmp(srt_sockopt_field, "OHEADBW") == 0) {
@@ -152,6 +150,8 @@ int srt_sockopt_j2n(JNIEnv *env, jobject sockOpt) {
         srt_sockopt = SRTO_PEERVERSION;
     } else if (strcmp(srt_sockopt_field, "CONNTIMEO") == 0) {
         srt_sockopt = SRTO_CONNTIMEO;
+    } else if (strcmp(srt_sockopt_field, "DRIFTTRACER") == 0) {
+        srt_sockopt = SRTO_DRIFTTRACER;
     } else if (strcmp(srt_sockopt_field, "SNDKMSTATE") == 0) {
         srt_sockopt = SRTO_SNDKMSTATE;
     } else if (strcmp(srt_sockopt_field, "RCVKMSTATE") == 0) {
@@ -178,10 +178,18 @@ int srt_sockopt_j2n(JNIEnv *env, jobject sockOpt) {
         srt_sockopt = SRTO_KMREFRESHRATE;
     } else if (strcmp(srt_sockopt_field, "KMPREANNOUNCE") == 0) {
         srt_sockopt = SRTO_KMPREANNOUNCE;
+    } else if (strcmp(srt_sockopt_field, "ENFORCEDENCRYPTION") == 0) {
+        srt_sockopt = SRTO_ENFORCEDENCRYPTION;
     } else if (strcmp(srt_sockopt_field, "IPV6ONLY") == 0) {
         srt_sockopt = SRTO_IPV6ONLY;
     } else if (strcmp(srt_sockopt_field, "PEERIDLETIMEO") == 0) {
         srt_sockopt = SRTO_PEERIDLETIMEO;
+    } else if (strcmp(srt_sockopt_field, "BINDTODEVICE") == 0) {
+        srt_sockopt = SRTO_BINDTODEVICE;
+    } else if (strcmp(srt_sockopt_field, "PACKETFILTER") == 0) {
+        srt_sockopt = SRTO_PACKETFILTER;
+    } else if (strcmp(srt_sockopt_field, "RETRANSMITALGO") == 0) {
+        srt_sockopt = SRTO_RETRANSMITALGO;
     } else {
         LOGE(TAG, "SockOpt: unknown value %s", srt_sockopt_field);
     }
@@ -392,11 +400,62 @@ jobject srt_sockstatus_n2j(JNIEnv *env, SRT_SOCKSTATUS sockstatus) {
     return sockStatus;
 }
 
+int srt_reject_reason_j2n(JNIEnv *env, jobject rejectReason) {
+    const char *reject_reason_field = enums_get_field_id(env, rejectReason);
+    if (!reject_reason_field) {
+        LOGE(TAG, "Can't get SRT reject reason field");
+        return SRT_REJ_UNKNOWN;
+    }
+
+    int reject_reason = SRT_REJ_UNKNOWN;
+    if (strcmp(reject_reason_field, "UNKNOWN") == 0) {
+        reject_reason = SRT_REJ_UNKNOWN;
+    } else if (strcmp(reject_reason_field, "SYSTEM") == 0) {
+        reject_reason = SRT_REJ_SYSTEM;
+    } else if (strcmp(reject_reason_field, "PEER") == 0) {
+        reject_reason = SRT_REJ_PEER;
+    } else if (strcmp(reject_reason_field, "RESOURCE") == 0) {
+        reject_reason = SRT_REJ_RESOURCE;
+    } else if (strcmp(reject_reason_field, "ROGUE") == 0) {
+        reject_reason = SRT_REJ_ROGUE;
+    } else if (strcmp(reject_reason_field, "BACKLOG") == 0) {
+        reject_reason = SRT_REJ_BACKLOG;
+    } else if (strcmp(reject_reason_field, "IPE") == 0) {
+        reject_reason = SRT_REJ_IPE;
+    } else if (strcmp(reject_reason_field, "CLOSE") == 0) {
+        reject_reason = SRT_REJ_CLOSE;
+    } else if (strcmp(reject_reason_field, "VERSION") == 0) {
+        reject_reason = SRT_REJ_VERSION;
+    } else if (strcmp(reject_reason_field, "RDVCOOKIE") == 0) {
+        reject_reason = SRT_REJ_RDVCOOKIE;
+    } else if (strcmp(reject_reason_field, "BADSECRET") == 0) {
+        reject_reason = SRT_REJ_BADSECRET;
+    } else if (strcmp(reject_reason_field, "UNSECURE") == 0) {
+        reject_reason = SRT_REJ_UNSECURE;
+    } else if (strcmp(reject_reason_field, "MESSAGEAPI") == 0) {
+        reject_reason = SRT_REJ_MESSAGEAPI;
+    } else if (strcmp(reject_reason_field, "CONGESTION") == 0) {
+        reject_reason = SRT_REJ_CONGESTION;
+    } else if (strcmp(reject_reason_field, "FILTER") == 0) {
+        reject_reason = SRT_REJ_FILTER;
+    } else if (strcmp(reject_reason_field, "GROUP") == 0) {
+        reject_reason = SRT_REJ_GROUP;
+    } else if (strcmp(reject_reason_field, "TIMEOUT") == 0) {
+        reject_reason = SRT_REJ_TIMEOUT;
+    } else {
+        LOGE(TAG, "RejectReason: unknown value %s", reject_reason_field);
+    }
+
+    free((void *) reject_reason_field);
+
+    return reject_reason;
+}
+
 int srt_error_j2n(JNIEnv *env, jobject errorType) {
     const char *error_type_field = enums_get_field_id(env, errorType);
     if (!error_type_field) {
         LOGE(TAG, "Can't get SRT Error field");
-        return SRTT_INVALID;
+        return SRT_EUNKNOWN;
     }
 
     int error_type = SRT_EUNKNOWN;

@@ -13,6 +13,7 @@ extern "C" {
 #define SRTSOCKET_CLASS "com/github/thibaultbee/srtwrapper/models/Socket"
 #define STATS_CLASS "com/github/thibaultbee/srtwrapper/models/Stats"
 #define SRT_CLASS "com/github/thibaultbee/srtwrapper/Srt"
+#define TIME_CLASS "com/github/thibaultbee/srtwrapper/models/Time"
 
 #define INETSOCKETADDRESS_CLASS "java/net/InetSocketAddress"
 #define PAIR_CLASS "android/util/Pair"

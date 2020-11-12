@@ -4,6 +4,9 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.github.thibaultbee.srtwrapper.Srt
 import com.github.thibaultbee.srtwrapper.enums.*
+import com.github.thibaultbee.srtwrapper.models.rejectreason.InternalRejectReason
+import com.github.thibaultbee.srtwrapper.models.rejectreason.PredefinedRejectReason
+import com.github.thibaultbee.srtwrapper.models.rejectreason.UserDefinedRejectReason
 import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
@@ -25,7 +28,7 @@ class SocketTest {
 
     @Before
     fun setUp() {
-        assertEquals(srt.startUp(), 0)
+        assert(srt.startUp() >= 0)
         socket = Socket()
         assertTrue(socket.isValid())
     }
@@ -86,6 +89,7 @@ class SocketTest {
     fun connectTest() {
         assertEquals(-1, socket.connect("127.0.3.1", 1234))
         assertEquals(Error.getLastError(), ErrorType.ENOSERVER)
+        assertEquals(InternalRejectReason(RejectReasonCode.TIMEOUT), socket.getRejectReason())
     }
 
     @Test
@@ -104,8 +108,7 @@ class SocketTest {
         assertNull(socket.getSockName())
         assertEquals(0, socket.bind("127.0.0.1", 1234))
         val sockAddr = socket.getSockName()
-        assertEquals(sockAddr!!.port, 1234)
-        assertEquals(sockAddr!!.hostString, "127.0.0.1")
+        assertNull(sockAddr) // sockAddr is null if no connection
     }
 
     @Test
@@ -193,6 +196,18 @@ class SocketTest {
     }
 
     @Test
+    fun getRejectReasonTest() {
+        assertEquals(InternalRejectReason(RejectReasonCode.UNKNOWN), socket.getRejectReason())
+    }
+
+    @Test
+    fun setRejectReasonTest() {
+        assertEquals(-1, socket.setRejectReason(InternalRejectReason(RejectReasonCode.BADSECRET)))
+        assertEquals(0, socket.setRejectReason(UserDefinedRejectReason(2)))
+        assertEquals(0, socket.setRejectReason(PredefinedRejectReason(1)))
+    }
+
+    @Test
     fun bstatsTest() {
         socket.bstats(true)
     }
@@ -200,5 +215,10 @@ class SocketTest {
     @Test
     fun bistatsTest() {
         socket.bistats(clear = true, instantaneous = false)
+    }
+
+    @Test
+    fun connectionTimeTest() {
+        socket.connectionTime()
     }
 }

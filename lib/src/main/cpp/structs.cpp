@@ -432,6 +432,7 @@ jobject srt_optval_n2j(JNIEnv *env, int u, int level, jobject sockOpt) {
         case SRTO_SNDSYN:
         case SRTO_ENFORCEDENCRYPTION:
         case SRTO_TLPKTDROP:
+        case SRTO_DRIFTTRACER:
         case SRTO_TSBPDMODE: {
             // Boolean
             bool optval = false;
@@ -445,6 +446,7 @@ jobject srt_optval_n2j(JNIEnv *env, int u, int level, jobject sockOpt) {
         }
         case SRTO_PACKETFILTER:
         case SRTO_PASSPHRASE:
+        case SRTO_BINDTODEVICE:
         case SRTO_STREAMID: {
             // String
             const char optval[512] = {0};
@@ -665,7 +667,7 @@ jobject srt_stats_n2j(JNIEnv *env, SRT_TRACEBSTATS tracebstats) {
     }
 
     jmethodID statsConstructorMethod = env->GetMethodID(statsClazz, "<init>",
-                                                        "(JJJIIIIIIIJIIIJJJJJJJJJIIIIIIIIDDJIDJIIIJJJJJJJDIIIDDIIDIIIIIIIIIIIIIIIIII)V");
+                                                        "(JJJIIIIIIIJIIIJJJJJJJJJIIIIIIIIDDJIDJIIIJJJJJJJDIIIDDIIDIIIIIIIIIIIIIIIIIIJJJJJJJJ)V");
     if (!statsConstructorMethod) {
         LOGE(TAG, "Can't get Stats constructor");
         env->DeleteLocalRef(statsClazz);
@@ -754,7 +756,17 @@ jobject srt_stats_n2j(JNIEnv *env, SRT_TRACEBSTATS tracebstats) {
                                        tracebstats.pktRcvFilterExtra,
                                        tracebstats.pktRcvFilterSupply,
                                        tracebstats.pktRcvFilterLoss,
-                                       tracebstats.pktReorderTolerance
+                                       tracebstats.pktReorderTolerance,
+
+                                       (jlong) tracebstats.pktSentUniqueTotal,
+                                       (jlong) tracebstats.pktRecvUniqueTotal,
+                                       (jlong) tracebstats.byteSentUniqueTotal,
+                                       (jlong) tracebstats.byteRecvUniqueTotal,
+
+                                       (jlong) tracebstats.pktSentUnique,
+                                       (jlong) tracebstats.pktRecvUnique,
+                                       (jlong) tracebstats.byteSentUnique,
+                                       (jlong) tracebstats.byteRecvUnique
     );
 
     env->DeleteLocalRef(statsClazz);

@@ -12,6 +12,7 @@ extern "C" {
 #define EPOLLOPT_CLASS "com/github/thibaultbee/srtwrapper/enums/EpollOpt"
 #define ERRORTYPE_CLASS "com/github/thibaultbee/srtwrapper/enums/ErrorType"
 #define KMSTATE_CLASS "com/github/thibaultbee/srtwrapper/enums/KMState"
+#define REJECT_REASON_CLASS "com/github/thibaultbee/srtwrapper/enums/RejectReasonCode"
 #define SOCKOPT_CLASS "com/github/thibaultbee/srtwrapper/enums/SockOpt"
 #define SOCKSTATUS_CLASS "com/github/thibaultbee/srtwrapper/enums/SockStatus"
 #define TRANSTYPE_CLASS "com/github/thibaultbee/srtwrapper/enums/Transtype"
@@ -78,6 +79,15 @@ SRT_KM_STATE srt_kmstate_j2n(JNIEnv *env, jobject kmState);
  * @return return corresponding Java SRT SockStatus
  */
 jobject srt_sockstatus_n2j(JNIEnv *env, SRT_SOCKSTATUS sockstatus);
+
+/**
+ * @brief Convert Java SRT reject reason to native SRT reject reason
+ *
+ * @param env Java environment
+ * @param rejectReason Java reject reason
+ * @return return corresponding SRT reject reason
+ */
+int srt_reject_reason_j2n(JNIEnv *env, jobject rejectReason);
 
 /**
  * @brief Convert Java SRT error to native SRT error
