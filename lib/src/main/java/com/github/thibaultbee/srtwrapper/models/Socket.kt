@@ -1,5 +1,6 @@
 package com.github.thibaultbee.srtwrapper.models
 
+import android.util.Log
 import android.util.Pair
 import com.github.thibaultbee.srtwrapper.enums.RejectReasonCode
 import com.github.thibaultbee.srtwrapper.enums.SockOpt
@@ -39,7 +40,9 @@ class Socket {
     fun bind(address: String, port: Int) = bind(InetSocketAddress(address, port))
     fun bind(address: InetAddress, port: Int) = bind(InetSocketAddress(address, port))
 
-    external fun getSockState(): SockStatus
+    external fun nativeGetSockState(): SockStatus
+    val sockState: SockStatus
+        get() = nativeGetSockState()
 
     external fun close(): Int
 
@@ -72,12 +75,15 @@ class Socket {
     )
 
     // Options and properties
-    external fun getPeerName(): InetSocketAddress?
+    private external fun nativeGetPeerName(): InetSocketAddress?
+    val peerName: InetSocketAddress?
+        get() = nativeGetPeerName()
 
-    external fun getSockName(): InetSocketAddress?
+    private external fun nativeGetSockName(): InetSocketAddress?
+    val sockName: InetSocketAddress?
+        get() = nativeGetSockName()
 
     external fun getSockFlag(opt: SockOpt): Any
-
     external fun setSockFlag(opt: SockOpt, value: Any): Int
 
     // Transmission
@@ -112,31 +118,33 @@ class Socket {
 
     // Reject reason
     private external fun nativeGetRejectReason(): Int
-    fun getRejectReason(): RejectReason {
-        val code = nativeGetRejectReason()
-        return when {
-            code < RejectReasonCode.PREDEFINED_OFFSET -> InternalRejectReason(RejectReasonCode.values()[code])
-            code < RejectReasonCode.USERDEFINED_OFFSET -> PredefinedRejectReason(code - RejectReasonCode.PREDEFINED_OFFSET)
-            else -> UserDefinedRejectReason(code - RejectReasonCode.USERDEFINED_OFFSET)
+    private external fun nativeSetRejectReason(rejectReason: Int): Int
+    var rejectReason: RejectReason
+        get() {
+            val code = nativeGetRejectReason()
+            return when {
+                code < RejectReasonCode.PREDEFINED_OFFSET -> InternalRejectReason(RejectReasonCode.values()[code])
+                code < RejectReasonCode.USERDEFINED_OFFSET -> PredefinedRejectReason(code - RejectReasonCode.PREDEFINED_OFFSET)
+                else -> UserDefinedRejectReason(code - RejectReasonCode.USERDEFINED_OFFSET)
+            }
         }
-    }
-
-    private external fun setRejectReason(rejectReason: Int): Int
-    fun setRejectReason(rejectReason: RejectReason): Int {
-        val code = when (rejectReason) {
-            is InternalRejectReason -> { // Forbidden by SRT
-                rejectReason.code.ordinal
+        set(value) {
+            val code = when (value) {
+                is InternalRejectReason -> { // Forbidden by SRT
+                    value.code.ordinal
+                }
+                is PredefinedRejectReason -> {
+                    value.code + RejectReasonCode.PREDEFINED_OFFSET
+                }
+                is UserDefinedRejectReason -> {
+                    value.code + RejectReasonCode.USERDEFINED_OFFSET
+                }
+                else -> RejectReasonCode.UNKNOWN.ordinal
             }
-            is PredefinedRejectReason -> {
-                rejectReason.code + RejectReasonCode.PREDEFINED_OFFSET
+            if (nativeSetRejectReason(code) != 0) {
+                Log.e(this.javaClass.canonicalName, "Failed to set reject reason")
             }
-            is UserDefinedRejectReason -> {
-                rejectReason.code + RejectReasonCode.USERDEFINED_OFFSET
-            }
-            else -> RejectReasonCode.UNKNOWN.ordinal
         }
-        return setRejectReason(code)
-    }
 
     // Performance tracking
     external fun bstats(clear: Boolean): Stats
@@ -144,5 +152,7 @@ class Socket {
     external fun bistats(clear: Boolean, instantaneous: Boolean): Stats
 
     // Time access
-    external fun connectionTime(): Long
+    external fun nativeGetConnectionTime(): Long
+    val connectionTime: Long
+        get() = nativeGetConnectionTime()
 }

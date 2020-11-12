@@ -112,7 +112,7 @@ object SocketHandler {
         recvThread.isRunning = false
     }
 
-    fun getPeerName() = clientSocket.getPeerName()
+    val peerName = clientSocket.peerName
 
     fun close() {
         stopRecvMessage()

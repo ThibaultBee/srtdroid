@@ -45,9 +45,9 @@ class Socket6Test {
 
     @Test
     fun sockStatusTest() {
-        assertEquals(SockStatus.INIT, socket.getSockState())
+        assertEquals(SockStatus.INIT, socket.sockState)
         assertEquals(0, socket.bind("::1", 1234))
-        assertEquals(SockStatus.OPENED, socket.getSockState())
+        assertEquals(SockStatus.OPENED, socket.sockState)
     }
 
     @Test
@@ -86,14 +86,13 @@ class Socket6Test {
 
     @Test
     fun getPeerNameTest() {
-        assertNull(socket.getPeerName())
+        assertNull(socket.peerName)
     }
 
     @Test
     fun getSockNameTest() {
-        assertNull(socket.getSockName())
+        assertNull(socket.sockName)
         assertEquals(0, socket.bind("::1", 12345))
-        val sockAddr = socket.getSockName()
-        assertNull(sockAddr) // sockAddr is null if no connection
+        assertNull(socket.sockName) // sockAddr is null if no connection
     }
 }

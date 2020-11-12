@@ -58,9 +58,9 @@ class SocketTest {
 
     @Test
     fun sockStatusTest() {
-        assertEquals(SockStatus.INIT, socket.getSockState())
+        assertEquals(SockStatus.INIT, socket.sockState)
         assertEquals(0, socket.bind("127.0.3.1", 1234))
-        assertEquals(SockStatus.OPENED, socket.getSockState())
+        assertEquals(SockStatus.OPENED, socket.sockState)
     }
 
     @Test
@@ -89,7 +89,7 @@ class SocketTest {
     fun connectTest() {
         assertEquals(-1, socket.connect("127.0.3.1", 1234))
         assertEquals(Error.getLastError(), ErrorType.ENOSERVER)
-        assertEquals(InternalRejectReason(RejectReasonCode.TIMEOUT), socket.getRejectReason())
+        assertEquals(InternalRejectReason(RejectReasonCode.TIMEOUT), socket.rejectReason)
     }
 
     @Test
@@ -100,15 +100,14 @@ class SocketTest {
 
     @Test
     fun getPeerNameTest() {
-        assertNull(socket.getPeerName())
+        assertNull(socket.peerName)
     }
 
     @Test
     fun getSockNameTest() {
-        assertNull(socket.getSockName())
+        assertNull(socket.sockName)
         assertEquals(0, socket.bind("127.0.0.1", 1234))
-        val sockAddr = socket.getSockName()
-        assertNull(sockAddr) // sockAddr is null if no connection
+        assertNull(socket.sockName) // sockAddr is null if no connection
     }
 
     @Test
@@ -197,14 +196,14 @@ class SocketTest {
 
     @Test
     fun getRejectReasonTest() {
-        assertEquals(InternalRejectReason(RejectReasonCode.UNKNOWN), socket.getRejectReason())
+        assertEquals(InternalRejectReason(RejectReasonCode.UNKNOWN), socket.rejectReason)
     }
 
     @Test
     fun setRejectReasonTest() {
-        assertEquals(-1, socket.setRejectReason(InternalRejectReason(RejectReasonCode.BADSECRET)))
-        assertEquals(0, socket.setRejectReason(UserDefinedRejectReason(2)))
-        assertEquals(0, socket.setRejectReason(PredefinedRejectReason(1)))
+        socket.rejectReason = InternalRejectReason(RejectReasonCode.BADSECRET) // Generate an error
+        socket.rejectReason = UserDefinedRejectReason(2)
+        socket.rejectReason = PredefinedRejectReason(1)
     }
 
     @Test
@@ -219,6 +218,6 @@ class SocketTest {
 
     @Test
     fun connectionTimeTest() {
-        socket.connectionTime()
+        assertEquals(0, socket.connectionTime)
     }
 }

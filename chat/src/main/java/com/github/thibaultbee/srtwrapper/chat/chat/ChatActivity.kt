@@ -62,7 +62,7 @@ class ChatActivity : AppCompatActivity(), SocketManagerInterface {
 
     // SocketManagerInterface
     override fun onRecvMsg(message: String) {
-        val peer = SocketHandler.getPeerName()
+        val peer = SocketHandler.peerName
         var sender: String
         peer.let { sender = "${peer?.address}:${peer?.port}" }
         this.runOnUiThread { updateList(message, sender, false) }
