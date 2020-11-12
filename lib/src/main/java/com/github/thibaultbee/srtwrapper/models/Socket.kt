@@ -78,10 +78,18 @@ class Socket {
     private external fun nativeGetPeerName(): InetSocketAddress?
     val peerName: InetSocketAddress?
         get() = nativeGetPeerName()
+    val inetAddress: InetAddress?
+        get() = peerName?.address
+    val port: Int
+        get() = peerName?.port ?: 0
 
     private external fun nativeGetSockName(): InetSocketAddress?
     val sockName: InetSocketAddress?
         get() = nativeGetSockName()
+    val localAddress: InetAddress?
+        get() = sockName?.address
+    val localPort: Int
+        get() = sockName?.port ?: 0
 
     external fun getSockFlag(opt: SockOpt): Any
     external fun setSockFlag(opt: SockOpt, value: Any): Int
@@ -155,4 +163,38 @@ class Socket {
     external fun nativeGetConnectionTime(): Long
     val connectionTime: Long
         get() = nativeGetConnectionTime()
+
+    // Android Socket like API
+    var receiveBufferSize: Int
+        get() = getSockFlag(SockOpt.RCVBUF) as Int
+        set(value) {
+            setSockFlag(SockOpt.RCVBUF, value)
+        }
+
+    var reuseAddress: Boolean
+        get() = getSockFlag(SockOpt.REUSEADDR) as Boolean
+        set(value) {
+            setSockFlag(SockOpt.REUSEADDR, value)
+        }
+
+    var sendBufferSize: Int
+        get() = getSockFlag(SockOpt.SNDBUF) as Int
+        set(value) {
+            setSockFlag(SockOpt.SNDBUF, value)
+        }
+
+    var soLinger: Int
+        get() = getSockFlag(SockOpt.LINGER) as Int
+        set(value) {
+            setSockFlag(SockOpt.SNDBUF, value)
+        }
+
+    val isBound: Boolean
+        get() = sockState == SockStatus.OPENED
+
+    val isClose: Boolean
+        get() = (sockState == SockStatus.CLOSED) || (sockState == SockStatus.NONEXIST)
+    
+    val isConnected: Boolean
+        get() = sockState == SockStatus.CONNECTED
 }

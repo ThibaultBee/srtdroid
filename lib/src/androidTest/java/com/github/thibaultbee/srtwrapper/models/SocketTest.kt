@@ -59,13 +59,16 @@ class SocketTest {
     @Test
     fun sockStatusTest() {
         assertEquals(SockStatus.INIT, socket.sockState)
+        assertFalse(socket.isBound)
         assertEquals(0, socket.bind("127.0.3.1", 1234))
         assertEquals(SockStatus.OPENED, socket.sockState)
+        assertTrue(socket.isBound)
     }
 
     @Test
     fun closeTest() {
         assertEquals(0, socket.close())
+        assertTrue(socket.isClose)
         assertFalse(socket.isValid())
     }
 
@@ -219,5 +222,27 @@ class SocketTest {
     @Test
     fun connectionTimeTest() {
         assertEquals(0, socket.connectionTime)
+    }
+
+    @Test
+    fun receiveBufferSizeTest() {
+        assertNotEquals(0, socket.receiveBufferSize)
+        socket.receiveBufferSize = 101568
+        assertEquals(101568, socket.receiveBufferSize)
+    }
+
+    @Test
+    fun reuseAddrTest() {
+        socket.reuseAddress = true
+        assertTrue(socket.reuseAddress)
+        socket.reuseAddress = false
+        assertFalse(socket.reuseAddress)
+    }
+
+    @Test
+    fun sendBufferSizeTest() {
+        assertNotEquals(0, socket.sendBufferSize)
+        socket.sendBufferSize = 101568
+        assertEquals(101568, socket.sendBufferSize)
     }
 }
