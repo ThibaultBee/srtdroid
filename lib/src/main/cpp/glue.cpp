@@ -171,15 +171,14 @@ nativeGetSockState(JNIEnv *env, jobject ju) {
     return srt_sockstatus_n2j(env, sock_status);
 }
 
-jint JNICALL
+void JNICALL
 nativeClose(JNIEnv *env, jobject ju) {
     SRTSOCKET u = srt_socket_j2n(env, ju);
 
     int res = srt_close((SRTSOCKET) u);
-
-    srt_socket_set(env, ju, SRT_INVALID_SOCK);
-
-    return res;
+    if (res != 0) {
+        LOGE(TAG, "Failed to close socket %d", u);
+    }
 }
 
 // Connecting
@@ -682,7 +681,7 @@ static JNINativeMethod socketMethods[] = {
         {"createSocket",            "()I",                                                           (void *) &nativeCreateSocket},
         {"bind",                    "(L" INETSOCKETADDRESS_CLASS ";)I",                              (void *) &nativeBind},
         {"nativeGetSockState",      "()L" SOCKSTATUS_CLASS ";",                                      (void *) &nativeGetSockState},
-        {"close",                   "()I",                                                           (void *) &nativeClose},
+        {"close",                   "()V",                                                           (void *) &nativeClose},
         {"listen",                  "(I)I",                                                          (void *) &nativeListen},
         {"accept",                  "()L" PAIR_CLASS ";",                                            (void *) &nativeAccept},
         {"connect",                 "(L" INETSOCKETADDRESS_CLASS ";)I",                              (void *) &nativeConnect},

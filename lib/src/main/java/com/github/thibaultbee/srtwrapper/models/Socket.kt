@@ -10,12 +10,13 @@ import com.github.thibaultbee.srtwrapper.models.rejectreason.InternalRejectReaso
 import com.github.thibaultbee.srtwrapper.models.rejectreason.PredefinedRejectReason
 import com.github.thibaultbee.srtwrapper.models.rejectreason.RejectReason
 import com.github.thibaultbee.srtwrapper.models.rejectreason.UserDefinedRejectReason
+import java.io.Closeable
 import java.io.File
 import java.net.InetAddress
 import java.net.InetSocketAddress
 import java.net.StandardProtocolFamily
 
-class Socket {
+class Socket: Closeable {
     var socketInterface: SocketInterface? = null
     private var srtsocket: Int
 
@@ -44,7 +45,7 @@ class Socket {
     val sockState: SockStatus
         get() = nativeGetSockState()
 
-    external fun close(): Int
+    external override fun close()
 
     // Connecting
     fun onListen(

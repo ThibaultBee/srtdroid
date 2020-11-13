@@ -33,7 +33,7 @@ class Socket6Test {
     @After
     fun tearDown() {
         if (socket.isValid())
-            assertEquals(socket.close(), 0)
+            socket.close()
         assertEquals(srt.cleanUp(), 0)
     }
 
@@ -52,8 +52,8 @@ class Socket6Test {
 
     @Test
     fun closeTest() {
-        assertEquals(0, socket.close())
-        assertFalse(socket.isValid())
+        socket.close()
+        assertTrue(socket.isClose)
     }
 
     @Test
