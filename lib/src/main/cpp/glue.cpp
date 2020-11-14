@@ -200,12 +200,12 @@ jobject JNICALL
 nativeAccept(JNIEnv *env, jobject ju) {
     SRTSOCKET u = srt_socket_j2n(env, ju);
     struct sockaddr_storage ss = {0};
-    int sockaddr_len = 0;
+    int sockaddr_len = sizeof(ss);
     jobject inetSocketAddress = nullptr;
 
     SRTSOCKET new_u = srt_accept((SRTSOCKET) u, reinterpret_cast<struct sockaddr *>(&ss),
                                  &sockaddr_len);
-    if (sockaddr_len != 0) {
+    if (new_u != -1) {
         inetSocketAddress = sockaddr_inet_n2j(env, nullptr, &ss);
     }
 
@@ -258,11 +258,11 @@ jobject JNICALL
 nativeGetPeerName(JNIEnv *env, jobject ju) {
     SRTSOCKET u = srt_socket_j2n(env, ju);
     struct sockaddr_storage ss = {0};
-    int sockaddr_len = 0;
+    int sockaddr_len = sizeof(ss);
     jobject inetSocketAddress = nullptr;
 
-    srt_getpeername((SRTSOCKET) u, reinterpret_cast<struct sockaddr *>(&ss), &sockaddr_len);
-    if (sockaddr_len != 0) {
+    int res = srt_getpeername((SRTSOCKET) u, reinterpret_cast<struct sockaddr *>(&ss), &sockaddr_len);
+    if (res == 0) {
         inetSocketAddress = sockaddr_inet_n2j(env, nullptr, &ss);
     }
 
@@ -273,11 +273,11 @@ jobject JNICALL
 nativeGetSockName(JNIEnv *env, jobject ju) {
     SRTSOCKET u = srt_socket_j2n(env, ju);
     struct sockaddr_storage ss = {0};
-    int sockaddr_len = 0;
+    int sockaddr_len = sizeof(ss);
     jobject inetSocketAddress = nullptr;
 
-    srt_getsockname((SRTSOCKET) u, reinterpret_cast<struct sockaddr *>(&ss), &sockaddr_len);
-    if (sockaddr_len != 0) {
+    int res = srt_getsockname((SRTSOCKET) u, reinterpret_cast<struct sockaddr *>(&ss), &sockaddr_len);
+    if (res == 0) {
         inetSocketAddress = sockaddr_inet_n2j(env, nullptr, &ss);
     }
 
@@ -660,7 +660,7 @@ nativeNow(JNIEnv *env, jobject obj) {
 
 jlong JNICALL
 nativeGetConnectionTime(JNIEnv *env,
-                     jobject ju) {
+                        jobject ju) {
     SRTSOCKET u = srt_socket_j2n(env, ju);
 
     return (jlong) srt_connection_time(u);
