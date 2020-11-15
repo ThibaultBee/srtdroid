@@ -10,11 +10,8 @@ import com.github.thibaultbee.srtwrapper.models.rejectreason.InternalRejectReaso
 import com.github.thibaultbee.srtwrapper.models.rejectreason.PredefinedRejectReason
 import com.github.thibaultbee.srtwrapper.models.rejectreason.RejectReason
 import com.github.thibaultbee.srtwrapper.models.rejectreason.UserDefinedRejectReason
-import java.io.Closeable
-import java.io.File
-import java.net.InetAddress
-import java.net.InetSocketAddress
-import java.net.StandardProtocolFamily
+import java.io.*
+import java.net.*
 
 class Socket: Closeable {
     var socketInterface: SocketInterface? = null
@@ -96,6 +93,7 @@ class Socket: Closeable {
     external fun setSockFlag(opt: SockOpt, value: Any): Int
 
     // Transmission
+    // Send
     external fun send(msg: ByteArray): Int
     fun send(msg: String) = send(msg.toByteArray())
     fun send(msg: ByteArray, offset: Int, size: Int): Int {
@@ -111,13 +109,121 @@ class Socket: Closeable {
     external fun sendMsg2(msg: ByteArray, msgCtrl: MsgCtrl?): Int
     fun sendMsg2(msg: String, msgCtrl: MsgCtrl?) = sendMsg2(msg.toByteArray(), msgCtrl)
 
+    val outputStream: OutputStream
+        get() = SrtSocketOutputStream(this)
+
+    private class SrtSocketOutputStream(private val socket: Socket) :
+        OutputStream() {
+
+        override fun close() {
+            socket.close()
+        }
+
+        override fun write(oneByte: Int) {
+            val buffer = byteArrayOf(oneByte.toByte())
+            socket.write(buffer, 0, 1)
+        }
+
+        override fun write(
+            buffer: ByteArray,
+            offset: Int,
+            byteCount: Int
+        ) {
+            socket.write(buffer, offset, byteCount)
+        }
+    }
+
+    private fun write(buffer: ByteArray, defaultOffset: Int, defaultByteCount: Int) {
+        var byteCount = defaultByteCount
+        var offset = defaultOffset
+        if (isClose) {
+            throw IOException("Socket is closed")
+        }
+        if (getSockFlag(SockOpt.MESSAGEAPI) as Boolean) {
+            // In case, message API is true, split buffer in payload size buffer.
+            val payloadSize = getSockFlag(SockOpt.PAYLOADSIZE) as Int
+            while (byteCount > 0) {
+                val bytesWritten = send(buffer, offset, byteCount.coerceAtMost(payloadSize))
+                if (bytesWritten < 0) {
+                    throw SocketException(Error.getLastErrorMessage())
+                } else if (bytesWritten == 0) {
+                    throw IOException("Socket is closed")
+                }
+                byteCount -= bytesWritten
+                offset += bytesWritten
+            }
+        } else {
+            val bytesWritten = send(buffer)
+            if (bytesWritten < 0) {
+                throw SocketException(Error.getLastErrorMessage())
+            } else if (bytesWritten == 0) {
+                throw IOException("Socket is closed")
+            }
+        }
+    }
+
+    // Recv
     external fun recv(size: Int): Pair<Int, ByteArray>
 
     external fun recvMsg2(size: Int, msgCtrl: MsgCtrl?): Pair<Int, ByteArray>
 
+    val inputStream: InputStream
+        get() = SrtSocketInputStream(this)
+
+    private class SrtSocketInputStream(private val socket: Socket) :
+        InputStream() {
+
+        override fun available(): Int {
+            return socket.available()
+        }
+
+        override fun close() {
+            socket.close()
+        }
+
+        override fun read(): Int {
+            return socket.readSingleByte()
+        }
+
+        override fun read(buffer: ByteArray, byteOffset: Int, byteCount: Int): Int {
+            return socket.read(buffer, byteOffset, byteCount)
+        }
+    }
+
+    private fun readSingleByte(): Int {
+        val pair = recv(1)
+        val readCount = pair.first
+        val byteArray = pair.second
+        return if (readCount > 0) {
+            byteArray[0].toInt()
+        } else {
+            -1
+        }
+    }
+
+    private fun read(buffer: ByteArray, offset: Int, byteCount: Int): Int {
+        if (byteCount == 0) {
+            return 0
+        }
+
+        val pair = recv(byteCount)
+        val readCount = pair.first
+        if (readCount == 0) {
+            throw SocketTimeoutException()
+        }
+
+        val byteArray = pair.second
+        //TODO: avoid copy here
+        byteArray.copyInto(buffer, offset, 0, byteArray.size)
+
+        return pair.first
+    }
+
+    // File
     external fun sendFile(path: String, offset: Long, size: Long, block: Int = 364000): Long
     fun sendFile(file: File, offset: Long, size: Long, block: Int = 364000) =
         sendFile(file.path, offset, size, block)
+
     fun sendFile(file: File, block: Int = 364000) =
         sendFile(file.path, 0, file.length(), block)
 
@@ -195,7 +301,9 @@ class Socket: Closeable {
 
     val isClose: Boolean
         get() = (sockState == SockStatus.CLOSED) || (sockState == SockStatus.NONEXIST)
-    
+
     val isConnected: Boolean
         get() = sockState == SockStatus.CONNECTED
+
+    fun available(): Int = getSockFlag(SockOpt.RCVDATA) as Int
 }
