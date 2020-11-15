@@ -80,7 +80,7 @@ class SocketTest {
     @Test
     fun listenTest() {
         assertEquals(-1, socket.listen(3))
-        assertEquals(Error.getLastError(), ErrorType.EUNBOUNDSOCK)
+        assertEquals(Error.lastError, ErrorType.EUNBOUNDSOCK)
         assertEquals(0, socket.bind("127.0.3.1", 1236))
         assertEquals(0, socket.listen(3))
     }
@@ -90,20 +90,20 @@ class SocketTest {
         val pair = socket.accept()
         assertFalse(pair.first.isValid())
         assertNull(pair.second)
-        assertEquals(Error.getLastError(), ErrorType.ENOLISTEN)
+        assertEquals(Error.lastError, ErrorType.ENOLISTEN)
     }
 
     @Test
     fun connectTest() {
         assertEquals(-1, socket.connect("127.0.3.1", 1237))
-        assertEquals(Error.getLastError(), ErrorType.ENOSERVER)
+        assertEquals(Error.lastError, ErrorType.ENOSERVER)
         assertEquals(InternalRejectReason(RejectReasonCode.TIMEOUT), socket.rejectReason)
     }
 
     @Test
     fun rendezVousTest() {
         assertEquals(-1, socket.rendezVous("0.0.0.0", "127.0.3.1", 1238))
-        assertEquals(Error.getLastError(), ErrorType.ENOSERVER)
+        assertEquals(Error.lastError, ErrorType.ENOSERVER)
     }
 
     @Test
@@ -141,24 +141,24 @@ class SocketTest {
     @Test
     fun sendMsg1Test() {
         assertEquals(-1, socket.send("Hello World !"))
-        assertEquals(Error.getLastError(), ErrorType.ENOCONN)
+        assertEquals(Error.lastError, ErrorType.ENOCONN)
     }
 
     @Test
     fun sendMsg2Test() {
         assertEquals(-1, socket.sendMsg("Hello World !", -1, false))
-        assertEquals(Error.getLastError(), ErrorType.ENOCONN)
+        assertEquals(Error.lastError, ErrorType.ENOCONN)
     }
 
     @Test
     fun sendMsg3Test() {
         assertEquals(-1, socket.sendMsg2("Hello World !", null))
-        assertEquals(Error.getLastError(), ErrorType.ENOCONN)
+        assertEquals(Error.lastError, ErrorType.ENOCONN)
         assertEquals(
             -1,
             socket.sendMsg2("Hello World !", MsgCtrl(flags = 0, boundary = 0, pktSeq = 0, no = 10))
         )
-        assertEquals(Error.getLastError(), ErrorType.ENOCONN)
+        assertEquals(Error.lastError, ErrorType.ENOCONN)
     }
 
     @Test
@@ -190,7 +190,7 @@ class SocketTest {
     @Test
     fun sendFileTest() {
         assertEquals(-1, socket.sendFile(createTestFile()))
-        assertEquals(Error.getLastError(), ErrorType.ENOCONN)
+        assertEquals(Error.lastError, ErrorType.ENOCONN)
     }
 
     @Test
@@ -200,7 +200,7 @@ class SocketTest {
             "FileToRecv"
         )
         assertEquals(-1, socket.recvFile(myFile, 0, 1024))
-        assertEquals(Error.getLastError(), ErrorType.ENOCONN)
+        assertEquals(Error.lastError, ErrorType.ENOCONN)
     }
 
     @Test

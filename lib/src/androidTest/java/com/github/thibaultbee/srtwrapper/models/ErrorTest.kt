@@ -4,7 +4,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.github.thibaultbee.srtwrapper.Srt
 import com.github.thibaultbee.srtwrapper.enums.ErrorType
 import org.junit.After
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -34,16 +35,16 @@ class ErrorTest {
     @Test
     fun getErrorTest() {
         assertEquals(-1, socket.listen(3))
-        assertEquals(Error.getLastError(), ErrorType.EUNBOUNDSOCK)
-        assertEquals(Error.getLastErrorMessage(), ErrorType.EUNBOUNDSOCK.toString())
+        assertEquals(Error.lastError, ErrorType.EUNBOUNDSOCK)
+        assertEquals(Error.lastErrorMessage, ErrorType.EUNBOUNDSOCK.toString())
     }
 
     @Test
     fun clearErrorTest() {
         assertEquals(-1, socket.listen(3))
-        assertEquals(Error.getLastError(), ErrorType.EUNBOUNDSOCK)
+        assertEquals(Error.lastError, ErrorType.EUNBOUNDSOCK)
         Error.clearLastError()
-        assertEquals(Error.getLastError(), ErrorType.SUCCESS)
+        assertEquals(Error.lastError, ErrorType.SUCCESS)
     }
 
     @Test

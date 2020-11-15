@@ -713,9 +713,9 @@ static JNINativeMethod rejectReasonMethods[] = {
 };
 
 static JNINativeMethod errorMethods[] = {
-        {"getLastErrorMessage", "()Ljava/lang/String;",    (void *) &nativeGetLastErrorStr},
-        {"getLastError",        "()L" ERRORTYPE_CLASS ";", (void *) &nativeGetLastError},
-        {"clearLastError",      "()V",                     (void *) &nativeClearLastError}
+        {"nativeGetLastErrorMessage", "()Ljava/lang/String;",    (void *) &nativeGetLastErrorStr},
+        {"nativeGetLastError",        "()L" ERRORTYPE_CLASS ";", (void *) &nativeGetLastError},
+        {"clearLastError",            "()V",                     (void *) &nativeClearLastError}
 };
 
 static JNINativeMethod errorTypeMethods[] = {

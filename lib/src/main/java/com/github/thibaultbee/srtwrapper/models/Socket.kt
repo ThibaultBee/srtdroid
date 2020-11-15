@@ -145,7 +145,7 @@ class Socket: Closeable {
             while (byteCount > 0) {
                 val bytesWritten = send(buffer, offset, byteCount.coerceAtMost(payloadSize))
                 if (bytesWritten < 0) {
-                    throw SocketException(Error.getLastErrorMessage())
+                    throw SocketException(Error.lastErrorMessage)
                 } else if (bytesWritten == 0) {
                     throw IOException("Socket is closed")
                 }
@@ -155,7 +155,7 @@ class Socket: Closeable {
         } else {
             val bytesWritten = send(buffer)
             if (bytesWritten < 0) {
-                throw SocketException(Error.getLastErrorMessage())
+                throw SocketException(Error.lastErrorMessage)
             } else if (bytesWritten == 0) {
                 throw IOException("Socket is closed")
             }

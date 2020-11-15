@@ -59,7 +59,7 @@ class Socket6Test {
     @Test
     fun listenTest() {
         assertEquals(-1, socket.listen(3))
-        assertEquals(Error.getLastError(), ErrorType.EUNBOUNDSOCK)
+        assertEquals(Error.lastError, ErrorType.EUNBOUNDSOCK)
         assertEquals(0, socket.bind("::1", 3333))
         assertEquals(0, socket.listen(3))
     }
@@ -69,19 +69,19 @@ class Socket6Test {
         val pair = socket.accept()
         assertFalse(pair.first.isValid())
         assertNull(pair.second)
-        assertEquals(Error.getLastError(), ErrorType.ENOLISTEN)
+        assertEquals(Error.lastError, ErrorType.ENOLISTEN)
     }
 
     @Test
     fun connectTest() {
         assertEquals(-1, socket.connect("::1", 4444))
-        assertEquals(Error.getLastError(), ErrorType.ENOSERVER)
+        assertEquals(Error.lastError, ErrorType.ENOSERVER)
     }
 
     @Test
     fun rendezVousTest() {
         assertEquals(-1, socket.rendezVous("::", "2001:0db8:0000:85a3:0000:0000:ac1f:8001", 5555))
-        assertEquals(Error.getLastError(), ErrorType.ENOSERVER)
+        assertEquals(Error.lastError, ErrorType.ENOSERVER)
     }
 
     @Test
