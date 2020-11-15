@@ -116,22 +116,52 @@ sockaddr_inet_j2n(JNIEnv *env, jobject inetSocketAddress, int *size) {
     int port = env->CallIntMethod(inetSocketAddress, inetSocketAddressGetPortMethod);
 
     // Hostname
-    jmethodID inetSocketAddressGetHostStringMethod = env->GetMethodID(inetSocketAddressClazz,
-                                                                      "getHostString",
-                                                                      "()Ljava/lang/String;");
-    if (!inetSocketAddressGetHostStringMethod) {
-        LOGE(TAG, "Can't get getHostString method");
+    jmethodID inetSocketAddressGetAddressMethod = env->GetMethodID(inetSocketAddressClazz,
+                                                                   "getAddress",
+                                                                   "()Ljava/net/InetAddress;");
+    if (!inetSocketAddressGetAddressMethod) {
+        LOGE(TAG, "Can't get getAddress method");
         env->DeleteLocalRef(inetSocketAddressClazz);
         return nullptr;
     }
 
-    auto hostName = (jstring) env->CallObjectMethod(inetSocketAddress,
-                                                    inetSocketAddressGetHostStringMethod);
-    if (!hostName) {
-        LOGE(TAG, "Can't get Hostname");
+    jobject inetAddress = env->CallObjectMethod(inetSocketAddress,
+                                                inetSocketAddressGetAddressMethod);
+    if (!inetAddress) {
+        LOGE(TAG, "Can't get InetAddress");
         env->DeleteLocalRef(inetSocketAddressClazz);
         return nullptr;
     }
+
+    // Get InetAddress class
+    jclass inetAddressClazz = env->GetObjectClass(inetAddress);
+    if (!inetAddressClazz) {
+        LOGE(TAG, "Can't get InetSocketAddress class");
+        env->DeleteLocalRef(inetSocketAddressClazz);
+        return nullptr;
+    }
+
+    jmethodID inetAddressGetHostAddressMethod = env->GetMethodID(inetAddressClazz,
+                                                                 "getHostAddress",
+                                                                 "()Ljava/lang/String;");
+    if (!inetAddressGetHostAddressMethod) {
+        LOGE(TAG, "Can't get getHostAddress method");
+        env->DeleteLocalRef(inetSocketAddressClazz);
+        env->DeleteLocalRef(inetAddressClazz);
+        return nullptr;
+    }
+
+    auto hostName = (jstring) env->CallObjectMethod(inetAddress,
+                                                    inetAddressGetHostAddressMethod);
+    if (!hostName) {
+        LOGE(TAG, "Can't get Hostname");
+        env->DeleteLocalRef(inetSocketAddressClazz);
+        env->DeleteLocalRef(inetAddressClazz);
+        return nullptr;
+    }
+
+    env->DeleteLocalRef(inetSocketAddressClazz);
+    env->DeleteLocalRef(inetAddressClazz);
 
     const char *hostname = env->GetStringUTFChars(hostName, nullptr);
 
@@ -146,14 +176,12 @@ sockaddr_inet_j2n(JNIEnv *env, jobject inetSocketAddress, int *size) {
     if (getaddrinfo(hostname, service, &hint, &ai)) {
         LOGE(TAG, "Invalid address %s", hostname);
         env->ReleaseStringUTFChars(hostName, hostname);
-        env->DeleteLocalRef(inetSocketAddressClazz);
         return nullptr;
     }
 
     if ((ai->ai_family != AF_INET) && (ai->ai_family != AF_INET6)) {
         LOGE(TAG, "Unknown family %d", ai->ai_family);
         env->ReleaseStringUTFChars(hostName, hostname);
-        env->DeleteLocalRef(inetSocketAddressClazz);
         return nullptr;
     }
 
@@ -165,7 +193,6 @@ sockaddr_inet_j2n(JNIEnv *env, jobject inetSocketAddress, int *size) {
     freeaddrinfo(ai);
 
     env->ReleaseStringUTFChars(hostName, hostname);
-    env->DeleteLocalRef(inetSocketAddressClazz);
 
     return ss;
 }
