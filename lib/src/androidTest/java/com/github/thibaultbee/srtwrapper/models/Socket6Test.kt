@@ -40,13 +40,13 @@ class Socket6Test {
     @Test
     fun bindTest() {
         assertEquals(0, socket.setSockFlag(SockOpt.TRANSTYPE, Transtype.FILE))
-        assertEquals(0, socket.bind("::1", 1234))
+        assertEquals(0, socket.bind("::1", 1111))
     }
 
     @Test
     fun sockStatusTest() {
         assertEquals(SockStatus.INIT, socket.sockState)
-        assertEquals(0, socket.bind("::1", 1234))
+        assertEquals(0, socket.bind("::1", 2222))
         assertEquals(SockStatus.OPENED, socket.sockState)
     }
 
@@ -60,7 +60,7 @@ class Socket6Test {
     fun listenTest() {
         assertEquals(-1, socket.listen(3))
         assertEquals(Error.getLastError(), ErrorType.EUNBOUNDSOCK)
-        assertEquals(0, socket.bind("::1", 1234))
+        assertEquals(0, socket.bind("::1", 3333))
         assertEquals(0, socket.listen(3))
     }
 
@@ -74,13 +74,13 @@ class Socket6Test {
 
     @Test
     fun connectTest() {
-        assertEquals(-1, socket.connect("::1", 1234))
+        assertEquals(-1, socket.connect("::1", 4444))
         assertEquals(Error.getLastError(), ErrorType.ENOSERVER)
     }
 
     @Test
     fun rendezVousTest() {
-        assertEquals(-1, socket.rendezVous("::", "2001:0db8:0000:85a3:0000:0000:ac1f:8001", 1234))
+        assertEquals(-1, socket.rendezVous("::", "2001:0db8:0000:85a3:0000:0000:ac1f:8001", 5555))
         assertEquals(Error.getLastError(), ErrorType.ENOSERVER)
     }
 
@@ -92,7 +92,8 @@ class Socket6Test {
     @Test
     fun getSockNameTest() {
         assertNull(socket.sockName)
-        assertEquals(0, socket.bind("::1", 12345))
-        assertNull(socket.sockName) // sockAddr is null if no connection
+        assertEquals(0, socket.bind("::1", 6666))
+        assertEquals(socket.sockName!!.address.hostAddress, "::1")
+        assertEquals(socket.sockName!!.port, 6666)
     }
 }
