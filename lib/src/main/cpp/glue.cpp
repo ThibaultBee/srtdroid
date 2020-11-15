@@ -374,7 +374,7 @@ nativeSendMsg2(JNIEnv *env,
 jobject JNICALL
 nativeRecv(JNIEnv *env, jobject ju, jint len) {
     SRTSOCKET u = srt_socket_j2n(env, ju);
-    jbyteArray byteArray = nullptr;
+    jbyteArray byteArray;
     auto *buf = (char *) malloc(sizeof(char) * len);
 
     int res = srt_recv(u, buf, len);
@@ -382,6 +382,8 @@ nativeRecv(JNIEnv *env, jobject ju, jint len) {
     if (res > 0) {
         byteArray = env->NewByteArray(res);
         env->SetByteArrayRegion(byteArray, 0, res, (jbyte *) buf);
+    } else {
+        byteArray = env->NewByteArray(0);
     }
 
     if (buf != nullptr) {
@@ -398,7 +400,7 @@ nativeRecvMsg2(JNIEnv *env,
                jobject msgCtrl) {
     SRTSOCKET u = srt_socket_j2n(env, ju);
     SRT_MSGCTRL *msgctrl = srt_msgctrl_j2n(env, msgCtrl);
-    jbyteArray byteArray = nullptr;
+    jbyteArray byteArray;
     auto *buf = (char *) malloc(sizeof(char) * len);
 
     int res = srt_recvmsg2(u, buf, len, msgctrl);
@@ -406,6 +408,8 @@ nativeRecvMsg2(JNIEnv *env,
     if (res > 0) {
         byteArray = env->NewByteArray(res);
         env->SetByteArrayRegion(byteArray, 0, res, (jbyte *) buf);
+    } else {
+        byteArray = env->NewByteArray(0);
     }
 
     if (buf != nullptr) {
