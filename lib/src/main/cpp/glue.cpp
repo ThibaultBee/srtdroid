@@ -322,12 +322,11 @@ nativeSetSockOpt(JNIEnv *env,
 
 // Transmission
 jint JNICALL
-nativeSend(JNIEnv *env, jobject ju, jbyteArray byteArray) {
+nativeSend(JNIEnv *env, jobject ju, jbyteArray byteArray, jint offset, jint len) {
     SRTSOCKET u = srt_socket_j2n(env, ju);
-    int len = env->GetArrayLength(byteArray);
     char *buf = (char *) env->GetByteArrayElements(byteArray, nullptr);
 
-    int res = srt_send(u, buf, len);
+    int res = srt_send(u, &buf[offset], len);
 
     env->ReleaseByteArrayElements(byteArray, (jbyte *) buf, 0);
 
@@ -338,13 +337,14 @@ jint JNICALL
 nativeSendMsg(JNIEnv *env,
               jobject ju,
               jbyteArray byteArray,
+              jint offset,
+              jint len,
               jint ttl/* = -1*/,
               jboolean inOrder/* = false*/) {
     SRTSOCKET u = srt_socket_j2n(env, ju);
-    int len = env->GetArrayLength(byteArray);
     char *buf = (char *) env->GetByteArrayElements(byteArray, nullptr);
 
-    int res = srt_sendmsg(u, buf, len, (int) ttl, inOrder);
+    int res = srt_sendmsg(u, &buf[offset], len, (int) ttl, inOrder);
 
     env->ReleaseByteArrayElements(byteArray, (jbyte *) buf, 0);
 
@@ -355,13 +355,14 @@ jint JNICALL
 nativeSendMsg2(JNIEnv *env,
                jobject ju,
                jbyteArray byteArray,
+               jint offset,
+               jint len,
                jobject msgCtrl) {
     SRTSOCKET u = srt_socket_j2n(env, ju);
     SRT_MSGCTRL *msgctrl = srt_msgctrl_j2n(env, msgCtrl);
-    int len = env->GetArrayLength(byteArray);
     char *buf = (char *) env->GetByteArrayElements(byteArray, nullptr);
 
-    int res = srt_sendmsg2(u, buf, len, msgctrl);
+    int res = srt_sendmsg2(u, &buf[offset], len, msgctrl);
 
     env->ReleaseByteArrayElements(byteArray, (jbyte *) buf, 0);
     if (msgctrl != nullptr) {
@@ -394,6 +395,20 @@ nativeRecv(JNIEnv *env, jobject ju, jint len) {
 }
 
 jobject JNICALL
+nativeRecvA(JNIEnv *env, jobject ju, jbyteArray byteArray, jint offset, jint len) {
+    SRTSOCKET u = srt_socket_j2n(env, ju);
+    int bufferLength = env->GetArrayLength(byteArray);
+    int res = -1;
+    if (bufferLength >= (offset + len)) {
+        char *buf = reinterpret_cast<char *>(env->GetByteArrayElements(byteArray, nullptr));
+        res = srt_recv(u, &buf[offset], (int) len);
+        env->ReleaseByteArrayElements(byteArray, reinterpret_cast<jbyte *>(buf), 0); // 0 - free buf
+    }
+
+    return pair_new(env, int_new(env, res), byteArray);
+}
+
+jobject JNICALL
 nativeRecvMsg2(JNIEnv *env,
                jobject ju,
                jint len,
@@ -415,6 +430,30 @@ nativeRecvMsg2(JNIEnv *env,
     if (buf != nullptr) {
         free(buf);
     }
+    if (msgctrl != nullptr) {
+        free(msgctrl);
+    }
+
+    return pair_new(env, int_new(env, res), byteArray);
+}
+
+jobject JNICALL
+nativeRecvMsg2A(JNIEnv *env,
+                jobject ju,
+                jbyteArray byteArray,
+                jint offset,
+                jint len,
+                jobject msgCtrl) {
+    SRTSOCKET u = srt_socket_j2n(env, ju);
+    SRT_MSGCTRL *msgctrl = srt_msgctrl_j2n(env, msgCtrl);
+    int bufferLength = env->GetArrayLength(byteArray);
+    int res = -1;
+    if (bufferLength >= (offset + len)) {
+        char *buf = reinterpret_cast<char *>(env->GetByteArrayElements(byteArray, nullptr));
+        res = srt_recvmsg2(u, &buf[offset], (int) len, msgctrl);
+        env->ReleaseByteArrayElements(byteArray, reinterpret_cast<jbyte *>(buf), 0); // 0 - free buf
+    }
+
     if (msgctrl != nullptr) {
         free(msgctrl);
     }
@@ -694,11 +733,13 @@ static JNINativeMethod socketMethods[] = {
         {"nativeGetSockName",       "()L" INETSOCKETADDRESS_CLASS ";",                               (void *) &nativeGetSockName},
         {"getSockFlag",             "(L" SOCKOPT_CLASS ";)Ljava/lang/Object;",                       (void *) &nativeGetSockOpt},
         {"setSockFlag",             "(L" SOCKOPT_CLASS ";Ljava/lang/Object;)I",                      (void *) &nativeSetSockOpt},
-        {"send",                    "([B)I",                                                         (void *) &nativeSend},
-        {"sendMsg",                 "([BIZ)I",                                                       (void *) &nativeSendMsg},
-        {"sendMsg2",                "([BL" MSGCTRL_CLASS ";)I",                                      (void *) &nativeSendMsg2},
+        {"send",                    "([BII)I",                                                       (void *) &nativeSend},
+        {"send",                    "([BIIIZ)I",                                                     (void *) &nativeSendMsg},
+        {"send",                    "([BIIL" MSGCTRL_CLASS ";)I",                                    (void *) &nativeSendMsg2},
         {"recv",                    "(I)L" PAIR_CLASS ";",                                           (void *) &nativeRecv},
-        {"recvMsg2",                "(IL" MSGCTRL_CLASS ";)L" PAIR_CLASS ";",                        (void *) &nativeRecvMsg2},
+        {"recv",                    "([BII)L" PAIR_CLASS ";",                                        (void *) &nativeRecvA},
+        {"recv",                    "(IL" MSGCTRL_CLASS ";)L" PAIR_CLASS ";",                        (void *) &nativeRecvMsg2},
+        {"recv",                    "([BIIL" MSGCTRL_CLASS ";)L" PAIR_CLASS ";",                     (void *) &nativeRecvMsg2A},
         {"sendFile",                "(Ljava/lang/String;JJI)J",                                      (void *) &nativeSendFile},
         {"recvFile",                "(Ljava/lang/String;JJI)J",                                      (void *) &nativeRecvFile},
         {"nativeGetRejectReason",   "()I",                                                           (void *) &nativeGetRejectReason},

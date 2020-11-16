@@ -94,25 +94,32 @@ class Socket: Closeable {
 
     // Transmission
     // Send
-    external fun send(msg: ByteArray): Int
+    external fun send(msg: ByteArray, offset: Int, size: Int): Int
+    fun send(msg: ByteArray) = send(msg, 0, msg.size)
     fun send(msg: String) = send(msg.toByteArray())
-    fun send(msg: ByteArray, offset: Int, size: Int): Int {
-        val buffer = ByteArray(size - offset)
-        msg.copyInto(buffer, 0, offset, offset + size)
-        return send(buffer)
-    }
 
-    external fun sendMsg(msg: ByteArray, ttl: Int = -1, inOrder: Boolean = false): Int
-    fun sendMsg(msg: String, ttl: Int = -1, inOrder: Boolean = false) =
-        sendMsg(msg.toByteArray(), ttl, inOrder)
+    external fun send(
+        msg: ByteArray,
+        offset: Int,
+        size: Int,
+        ttl: Int = -1,
+        inOrder: Boolean = false
+    ): Int
 
-    external fun sendMsg2(msg: ByteArray, msgCtrl: MsgCtrl?): Int
-    fun sendMsg2(msg: String, msgCtrl: MsgCtrl?) = sendMsg2(msg.toByteArray(), msgCtrl)
+    fun send(msg: ByteArray, ttl: Int = -1, inOrder: Boolean = false) =
+        send(msg, 0, msg.size, ttl, inOrder)
 
-    val outputStream: OutputStream
-        get() = SrtSocketOutputStream(this)
+    fun send(msg: String, ttl: Int = -1, inOrder: Boolean = false) =
+        send(msg.toByteArray(), ttl, inOrder)
 
-    private class SrtSocketOutputStream(private val socket: Socket) :
+    external fun send(msg: ByteArray, offset: Int, size: Int, msgCtrl: MsgCtrl): Int
+    fun send(msg: ByteArray, msgCtrl: MsgCtrl) = send(msg, 0, msg.size, msgCtrl)
+    fun send(msg: String, msgCtrl: MsgCtrl) = send(msg.toByteArray(), msgCtrl)
+
+    fun getOutputStream(msgCtrl: MsgCtrl? = null) =
+        SrtSocketOutputStream(this, msgCtrl) as OutputStream
+
+    private class SrtSocketOutputStream(private val socket: Socket, private val msgCtrl: MsgCtrl?) :
         OutputStream() {
 
         override fun close() {
@@ -121,56 +128,67 @@ class Socket: Closeable {
 
         override fun write(oneByte: Int) {
             val buffer = byteArrayOf(oneByte.toByte())
-            socket.write(buffer, 0, 1)
+            write(buffer, 0, 1)
         }
 
         override fun write(
             buffer: ByteArray,
-            offset: Int,
-            byteCount: Int
+            defaultOffset: Int,
+            defaultByteCount: Int
         ) {
-            socket.write(buffer, offset, byteCount)
-        }
-    }
-
-    private fun write(buffer: ByteArray, defaultOffset: Int, defaultByteCount: Int) {
-        var byteCount = defaultByteCount
-        var offset = defaultOffset
-        if (isClose) {
-            throw IOException("Socket is closed")
-        }
-        if (getSockFlag(SockOpt.MESSAGEAPI) as Boolean) {
-            // In case, message API is true, split buffer in payload size buffer.
-            val payloadSize = getSockFlag(SockOpt.PAYLOADSIZE) as Int
-            while (byteCount > 0) {
-                val bytesWritten = send(buffer, offset, byteCount.coerceAtMost(payloadSize))
+            var byteCount = defaultByteCount
+            var offset = defaultOffset
+            if (socket.isClose) {
+                throw IOException("Socket is closed")
+            }
+            if (socket.getSockFlag(SockOpt.MESSAGEAPI) as Boolean) {
+                // In case, message API is true, split buffer in payload size buffer.
+                val payloadSize = socket.getSockFlag(SockOpt.PAYLOADSIZE) as Int
+                while (byteCount > 0) {
+                    val bytesWritten = if (msgCtrl != null) {
+                        socket.send(buffer, offset, byteCount.coerceAtMost(payloadSize), msgCtrl)
+                    } else {
+                        socket.send(buffer, offset, byteCount.coerceAtMost(payloadSize))
+                    }
+                    if (bytesWritten < 0) {
+                        throw SocketException(Error.lastErrorMessage)
+                    } else if (bytesWritten == 0) {
+                        throw IOException("Socket is closed")
+                    }
+                    byteCount -= bytesWritten
+                    offset += bytesWritten
+                }
+            } else {
+                val bytesWritten = if (msgCtrl != null) {
+                    socket.send(buffer, offset, byteCount, msgCtrl)
+                } else {
+                    socket.send(buffer, offset, byteCount)
+                }
                 if (bytesWritten < 0) {
                     throw SocketException(Error.lastErrorMessage)
                 } else if (bytesWritten == 0) {
                     throw IOException("Socket is closed")
                 }
-                byteCount -= bytesWritten
-                offset += bytesWritten
-            }
-        } else {
-            val bytesWritten = send(buffer)
-            if (bytesWritten < 0) {
-                throw SocketException(Error.lastErrorMessage)
-            } else if (bytesWritten == 0) {
-                throw IOException("Socket is closed")
             }
         }
     }
 
     // Recv
     external fun recv(size: Int): Pair<Int, ByteArray>
+    external fun recv(buffer: ByteArray, offset: Int, byteCount: Int): Pair<Int, ByteArray>
 
-    external fun recvMsg2(size: Int, msgCtrl: MsgCtrl?): Pair<Int, ByteArray>
+    external fun recv(size: Int, msgCtrl: MsgCtrl): Pair<Int, ByteArray>
+    external fun recv(
+        buffer: ByteArray,
+        offset: Int,
+        byteCount: Int,
+        msgCtrl: MsgCtrl?
+    ): Pair<Int, ByteArray>
 
-    val inputStream: InputStream
-        get() = SrtSocketInputStream(this)
+    fun getInputStream(msgCtrl: MsgCtrl? = null) =
+        SrtSocketInputStream(this, msgCtrl) as InputStream
 
-    private class SrtSocketInputStream(private val socket: Socket) :
+    private class SrtSocketInputStream(private val socket: Socket, private val msgCtrl: MsgCtrl?) :
         InputStream() {
 
         override fun available(): Int {
@@ -182,41 +200,37 @@ class Socket: Closeable {
         }
 
         override fun read(): Int {
-            return socket.readSingleByte()
+            val pair = if (msgCtrl != null) {
+                socket.recv(1, msgCtrl)
+            } else {
+                socket.recv(1)
+            }
+            val readCount = pair.first
+            val byteArray = pair.second
+            return if (readCount > 0) {
+                byteArray[0].toInt()
+            } else {
+                -1
+            }
         }
 
-        override fun read(buffer: ByteArray, byteOffset: Int, byteCount: Int): Int {
-            return socket.read(buffer, byteOffset, byteCount)
+        override fun read(buffer: ByteArray, offset: Int, byteCount: Int): Int {
+            if (byteCount == 0) {
+                return 0
+            }
+
+            val pair = if (msgCtrl != null) {
+                socket.recv(buffer, offset, byteCount, msgCtrl)
+            } else {
+                socket.recv(buffer, offset, byteCount)
+            }
+            val readCount = pair.first
+            if (readCount == 0) {
+                throw SocketTimeoutException()
+            }
+
+            return pair.first
         }
-    }
-
-    private fun readSingleByte(): Int {
-        val pair = recv(1)
-        val readCount = pair.first
-        val byteArray = pair.second
-        return if (readCount > 0) {
-            byteArray[0].toInt()
-        } else {
-            -1
-        }
-    }
-
-    private fun read(buffer: ByteArray, offset: Int, byteCount: Int): Int {
-        if (byteCount == 0) {
-            return 0
-        }
-
-        val pair = recv(byteCount)
-        val readCount = pair.first
-        if (readCount == 0) {
-            throw SocketTimeoutException()
-        }
-
-        val byteArray = pair.second
-        //TODO: avoid copy here
-        byteArray.copyInto(buffer, offset, 0, byteArray.size)
-
-        return pair.first
     }
 
     // File

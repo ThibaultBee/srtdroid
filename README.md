@@ -45,6 +45,11 @@ Chat is an SRT utility to send and receive messages. It provides both a client a
 As Android SRT Wrapper is a wrapper (obvioulsy) for API documentation refers to [SRT API documentation](https://github.com/Haivision/srt/blob/master/docs/API.md).
 You must create a [Srt object](https://github.com/ThibaultBee/SRTWrapper/blob/master/lib/src/main/java/com/github/thibaultbee/srtwrapper/Srt.kt) before calling any other API. It will load SRT, ssl and crypto libraries.
 
+### Read/write
+
+Srt send, sendMsg and sendMsg are called send(). Alternatively, you can use OutputStream.
+Srt recv, recvdMsg are called recv(). Alternatively, you can use InputStream.
+
 ## Permissions
 
 You need to add the INTERNET permission in your AndroidManifest.xml:

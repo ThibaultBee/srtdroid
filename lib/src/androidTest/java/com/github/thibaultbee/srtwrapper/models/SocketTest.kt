@@ -146,17 +146,17 @@ class SocketTest {
 
     @Test
     fun sendMsg2Test() {
-        assertEquals(-1, socket.sendMsg("Hello World !", -1, false))
+        assertEquals(-1, socket.send("Hello World !", -1, false))
         assertEquals(Error.lastError, ErrorType.ENOCONN)
     }
 
     @Test
     fun sendMsg3Test() {
-        assertEquals(-1, socket.sendMsg2("Hello World !", null))
+        assertEquals(-1, socket.send("Hello World !", null))
         assertEquals(Error.lastError, ErrorType.ENOCONN)
         assertEquals(
             -1,
-            socket.sendMsg2("Hello World !", MsgCtrl(flags = 0, boundary = 0, pktSeq = 0, no = 10))
+            socket.send("Hello World !", MsgCtrl(flags = 0, boundary = 0, pktSeq = 0, no = 10))
         )
         assertEquals(Error.lastError, ErrorType.ENOCONN)
     }
@@ -169,7 +169,7 @@ class SocketTest {
     @Test
     fun recvMsg2Test() {
         assert(
-            socket.recvMsg2(
+            socket.recv(
                 4 /*Int nb bytes*/,
                 MsgCtrl(flags = 0, boundary = 0, pktSeq = 0, no = 10)
             ).second.isEmpty()
@@ -254,7 +254,7 @@ class SocketTest {
 
     @Test
     fun inputStreamTest() {
-        val inputStream = socket.inputStream
+        val inputStream = socket.getInputStream()
         assertEquals(0, inputStream.read(ByteArray(0)))
         assertEquals(-1, inputStream.read())
         assertEquals(-1, inputStream.read(ByteArray(10)))
@@ -269,7 +269,7 @@ class SocketTest {
 
     @Test
     fun outputStreamTest() {
-        val outputStream = socket.outputStream
+        val outputStream = socket.getOutputStream()
         outputStream.write(ByteArray(0))
         try {
             outputStream.write(255)
@@ -288,15 +288,13 @@ class SocketTest {
         Random.Default.nextBytes(serverByteArray)
         server.enqueue(serverByteArray, 0)
         assertEquals(0, socket.setSockFlag(SockOpt.TRANSTYPE, Transtype.LIVE))
-        assertEquals(0, socket.setSockFlag(SockOpt.RCVTIMEO, 1000))
         assertEquals(0, socket.connect(InetAddress.getLoopbackAddress(), server.port))
-        val inputStream = socket.inputStream
+        val inputStream = socket.getInputStream()
         val byteArray = ByteArray(arraySize)
         assertEquals(arraySize, inputStream.read(byteArray))
         assertArrayEquals(serverByteArray, byteArray)
         socket.close()
         inputStream.close()
-        assertEquals(-1, inputStream.read(byteArray))
         server.shutdown()
     }
 
@@ -308,7 +306,7 @@ class SocketTest {
         server.enqueue(ByteArray(arraySize), arraySize)
         assertEquals(0, socket.setSockFlag(SockOpt.TRANSTYPE, Transtype.LIVE))
         assertEquals(0, socket.connect(InetAddress.getLoopbackAddress(), server.port))
-        val outputStream = socket.outputStream
+        val outputStream = socket.getOutputStream()
         outputStream.write(ByteArray(arraySize))
         socket.close()
         outputStream.close()
@@ -328,7 +326,7 @@ class SocketTest {
         assertEquals(0, socket.setSockFlag(SockOpt.TRANSTYPE, Transtype.FILE))
         assertEquals(0, socket.setSockFlag(SockOpt.RCVTIMEO, 1000))
         assertEquals(0, socket.connect(InetAddress.getLoopbackAddress(), server.port))
-        val inputStream = socket.inputStream
+        val inputStream = socket.getInputStream()
         assertEquals(5, inputStream.read())
         assertEquals(3, inputStream.read())
         assertEquals(-1, inputStream.read())
@@ -348,7 +346,7 @@ class SocketTest {
         val socket = Socket()
         assertEquals(0, socket.setSockFlag(SockOpt.TRANSTYPE, Transtype.FILE))
         assertEquals(0, socket.connect(InetAddress.getLoopbackAddress(), server.port))
-        val outputStream = socket.outputStream
+        val outputStream = socket.getOutputStream()
         outputStream.write(5)
         outputStream.write(3)
         socket.close()
@@ -392,6 +390,7 @@ class SocketTest {
     internal class InOutMockServer(transtype: Transtype) {
         private val executor = Executors.newCachedThreadPool()
         private val serverSocket = Socket()
+        private lateinit var socket: Socket
         val port: Int
 
         init {
@@ -406,21 +405,21 @@ class SocketTest {
                 assertEquals(0, serverSocket.listen(1))
                 val pair = serverSocket.accept()
                 assertNotNull(pair.second)
-                val socket = pair.first
-                val outputStream = socket.outputStream
+                socket = pair.first
+                val outputStream = socket.getOutputStream()
                 assertEquals(sendBytes.size, outputStream.write(sendBytes))
-                val inputStream = socket.inputStream
+                val inputStream = socket.getInputStream()
                 val result = ByteArray(receiveByteCount)
                 var total = 0
                 while (total < receiveByteCount) {
                     total += inputStream.read(result, total, result.size - total)
                 }
-                socket.close()
                 result
             })
         }
 
         fun shutdown() {
+            socket.close()
             serverSocket.close()
             executor.shutdown()
         }
