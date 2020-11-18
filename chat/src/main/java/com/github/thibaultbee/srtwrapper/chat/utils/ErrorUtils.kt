@@ -5,7 +5,7 @@ import com.github.thibaultbee.srtwrapper.models.Error
 class ErrorUtils {
     companion object {
         fun getMessage(): String {
-            val message = Error.getLastErrorMessage()
+            val message = Error.lastErrorMessage
             Error.clearLastError()
             return message
         }

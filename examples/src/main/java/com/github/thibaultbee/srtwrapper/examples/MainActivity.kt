@@ -7,18 +7,17 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import butterknife.BindView
 import butterknife.ButterKnife
-import com.google.common.primitives.Ints
-import com.google.common.primitives.Longs
 import com.github.thibaultbee.srtwrapper.Srt
 import com.github.thibaultbee.srtwrapper.enums.SockOpt
 import com.github.thibaultbee.srtwrapper.enums.Transtype
 import com.github.thibaultbee.srtwrapper.models.Socket
+import com.google.common.primitives.Ints
+import com.google.common.primitives.Longs
 import com.jakewharton.rxbinding3.view.clicks
 import com.tbruyelle.rxpermissions2.RxPermissions
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import java.io.File
-import java.lang.Exception
 
 class MainActivity : AppCompatActivity() {
     private val TAG = MainActivity::class.qualifiedName
@@ -220,12 +219,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Request server file
-        if (socket.sendMsg(Ints.toByteArray(serverFileName.length).reversedArray()) <= 0) {
-                socket.close()
-                throw Exception("Failed to send file length to $ip:$port: ${Utils.getErrorMessage()}")
+        if (socket.send(Ints.toByteArray(serverFileName.length).reversedArray()) <= 0) {
+            socket.close()
+            throw Exception("Failed to send file length to $ip:$port: ${Utils.getErrorMessage()}")
         }
 
-        if (socket.sendMsg(serverFileName) <= 0) {
+        if (socket.send(serverFileName) <= 0) {
             socket.close()
             throw Exception("Failed to send file name to $ip:$port: ${Utils.getErrorMessage()}")
         }
@@ -320,7 +319,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Send file size
-        if (clientSocket.sendMsg(Longs.toByteArray(file.length()).reversedArray()) <= 0) {
+        if (clientSocket.send(Longs.toByteArray(file.length()).reversedArray()) <= 0) {
             socket.close()
             throw Exception("Failed to send file ${file.name} length to $ip:$port: ${Utils.getErrorMessage()}")
         }

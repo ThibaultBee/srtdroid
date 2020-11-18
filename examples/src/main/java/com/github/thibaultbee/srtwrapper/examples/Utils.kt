@@ -40,7 +40,7 @@ class Utils {
         }
 
         fun getErrorMessage(): String {
-            val message = Error.getLastErrorMessage()
+            val message = Error.lastErrorMessage
             Error.clearLastError()
             return message
         }

@@ -62,12 +62,12 @@ class EpollTest {
         val readFds = listOf(Socket(), Socket(), Socket())
         assertEquals(listOf<EpollFlag>(), epoll.set(listOf(EpollFlag.ENABLE_EMPTY)))
         assertEquals(-1, epoll.wait(readFds, emptyList(), 1000L))
-        assertEquals(Error.getLastError(), ErrorType.ETIMEOUT)
+        assertEquals(Error.lastError, ErrorType.ETIMEOUT)
         assertEquals(-1, epoll.wait(readFds, timeOut = 1000L))
-        assertEquals(Error.getLastError(), ErrorType.ETIMEOUT)
+        assertEquals(Error.lastError, ErrorType.ETIMEOUT)
         val writeFds = listOf(Socket(), Socket())
         assertEquals(-1, epoll.wait(readFds, writeFds, 1000L))
-        assertEquals(Error.getLastError(), ErrorType.ETIMEOUT)
+        assertEquals(Error.lastError, ErrorType.ETIMEOUT)
     }
 
     @Test

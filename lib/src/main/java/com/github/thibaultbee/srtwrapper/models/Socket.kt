@@ -1,5 +1,6 @@
 package com.github.thibaultbee.srtwrapper.models
 
+import android.util.Log
 import android.util.Pair
 import com.github.thibaultbee.srtwrapper.enums.RejectReasonCode
 import com.github.thibaultbee.srtwrapper.enums.SockOpt
@@ -9,12 +10,10 @@ import com.github.thibaultbee.srtwrapper.models.rejectreason.InternalRejectReaso
 import com.github.thibaultbee.srtwrapper.models.rejectreason.PredefinedRejectReason
 import com.github.thibaultbee.srtwrapper.models.rejectreason.RejectReason
 import com.github.thibaultbee.srtwrapper.models.rejectreason.UserDefinedRejectReason
-import java.io.File
-import java.net.InetAddress
-import java.net.InetSocketAddress
-import java.net.StandardProtocolFamily
+import java.io.*
+import java.net.*
 
-class Socket {
+class Socket: Closeable {
     var socketInterface: SocketInterface? = null
     private var srtsocket: Int
 
@@ -39,9 +38,11 @@ class Socket {
     fun bind(address: String, port: Int) = bind(InetSocketAddress(address, port))
     fun bind(address: InetAddress, port: Int) = bind(InetSocketAddress(address, port))
 
-    external fun getSockState(): SockStatus
+    external fun nativeGetSockState(): SockStatus
+    val sockState: SockStatus
+        get() = nativeGetSockState()
 
-    external fun close(): Int
+    external override fun close()
 
     // Connecting
     fun onListen(
@@ -72,37 +73,171 @@ class Socket {
     )
 
     // Options and properties
-    external fun getPeerName(): InetSocketAddress?
+    private external fun nativeGetPeerName(): InetSocketAddress?
+    val peerName: InetSocketAddress?
+        get() = nativeGetPeerName()
+    val inetAddress: InetAddress?
+        get() = peerName?.address
+    val port: Int
+        get() = peerName?.port ?: 0
 
-    external fun getSockName(): InetSocketAddress?
+    private external fun nativeGetSockName(): InetSocketAddress?
+    val sockName: InetSocketAddress?
+        get() = nativeGetSockName()
+    val localAddress: InetAddress?
+        get() = sockName?.address
+    val localPort: Int
+        get() = sockName?.port ?: 0
 
     external fun getSockFlag(opt: SockOpt): Any
-
     external fun setSockFlag(opt: SockOpt, value: Any): Int
 
     // Transmission
-    external fun send(msg: ByteArray): Int
+    // Send
+    external fun send(msg: ByteArray, offset: Int, size: Int): Int
+    fun send(msg: ByteArray) = send(msg, 0, msg.size)
     fun send(msg: String) = send(msg.toByteArray())
-    fun send(msg: ByteArray, offset: Int, size: Int): Int {
-        val buffer = ByteArray(size - offset)
-        msg.copyInto(buffer, 0, offset, offset + size)
-        return send(buffer)
+
+    external fun send(
+        msg: ByteArray,
+        offset: Int,
+        size: Int,
+        ttl: Int = -1,
+        inOrder: Boolean = false
+    ): Int
+
+    fun send(msg: ByteArray, ttl: Int = -1, inOrder: Boolean = false) =
+        send(msg, 0, msg.size, ttl, inOrder)
+
+    fun send(msg: String, ttl: Int = -1, inOrder: Boolean = false) =
+        send(msg.toByteArray(), ttl, inOrder)
+
+    external fun send(msg: ByteArray, offset: Int, size: Int, msgCtrl: MsgCtrl): Int
+    fun send(msg: ByteArray, msgCtrl: MsgCtrl) = send(msg, 0, msg.size, msgCtrl)
+    fun send(msg: String, msgCtrl: MsgCtrl) = send(msg.toByteArray(), msgCtrl)
+
+    fun getOutputStream(msgCtrl: MsgCtrl? = null) =
+        SrtSocketOutputStream(this, msgCtrl) as OutputStream
+
+    private class SrtSocketOutputStream(private val socket: Socket, private val msgCtrl: MsgCtrl?) :
+        OutputStream() {
+
+        override fun close() {
+            socket.close()
+        }
+
+        override fun write(oneByte: Int) {
+            val buffer = byteArrayOf(oneByte.toByte())
+            write(buffer, 0, 1)
+        }
+
+        override fun write(
+            buffer: ByteArray,
+            defaultOffset: Int,
+            defaultByteCount: Int
+        ) {
+            var byteCount = defaultByteCount
+            var offset = defaultOffset
+            if (socket.isClose) {
+                throw IOException("Socket is closed")
+            }
+            if (socket.getSockFlag(SockOpt.MESSAGEAPI) as Boolean) {
+                // In case, message API is true, split buffer in payload size buffer.
+                val payloadSize = socket.getSockFlag(SockOpt.PAYLOADSIZE) as Int
+                while (byteCount > 0) {
+                    val bytesWritten = if (msgCtrl != null) {
+                        socket.send(buffer, offset, byteCount.coerceAtMost(payloadSize), msgCtrl)
+                    } else {
+                        socket.send(buffer, offset, byteCount.coerceAtMost(payloadSize))
+                    }
+                    if (bytesWritten < 0) {
+                        throw SocketException(Error.lastErrorMessage)
+                    } else if (bytesWritten == 0) {
+                        throw IOException("Socket is closed")
+                    }
+                    byteCount -= bytesWritten
+                    offset += bytesWritten
+                }
+            } else {
+                val bytesWritten = if (msgCtrl != null) {
+                    socket.send(buffer, offset, byteCount, msgCtrl)
+                } else {
+                    socket.send(buffer, offset, byteCount)
+                }
+                if (bytesWritten < 0) {
+                    throw SocketException(Error.lastErrorMessage)
+                } else if (bytesWritten == 0) {
+                    throw IOException("Socket is closed")
+                }
+            }
+        }
     }
 
-    external fun sendMsg(msg: ByteArray, ttl: Int = -1, inOrder: Boolean = false): Int
-    fun sendMsg(msg: String, ttl: Int = -1, inOrder: Boolean = false) =
-        sendMsg(msg.toByteArray(), ttl, inOrder)
-
-    external fun sendMsg2(msg: ByteArray, msgCtrl: MsgCtrl?): Int
-    fun sendMsg2(msg: String, msgCtrl: MsgCtrl?) = sendMsg2(msg.toByteArray(), msgCtrl)
-
+    // Recv
     external fun recv(size: Int): Pair<Int, ByteArray>
+    external fun recv(buffer: ByteArray, offset: Int, byteCount: Int): Pair<Int, ByteArray>
 
-    external fun recvMsg2(size: Int, msgCtrl: MsgCtrl?): Pair<Int, ByteArray>
+    external fun recv(size: Int, msgCtrl: MsgCtrl): Pair<Int, ByteArray>
+    external fun recv(
+        buffer: ByteArray,
+        offset: Int,
+        byteCount: Int,
+        msgCtrl: MsgCtrl?
+    ): Pair<Int, ByteArray>
 
+    fun getInputStream(msgCtrl: MsgCtrl? = null) =
+        SrtSocketInputStream(this, msgCtrl) as InputStream
+
+    private class SrtSocketInputStream(private val socket: Socket, private val msgCtrl: MsgCtrl?) :
+        InputStream() {
+
+        override fun available(): Int {
+            return socket.available()
+        }
+
+        override fun close() {
+            socket.close()
+        }
+
+        override fun read(): Int {
+            val pair = if (msgCtrl != null) {
+                socket.recv(1, msgCtrl)
+            } else {
+                socket.recv(1)
+            }
+            val readCount = pair.first
+            val byteArray = pair.second
+            return if (readCount > 0) {
+                byteArray[0].toInt()
+            } else {
+                -1
+            }
+        }
+
+        override fun read(buffer: ByteArray, offset: Int, byteCount: Int): Int {
+            if (byteCount == 0) {
+                return 0
+            }
+
+            val pair = if (msgCtrl != null) {
+                socket.recv(buffer, offset, byteCount, msgCtrl)
+            } else {
+                socket.recv(buffer, offset, byteCount)
+            }
+            val readCount = pair.first
+            if (readCount == 0) {
+                throw SocketTimeoutException()
+            }
+
+            return pair.first
+        }
+    }
+
+    // File
     external fun sendFile(path: String, offset: Long, size: Long, block: Int = 364000): Long
     fun sendFile(file: File, offset: Long, size: Long, block: Int = 364000) =
         sendFile(file.path, offset, size, block)
+
     fun sendFile(file: File, block: Int = 364000) =
         sendFile(file.path, 0, file.length(), block)
 
@@ -112,31 +247,33 @@ class Socket {
 
     // Reject reason
     private external fun nativeGetRejectReason(): Int
-    fun getRejectReason(): RejectReason {
-        val code = nativeGetRejectReason()
-        return when {
-            code < RejectReasonCode.PREDEFINED_OFFSET -> InternalRejectReason(RejectReasonCode.values()[code])
-            code < RejectReasonCode.USERDEFINED_OFFSET -> PredefinedRejectReason(code - RejectReasonCode.PREDEFINED_OFFSET)
-            else -> UserDefinedRejectReason(code - RejectReasonCode.USERDEFINED_OFFSET)
+    private external fun nativeSetRejectReason(rejectReason: Int): Int
+    var rejectReason: RejectReason
+        get() {
+            val code = nativeGetRejectReason()
+            return when {
+                code < RejectReasonCode.PREDEFINED_OFFSET -> InternalRejectReason(RejectReasonCode.values()[code])
+                code < RejectReasonCode.USERDEFINED_OFFSET -> PredefinedRejectReason(code - RejectReasonCode.PREDEFINED_OFFSET)
+                else -> UserDefinedRejectReason(code - RejectReasonCode.USERDEFINED_OFFSET)
+            }
         }
-    }
-
-    private external fun setRejectReason(rejectReason: Int): Int
-    fun setRejectReason(rejectReason: RejectReason): Int {
-        val code = when (rejectReason) {
-            is InternalRejectReason -> { // Forbidden by SRT
-                rejectReason.code.ordinal
+        set(value) {
+            val code = when (value) {
+                is InternalRejectReason -> { // Forbidden by SRT
+                    value.code.ordinal
+                }
+                is PredefinedRejectReason -> {
+                    value.code + RejectReasonCode.PREDEFINED_OFFSET
+                }
+                is UserDefinedRejectReason -> {
+                    value.code + RejectReasonCode.USERDEFINED_OFFSET
+                }
+                else -> RejectReasonCode.UNKNOWN.ordinal
             }
-            is PredefinedRejectReason -> {
-                rejectReason.code + RejectReasonCode.PREDEFINED_OFFSET
+            if (nativeSetRejectReason(code) != 0) {
+                Log.e(this.javaClass.canonicalName, "Failed to set reject reason")
             }
-            is UserDefinedRejectReason -> {
-                rejectReason.code + RejectReasonCode.USERDEFINED_OFFSET
-            }
-            else -> RejectReasonCode.UNKNOWN.ordinal
         }
-        return setRejectReason(code)
-    }
 
     // Performance tracking
     external fun bstats(clear: Boolean): Stats
@@ -144,5 +281,43 @@ class Socket {
     external fun bistats(clear: Boolean, instantaneous: Boolean): Stats
 
     // Time access
-    external fun connectionTime(): Long
+    external fun nativeGetConnectionTime(): Long
+    val connectionTime: Long
+        get() = nativeGetConnectionTime()
+
+    // Android Socket like API
+    var receiveBufferSize: Int
+        get() = getSockFlag(SockOpt.RCVBUF) as Int
+        set(value) {
+            setSockFlag(SockOpt.RCVBUF, value)
+        }
+
+    var reuseAddress: Boolean
+        get() = getSockFlag(SockOpt.REUSEADDR) as Boolean
+        set(value) {
+            setSockFlag(SockOpt.REUSEADDR, value)
+        }
+
+    var sendBufferSize: Int
+        get() = getSockFlag(SockOpt.SNDBUF) as Int
+        set(value) {
+            setSockFlag(SockOpt.SNDBUF, value)
+        }
+
+    var soLinger: Int
+        get() = getSockFlag(SockOpt.LINGER) as Int
+        set(value) {
+            setSockFlag(SockOpt.SNDBUF, value)
+        }
+
+    val isBound: Boolean
+        get() = sockState == SockStatus.OPENED
+
+    val isClose: Boolean
+        get() = (sockState == SockStatus.CLOSED) || (sockState == SockStatus.NONEXIST)
+
+    val isConnected: Boolean
+        get() = sockState == SockStatus.CONNECTED
+
+    fun available(): Int = getSockFlag(SockOpt.RCVDATA) as Int
 }

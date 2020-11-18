@@ -33,34 +33,34 @@ class Socket6Test {
     @After
     fun tearDown() {
         if (socket.isValid())
-            assertEquals(socket.close(), 0)
+            socket.close()
         assertEquals(srt.cleanUp(), 0)
     }
 
     @Test
     fun bindTest() {
         assertEquals(0, socket.setSockFlag(SockOpt.TRANSTYPE, Transtype.FILE))
-        assertEquals(0, socket.bind("::1", 1234))
+        assertEquals(0, socket.bind("::1", 1111))
     }
 
     @Test
     fun sockStatusTest() {
-        assertEquals(SockStatus.INIT, socket.getSockState())
-        assertEquals(0, socket.bind("::1", 1234))
-        assertEquals(SockStatus.OPENED, socket.getSockState())
+        assertEquals(SockStatus.INIT, socket.sockState)
+        assertEquals(0, socket.bind("::1", 2222))
+        assertEquals(SockStatus.OPENED, socket.sockState)
     }
 
     @Test
     fun closeTest() {
-        assertEquals(0, socket.close())
-        assertFalse(socket.isValid())
+        socket.close()
+        assertTrue(socket.isClose)
     }
 
     @Test
     fun listenTest() {
         assertEquals(-1, socket.listen(3))
-        assertEquals(Error.getLastError(), ErrorType.EUNBOUNDSOCK)
-        assertEquals(0, socket.bind("::1", 1234))
+        assertEquals(Error.lastError, ErrorType.EUNBOUNDSOCK)
+        assertEquals(0, socket.bind("::1", 3333))
         assertEquals(0, socket.listen(3))
     }
 
@@ -69,31 +69,31 @@ class Socket6Test {
         val pair = socket.accept()
         assertFalse(pair.first.isValid())
         assertNull(pair.second)
-        assertEquals(Error.getLastError(), ErrorType.ENOLISTEN)
+        assertEquals(Error.lastError, ErrorType.ENOLISTEN)
     }
 
     @Test
     fun connectTest() {
-        assertEquals(-1, socket.connect("::1", 1234))
-        assertEquals(Error.getLastError(), ErrorType.ENOSERVER)
+        assertEquals(-1, socket.connect("::1", 4444))
+        assertEquals(Error.lastError, ErrorType.ENOSERVER)
     }
 
     @Test
     fun rendezVousTest() {
-        assertEquals(-1, socket.rendezVous("::", "2001:0db8:0000:85a3:0000:0000:ac1f:8001", 1234))
-        assertEquals(Error.getLastError(), ErrorType.ENOSERVER)
+        assertEquals(-1, socket.rendezVous("::", "2001:0db8:0000:85a3:0000:0000:ac1f:8001", 5555))
+        assertEquals(Error.lastError, ErrorType.ENOSERVER)
     }
 
     @Test
     fun getPeerNameTest() {
-        assertNull(socket.getPeerName())
+        assertNull(socket.peerName)
     }
 
     @Test
     fun getSockNameTest() {
-        assertNull(socket.getSockName())
-        assertEquals(0, socket.bind("::1", 12345))
-        val sockAddr = socket.getSockName()
-        assertNull(sockAddr) // sockAddr is null if no connection
+        assertNull(socket.sockName)
+        assertEquals(0, socket.bind("::1", 6666))
+        assertEquals(socket.sockName!!.address.hostAddress, "::1")
+        assertEquals(socket.sockName!!.port, 6666)
     }
 }
