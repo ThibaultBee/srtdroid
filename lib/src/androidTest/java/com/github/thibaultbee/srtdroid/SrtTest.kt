@@ -19,7 +19,7 @@ class SrtTest {
         val srt = Srt()
 
         assert(srt.startUp() >= 0)
-        assert(srt.getVersion() > 0)
+        assert(srt.version > 0)
         assertEquals(0, srt.cleanUp())
     }
 }

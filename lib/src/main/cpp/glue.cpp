@@ -709,10 +709,10 @@ nativeGetConnectionTime(JNIEnv *env,
 
 // Register natives API
 static JNINativeMethod srtMethods[] = {
-        {"startUp",     "()I",  (void *) &nativeStartUp},
-        {"cleanUp",     "()I",  (void *) &nativeCleanUp},
-        {"getVersion",  "()I",  (void *) &nativeGetVersion},
-        {"setLogLevel", "(I)V", (void *) &nativeSetLogLevel}
+        {"startUp",          "()I",  (void *) &nativeStartUp},
+        {"cleanUp",          "()I",  (void *) &nativeCleanUp},
+        {"nativeGetVersion", "()I",  (void *) &nativeGetVersion},
+        {"setLogLevel",      "(I)V", (void *) &nativeSetLogLevel}
 };
 
 static JNINativeMethod socketMethods[] = {
