@@ -152,7 +152,8 @@ class SocketTest {
 
     @Test
     fun sendMsg3Test() {
-        assertEquals(-1, socket.send("Hello World !", null))
+        val msgCtrl = MsgCtrl(boundary = 1, pktSeq = 1, no = 1)
+        assertEquals(-1, socket.send("Hello World !", msgCtrl))
         assertEquals(Error.lastError, ErrorType.ENOCONN)
         assertEquals(
             -1,
@@ -390,7 +391,7 @@ class SocketTest {
     internal class InOutMockServer(transtype: Transtype) {
         private val executor = Executors.newCachedThreadPool()
         private val serverSocket = Socket()
-        private lateinit var socket: Socket
+        private var socket: Socket? = null
         val port: Int
 
         init {
@@ -406,20 +407,26 @@ class SocketTest {
                 val pair = serverSocket.accept()
                 assertNotNull(pair.second)
                 socket = pair.first
-                val outputStream = socket.getOutputStream()
-                assertEquals(sendBytes.size, outputStream.write(sendBytes))
-                val inputStream = socket.getInputStream()
-                val result = ByteArray(receiveByteCount)
-                var total = 0
-                while (total < receiveByteCount) {
-                    total += inputStream.read(result, total, result.size - total)
+                val outputStream = socket?.getOutputStream()
+                if (outputStream != null) {
+                    assertEquals(sendBytes.size, outputStream.write(sendBytes))
+                    val inputStream = socket?.getInputStream()
+                    if (inputStream != null) {
+                        val result = ByteArray(receiveByteCount)
+                        var total = 0
+                        while (total < receiveByteCount) {
+                            total += inputStream.read(result, total, result.size - total)
+                        }
+                        result
+                    }
                 }
-                result
+                ByteArray(0)
+
             })
         }
 
         fun shutdown() {
-            socket.close()
+            socket?.close()
             serverSocket.close()
             executor.shutdown()
         }
