@@ -6,14 +6,14 @@
 extern "C" {
 #endif
 
-#define EPOLL_CLASS "com/github/thibaultbee/srtwrapper/models/Epoll"
-#define EPOLLEVENT_CLASS "com/github/thibaultbee/srtwrapper/models/EpollEvent"
-#define ERROR_CLASS "com/github/thibaultbee/srtwrapper/models/Error"
-#define MSGCTRL_CLASS "com/github/thibaultbee/srtwrapper/models/MsgCtrl"
-#define SRTSOCKET_CLASS "com/github/thibaultbee/srtwrapper/models/Socket"
-#define STATS_CLASS "com/github/thibaultbee/srtwrapper/models/Stats"
-#define SRT_CLASS "com/github/thibaultbee/srtwrapper/Srt"
-#define TIME_CLASS "com/github/thibaultbee/srtwrapper/models/Time"
+#define EPOLL_CLASS "com/github/thibaultbee/srtdroid/models/Epoll"
+#define EPOLLEVENT_CLASS "com/github/thibaultbee/srtdroid/models/EpollEvent"
+#define ERROR_CLASS "com/github/thibaultbee/srtdroid/models/Error"
+#define MSGCTRL_CLASS "com/github/thibaultbee/srtdroid/models/MsgCtrl"
+#define SRTSOCKET_CLASS "com/github/thibaultbee/srtdroid/models/Socket"
+#define STATS_CLASS "com/github/thibaultbee/srtdroid/models/Stats"
+#define SRT_CLASS "com/github/thibaultbee/srtdroid/Srt"
+#define TIME_CLASS "com/github/thibaultbee/srtdroid/models/Time"
 
 #define INETSOCKETADDRESS_CLASS "java/net/InetSocketAddress"
 #define PAIR_CLASS "android/util/Pair"

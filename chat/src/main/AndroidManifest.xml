@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.github.thibaultbee.srtwrapper.chat">
+    package="com.github.thibaultbee.srtdroid.chat">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -12,12 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.github.thibaultbee.srtwrapper.chat.chat.ChatActivity"
+            android:name="com.github.thibaultbee.srtdroid.chat.chat.ChatActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="com.github.thibaultbee.srtwrapper.chat.settings.SettingsActivity"
+            android:name="com.github.thibaultbee.srtdroid.chat.settings.SettingsActivity"
             android:label="@string/settings_activity" />
-        <activity android:name="com.github.thibaultbee.srtwrapper.chat.main.MainActivity">
+        <activity android:name="com.github.thibaultbee.srtdroid.chat.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

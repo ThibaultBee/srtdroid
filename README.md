@@ -1,4 +1,4 @@
-[![](https://jitpack.io/v/ThibaultBee/SRTWrapper.svg)](https://jitpack.io/#ThibaultBee/SRTWrapper)
+[![](https://jitpack.io/v/ThibaultBee/srtdroid.svg)](https://jitpack.io/#ThibaultBee/srtdroid)
 
 # Android SRT Wrapper
 
@@ -6,7 +6,7 @@ Low level API for SRT library on Android. SRT is an open source transport techno
 
 ## Setup
 
-Get SRT Wrapper lastest artifacts on [jitpack.io](https://jitpack.io/#ThibaultBee/SRTWrapper)
+Get SRT Wrapper lastest artifacts on [jitpack.io](https://jitpack.io/#ThibaultBee/srtdroid)
 
 ```gradle
 allprojects {
@@ -17,7 +17,7 @@ allprojects {
 }
 
 dependencies {
-    implementation 'com.github.ThibaultBee:SRTWrapper:0.8.2'
+    implementation 'com.github.ThibaultBee:srtdroid:0.8.2'
 }
 ```
 
@@ -43,7 +43,7 @@ Chat is an SRT utility to send and receive messages. It provides both a client a
 ## API
 
 As Android SRT Wrapper is a wrapper (obvioulsy) for API documentation refers to [SRT API documentation](https://github.com/Haivision/srt/blob/master/docs/API.md).
-You must create a [Srt object](https://github.com/ThibaultBee/SRTWrapper/blob/master/lib/src/main/java/com/github/thibaultbee/srtwrapper/Srt.kt) before calling any other API. It will load SRT, ssl and crypto libraries.
+You must create a [Srt object](https://github.com/ThibaultBee/srtdroid/blob/master/lib/src/main/java/com/github/thibaultbee/srtdroid/Srt.kt) before calling any other API. It will load SRT, ssl and crypto libraries.
 
 ### Read/write
 
