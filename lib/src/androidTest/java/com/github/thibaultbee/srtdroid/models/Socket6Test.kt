@@ -2,15 +2,14 @@ package com.github.thibaultbee.srtdroid.models
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.github.thibaultbee.srtdroid.Srt
-import com.github.thibaultbee.srtdroid.enums.ErrorType
-import com.github.thibaultbee.srtdroid.enums.SockOpt
-import com.github.thibaultbee.srtdroid.enums.SockStatus
-import com.github.thibaultbee.srtdroid.enums.Transtype
+import com.github.thibaultbee.srtdroid.enums.*
+import com.github.thibaultbee.srtdroid.models.rejectreason.InternalRejectReason
 import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.net.SocketException
 import java.net.StandardProtocolFamily
 
 
@@ -27,26 +26,27 @@ class Socket6Test {
     fun setUp() {
         assert(srt.startUp() >= 0)
         socket = Socket(StandardProtocolFamily.INET6)
-        assertTrue(socket.isValid())
+        assertTrue(socket.isValid)
     }
 
     @After
     fun tearDown() {
-        if (socket.isValid())
+        if (socket.isValid)
             socket.close()
         assertEquals(srt.cleanUp(), 0)
     }
 
     @Test
     fun bindTest() {
-        assertEquals(0, socket.setSockFlag(SockOpt.TRANSTYPE, Transtype.FILE))
-        assertEquals(0, socket.bind("::1", 1111))
+        socket.setSockFlag(SockOpt.TRANSTYPE, Transtype.FILE)
+        socket.bind("::1", 1111)
+        assertTrue(socket.isBound)
     }
 
     @Test
     fun sockStatusTest() {
         assertEquals(SockStatus.INIT, socket.sockState)
-        assertEquals(0, socket.bind("::1", 2222))
+        socket.bind("::1", 2222)
         assertEquals(SockStatus.OPENED, socket.sockState)
     }
 
@@ -58,30 +58,44 @@ class Socket6Test {
 
     @Test
     fun listenTest() {
-        assertEquals(-1, socket.listen(3))
-        assertEquals(Error.lastError, ErrorType.EUNBOUNDSOCK)
-        assertEquals(0, socket.bind("::1", 3333))
-        assertEquals(0, socket.listen(3))
+        try {
+            socket.listen(3)
+            fail()
+        } catch (e: SocketException) {
+            assertEquals(e.message, ErrorType.EUNBOUNDSOCK.toString())
+        }
+        socket.bind("::1", 3333)
+        socket.listen(3)
     }
 
     @Test
     fun acceptTest() {
-        val pair = socket.accept()
-        assertFalse(pair.first.isValid())
-        assertNull(pair.second)
-        assertEquals(Error.lastError, ErrorType.ENOLISTEN)
+        try {
+            socket.accept()
+        } catch (e: SocketException) {
+            assertEquals(e.message, ErrorType.ENOLISTEN.toString())
+        }
     }
 
     @Test
     fun connectTest() {
-        assertEquals(-1, socket.connect("::1", 4444))
-        assertEquals(Error.lastError, ErrorType.ENOSERVER)
+        try {
+            socket.connect("::1", 4444)
+            fail()
+        } catch (e: SocketException) {
+            assertEquals(e.message, ErrorType.ENOSERVER.toString())
+        }
+        assertEquals(InternalRejectReason(RejectReasonCode.TIMEOUT), socket.rejectReason)
     }
 
     @Test
     fun rendezVousTest() {
-        assertEquals(-1, socket.rendezVous("::", "2001:0db8:0000:85a3:0000:0000:ac1f:8001", 5555))
-        assertEquals(Error.lastError, ErrorType.ENOSERVER)
+        try {
+            socket.rendezVous("::", "2001:0db8:0000:85a3:0000:0000:ac1f:8001", 5555)
+            fail()
+        } catch (e: SocketException) {
+            assertEquals(e.message, ErrorType.ENOSERVER.toString())
+        }
     }
 
     @Test
@@ -92,7 +106,7 @@ class Socket6Test {
     @Test
     fun getSockNameTest() {
         assertNull(socket.sockName)
-        assertEquals(0, socket.bind("::1", 6666))
+        socket.bind("::1", 6666)
         assertEquals(socket.sockName!!.address.hostAddress, "::1")
         assertEquals(socket.sockName!!.port, 6666)
     }

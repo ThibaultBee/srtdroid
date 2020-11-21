@@ -2,6 +2,7 @@ package com.github.thibaultbee.srtdroid.models
 
 import android.util.Log
 import android.util.Pair
+import com.github.thibaultbee.srtdroid.enums.ErrorType
 import com.github.thibaultbee.srtdroid.enums.RejectReasonCode
 import com.github.thibaultbee.srtdroid.enums.SockOpt
 import com.github.thibaultbee.srtdroid.enums.SockStatus
@@ -24,6 +25,7 @@ class Socket: Closeable {
     }
 
     private external fun createSocket(): Int
+
     constructor() {
         srtsocket = createSocket()
     }
@@ -32,17 +34,30 @@ class Socket: Closeable {
         srtsocket = socket
     }
 
-    external fun isValid(): Boolean
+    private external fun nativeIsValid(): Boolean
+    val isValid: Boolean
+        get() = nativeIsValid()
 
-    external fun bind(address: InetSocketAddress): Int
+    private external fun nativeBind(address: InetSocketAddress): Int
+    fun bind(address: InetSocketAddress) {
+        if (nativeBind(address) != 0) {
+            throw BindException(Error.lastErrorMessage)
+        }
+    }
+
     fun bind(address: String, port: Int) = bind(InetSocketAddress(address, port))
     fun bind(address: InetAddress, port: Int) = bind(InetSocketAddress(address, port))
 
-    external fun nativeGetSockState(): SockStatus
+    private external fun nativeGetSockState(): SockStatus
     val sockState: SockStatus
         get() = nativeGetSockState()
 
-    external override fun close()
+    private external fun nativeClose(): Int
+    override fun close() {
+        if (nativeClose() != 0) {
+            throw SocketException(Error.lastErrorMessage)
+        }
+    }
 
     // Connecting
     fun onListen(
@@ -54,18 +69,46 @@ class Socket: Closeable {
         return socketInterface?.onListen(ns, hsVersion, peerAddress, streamId)
             ?: 0 // By default, accept incoming connection
     }
-    external fun listen(backlog: Int): Int
 
-    external fun accept(): Pair<Socket, InetSocketAddress?>
+    private external fun nativeListen(backlog: Int): Int
+    fun listen(backlog: Int) {
+        if (nativeListen(backlog) != 0) {
+            throw SocketException(Error.lastErrorMessage)
+        }
+    }
 
-    external fun connect(address: InetSocketAddress): Int
+    private external fun nativeAccept(): Pair<Socket, InetSocketAddress?>
+    fun accept(): Pair<Socket, InetSocketAddress?> {
+        val pair = nativeAccept()
+        if (!pair.first.isValid) {
+            throw SocketException(Error.lastErrorMessage)
+        }
+        return pair
+    }
+
+    private external fun nativeConnect(address: InetSocketAddress): Int
+    fun connect(address: InetSocketAddress) {
+        if (nativeConnect(address) != 0) {
+            throw ConnectException(Error.lastErrorMessage)
+        }
+    }
+
     fun connect(address: String, port: Int) = connect(InetSocketAddress(address, port))
     fun connect(address: InetAddress, port: Int) = connect(InetSocketAddress(address, port))
 
-    external fun rendezVous(
+    private external fun nativeRendezVous(
         localAddress: InetSocketAddress,
         remoteAddress: InetSocketAddress
     ): Int
+
+    fun rendezVous(
+        localAddress: InetSocketAddress,
+        remoteAddress: InetSocketAddress
+    ) {
+        if (nativeRendezVous(localAddress, remoteAddress) != 0) {
+            throw SocketException(Error.lastErrorMessage)
+        }
+    }
 
     fun rendezVous(localAddress: String, remoteAddress: String, port: Int) = rendezVous(
         InetSocketAddress(localAddress, port),
@@ -89,16 +132,38 @@ class Socket: Closeable {
     val localPort: Int
         get() = sockName?.port ?: 0
 
-    external fun getSockFlag(opt: SockOpt): Any
-    external fun setSockFlag(opt: SockOpt, value: Any): Int
+    private external fun nativeGetSockFlag(opt: SockOpt): Any
+    fun getSockFlag(opt: SockOpt): Any {
+        return nativeGetSockFlag(opt) ?: throw IOException(Error.lastErrorMessage)
+    }
+
+    private external fun nativeSetSockFlag(opt: SockOpt, value: Any): Int
+    fun setSockFlag(opt: SockOpt, value: Any) {
+        if (nativeSetSockFlag(opt, value) != 0) {
+            throw IOException(Error.lastErrorMessage)
+        }
+    }
 
     // Transmission
     // Send
-    external fun send(msg: ByteArray, offset: Int, size: Int): Int
+    private external fun nativeSend(msg: ByteArray, offset: Int, size: Int): Int
+    fun send(msg: ByteArray, offset: Int, size: Int): Int {
+        val byteSent = nativeSend(msg, offset, size)
+        when {
+            byteSent < 0 -> {
+                throw SocketException(Error.lastErrorMessage)
+            }
+            byteSent == 0 -> {
+                throw SocketTimeoutException(ErrorType.ESCLOSED.toString())
+            }
+            else -> return byteSent
+        }
+    }
+
     fun send(msg: ByteArray) = send(msg, 0, msg.size)
     fun send(msg: String) = send(msg.toByteArray())
 
-    external fun send(
+    private external fun nativeSend(
         msg: ByteArray,
         offset: Int,
         size: Int,
@@ -106,13 +171,45 @@ class Socket: Closeable {
         inOrder: Boolean = false
     ): Int
 
+    fun send(
+        msg: ByteArray,
+        offset: Int,
+        size: Int,
+        ttl: Int = -1,
+        inOrder: Boolean = false
+    ): Int {
+        val byteSent = nativeSend(msg, offset, size, ttl, inOrder)
+        when {
+            byteSent < 0 -> {
+                throw SocketException(Error.lastErrorMessage)
+            }
+            byteSent == 0 -> {
+                throw SocketTimeoutException(ErrorType.ESCLOSED.toString())
+            }
+            else -> return byteSent
+        }
+    }
+
     fun send(msg: ByteArray, ttl: Int = -1, inOrder: Boolean = false) =
         send(msg, 0, msg.size, ttl, inOrder)
 
     fun send(msg: String, ttl: Int = -1, inOrder: Boolean = false) =
         send(msg.toByteArray(), ttl, inOrder)
 
-    external fun send(msg: ByteArray, offset: Int, size: Int, msgCtrl: MsgCtrl): Int
+    private external fun nativeSend(msg: ByteArray, offset: Int, size: Int, msgCtrl: MsgCtrl): Int
+    fun send(msg: ByteArray, offset: Int, size: Int, msgCtrl: MsgCtrl): Int {
+        val byteSent = nativeSend(msg, offset, size, msgCtrl)
+        when {
+            byteSent < 0 -> {
+                throw SocketException(Error.lastErrorMessage)
+            }
+            byteSent == 0 -> {
+                throw SocketTimeoutException(ErrorType.ESCLOSED.toString())
+            }
+            else -> return byteSent
+        }
+    }
+
     fun send(msg: ByteArray, msgCtrl: MsgCtrl) = send(msg, 0, msg.size, msgCtrl)
     fun send(msg: String, msgCtrl: MsgCtrl) = send(msg.toByteArray(), msgCtrl)
 
@@ -139,7 +236,7 @@ class Socket: Closeable {
             var byteCount = defaultByteCount
             var offset = defaultOffset
             if (socket.isClose) {
-                throw IOException("Socket is closed")
+                throw SocketException(ErrorType.ESCLOSED.toString())
             }
             if (socket.getSockFlag(SockOpt.MESSAGEAPI) as Boolean) {
                 // In case, message API is true, split buffer in payload size buffer.
@@ -150,40 +247,95 @@ class Socket: Closeable {
                     } else {
                         socket.send(buffer, offset, byteCount.coerceAtMost(payloadSize))
                     }
-                    if (bytesWritten < 0) {
-                        throw SocketException(Error.lastErrorMessage)
-                    } else if (bytesWritten == 0) {
-                        throw IOException("Socket is closed")
-                    }
                     byteCount -= bytesWritten
                     offset += bytesWritten
                 }
             } else {
-                val bytesWritten = if (msgCtrl != null) {
+                if (msgCtrl != null) {
                     socket.send(buffer, offset, byteCount, msgCtrl)
                 } else {
                     socket.send(buffer, offset, byteCount)
-                }
-                if (bytesWritten < 0) {
-                    throw SocketException(Error.lastErrorMessage)
-                } else if (bytesWritten == 0) {
-                    throw IOException("Socket is closed")
                 }
             }
         }
     }
 
     // Recv
-    external fun recv(size: Int): Pair<Int, ByteArray>
-    external fun recv(buffer: ByteArray, offset: Int, byteCount: Int): Pair<Int, ByteArray>
+    private external fun nativeRecv(size: Int): Pair<Int, ByteArray>
+    fun recv(size: Int): Pair<Int, ByteArray> {
+        val pair = nativeRecv(size)
+        val byteReceived = pair.first
+        when {
+            byteReceived < 0 -> {
+                throw SocketException(Error.lastErrorMessage)
+            }
+            byteReceived == 0 -> {
+                throw SocketTimeoutException(ErrorType.ESCLOSED.toString())
+            }
+            else -> return pair
+        }
+    }
 
-    external fun recv(size: Int, msgCtrl: MsgCtrl): Pair<Int, ByteArray>
-    external fun recv(
+    private external fun nativeRecv(
+        buffer: ByteArray,
+        offset: Int,
+        byteCount: Int
+    ): Pair<Int, ByteArray>
+
+    fun recv(buffer: ByteArray, offset: Int, byteCount: Int): Pair<Int, ByteArray> {
+        val pair = nativeRecv(buffer, offset, byteCount)
+        val byteReceived = pair.first
+        when {
+            byteReceived < 0 -> {
+                throw SocketException(Error.lastErrorMessage)
+            }
+            byteReceived == 0 -> {
+                throw SocketTimeoutException(ErrorType.ESCLOSED.toString())
+            }
+            else -> return pair
+        }
+    }
+
+    private external fun nativeRecv(size: Int, msgCtrl: MsgCtrl): Pair<Int, ByteArray>
+    fun recv(size: Int, msgCtrl: MsgCtrl): Pair<Int, ByteArray> {
+        val pair = nativeRecv(size, msgCtrl)
+        val byteReceived = pair.first
+        when {
+            byteReceived < 0 -> {
+                throw SocketException(Error.lastErrorMessage)
+            }
+            byteReceived == 0 -> {
+                throw SocketTimeoutException(ErrorType.ESCLOSED.toString())
+            }
+            else -> return pair
+        }
+    }
+
+    private external fun nativeRecv(
         buffer: ByteArray,
         offset: Int,
         byteCount: Int,
         msgCtrl: MsgCtrl?
     ): Pair<Int, ByteArray>
+
+    fun recv(
+        buffer: ByteArray,
+        offset: Int,
+        byteCount: Int,
+        msgCtrl: MsgCtrl?
+    ): Pair<Int, ByteArray> {
+        val pair = nativeRecv(buffer, offset, byteCount, msgCtrl)
+        val byteReceived = pair.first
+        when {
+            byteReceived < 0 -> {
+                throw SocketException(Error.lastErrorMessage)
+            }
+            byteReceived == 0 -> {
+                throw SocketTimeoutException(ErrorType.ESCLOSED.toString())
+            }
+            else -> return pair
+        }
+    }
 
     fun getInputStream(msgCtrl: MsgCtrl? = null) =
         SrtSocketInputStream(this, msgCtrl) as InputStream
@@ -205,9 +357,9 @@ class Socket: Closeable {
             } else {
                 socket.recv(1)
             }
-            val readCount = pair.first
+            val byteReceived = pair.first
             val byteArray = pair.second
-            return if (readCount > 0) {
+            return if (byteReceived > 0) {
                 byteArray[0].toInt()
             } else {
                 -1
@@ -224,24 +376,58 @@ class Socket: Closeable {
             } else {
                 socket.recv(buffer, offset, byteCount)
             }
-            val readCount = pair.first
-            if (readCount == 0) {
-                throw SocketTimeoutException()
-            }
 
             return pair.first
         }
     }
 
     // File
-    external fun sendFile(path: String, offset: Long, size: Long, block: Int = 364000): Long
+    private external fun nativeSendFile(
+        path: String,
+        offset: Long,
+        size: Long,
+        block: Int = 364000
+    ): Long
+
+    fun sendFile(path: String, offset: Long, size: Long, block: Int = 364000): Long {
+        val byteSent = nativeSendFile(path, offset, size, block)
+        when {
+            byteSent < 0 -> {
+                throw SocketException(Error.lastErrorMessage)
+            }
+            byteSent == 0L -> {
+                throw SocketTimeoutException(ErrorType.ESCLOSED.toString())
+            }
+            else -> return byteSent
+        }
+    }
+
     fun sendFile(file: File, offset: Long, size: Long, block: Int = 364000) =
         sendFile(file.path, offset, size, block)
 
     fun sendFile(file: File, block: Int = 364000) =
         sendFile(file.path, 0, file.length(), block)
 
-    external fun recvFile(path: String, offset: Long, size: Long, block: Int = 7280000): Long
+    private external fun nativeRecvFile(
+        path: String,
+        offset: Long,
+        size: Long,
+        block: Int = 7280000
+    ): Long
+
+    fun recvFile(path: String, offset: Long, size: Long, block: Int = 7280000): Long {
+        val byteReceived = nativeSendFile(path, offset, size, block)
+        when {
+            byteReceived < 0 -> {
+                throw SocketException(Error.lastErrorMessage)
+            }
+            byteReceived == 0L -> {
+                throw SocketTimeoutException(ErrorType.ESCLOSED.toString())
+            }
+            else -> return byteReceived
+        }
+    }
+
     fun recvFile(file: File, offset: Long, size: Long, block: Int = 7280000) =
         recvFile(file.path, offset, size, block)
 
@@ -281,7 +467,7 @@ class Socket: Closeable {
     external fun bistats(clear: Boolean, instantaneous: Boolean): Stats
 
     // Time access
-    external fun nativeGetConnectionTime(): Long
+    private external fun nativeGetConnectionTime(): Long
     val connectionTime: Long
         get() = nativeGetConnectionTime()
 
