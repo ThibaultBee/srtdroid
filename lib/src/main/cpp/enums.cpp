@@ -473,6 +473,8 @@ int srt_error_j2n(JNIEnv *env, jobject errorType) {
         error_type = SRT_ESOCKFAIL;
     } else if (strcmp(error_type_field, "ESECFAIL") == 0) {
         error_type = SRT_ESECFAIL;
+    } else if (strcmp(error_type_field, "ESCLOSED") == 0) {
+        error_type = SRT_ESCLOSED;
     } else if (strcmp(error_type_field, "ECONNFAIL") == 0) {
         error_type = SRT_ECONNFAIL;
     } else if (strcmp(error_type_field, "ECONNLOST") == 0) {
@@ -485,6 +487,8 @@ int srt_error_j2n(JNIEnv *env, jobject errorType) {
         error_type = SRT_ETHREAD;
     } else if (strcmp(error_type_field, "ENOBUF") == 0) {
         error_type = SRT_ENOBUF;
+    } else if (strcmp(error_type_field, "ESYSOBJ") == 0) {
+        error_type = SRT_ESYSOBJ;
     } else if (strcmp(error_type_field, "EFILE") == 0) {
         error_type = SRT_EFILE;
     } else if (strcmp(error_type_field, "EINVRDOFF") == 0) {
@@ -523,6 +527,8 @@ int srt_error_j2n(JNIEnv *env, jobject errorType) {
         error_type = SRT_ELARGEMSG;
     } else if (strcmp(error_type_field, "EINVPOLLID") == 0) {
         error_type = SRT_EINVPOLLID;
+    } else if (strcmp(error_type_field, "EPOLLEMPTY") == 0) {
+        error_type = SRT_EPOLLEMPTY;
     } else if (strcmp(error_type_field, "EASYNCFAIL") == 0) {
         error_type = SRT_EASYNCFAIL;
     } else if (strcmp(error_type_field, "EASYNCSND") == 0) {
@@ -576,6 +582,9 @@ jobject srt_error_n2j(JNIEnv *env, int error_type) {
         case SRT_ESECFAIL:
             error_type_field = strdup("ESECFAIL");
             break;
+        case SRT_ESCLOSED:
+            error_type_field = strdup("ESCLOSED");
+            break;
         case SRT_ECONNFAIL:
             error_type_field = strdup("ECONNFAIL");
             break;
@@ -593,6 +602,9 @@ jobject srt_error_n2j(JNIEnv *env, int error_type) {
             break;
         case SRT_ENOBUF:
             error_type_field = strdup("ENOBUF");
+            break;
+        case SRT_ESYSOBJ:
+            error_type_field = strdup("ESYSOBJ");
             break;
         case SRT_EFILE:
             error_type_field = strdup("EFILE");
@@ -650,6 +662,9 @@ jobject srt_error_n2j(JNIEnv *env, int error_type) {
             break;
         case SRT_EINVPOLLID:
             error_type_field = strdup("EINVPOLLID");
+            break;
+        case SRT_EPOLLEMPTY:
+            error_type_field = strdup("EPOLLEMPTY");
             break;
         case SRT_EASYNCFAIL:
             error_type_field = strdup("EASYNCFAIL");
