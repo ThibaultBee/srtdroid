@@ -765,16 +765,16 @@ static JNINativeMethod timeMethods[] = {
 };
 
 static JNINativeMethod epollMethods[] = {
-        {"isValid",     "()Z",                                      (void *) &nativeEpollIsValid},
-        {"create",      "()I",                                      (void *) &nativeEpollCreate},
-        {"addUSock",    "(L" SRTSOCKET_CLASS ";L" LIST_CLASS ";)I", (void *) &nativeEpollAddUSock},
-        {"updateUSock", "(L" SRTSOCKET_CLASS ";L" LIST_CLASS ";)I", (void *) &nativeEpollUpdateUSock},
-        {"removeUSock", "(L" SRTSOCKET_CLASS ";)I",                 (void *) &nativeEpollRemoveUSock},
-        {"wait",        "(L" LIST_CLASS ";L" LIST_CLASS ";J)I",     (void *) &nativeEpollWait},
-        {"uWait",       "(L" LIST_CLASS ";J)I",                     (void *) &nativeEpollUWait},
-        {"set",         "(L" LIST_CLASS ";)L" LIST_CLASS ";",       (void *) &nativeEpollSet},
-        {"get",         "()L" LIST_CLASS ";",                       (void *) &nativeEpollGet},
-        {"release",     "()I",                                      (void *) &nativeEpollRelease}
+        {"nativeIsValid",  "()Z",                                      (void *) &nativeEpollIsValid},
+        {"create",         "()I",                                      (void *) &nativeEpollCreate},
+        {"addUSock",       "(L" SRTSOCKET_CLASS ";L" LIST_CLASS ";)I", (void *) &nativeEpollAddUSock},
+        {"updateUSock",    "(L" SRTSOCKET_CLASS ";L" LIST_CLASS ";)I", (void *) &nativeEpollUpdateUSock},
+        {"removeUSock",    "(L" SRTSOCKET_CLASS ";)I",                 (void *) &nativeEpollRemoveUSock},
+        {"wait",           "(L" LIST_CLASS ";L" LIST_CLASS ";J)I",     (void *) &nativeEpollWait},
+        {"uWait",          "(L" LIST_CLASS ";J)I",                     (void *) &nativeEpollUWait},
+        {"setFlags",       "(L" LIST_CLASS ";)L" LIST_CLASS ";",       (void *) &nativeEpollSet},
+        {"nativeGetFlags", "()L" LIST_CLASS ";",                       (void *) &nativeEpollGet},
+        {"release",        "()I",                                      (void *) &nativeEpollRelease}
 };
 
 static int registerNativeForClassName(JNIEnv *env, const char *className,

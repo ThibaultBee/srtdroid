@@ -18,12 +18,12 @@ class EpollTest {
     fun setUp() {
         assert(srt.startUp() >= 0)
         epoll = Epoll()
-        assertTrue(epoll.isValid())
+        assertTrue(epoll.isValid)
     }
 
     @After
     fun tearDown() {
-        if (epoll.isValid())
+        if (epoll.isValid)
             epoll.release()
         if (::socket.isInitialized) {
             if (socket.isValid)
@@ -60,7 +60,8 @@ class EpollTest {
     @Test
     fun testWaitTest() {
         val readFds = listOf(Socket(), Socket(), Socket())
-        assertEquals(listOf<EpollFlag>(), epoll.set(listOf(EpollFlag.ENABLE_EMPTY)))
+        epoll.flags = listOf(EpollFlag.ENABLE_EMPTY)
+        assertEquals(listOf(EpollFlag.ENABLE_EMPTY), epoll.flags)
         assertEquals(-1, epoll.wait(readFds, emptyList(), 1000L))
         assertEquals(Error.lastError, ErrorType.ETIMEOUT)
         assertEquals(-1, epoll.wait(readFds, timeOut = 1000L))
@@ -73,7 +74,8 @@ class EpollTest {
     @Test
     fun uWaitTest() {
         assertEquals(-1, epoll.uWait(listOf(), 1000L))
-        assertEquals(listOf<EpollFlag>(), epoll.set(listOf(EpollFlag.ENABLE_EMPTY)))
+        epoll.flags = listOf(EpollFlag.ENABLE_EMPTY)
+        assertEquals(listOf(EpollFlag.ENABLE_EMPTY), epoll.flags)
         assertEquals(
             0,
             epoll.uWait(listOf(EpollEvent(Socket(), listOf(EpollOpt.IN, EpollOpt.ET))), 1000L)
@@ -82,29 +84,31 @@ class EpollTest {
 
     @Test
     fun setTest() {
-        assertEquals(listOf<EpollFlag>(), epoll.set(listOf(EpollFlag.ENABLE_EMPTY)))
+        epoll.flags = listOf()
+        assertEquals(listOf<EpollFlag>(), epoll.flags)
+        epoll.flags = listOf(EpollFlag.ENABLE_EMPTY)
         assertEquals(
             listOf(EpollFlag.ENABLE_EMPTY),
-            epoll.set(listOf(EpollFlag.ENABLE_OUTPUTCHECK))
+            epoll.setFlags(listOf(EpollFlag.ENABLE_OUTPUTCHECK))
         )
         assertEquals(
             listOf(EpollFlag.ENABLE_EMPTY, EpollFlag.ENABLE_OUTPUTCHECK),
-            epoll.set(listOf(EpollFlag.CLEAR_ALL))
+            epoll.setFlags(listOf(EpollFlag.CLEAR_ALL))
         )
-        assertEquals(listOf<EpollFlag>(), epoll.set(listOf()))
+        assertEquals(listOf<EpollFlag>(), epoll.setFlags(listOf()))
     }
 
     @Test
     fun getTest() {
-        assertEquals(listOf<EpollFlag>(), epoll.get())
-        assertEquals(listOf<EpollFlag>(), epoll.set(listOf(EpollFlag.ENABLE_EMPTY)))
-        assertEquals(listOf(EpollFlag.ENABLE_EMPTY), epoll.get())
+        assertEquals(listOf<EpollFlag>(), epoll.flags)
+        epoll.flags = listOf(EpollFlag.ENABLE_EMPTY)
+        assertEquals(listOf(EpollFlag.ENABLE_EMPTY), epoll.flags)
     }
 
     @Test
     fun releaseTest() {
-        assertTrue(epoll.isValid())
+        assertTrue(epoll.isValid)
         assertEquals(epoll.release(), 0)
-        assertFalse(epoll.isValid())
+        assertFalse(epoll.isValid)
     }
 }
