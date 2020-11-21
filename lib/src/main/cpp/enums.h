@@ -6,16 +6,16 @@
 extern "C" {
 #endif
 
-#define ENUM_PACKAGE "com.github.thibaultbee.srtwrapper.enums"
+#define ENUM_PACKAGE "com.github.thibaultbee.srtdroid.enums"
 
-#define EPOLLFLAG_CLASS "com/github/thibaultbee/srtwrapper/enums/EpollFlag"
-#define EPOLLOPT_CLASS "com/github/thibaultbee/srtwrapper/enums/EpollOpt"
-#define ERRORTYPE_CLASS "com/github/thibaultbee/srtwrapper/enums/ErrorType"
-#define KMSTATE_CLASS "com/github/thibaultbee/srtwrapper/enums/KMState"
-#define REJECT_REASON_CLASS "com/github/thibaultbee/srtwrapper/enums/RejectReasonCode"
-#define SOCKOPT_CLASS "com/github/thibaultbee/srtwrapper/enums/SockOpt"
-#define SOCKSTATUS_CLASS "com/github/thibaultbee/srtwrapper/enums/SockStatus"
-#define TRANSTYPE_CLASS "com/github/thibaultbee/srtwrapper/enums/Transtype"
+#define EPOLLFLAG_CLASS "com/github/thibaultbee/srtdroid/enums/EpollFlag"
+#define EPOLLOPT_CLASS "com/github/thibaultbee/srtdroid/enums/EpollOpt"
+#define ERRORTYPE_CLASS "com/github/thibaultbee/srtdroid/enums/ErrorType"
+#define KMSTATE_CLASS "com/github/thibaultbee/srtdroid/enums/KMState"
+#define REJECT_REASON_CLASS "com/github/thibaultbee/srtdroid/enums/RejectReasonCode"
+#define SOCKOPT_CLASS "com/github/thibaultbee/srtdroid/enums/SockOpt"
+#define SOCKSTATUS_CLASS "com/github/thibaultbee/srtdroid/enums/SockStatus"
+#define TRANSTYPE_CLASS "com/github/thibaultbee/srtdroid/enums/Transtype"
 
 /**
  * @brief Convert Java address family to native value
