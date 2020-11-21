@@ -19,3 +19,15 @@ jobs:
         java-version: 1.8
     - name: Build with Gradle
       run: ./gradlew build
+    - name: Upload library artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: lib
+        path: lib/build/outputs/aar
+    - name: Upload APKs
+      uses: actions/upload-artifact@v2
+      with:
+        name: apks
+        path: |
+          examples/build/outputs/apk/debug/examples-debug.apk
+          chat/build/outputs/apk/debug/chat-debug.apk
