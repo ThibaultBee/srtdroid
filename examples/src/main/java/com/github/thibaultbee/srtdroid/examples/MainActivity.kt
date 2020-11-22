@@ -3,13 +3,11 @@ package com.github.thibaultbee.srtdroid.examples
 import android.Manifest
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.github.thibaultbee.srtdroid.Srt
 import com.github.thibaultbee.srtdroid.enums.SockOpt
 import com.github.thibaultbee.srtdroid.enums.Transtype
+import com.github.thibaultbee.srtdroid.examples.databinding.ActivityMainBinding
 import com.github.thibaultbee.srtdroid.models.Socket
 import com.google.common.primitives.Ints
 import com.google.common.primitives.Longs
@@ -22,15 +20,7 @@ import java.io.File
 class MainActivity : AppCompatActivity() {
     private val TAG = MainActivity::class.qualifiedName
     private val activityDisposables = CompositeDisposable()
-
-    @BindView(R.id.testClientButton)
-    lateinit var testClientButton: Button
-    @BindView(R.id.testServerButton)
-    lateinit var testServerButton: Button
-    @BindView(R.id.recvFileButton)
-    lateinit var recvFileButton: Button
-    @BindView(R.id.sendFileButton)
-    lateinit var sendFile: Button
+    private lateinit var binding: ActivityMainBinding
 
     private lateinit var srt: Srt
 
@@ -38,8 +28,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        ButterKnife.bind(this)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         supportFragmentManager
             .beginTransaction()
@@ -57,7 +47,7 @@ class MainActivity : AppCompatActivity() {
         val rxPermissions = RxPermissions(this)
         rxPermissions.request(Manifest.permission.INTERNET)
 
-        testClientButton.clicks()
+        binding.testClientButton.clicks()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
                 try {
@@ -72,7 +62,7 @@ class MainActivity : AppCompatActivity() {
             }
             .let(activityDisposables::add)
 
-        testServerButton.clicks()
+        binding.testServerButton.clicks()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
                 try {
@@ -87,7 +77,7 @@ class MainActivity : AppCompatActivity() {
             }
             .let(activityDisposables::add)
 
-        recvFileButton.clicks()
+        binding.recvFileButton.clicks()
             .observeOn(AndroidSchedulers.mainThread())
             .compose(rxPermissions.ensure(Manifest.permission.WRITE_EXTERNAL_STORAGE))
             .subscribe {
@@ -104,7 +94,7 @@ class MainActivity : AppCompatActivity() {
             }
             .let(activityDisposables::add)
 
-        sendFile.clicks()
+        binding.sendFileButton.clicks()
             .observeOn(AndroidSchedulers.mainThread())
             .compose(rxPermissions.ensure(Manifest.permission.READ_EXTERNAL_STORAGE))
             .compose(rxPermissions.ensure(Manifest.permission.WRITE_EXTERNAL_STORAGE))
