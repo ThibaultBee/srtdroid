@@ -37,7 +37,7 @@ class SocketTest {
     fun setUp() {
         assert(srt.startUp() >= 0)
         socket = Socket()
-        assertTrue(socket.isValid())
+        assertTrue(socket.isValid)
     }
 
     @After
@@ -48,25 +48,26 @@ class SocketTest {
 
     @Test
     fun inetConstructorTest() {
-        assertTrue(Socket(StandardProtocolFamily.INET).isValid())
+        assertTrue(Socket(StandardProtocolFamily.INET).isValid)
     }
 
     @Test
     fun inet6ConstructorTest() {
-        assertTrue(Socket(StandardProtocolFamily.INET6).isValid())
+        assertTrue(Socket(StandardProtocolFamily.INET6).isValid)
     }
 
     @Test
     fun bindTest() {
-        assertEquals(0, socket.setSockFlag(SockOpt.TRANSTYPE, Transtype.FILE))
-        assertEquals(0, socket.bind("127.0.3.1", 1234))
+        socket.setSockFlag(SockOpt.TRANSTYPE, Transtype.FILE)
+        socket.bind("127.0.3.1", 1234)
+        assertTrue(socket.isBound)
     }
 
     @Test
     fun sockStatusTest() {
         assertEquals(SockStatus.INIT, socket.sockState)
         assertFalse(socket.isBound)
-        assertEquals(0, socket.bind("127.0.3.1", 1235))
+        socket.bind("127.0.3.1", 1235)
         assertEquals(SockStatus.OPENED, socket.sockState)
         assertTrue(socket.isBound)
     }
@@ -79,31 +80,45 @@ class SocketTest {
 
     @Test
     fun listenTest() {
-        assertEquals(-1, socket.listen(3))
-        assertEquals(Error.lastError, ErrorType.EUNBOUNDSOCK)
-        assertEquals(0, socket.bind("127.0.3.1", 1236))
-        assertEquals(0, socket.listen(3))
+        try {
+            socket.listen(3)
+            fail()
+        } catch (e: SocketException) {
+            assertEquals(e.message, ErrorType.EUNBOUNDSOCK.toString())
+        }
+        socket.bind("127.0.3.1", 1236)
+        socket.listen(3)
     }
 
     @Test
     fun acceptTest() {
-        val pair = socket.accept()
-        assertFalse(pair.first.isValid())
-        assertNull(pair.second)
-        assertEquals(Error.lastError, ErrorType.ENOLISTEN)
+        try {
+            socket.accept()
+            fail()
+        } catch (e: SocketException) {
+            assertEquals(e.message, ErrorType.ENOLISTEN.toString())
+        }
     }
 
     @Test
     fun connectTest() {
-        assertEquals(-1, socket.connect("127.0.3.1", 1237))
-        assertEquals(Error.lastError, ErrorType.ENOSERVER)
+        try {
+            socket.connect("127.0.3.1", 1237)
+            fail()
+        } catch (e: SocketException) {
+            assertEquals(e.message, ErrorType.ENOSERVER.toString())
+        }
         assertEquals(InternalRejectReason(RejectReasonCode.TIMEOUT), socket.rejectReason)
     }
 
     @Test
     fun rendezVousTest() {
-        assertEquals(-1, socket.rendezVous("0.0.0.0", "127.0.3.1", 1238))
-        assertEquals(Error.lastError, ErrorType.ENOSERVER)
+        try {
+            socket.rendezVous("0.0.0.0", "127.0.3.1", 1238)
+            fail()
+        } catch (e: SocketException) {
+            assertEquals(e.message, ErrorType.ENOSERVER.toString())
+        }
     }
 
     @Test
@@ -114,14 +129,18 @@ class SocketTest {
     @Test
     fun getSockNameTest() {
         assertNull(socket.sockName)
-        assertEquals(0, socket.bind("127.0.3.1", 1239))
+        socket.bind("127.0.3.1", 1239)
         assertEquals("127.0.3.1", socket.sockName!!.address.hostAddress)
         assertEquals(1239, socket.sockName!!.port)
     }
 
     @Test
     fun getSockOptTest() {
-        assertNull(socket.getSockFlag(SockOpt.TRANSTYPE)) // Write only property
+        try {
+            socket.getSockFlag(SockOpt.TRANSTYPE)  // Write only property
+            fail()
+        } catch (e: IOException) {
+        }
         assertEquals(true, socket.getSockFlag(SockOpt.RCVSYN))
         assertEquals(-1, socket.getSockFlag(SockOpt.SNDTIMEO))
         assertEquals(-1L, socket.getSockFlag(SockOpt.MAXBW))
@@ -131,50 +150,67 @@ class SocketTest {
 
     @Test
     fun setSockOptTest() {
-        assertEquals(0, socket.setSockFlag(SockOpt.TRANSTYPE, Transtype.FILE))
-        assertEquals(0, socket.setSockFlag(SockOpt.RCVSYN, true))
-        assertEquals(0, socket.setSockFlag(SockOpt.SNDTIMEO, 100))
-        assertEquals(0, socket.setSockFlag(SockOpt.MAXBW, 100L))
-        assertEquals(0, socket.setSockFlag(SockOpt.STREAMID, "Hello"))
+        socket.setSockFlag(SockOpt.TRANSTYPE, Transtype.FILE)
+        socket.setSockFlag(SockOpt.RCVSYN, true)
+        socket.setSockFlag(SockOpt.SNDTIMEO, 100)
+        socket.setSockFlag(SockOpt.MAXBW, 100L)
+        socket.setSockFlag(SockOpt.STREAMID, "Hello")
     }
 
     @Test
     fun sendMsg1Test() {
-        assertEquals(-1, socket.send("Hello World !"))
-        assertEquals(Error.lastError, ErrorType.ENOCONN)
+        try {
+            socket.send("Hello World !")
+            fail()
+        } catch (e: SocketException) {
+            assertEquals(e.message, ErrorType.ENOCONN.toString())
+        }
     }
 
     @Test
     fun sendMsg2Test() {
-        assertEquals(-1, socket.send("Hello World !", -1, false))
-        assertEquals(Error.lastError, ErrorType.ENOCONN)
+        try {
+            socket.send("Hello World !", -1, false)
+            fail()
+        } catch (e: SocketException) {
+            assertEquals(e.message, ErrorType.ENOCONN.toString())
+        }
     }
 
     @Test
     fun sendMsg3Test() {
         val msgCtrl = MsgCtrl(boundary = 1, pktSeq = 1, no = 1)
-        assertEquals(-1, socket.send("Hello World !", msgCtrl))
-        assertEquals(Error.lastError, ErrorType.ENOCONN)
-        assertEquals(
-            -1,
-            socket.send("Hello World !", MsgCtrl(flags = 0, boundary = 0, pktSeq = 0, no = 10))
-        )
-        assertEquals(Error.lastError, ErrorType.ENOCONN)
+        try {
+            socket.send("Hello World !", msgCtrl)
+            fail()
+        } catch (e: SocketException) {
+            assertEquals(e.message, ErrorType.ENOCONN.toString())
+        }
     }
 
     @Test
     fun recvTest() {
-        assert(socket.recv(4 /*Int nb bytes*/).second.isEmpty())
+        try {
+            socket.recv(
+                4 /*Int nb bytes*/
+            )
+            fail()
+        } catch (e: SocketException) {
+            assertEquals(e.message, ErrorType.ENOCONN.toString())
+        }
     }
 
     @Test
     fun recvMsg2Test() {
-        assert(
+        try {
             socket.recv(
                 4 /*Int nb bytes*/,
                 MsgCtrl(flags = 0, boundary = 0, pktSeq = 0, no = 10)
-            ).second.isEmpty()
-        )
+            )
+            fail()
+        } catch (e: SocketException) {
+            assertEquals(e.message, ErrorType.ENOCONN.toString())
+        }
     }
 
     private fun createTestFile(): File {
@@ -190,8 +226,12 @@ class SocketTest {
 
     @Test
     fun sendFileTest() {
-        assertEquals(-1, socket.sendFile(createTestFile()))
-        assertEquals(Error.lastError, ErrorType.ENOCONN)
+        try {
+            socket.sendFile(createTestFile())
+            fail()
+        } catch (e: SocketException) {
+            assertEquals(e.message, ErrorType.ENOCONN.toString())
+        }
     }
 
     @Test
@@ -200,8 +240,12 @@ class SocketTest {
             InstrumentationRegistry.getInstrumentation().context.externalCacheDir,
             "FileToRecv"
         )
-        assertEquals(-1, socket.recvFile(myFile, 0, 1024))
-        assertEquals(Error.lastError, ErrorType.ENOCONN)
+        try {
+            socket.recvFile(myFile, 0, 1024)
+            fail()
+        } catch (e: SocketException) {
+            assertEquals(e.message, ErrorType.ENOCONN.toString())
+        }
     }
 
     @Test
@@ -257,15 +301,31 @@ class SocketTest {
     fun inputStreamTest() {
         val inputStream = socket.getInputStream()
         assertEquals(0, inputStream.read(ByteArray(0)))
-        assertEquals(-1, inputStream.read())
-        assertEquals(-1, inputStream.read(ByteArray(10)))
+        try {
+            inputStream.read()
+            fail()
+        } catch (e: SocketException) {
+        }
+        try {
+            inputStream.read(ByteArray(10))
+            fail()
+        } catch (e: SocketException) {
+        }
         val server = MockServer()
         server.enqueue()
-        assertEquals(0, socket.connect(InetAddress.getLoopbackAddress(), server.port))
+        socket.connect(InetAddress.getLoopbackAddress(), server.port)
         socket.close()
         assertEquals(0, inputStream.read(ByteArray(0)))
-        assertEquals(-1, inputStream.read())
-        assertEquals(-1, inputStream.read(ByteArray(10)))
+        try {
+            inputStream.read()
+            fail()
+        } catch (e: SocketException) {
+        }
+        try {
+            inputStream.read(ByteArray(10))
+            fail()
+        } catch (e: SocketException) {
+        }
     }
 
     @Test
@@ -288,12 +348,18 @@ class SocketTest {
         val serverByteArray = ByteArray(arraySize)
         Random.Default.nextBytes(serverByteArray)
         server.enqueue(serverByteArray, 0)
-        assertEquals(0, socket.setSockFlag(SockOpt.TRANSTYPE, Transtype.LIVE))
-        assertEquals(0, socket.connect(InetAddress.getLoopbackAddress(), server.port))
+        socket.setSockFlag(SockOpt.TRANSTYPE, Transtype.LIVE)
+        socket.setSockFlag(SockOpt.RCVTIMEO, 1000)
+        socket.connect(InetAddress.getLoopbackAddress(), server.port)
         val inputStream = socket.getInputStream()
         val byteArray = ByteArray(arraySize)
         assertEquals(arraySize, inputStream.read(byteArray))
         assertArrayEquals(serverByteArray, byteArray)
+        try {
+            inputStream.read()
+            fail()
+        } catch (e: SocketException) {
+        }
         socket.close()
         inputStream.close()
         server.shutdown()
@@ -305,8 +371,8 @@ class SocketTest {
         val socket = Socket()
         val arraySize = socket.getSockFlag(SockOpt.PAYLOADSIZE) as Int
         server.enqueue(ByteArray(arraySize), arraySize)
-        assertEquals(0, socket.setSockFlag(SockOpt.TRANSTYPE, Transtype.LIVE))
-        assertEquals(0, socket.connect(InetAddress.getLoopbackAddress(), server.port))
+        socket.setSockFlag(SockOpt.TRANSTYPE, Transtype.LIVE)
+        socket.connect(InetAddress.getLoopbackAddress(), server.port)
         val outputStream = socket.getOutputStream()
         outputStream.write(ByteArray(arraySize))
         socket.close()
@@ -324,19 +390,35 @@ class SocketTest {
         val server = InOutMockServer(Transtype.FILE)
         server.enqueue(byteArrayOf(5, 3), 0)
         val socket = Socket()
-        assertEquals(0, socket.setSockFlag(SockOpt.TRANSTYPE, Transtype.FILE))
-        assertEquals(0, socket.setSockFlag(SockOpt.RCVTIMEO, 1000))
-        assertEquals(0, socket.connect(InetAddress.getLoopbackAddress(), server.port))
+        socket.setSockFlag(SockOpt.TRANSTYPE, Transtype.FILE)
+        socket.setSockFlag(SockOpt.RCVTIMEO, 1000)
+        socket.connect(InetAddress.getLoopbackAddress(), server.port)
         val inputStream = socket.getInputStream()
         assertEquals(5, inputStream.read())
         assertEquals(3, inputStream.read())
-        assertEquals(-1, inputStream.read())
-        assertEquals(-1, inputStream.read())
+        try {
+            inputStream.read()
+            fail()
+        } catch (e: SocketException) {
+        }
+        try {
+            inputStream.read()
+            fail()
+        } catch (e: SocketException) {
+        }
         socket.close()
         inputStream.close()
 
-        assertEquals(-1, inputStream.read())
-        assertEquals(-1, inputStream.read())
+        try {
+            inputStream.read()
+            fail()
+        } catch (e: SocketException) {
+        }
+        try {
+            inputStream.read()
+            fail()
+        } catch (e: SocketException) {
+        }
         server.shutdown()
     }
 
@@ -345,8 +427,8 @@ class SocketTest {
         val server = InOutMockServer(Transtype.FILE)
         server.enqueue(ByteArray(0), 3)
         val socket = Socket()
-        assertEquals(0, socket.setSockFlag(SockOpt.TRANSTYPE, Transtype.FILE))
-        assertEquals(0, socket.connect(InetAddress.getLoopbackAddress(), server.port))
+        socket.setSockFlag(SockOpt.TRANSTYPE, Transtype.FILE)
+        socket.connect(InetAddress.getLoopbackAddress(), server.port)
         val outputStream = socket.getOutputStream()
         outputStream.write(5)
         outputStream.write(3)
@@ -368,13 +450,13 @@ class SocketTest {
 
         init {
             serverSocket.reuseAddress = true
-            assertEquals(0, serverSocket.bind(InetAddress.getLoopbackAddress(), 0))
+            serverSocket.bind(InetAddress.getLoopbackAddress(), 0)
             port = serverSocket.localPort
         }
 
         fun enqueue(): Future<Unit> {
             return executor.submit(Callable {
-                assertEquals(0, serverSocket.listen(1))
+                serverSocket.listen(1)
                 val pair = serverSocket.accept()
                 assertNotNull(pair.second)
                 socket = pair.first
@@ -396,14 +478,14 @@ class SocketTest {
 
         init {
             serverSocket.reuseAddress = true
-            assertEquals(0, serverSocket.setSockFlag(SockOpt.TRANSTYPE, transtype))
-            assertEquals(0, serverSocket.bind(InetAddress.getLoopbackAddress(), 0))
+            serverSocket.setSockFlag(SockOpt.TRANSTYPE, transtype)
+            serverSocket.bind(InetAddress.getLoopbackAddress(), 0)
             port = serverSocket.localPort
         }
 
         fun enqueue(sendBytes: ByteArray, receiveByteCount: Int): Future<ByteArray?> {
             return executor.submit(Callable<ByteArray?> {
-                assertEquals(0, serverSocket.listen(1))
+                serverSocket.listen(1)
                 val pair = serverSocket.accept()
                 assertNotNull(pair.second)
                 socket = pair.first

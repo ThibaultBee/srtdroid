@@ -7,6 +7,9 @@ class Srt {
 
     external fun startUp(): Int
     external fun cleanUp(): Int
-    external fun getVersion(): Int
+    private external fun nativeGetVersion(): Int
+    val version: Int
+        get() = nativeGetVersion()
+
     external fun setLogLevel(level: Int)
 }

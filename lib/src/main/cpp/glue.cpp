@@ -171,14 +171,11 @@ nativeGetSockState(JNIEnv *env, jobject ju) {
     return srt_sockstatus_n2j(env, sock_status);
 }
 
-void JNICALL
+jint JNICALL
 nativeClose(JNIEnv *env, jobject ju) {
     SRTSOCKET u = srt_socket_j2n(env, ju);
 
-    int res = srt_close((SRTSOCKET) u);
-    if (res != 0) {
-        LOGE(TAG, "Failed to close socket %d", u);
-    }
+    return (srt_close((SRTSOCKET) u));
 }
 
 // Connecting
@@ -712,36 +709,36 @@ nativeGetConnectionTime(JNIEnv *env,
 
 // Register natives API
 static JNINativeMethod srtMethods[] = {
-        {"startUp",     "()I",  (void *) &nativeStartUp},
-        {"cleanUp",     "()I",  (void *) &nativeCleanUp},
-        {"getVersion",  "()I",  (void *) &nativeGetVersion},
-        {"setLogLevel", "(I)V", (void *) &nativeSetLogLevel}
+        {"startUp",          "()I",  (void *) &nativeStartUp},
+        {"cleanUp",          "()I",  (void *) &nativeCleanUp},
+        {"nativeGetVersion", "()I",  (void *) &nativeGetVersion},
+        {"setLogLevel",      "(I)V", (void *) &nativeSetLogLevel}
 };
 
 static JNINativeMethod socketMethods[] = {
-        {"isValid",                 "()Z",                                                           (void *) &nativeIsValid},
+        {"nativeIsValid",           "()Z",                                                           (void *) &nativeIsValid},
         {"socket",                  "(Ljava/net/StandardProtocolFamily;II)I",                        (void *) &nativeSocket},
         {"createSocket",            "()I",                                                           (void *) &nativeCreateSocket},
-        {"bind",                    "(L" INETSOCKETADDRESS_CLASS ";)I",                              (void *) &nativeBind},
+        {"nativeBind",              "(L" INETSOCKETADDRESS_CLASS ";)I",                              (void *) &nativeBind},
         {"nativeGetSockState",      "()L" SOCKSTATUS_CLASS ";",                                      (void *) &nativeGetSockState},
-        {"close",                   "()V",                                                           (void *) &nativeClose},
-        {"listen",                  "(I)I",                                                          (void *) &nativeListen},
-        {"accept",                  "()L" PAIR_CLASS ";",                                            (void *) &nativeAccept},
-        {"connect",                 "(L" INETSOCKETADDRESS_CLASS ";)I",                              (void *) &nativeConnect},
-        {"rendezVous",              "(L" INETSOCKETADDRESS_CLASS ";L" INETSOCKETADDRESS_CLASS ";)I", (void *) &nativeRendezVous},
+        {"nativeClose",             "()I",                                                           (void *) &nativeClose},
+        {"nativeListen",            "(I)I",                                                          (void *) &nativeListen},
+        {"nativeAccept",            "()L" PAIR_CLASS ";",                                            (void *) &nativeAccept},
+        {"nativeConnect",           "(L" INETSOCKETADDRESS_CLASS ";)I",                              (void *) &nativeConnect},
+        {"nativeRendezVous",        "(L" INETSOCKETADDRESS_CLASS ";L" INETSOCKETADDRESS_CLASS ";)I", (void *) &nativeRendezVous},
         {"nativeGetPeerName",       "()L" INETSOCKETADDRESS_CLASS ";",                               (void *) &nativeGetPeerName},
         {"nativeGetSockName",       "()L" INETSOCKETADDRESS_CLASS ";",                               (void *) &nativeGetSockName},
-        {"getSockFlag",             "(L" SOCKOPT_CLASS ";)Ljava/lang/Object;",                       (void *) &nativeGetSockOpt},
-        {"setSockFlag",             "(L" SOCKOPT_CLASS ";Ljava/lang/Object;)I",                      (void *) &nativeSetSockOpt},
-        {"send",                    "([BII)I",                                                       (void *) &nativeSend},
-        {"send",                    "([BIIIZ)I",                                                     (void *) &nativeSendMsg},
-        {"send",                    "([BIIL" MSGCTRL_CLASS ";)I",                                    (void *) &nativeSendMsg2},
-        {"recv",                    "(I)L" PAIR_CLASS ";",                                           (void *) &nativeRecv},
-        {"recv",                    "([BII)L" PAIR_CLASS ";",                                        (void *) &nativeRecvA},
-        {"recv",                    "(IL" MSGCTRL_CLASS ";)L" PAIR_CLASS ";",                        (void *) &nativeRecvMsg2},
-        {"recv",                    "([BIIL" MSGCTRL_CLASS ";)L" PAIR_CLASS ";",                     (void *) &nativeRecvMsg2A},
-        {"sendFile",                "(Ljava/lang/String;JJI)J",                                      (void *) &nativeSendFile},
-        {"recvFile",                "(Ljava/lang/String;JJI)J",                                      (void *) &nativeRecvFile},
+        {"nativeGetSockFlag",       "(L" SOCKOPT_CLASS ";)Ljava/lang/Object;",                       (void *) &nativeGetSockOpt},
+        {"nativeSetSockFlag",       "(L" SOCKOPT_CLASS ";Ljava/lang/Object;)I",                      (void *) &nativeSetSockOpt},
+        {"nativeSend",              "([BII)I",                                                       (void *) &nativeSend},
+        {"nativeSend",              "([BIIIZ)I",                                                     (void *) &nativeSendMsg},
+        {"nativeSend",              "([BIIL" MSGCTRL_CLASS ";)I",                                    (void *) &nativeSendMsg2},
+        {"nativeRecv",              "(I)L" PAIR_CLASS ";",                                           (void *) &nativeRecv},
+        {"nativeRecv",              "([BII)L" PAIR_CLASS ";",                                        (void *) &nativeRecvA},
+        {"nativeRecv",              "(IL" MSGCTRL_CLASS ";)L" PAIR_CLASS ";",                        (void *) &nativeRecvMsg2},
+        {"nativeRecv",              "([BIIL" MSGCTRL_CLASS ";)L" PAIR_CLASS ";",                     (void *) &nativeRecvMsg2A},
+        {"nativeSendFile",          "(Ljava/lang/String;JJI)J",                                      (void *) &nativeSendFile},
+        {"nativeRecvFile",          "(Ljava/lang/String;JJI)J",                                      (void *) &nativeRecvFile},
         {"nativeGetRejectReason",   "()I",                                                           (void *) &nativeGetRejectReason},
         {"nativeSetRejectReason",   "(I)I",                                                          (void *) &nativeSetRejectReason},
         {"bstats",                  "(Z)L" STATS_CLASS ";",                                          (void *) &nativebstats},
@@ -768,16 +765,16 @@ static JNINativeMethod timeMethods[] = {
 };
 
 static JNINativeMethod epollMethods[] = {
-        {"isValid",     "()Z",                                      (void *) &nativeEpollIsValid},
-        {"create",      "()I",                                      (void *) &nativeEpollCreate},
-        {"addUSock",    "(L" SRTSOCKET_CLASS ";L" LIST_CLASS ";)I", (void *) &nativeEpollAddUSock},
-        {"updateUSock", "(L" SRTSOCKET_CLASS ";L" LIST_CLASS ";)I", (void *) &nativeEpollUpdateUSock},
-        {"removeUSock", "(L" SRTSOCKET_CLASS ";)I",                 (void *) &nativeEpollRemoveUSock},
-        {"wait",        "(L" LIST_CLASS ";L" LIST_CLASS ";J)I",     (void *) &nativeEpollWait},
-        {"uWait",       "(L" LIST_CLASS ";J)I",                     (void *) &nativeEpollUWait},
-        {"set",         "(L" LIST_CLASS ";)L" LIST_CLASS ";",       (void *) &nativeEpollSet},
-        {"get",         "()L" LIST_CLASS ";",                       (void *) &nativeEpollGet},
-        {"release",     "()I",                                      (void *) &nativeEpollRelease}
+        {"nativeIsValid",  "()Z",                                      (void *) &nativeEpollIsValid},
+        {"create",         "()I",                                      (void *) &nativeEpollCreate},
+        {"addUSock",       "(L" SRTSOCKET_CLASS ";L" LIST_CLASS ";)I", (void *) &nativeEpollAddUSock},
+        {"updateUSock",    "(L" SRTSOCKET_CLASS ";L" LIST_CLASS ";)I", (void *) &nativeEpollUpdateUSock},
+        {"removeUSock",    "(L" SRTSOCKET_CLASS ";)I",                 (void *) &nativeEpollRemoveUSock},
+        {"wait",           "(L" LIST_CLASS ";L" LIST_CLASS ";J)I",     (void *) &nativeEpollWait},
+        {"uWait",          "(L" LIST_CLASS ";J)I",                     (void *) &nativeEpollUWait},
+        {"setFlags",       "(L" LIST_CLASS ";)L" LIST_CLASS ";",       (void *) &nativeEpollSet},
+        {"nativeGetFlags", "()L" LIST_CLASS ";",                       (void *) &nativeEpollGet},
+        {"release",        "()I",                                      (void *) &nativeEpollRelease}
 };
 
 static int registerNativeForClassName(JNIEnv *env, const char *className,

@@ -9,6 +9,7 @@ enum class ErrorType {
     ECONNREJ,
     ESOCKFAIL,
     ESECFAIL,
+    ESCLOSED,
 
     ECONNFAIL,
     ECONNLOST,
@@ -17,6 +18,7 @@ enum class ErrorType {
     ERESOURCE,
     ETHREAD,
     ENOBUF,
+    ESYSOBJ,
 
     EFILE,
     EINVRDOFF,
@@ -38,6 +40,7 @@ enum class ErrorType {
     EDUPLISTEN,
     ELARGEMSG,
     EINVPOLLID,
+    EPOLLEMPTY,
 
     EASYNCFAIL,
     EASYNCSND,

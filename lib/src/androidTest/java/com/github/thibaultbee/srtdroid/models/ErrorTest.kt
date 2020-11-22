@@ -9,6 +9,7 @@ import org.junit.Assert.assertNotNull
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import java.net.SocketException
 
 
 /*
@@ -27,21 +28,27 @@ class ErrorTest {
 
     @After
     fun tearDown() {
-        if (socket.isValid())
+        if (socket.isValid)
             socket.close()
         assertEquals(srt.cleanUp(), 0)
     }
 
     @Test
     fun getErrorTest() {
-        assertEquals(-1, socket.listen(3))
+        try {
+            socket.listen(3)
+        } catch (e: SocketException) {
+        }
         assertEquals(Error.lastError, ErrorType.EUNBOUNDSOCK)
         assertEquals(Error.lastErrorMessage, ErrorType.EUNBOUNDSOCK.toString())
     }
 
     @Test
     fun clearErrorTest() {
-        assertEquals(-1, socket.listen(3))
+        try {
+            socket.listen(3)
+        } catch (e: SocketException) {
+        }
         assertEquals(Error.lastError, ErrorType.EUNBOUNDSOCK)
         Error.clearLastError()
         assertEquals(Error.lastError, ErrorType.SUCCESS)

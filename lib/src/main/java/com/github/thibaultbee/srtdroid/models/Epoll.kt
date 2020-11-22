@@ -7,11 +7,14 @@ class Epoll {
     private var eid: Int
 
     private external fun create(): Int
+
     constructor() {
         eid = create()
     }
 
-    external fun isValid(): Boolean
+    external fun nativeIsValid(): Boolean
+    val isValid: Boolean
+        get() = nativeIsValid()
 
     external fun addUSock(socket: Socket, events: List<EpollOpt> = emptyList()): Int
 
@@ -27,9 +30,13 @@ class Epoll {
 
     external fun uWait(fdsSet: List<EpollEvent>, timeOut: Long): Int
 
-    external fun set(events: List<EpollFlag>): List<EpollFlag>
-
-    external fun get(): List<EpollFlag>
+    external fun setFlags(events: List<EpollFlag>): List<EpollFlag>
+    private external fun nativeGetFlags(): List<EpollFlag>
+    var flags: List<EpollFlag>
+        get() = nativeGetFlags()
+        set(value) {
+            setFlags(value)
+        }
 
     external fun release(): Int
 }

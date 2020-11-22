@@ -4,6 +4,7 @@ import com.github.thibaultbee.srtdroid.chat.interfaces.SocketManagerInterface
 import com.github.thibaultbee.srtdroid.chat.utils.ErrorUtils
 import com.github.thibaultbee.srtdroid.enums.SockOpt
 import com.github.thibaultbee.srtdroid.models.Socket
+import java.io.IOException
 
 object SocketHandler {
     private var serverSocket: Socket? = null
@@ -15,46 +16,37 @@ object SocketHandler {
     fun createServer(ip: String, port: Int) {
         serverSocket = Socket()
         serverSocket?.let {
-            if (!it.isValid()) {
+            if (!it.isValid) {
                 throw Exception("Failed to create a Socket")
             }
-            if (it.setSockFlag(SockOpt.RCVSYN, true) != 0) {
-                it.close()
-                throw Exception(ErrorUtils.getMessage())
-            }
-            if (it.bind(ip, port) != 0) {
-                it.close()
-                throw Exception(ErrorUtils.getMessage())
-            }
-            if (it.listen(1) != 0) {
-                it.close()
-                throw Exception(ErrorUtils.getMessage())
-            }
+            try {
+                it.setSockFlag(SockOpt.RCVSYN, true)
+                it.bind(ip, port)
+                it.listen(1)
 
-            val peer = it.accept()
-            clientSocket = peer.first
-            if (!clientSocket.isValid()) {
+                val peer = it.accept()
+                clientSocket = peer.first
+                startRecvMessage()
+            } catch (e: IOException) {
                 it.close()
-                throw Exception(ErrorUtils.getMessage())
+                throw e
             }
-            startRecvMessage()
         }
     }
 
     fun createClient(ip: String, port: Int) {
         clientSocket = Socket()
-        if (!clientSocket.isValid()) {
+        if (!clientSocket.isValid) {
             throw Exception("Failed to create a Socket")
         }
-        if (clientSocket.setSockFlag(SockOpt.RCVSYN, true) != 0) {
+        try {
+            clientSocket.setSockFlag(SockOpt.RCVSYN, true)
+            clientSocket.connect(ip, port)
+            startRecvMessage()
+        } catch (e: IOException) {
             clientSocket.close()
-            throw Exception(ErrorUtils.getMessage())
+            throw e
         }
-        if (clientSocket.connect(ip, port) != 0) {
-            clientSocket.close()
-            throw Exception(ErrorUtils.getMessage())
-        }
-        startRecvMessage()
     }
 
     fun sendMessage(message: String) {
@@ -92,7 +84,7 @@ object SocketHandler {
                     val message =
                         recvMessage()
                     socketManagerInterface?.onRecvMsg(message)
-                } catch (e: java.lang.Exception) {
+                } catch (e: Exception) {
                     socketManagerInterface?.onConnectionClose(e.message ?: "")
                     close()
                     isRunning = false
