@@ -1,12 +1,12 @@
 [![](https://jitpack.io/v/ThibaultBee/srtdroid.svg)](https://jitpack.io/#ThibaultBee/srtdroid)
 
-# Android SRT Wrapper
+# srtdroid: an Android SRT Wrapper
 
 Low level API for SRT library on Android. SRT is an open source transport technology that optimizes streaming performance across unpredictable networks. More information on https://github.com/Haivision/srt.
 
 ## Setup
 
-Get SRT Wrapper lastest artifacts on [jitpack.io](https://jitpack.io/#ThibaultBee/srtdroid)
+Get srtdroid lastest artifacts on [jitpack.io](https://jitpack.io/#ThibaultBee/srtdroid)
 
 ```gradle
 allprojects {
@@ -24,7 +24,7 @@ dependencies {
 
 ## Samples
 
-To test Android SR Wrapper, you will need 2 Android devices: one client and one server.
+To test srtdroid, you will need 2 Android devices: one client and one server.
 On the server side, configure listening IP to "0.0.0.0" or to server ethernet IP.
 On the client side, configure connecting IP to server IP.
 The port must be the same value for both.
@@ -32,7 +32,7 @@ The port must be the same value for both.
 ### Examples
 
 In examples folder.
-Examples are the SRT Android Wrapper counterpart of [SRT examples folder](https://github.com/Haivision/srt/tree/master/examples).
+Examples are the srtdroid counterpart of [SRT examples folder](https://github.com/Haivision/srt/tree/master/examples).
 You will find both client and server examples.
 
 ### Chat
@@ -42,7 +42,7 @@ Chat is an SRT utility to send and receive messages. It provides both a client a
 
 ## API
 
-As Android SRT Wrapper is a wrapper (obvioulsy) for API documentation refers to [SRT API documentation](https://github.com/Haivision/srt/blob/master/docs/API.md).
+As rtdroid is a simple wrapper for API documentation refers to [SRT API documentation](https://github.com/Haivision/srt/blob/master/docs/API.md).
 You must create a [Srt object](https://github.com/ThibaultBee/srtdroid/blob/master/lib/src/main/java/com/github/thibaultbee/srtdroid/Srt.kt) before calling any other API. It will load SRT, ssl and crypto libraries.
 
 ### Read/write
