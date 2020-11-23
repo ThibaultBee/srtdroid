@@ -3,13 +3,11 @@ package com.github.thibaultbee.srtdroid.chat.settings
 import android.Manifest
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.PreferenceManager
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.github.thibaultbee.srtdroid.chat.R
 import com.github.thibaultbee.srtdroid.chat.chat.ChatActivity
+import com.github.thibaultbee.srtdroid.chat.databinding.ActivitySettingsBinding
 import com.github.thibaultbee.srtdroid.chat.singleton.SocketHandler
 import com.github.thibaultbee.srtdroid.chat.utils.DialogUtils
 import com.jakewharton.rxbinding3.view.clicks
@@ -21,18 +19,16 @@ import io.reactivex.disposables.CompositeDisposable
 class SettingsActivity : AppCompatActivity() {
     private val TAG = SettingsActivity::class.qualifiedName
     private val activityDisposables = CompositeDisposable()
-
-    @BindView(R.id.connectButton)
-    lateinit var connectButton: Button
+    private lateinit var binding: ActivitySettingsBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_settings)
-        ButterKnife.bind(this)
+        binding = ActivitySettingsBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         supportFragmentManager.beginTransaction().replace(
-                R.id.preferenceLayout,
-                SettingsFragment()
-            )
+            R.id.preferenceLayout,
+            SettingsFragment()
+        )
             .commit()
 
         bindProperties()
@@ -43,14 +39,14 @@ class SettingsActivity : AppCompatActivity() {
         Observable.just(isServer)
             .subscribe {
                 if (it) {
-                    connectButton.text = getString(R.string.listen)
+                    binding.connectButton.text = getString(R.string.listen)
                 } else {
-                    connectButton.text = getString(R.string.connect)
+                    binding.connectButton.text = getString(R.string.connect)
                 }
             }.let(activityDisposables::add)
 
         val rxPermissions = RxPermissions(this)
-        val connectButtonObservable = connectButton.clicks().share()
+        val connectButtonObservable = binding.connectButton.clicks().share()
         connectButtonObservable
             .compose(rxPermissions.ensure(Manifest.permission.INTERNET))
             .filter { granted -> !granted }

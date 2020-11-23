@@ -4,12 +4,9 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.github.thibaultbee.srtdroid.Srt
-import com.github.thibaultbee.srtdroid.chat.R
+import com.github.thibaultbee.srtdroid.chat.databinding.ActivityMainBinding
 import com.github.thibaultbee.srtdroid.chat.settings.SettingsActivity
 import com.jakewharton.rxbinding3.view.clicks
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -19,18 +16,14 @@ import io.reactivex.disposables.CompositeDisposable
 class MainActivity : AppCompatActivity() {
     private val TAG = MainActivity::class.qualifiedName
     private val activityDisposables = CompositeDisposable()
-
-    @BindView(R.id.serverButton)
-    lateinit var serverButton: Button
-    @BindView(R.id.clientButton)
-    lateinit var clientButton: Button
+    private lateinit var binding: ActivityMainBinding
 
     private lateinit var srt: Srt
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        ButterKnife.bind(this)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         srt = Srt()
         srt.startUp()
@@ -45,14 +38,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun bindProperties() {
-        serverButton.clicks()
+        binding.serverButton.clicks()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
                 goToSettingsActivity(true)
             }
             .let(activityDisposables::add)
 
-        clientButton.clicks()
+        binding.clientButton.clicks()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
                 goToSettingsActivity(false)

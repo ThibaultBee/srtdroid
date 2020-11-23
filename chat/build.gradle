@@ -4,18 +4,20 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
-apply plugin: 'kotlin-kapt'
-
 android {
     compileSdkVersion 29
+    buildToolsVersion "29.0.3"
+
     defaultConfig {
         applicationId "com.github.thibaultbee.srtdroid.chat"
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
         versionName "0.8.2"
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -30,9 +32,15 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+    buildFeatures {
+        viewBinding true
+    }
+
 }
 
 dependencies {
@@ -54,6 +62,4 @@ dependencies {
     implementation 'androidx.preference:preference-ktx:1.1.1'
     implementation 'org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:0.9.1'
     implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
-    implementation 'com.jakewharton:butterknife:10.2.1'
-    kapt 'com.jakewharton:butterknife-compiler:10.2.1'
 }

@@ -1,7 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 29
@@ -31,9 +30,15 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+    buildFeatures {
+        viewBinding true
+    }
+
 }
 
 dependencies {
@@ -47,8 +52,6 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation 'com.jakewharton.rxbinding3:rxbinding:3.1.0'
-    implementation 'com.jakewharton:butterknife:10.2.1'
-    kapt 'com.jakewharton:butterknife-compiler:10.2.1'
     implementation 'androidx.preference:preference-ktx:1.1.1'
     implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.3.1'

@@ -5,6 +5,8 @@ import com.github.thibaultbee.srtdroid.chat.utils.ErrorUtils
 import com.github.thibaultbee.srtdroid.enums.SockOpt
 import com.github.thibaultbee.srtdroid.models.Socket
 import java.io.IOException
+import java.net.InetSocketAddress
+
 
 object SocketHandler {
     private var serverSocket: Socket? = null
@@ -103,7 +105,8 @@ object SocketHandler {
         recvThread.isRunning = false
     }
 
-    val peerName = clientSocket.peerName
+    val peerName: InetSocketAddress?
+        get() = clientSocket.peerName
 
     fun close() {
         stopRecvMessage()
