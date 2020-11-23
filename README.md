@@ -17,7 +17,7 @@ allprojects {
 }
 
 dependencies {
-    implementation 'com.github.ThibaultBee:srtdroid:0.8.2'
+    implementation 'com.github.ThibaultBee:srtdroid:1.0.0'
 }
 ```
 
