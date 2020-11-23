@@ -77,7 +77,7 @@ object SocketHandler {
         }
     }
 
-    private class RecvThread() : Thread() {
+    private class RecvThread : Thread() {
         var isRunning: Boolean = false
         override fun run() {
             isRunning = true

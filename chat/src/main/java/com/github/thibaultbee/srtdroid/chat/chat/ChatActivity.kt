@@ -45,7 +45,7 @@ class ChatActivity : AppCompatActivity(), SocketManagerInterface {
 
     private fun updateList(message: String, sender: String, amISender: Boolean) {
         messages.add(Message(message, sender, amISender))
-        adapter.notifyDataSetChanged();
+        adapter.notifyDataSetChanged()
     }
 
     override fun onBackPressed() {
