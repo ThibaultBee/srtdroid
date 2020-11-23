@@ -6,11 +6,11 @@ import com.github.thibaultbee.srtdroid.enums.EpollOpt
 class Epoll {
     private var eid: Int
 
-    private external fun create(): Int
-
-    constructor() {
+    init {
         eid = create()
     }
+
+    private external fun create(): Int
 
     external fun nativeIsValid(): Boolean
     val isValid: Boolean
