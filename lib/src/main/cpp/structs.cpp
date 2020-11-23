@@ -848,7 +848,7 @@ jobject srt_epoll_n2j(JNIEnv *env, int eid) {
         return nullptr;
     }
 
-    jmethodID epollConstructorMethod = env->GetMethodID(epollClazz, "<init>", "(I)V");
+    jmethodID epollConstructorMethod = env->GetMethodID(epollClazz, "<init>", "()V");
     if (!epollConstructorMethod) {
         LOGE(TAG, "Can't get Epoll constructor");
         env->DeleteLocalRef(epollClazz);
