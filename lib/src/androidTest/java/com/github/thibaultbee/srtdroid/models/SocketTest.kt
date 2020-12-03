@@ -7,21 +7,16 @@ import com.github.thibaultbee.srtdroid.enums.*
 import com.github.thibaultbee.srtdroid.models.rejectreason.InternalRejectReason
 import com.github.thibaultbee.srtdroid.models.rejectreason.PredefinedRejectReason
 import com.github.thibaultbee.srtdroid.models.rejectreason.UserDefinedRejectReason
+import com.github.thibaultbee.srtdroid.utils.Utils.Companion.createTestFile
 import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.io.File
-import java.io.FileWriter
 import java.io.IOException
-import java.net.InetAddress
 import java.net.SocketException
 import java.net.StandardProtocolFamily
-import java.util.concurrent.Callable
-import java.util.concurrent.Executors
-import java.util.concurrent.Future
-import kotlin.random.Random
 
 
 /*
@@ -213,17 +208,6 @@ class SocketTest {
         }
     }
 
-    private fun createTestFile(): File {
-        val myFile = File(
-            InstrumentationRegistry.getInstrumentation().context.externalCacheDir,
-            "FileToSend"
-        )
-        val fw = FileWriter(myFile)
-        fw.write("Hello ! Did someone receive this message?")
-        fw.close()
-        return myFile
-    }
-
     @Test
     fun sendFileTest() {
         try {
@@ -296,222 +280,4 @@ class SocketTest {
         socket.sendBufferSize = 101568
         assertEquals(101568, socket.sendBufferSize)
     }
-
-    @Test
-    fun inputStreamTest() {
-        val inputStream = socket.getInputStream()
-        assertEquals(0, inputStream.read(ByteArray(0)))
-        try {
-            inputStream.read()
-            fail()
-        } catch (e: SocketException) {
-        }
-        try {
-            inputStream.read(ByteArray(10))
-            fail()
-        } catch (e: SocketException) {
-        }
-        val server = MockServer()
-        server.enqueue()
-        socket.connect(InetAddress.getLoopbackAddress(), server.port)
-        socket.close()
-        assertEquals(0, inputStream.read(ByteArray(0)))
-        try {
-            inputStream.read()
-            fail()
-        } catch (e: SocketException) {
-        }
-        try {
-            inputStream.read(ByteArray(10))
-            fail()
-        } catch (e: SocketException) {
-        }
-    }
-
-    @Test
-    fun outputStreamTest() {
-        val outputStream = socket.getOutputStream()
-        outputStream.write(ByteArray(0))
-        try {
-            outputStream.write(255)
-            outputStream.write(ByteArray(10))
-            fail()
-        } catch (expected: SocketException) {
-        }
-    }
-
-    @Test
-    fun inputStreamLiveTest() {
-        val server = InOutMockServer(Transtype.LIVE)
-        val socket = Socket()
-        val arraySize = socket.getSockFlag(SockOpt.PAYLOADSIZE) as Int
-        val serverByteArray = ByteArray(arraySize)
-        Random.Default.nextBytes(serverByteArray)
-        server.enqueue(serverByteArray, 0)
-        socket.setSockFlag(SockOpt.TRANSTYPE, Transtype.LIVE)
-        socket.setSockFlag(SockOpt.RCVTIMEO, 1000)
-        socket.connect(InetAddress.getLoopbackAddress(), server.port)
-        val inputStream = socket.getInputStream()
-        val byteArray = ByteArray(arraySize)
-        assertEquals(arraySize, inputStream.read(byteArray))
-        assertArrayEquals(serverByteArray, byteArray)
-        try {
-            inputStream.read()
-            fail()
-        } catch (e: SocketException) {
-        }
-        socket.close()
-        inputStream.close()
-        server.shutdown()
-    }
-
-    @Test
-    fun outputStreamLiveTest() {
-        val server = InOutMockServer(Transtype.LIVE)
-        val socket = Socket()
-        val arraySize = socket.getSockFlag(SockOpt.PAYLOADSIZE) as Int
-        server.enqueue(ByteArray(arraySize), arraySize)
-        socket.setSockFlag(SockOpt.TRANSTYPE, Transtype.LIVE)
-        socket.connect(InetAddress.getLoopbackAddress(), server.port)
-        val outputStream = socket.getOutputStream()
-        outputStream.write(ByteArray(arraySize))
-        socket.close()
-        outputStream.close()
-        try {
-            outputStream.write(ByteArray(arraySize))
-            fail()
-        } catch (expected: IOException) {
-        }
-        server.shutdown()
-    }
-
-    @Test
-    fun inputStreamFileTest() {
-        val server = InOutMockServer(Transtype.FILE)
-        server.enqueue(byteArrayOf(5, 3), 0)
-        val socket = Socket()
-        socket.setSockFlag(SockOpt.TRANSTYPE, Transtype.FILE)
-        socket.setSockFlag(SockOpt.RCVTIMEO, 1000)
-        socket.connect(InetAddress.getLoopbackAddress(), server.port)
-        val inputStream = socket.getInputStream()
-        assertEquals(5, inputStream.read())
-        assertEquals(3, inputStream.read())
-        try {
-            inputStream.read()
-            fail()
-        } catch (e: SocketException) {
-        }
-        try {
-            inputStream.read()
-            fail()
-        } catch (e: SocketException) {
-        }
-        socket.close()
-        inputStream.close()
-
-        try {
-            inputStream.read()
-            fail()
-        } catch (e: SocketException) {
-        }
-        try {
-            inputStream.read()
-            fail()
-        } catch (e: SocketException) {
-        }
-        server.shutdown()
-    }
-
-    @Test
-    fun outputStreamFileTest() {
-        val server = InOutMockServer(Transtype.FILE)
-        server.enqueue(ByteArray(0), 3)
-        val socket = Socket()
-        socket.setSockFlag(SockOpt.TRANSTYPE, Transtype.FILE)
-        socket.connect(InetAddress.getLoopbackAddress(), server.port)
-        val outputStream = socket.getOutputStream()
-        outputStream.write(5)
-        outputStream.write(3)
-        socket.close()
-        outputStream.close()
-        try {
-            outputStream.write(9)
-            fail()
-        } catch (expected: IOException) {
-        }
-        server.shutdown()
-    }
-
-    internal class MockServer {
-        private val executor = Executors.newCachedThreadPool()
-        private val serverSocket = Socket()
-        val port: Int
-        private var socket: Socket? = null
-
-        init {
-            serverSocket.reuseAddress = true
-            serverSocket.bind(InetAddress.getLoopbackAddress(), 0)
-            port = serverSocket.localPort
-        }
-
-        fun enqueue(): Future<Unit> {
-            return executor.submit(Callable {
-                serverSocket.listen(1)
-                val pair = serverSocket.accept()
-                assertNotNull(pair.second)
-                socket = pair.first
-            })
-        }
-
-        fun shutdown() {
-            socket?.close()
-            serverSocket.close()
-            executor.shutdown()
-        }
-    }
-
-    internal class InOutMockServer(transtype: Transtype) {
-        private val executor = Executors.newCachedThreadPool()
-        private val serverSocket = Socket()
-        private var socket: Socket? = null
-        val port: Int
-
-        init {
-            serverSocket.reuseAddress = true
-            serverSocket.setSockFlag(SockOpt.TRANSTYPE, transtype)
-            serverSocket.bind(InetAddress.getLoopbackAddress(), 0)
-            port = serverSocket.localPort
-        }
-
-        fun enqueue(sendBytes: ByteArray, receiveByteCount: Int): Future<ByteArray?> {
-            return executor.submit(Callable<ByteArray?> {
-                serverSocket.listen(1)
-                val pair = serverSocket.accept()
-                assertNotNull(pair.second)
-                socket = pair.first
-                val outputStream = socket?.getOutputStream()
-                if (outputStream != null) {
-                    assertEquals(sendBytes.size, outputStream.write(sendBytes))
-                    val inputStream = socket?.getInputStream()
-                    if (inputStream != null) {
-                        val result = ByteArray(receiveByteCount)
-                        var total = 0
-                        while (total < receiveByteCount) {
-                            total += inputStream.read(result, total, result.size - total)
-                        }
-                        result
-                    }
-                }
-                ByteArray(0)
-
-            })
-        }
-
-        fun shutdown() {
-            socket?.close()
-            serverSocket.close()
-            executor.shutdown()
-        }
-    }
-
 }
