@@ -416,7 +416,7 @@ class Socket: Closeable {
     ): Long
 
     fun recvFile(path: String, offset: Long, size: Long, block: Int = 7280000): Long {
-        val byteReceived = nativeSendFile(path, offset, size, block)
+        val byteReceived = nativeRecvFile(path, offset, size, block)
         when {
             byteReceived < 0 -> {
                 throw SocketException(Error.lastErrorMessage)
