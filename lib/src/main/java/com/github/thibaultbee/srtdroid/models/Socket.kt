@@ -389,7 +389,7 @@ class Socket: Closeable {
         block: Int = 364000
     ): Long
 
-    fun sendFile(path: String, offset: Long, size: Long, block: Int = 364000): Long {
+    fun sendFile(path: String, offset: Long = 0, size: Long, block: Int = 364000): Long {
         val byteSent = nativeSendFile(path, offset, size, block)
         when {
             byteSent < 0 -> {
@@ -402,7 +402,7 @@ class Socket: Closeable {
         }
     }
 
-    fun sendFile(file: File, offset: Long, size: Long, block: Int = 364000) =
+    fun sendFile(file: File, offset: Long = 0, size: Long, block: Int = 364000) =
         sendFile(file.path, offset, size, block)
 
     fun sendFile(file: File, block: Int = 364000) =
@@ -415,7 +415,7 @@ class Socket: Closeable {
         block: Int = 7280000
     ): Long
 
-    fun recvFile(path: String, offset: Long, size: Long, block: Int = 7280000): Long {
+    fun recvFile(path: String, offset: Long = 0, size: Long, block: Int = 7280000): Long {
         val byteReceived = nativeRecvFile(path, offset, size, block)
         when {
             byteReceived < 0 -> {
@@ -428,7 +428,7 @@ class Socket: Closeable {
         }
     }
 
-    fun recvFile(file: File, offset: Long, size: Long, block: Int = 7280000) =
+    fun recvFile(file: File, offset: Long = 0, size: Long, block: Int = 7280000) =
         recvFile(file.path, offset, size, block)
 
     // Reject reason
