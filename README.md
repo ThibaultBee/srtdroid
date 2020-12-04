@@ -1,8 +1,10 @@
 [![](https://jitpack.io/v/ThibaultBee/srtdroid.svg)](https://jitpack.io/#ThibaultBee/srtdroid)
 
-# srtdroid: an Android SRT Wrapper
+# srtdroid: Secure Reliable Transport (SRT) Protocol for Android
 
 Low level API for SRT library on Android. SRT is an open source transport technology that optimizes streaming performance across unpredictable networks. More information on https://github.com/Haivision/srt.
+
+srtdroid is a binder built on [SRT](https://github.com/Haivision/srt). It is a not a new implementation of SRT protocol.
 
 ## Setup
 
