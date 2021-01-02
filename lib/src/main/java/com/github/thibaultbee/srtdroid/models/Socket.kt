@@ -493,7 +493,7 @@ class Socket: Closeable {
     var soLinger: Int
         get() = getSockFlag(SockOpt.LINGER) as Int
         set(value) {
-            setSockFlag(SockOpt.SNDBUF, value)
+            setSockFlag(SockOpt.LINGER, value)
         }
 
     val isBound: Boolean
