@@ -31,7 +31,6 @@ import org.junit.runner.RunWith
 import java.io.File
 import java.io.IOException
 import java.net.SocketException
-import java.net.StandardProtocolFamily
 
 
 /*
@@ -54,16 +53,6 @@ class SocketTest {
     fun tearDown() {
         socket.close()
         assertEquals(srt.cleanUp(), 0)
-    }
-
-    @Test
-    fun inetConstructorTest() {
-        assertTrue(Socket(StandardProtocolFamily.INET).isValid)
-    }
-
-    @Test
-    fun inet6ConstructorTest() {
-        assertTrue(Socket(StandardProtocolFamily.INET6).isValid)
     }
 
     @Test

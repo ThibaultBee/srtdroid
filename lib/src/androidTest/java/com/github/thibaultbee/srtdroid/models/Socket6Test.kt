@@ -25,7 +25,6 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.net.SocketException
-import java.net.StandardProtocolFamily
 
 
 /*
@@ -40,7 +39,7 @@ class Socket6Test {
     @Before
     fun setUp() {
         assert(srt.startUp() >= 0)
-        socket = Socket(StandardProtocolFamily.INET6)
+        socket = Socket()
         assertTrue(socket.isValid)
     }
 
@@ -66,12 +65,6 @@ class Socket6Test {
     }
 
     @Test
-    fun closeTest() {
-        socket.close()
-        assertTrue(socket.isClose)
-    }
-
-    @Test
     fun listenTest() {
         try {
             socket.listen(3)
@@ -81,15 +74,6 @@ class Socket6Test {
         }
         socket.bind("::1", 3333)
         socket.listen(3)
-    }
-
-    @Test
-    fun acceptTest() {
-        try {
-            socket.accept()
-        } catch (e: SocketException) {
-            assertEquals(e.message, ErrorType.ENOLISTEN.toString())
-        }
     }
 
     @Test
@@ -111,11 +95,6 @@ class Socket6Test {
         } catch (e: SocketException) {
             assertEquals(e.message, ErrorType.ENOSERVER.toString())
         }
-    }
-
-    @Test
-    fun getPeerNameTest() {
-        assertNull(socket.peerName)
     }
 
     @Test
