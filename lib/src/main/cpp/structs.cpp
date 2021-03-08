@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2021 Thibault Beyou
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 #include <string>
 #include <cerrno>
 #include <cstring>
@@ -227,14 +243,14 @@ sockaddr_inet_n2j(JNIEnv *env, jclass clazz, struct sockaddr_storage *ss) {
     if (ss->ss_family == AF_INET) {
         struct sockaddr_in *sa = (struct sockaddr_in *) ss;
         if (inet_ntop(sa->sin_family, (void *) &(sa->sin_addr), ip, sizeof(ip)) ==
-            nullptr) {
+                nullptr) {
             LOGE(TAG, "Can't convert ipv4");
         }
         port = ntohs(sa->sin_port);
     } else if (ss->ss_family == AF_INET6) {
         struct sockaddr_in6 *sa = (struct sockaddr_in6 *) ss;
         if (inet_ntop(sa->sin6_family, (void *) &(sa->sin6_addr), ip, sizeof(ip)) ==
-            nullptr) {
+                nullptr) {
             LOGE(TAG, "Can't convert ipv6");
         }
         port = ntohs(sa->sin6_port);
