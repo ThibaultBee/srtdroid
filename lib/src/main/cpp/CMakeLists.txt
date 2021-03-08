@@ -5,8 +5,6 @@ include(ExternalProject)
 set(OPENSSL_VERSION "1.1.1j")
 set(SRT_VERSION "1.4.3-rc.0")
 
-find_program(GIT "git")
-
 # OpenSSL - needs few executable such as perl and mv in PATH
 ExternalProject_Add(openssl_project
         URL https://www.openssl.org/source/openssl-${OPENSSL_VERSION}.tar.gz
@@ -29,7 +27,6 @@ set_target_properties(crypto PROPERTIES IMPORTED_LOCATION ${CMAKE_LIBRARY_OUTPUT
 ExternalProject_Add(srt_project
         GIT_REPOSITORY https://github.com/Haivision/srt.git
         GIT_TAG v${SRT_VERSION}
-        PATCH_COMMAND ${GIT} apply ${CMAKE_SOURCE_DIR}/patches/0001_srt_cmakefiles.patch
         CMAKE_ARGS -DUSE_OPENSSL_PC=OFF
         -DENABLE_MONOTONIC_CLOCK=ON
         -DENABLE_APPS=OFF
