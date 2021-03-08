@@ -39,6 +39,7 @@ enum class SockOpt {
     TSBPDMODE,       // Enable/Disable TsbPd. Enable -> Tx set origin timestamp, Rx deliver packet at origin time + delay
     LATENCY,         // NOT RECOMMENDED. SET: to both RCVLATENCY and PEERLATENCY. GET: same as RCVLATENCY.
     INPUTBW,         // Estimated input stream rate.
+    MININPUTBW,      // Minimum estimate of input stream rate.
     OHEADBW,         // MaxBW ceiling based on % over input stream rate. Applies when UDT_MAXBW=0 (auto).
     PASSPHRASE,      // Crypto PBKDF2 Passphrase size[0,10..64] 0:disable crypto
     PBKEYLEN,        // Crypto key len in bytes {16,24,32} Default: 16 (128-bit)

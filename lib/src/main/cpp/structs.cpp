@@ -455,6 +455,7 @@ jobject srt_optval_n2j(JNIEnv *env, int u, int level, jobject sockOpt) {
 
     switch (sockopt) {
         case SRTO_INPUTBW:
+        case SRTO_MININPUTBW:
         case SRTO_MAXBW: {
             // Int64
             int64_t optval = 0;
