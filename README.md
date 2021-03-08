@@ -44,13 +44,13 @@ Chat is an SRT utility to send and receive messages. It provides both a client a
 
 ## API
 
-As rtdroid is a simple wrapper for API documentation refers to [SRT API documentation](https://github.com/Haivision/srt/blob/master/docs/API.md).
+As srtdroid is a simple wrapper for API documentation refers to [SRT API documentation](https://github.com/Haivision/srt/blob/master/docs/API.md).
 You must create a [Srt object](https://github.com/ThibaultBee/srtdroid/blob/master/lib/src/main/java/com/github/thibaultbee/srtdroid/Srt.kt) before calling any other API. It will load SRT, ssl and crypto libraries.
 
 ### Read/write
 
-Srt send, sendMsg and sendMsg are called send(). Alternatively, you can use OutputStream.
-Srt recv, recvdMsg are called recv(). Alternatively, you can use InputStream.
+Srt `send`, `sendMsg` and `sendMsg` are called `send()` in srtdroid. Alternatively, you can use the `OutputStream` API.
+Srt `recv`, `recvdMsg` are called `recv()` in srtdroid. Alternatively, you can use the `InputStream` API.
 
 ## Permissions
 
