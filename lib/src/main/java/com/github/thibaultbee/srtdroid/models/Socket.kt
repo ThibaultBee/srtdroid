@@ -148,7 +148,7 @@ class Socket: Closeable {
     val localPort: Int
         get() = sockName?.port ?: 0
 
-    private external fun nativeGetSockFlag(opt: SockOpt): Any
+    private external fun nativeGetSockFlag(opt: SockOpt): Any?
     fun getSockFlag(opt: SockOpt): Any {
         return nativeGetSockFlag(opt) ?: throw IOException(Error.lastErrorMessage)
     }
