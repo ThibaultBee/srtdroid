@@ -23,9 +23,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.github.thibaultbee.srtdroid.Srt
 import com.github.thibaultbee.srtdroid.chat.databinding.ActivityMainBinding
 import com.github.thibaultbee.srtdroid.chat.settings.SettingsActivity
-import com.jakewharton.rxbinding3.view.clicks
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
+import com.jakewharton.rxbinding4.view.clicks
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 
 class MainActivity : AppCompatActivity() {

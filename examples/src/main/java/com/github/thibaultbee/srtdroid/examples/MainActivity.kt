@@ -26,10 +26,10 @@ import com.github.thibaultbee.srtdroid.examples.databinding.ActivityMainBinding
 import com.github.thibaultbee.srtdroid.models.Socket
 import com.google.common.primitives.Ints
 import com.google.common.primitives.Longs
-import com.jakewharton.rxbinding3.view.clicks
-import com.tbruyelle.rxpermissions2.RxPermissions
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
+import com.jakewharton.rxbinding4.view.clicks
+import com.tbruyelle.rxpermissions3.RxPermissions
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 import java.io.File
 
 class MainActivity : AppCompatActivity() {
@@ -60,68 +60,100 @@ class MainActivity : AppCompatActivity() {
 
     private fun bindProperties() {
         val rxPermissions = RxPermissions(this)
-        rxPermissions.request(Manifest.permission.INTERNET)
 
         binding.testClientButton.clicks()
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                try {
-                    launchTestClient(
-                        Utils.getClientIpFromPreference(this),
-                        Utils.getClientPortFromPreference(this)
-                    )
-                    Utils.showAlert(this, "Success", "Noice!")
-                } catch (e: Exception) {
-                    Utils.showAlert(this, "Error", e.message ?: "")
+            .compose(rxPermissions.ensure(Manifest.permission.INTERNET))
+            .subscribe { granted ->
+                if (granted) {
+                    try {
+                        launchTestClient(
+                            Utils.getClientIpFromPreference(this),
+                            Utils.getClientPortFromPreference(this)
+                        )
+                        Utils.showAlert(this, "Success", "Noice!")
+                    } catch (e: Exception) {
+                        Utils.showAlert(this, "Error", e.message ?: "")
+                    }
+                } else {
+                    Utils.showAlert(this, "Permission", "Missing permissions")
                 }
             }
             .let(activityDisposables::add)
 
         binding.testServerButton.clicks()
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe {
-                try {
-                    launchTestServer(
-                        Utils.getServerIpFromPreference(this),
-                        Utils.getServerPortFromPreference(this)
-                    )
-                    Utils.showAlert(this, "Success", "Noice! (check logcat)")
-                } catch (e: Exception) {
-                    Utils.showAlert(this, "Error", e.message ?: "")
+            .compose(rxPermissions.ensure(Manifest.permission.INTERNET))
+            .subscribe { granted ->
+                if (granted) {
+                    try {
+                        launchTestServer(
+                            Utils.getServerIpFromPreference(this),
+                            Utils.getServerPortFromPreference(this)
+                        )
+                        Utils.showAlert(this, "Success", "Noice! (check logcat)")
+                    } catch (e: Exception) {
+                        Utils.showAlert(this, "Error", e.message ?: "")
+                    }
+                } else {
+                    Utils.showAlert(this, "Permission", "Missing permissions")
                 }
             }
             .let(activityDisposables::add)
 
         binding.recvFileButton.clicks()
             .observeOn(AndroidSchedulers.mainThread())
-            .compose(rxPermissions.ensure(Manifest.permission.WRITE_EXTERNAL_STORAGE))
-            .subscribe {
-                try {
-                    Log.i(TAG, "Will get file $serverFileName from server")
-                    val file = launchRecvFile(
-                        Utils.getClientIpFromPreference(this),
-                        Utils.getClientPortFromPreference(this),
-                        serverFileName)
-                    Utils.showAlert(this, "Success", "Check out ${file.path}")
-                } catch (e: Exception) {
-                    Utils.showAlert(this, "Failed to recv file", e.message ?: "")
+            .compose(
+                rxPermissions.ensureEachCombined(
+                    Manifest.permission.INTERNET,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                )
+            )
+            .subscribe { permission ->
+                if (permission.granted) {
+                    try {
+                        Log.i(TAG, "Will get file $serverFileName from server")
+                        val file = launchRecvFile(
+                            Utils.getClientIpFromPreference(this),
+                            Utils.getClientPortFromPreference(this),
+                            serverFileName
+                        )
+                        Utils.showAlert(this, "Success", "Check out ${file.path}")
+                    } catch (e: Exception) {
+                        Utils.showAlert(this, "Failed to recv file", e.message ?: "")
+                    }
+                } else {
+                    Utils.showAlert(this, "Permission", "Missing permissions")
                 }
             }
             .let(activityDisposables::add)
 
         binding.sendFileButton.clicks()
             .observeOn(AndroidSchedulers.mainThread())
-            .compose(rxPermissions.ensure(Manifest.permission.READ_EXTERNAL_STORAGE))
-            .compose(rxPermissions.ensure(Manifest.permission.WRITE_EXTERNAL_STORAGE))
-            .subscribe {
-                try {
-                    val stats = launchSendFile(
-                        Utils.getServerIpFromPreference(this),
-                        Utils.getServerPortFromPreference(this)
-                    )
-                    Utils.showAlert(this, "Success", "Noice!\nSpeed = ${stats.mbpsRate}\nLoss = ${stats.pktLossTotal} pkt ( ${stats.lossPercent} %)")
-                } catch (e: Exception) {
-                    Utils.showAlert(this, "Error", e.message ?: "")
+            .compose(
+                rxPermissions.ensureEachCombined(
+                    Manifest.permission.INTERNET,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                )
+            )
+            .subscribe { permission ->
+                if (permission.granted) {
+                    try {
+                        val stats = launchSendFile(
+                            Utils.getServerIpFromPreference(this),
+                            Utils.getServerPortFromPreference(this)
+                        )
+                        Utils.showAlert(
+                            this,
+                            "Success",
+                            "Noice!\nSpeed = ${stats.mbpsRate}\nLoss = ${stats.pktLossTotal} pkt ( ${stats.lossPercent} %)"
+                        )
+                    } catch (e: Exception) {
+                        Utils.showAlert(this, "Error", e.message ?: "")
+                    }
+                } else {
+                    Utils.showAlert(this, "Permission", "Missing permissions")
                 }
             }
             .let(activityDisposables::add)

@@ -25,11 +25,11 @@ import com.github.thibaultbee.srtdroid.chat.chat.ChatActivity
 import com.github.thibaultbee.srtdroid.chat.databinding.ActivitySettingsBinding
 import com.github.thibaultbee.srtdroid.chat.singleton.SocketHandler
 import com.github.thibaultbee.srtdroid.chat.utils.DialogUtils
-import com.jakewharton.rxbinding3.view.clicks
-import com.tbruyelle.rxpermissions2.RxPermissions
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
+import com.jakewharton.rxbinding4.view.clicks
+import com.tbruyelle.rxpermissions3.RxPermissions
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 class SettingsActivity : AppCompatActivity() {
     private val TAG = SettingsActivity::class.qualifiedName
@@ -77,7 +77,7 @@ class SettingsActivity : AppCompatActivity() {
 
         connectButtonObservable
             .compose(rxPermissions.ensure(Manifest.permission.INTERNET))
-            .filter { granted -> granted }
+            .filter { granted -> granted == true }
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
                 try {
