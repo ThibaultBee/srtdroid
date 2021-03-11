@@ -99,9 +99,13 @@ class Socket6Test {
 
     @Test
     fun getSockNameTest() {
-        assertNull(socket.sockName)
+        try {
+            assertNull(socket.sockName)
+            fail()
+        } catch (e: Exception) {
+        }
         socket.bind("::1", 6666)
-        assertEquals(socket.sockName!!.address.hostAddress, "::1")
-        assertEquals(socket.sockName!!.port, 6666)
+        assertEquals(socket.sockName.address.hostAddress, "::1")
+        assertEquals(socket.sockName.port, 6666)
     }
 }

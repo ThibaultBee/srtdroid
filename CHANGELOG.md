@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+Version 1.1.0
+-------------
+
+## API changes:
+- In case an error happened, connectionTime/setRejectReason/peerName/inetAddress/port/sockName/localAddress/localPort returns an exception instead of a null
+
 Version 1.0.0
 -------------
 

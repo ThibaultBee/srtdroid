@@ -122,15 +122,23 @@ class SocketTest {
 
     @Test
     fun getPeerNameTest() {
-        assertNull(socket.peerName)
+        try {
+            assertNull(socket.sockName)
+            fail()
+        } catch (e: Exception) {
+        }
     }
 
     @Test
     fun getSockNameTest() {
-        assertNull(socket.sockName)
+        try {
+            assertNull(socket.sockName)
+            fail()
+        } catch (e: Exception) {
+        }
         socket.bind("127.0.3.1", 1239)
-        assertEquals("127.0.3.1", socket.sockName!!.address.hostAddress)
-        assertEquals(1239, socket.sockName!!.port)
+        assertEquals("127.0.3.1", socket.sockName.address.hostAddress)
+        assertEquals(1239, socket.sockName.port)
     }
 
     @Test
@@ -243,7 +251,6 @@ class SocketTest {
 
     @Test
     fun setRejectReasonTest() {
-        socket.rejectReason = InternalRejectReason(RejectReasonCode.BADSECRET) // Generate an error
         socket.rejectReason = UserDefinedRejectReason(2)
         socket.rejectReason = PredefinedRejectReason(1)
     }
