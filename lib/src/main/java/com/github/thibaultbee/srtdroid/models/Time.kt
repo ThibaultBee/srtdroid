@@ -15,8 +15,18 @@
  */
 package com.github.thibaultbee.srtdroid.models
 
+/**
+ * This class contains time utils.
+ */
 class Time {
     companion object {
+        /**
+         * Gets time in microseconds elapsed since epoch using SRT internal clock.
+         *
+         * **See Also:** [srt_time_now](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_time_now)
+         *
+         * @return the current time in microseconds
+         */
         @JvmStatic
         external fun now(): Long
     }

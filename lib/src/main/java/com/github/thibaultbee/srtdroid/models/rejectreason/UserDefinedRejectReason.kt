@@ -15,4 +15,9 @@
  */
 package com.github.thibaultbee.srtdroid.models.rejectreason
 
+/**
+ * This class represents a reject reason that was triggered by user.
+ *
+ * @param code an User-defined rejection reason
+ */
 data class UserDefinedRejectReason(val code: Int): RejectReason()

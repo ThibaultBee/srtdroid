@@ -17,4 +17,9 @@ package com.github.thibaultbee.srtdroid.models.rejectreason
 
 import com.github.thibaultbee.srtdroid.enums.RejectReasonCode
 
+/**
+ * This class represents a reject reason that was triggered by internal mechanism.
+ *
+ * @param code an [RejectReasonCode]
+ */
 data class InternalRejectReason(val code: RejectReasonCode): RejectReason()
