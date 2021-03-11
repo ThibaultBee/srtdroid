@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'org.jetbrains.dokka-android'
 
 group='com.github.ThibaultBee'
 
@@ -37,6 +38,12 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+}
+
+dokka {
+    outputFormat = 'html' // use 'javadoc' to get standard java docs
+    outputDirectory = "$buildDir/javadoc"
+    includeNonPublic = false
 }
 
 dependencies {
