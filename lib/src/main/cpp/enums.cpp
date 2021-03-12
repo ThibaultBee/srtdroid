@@ -851,6 +851,8 @@ int32_t srt_epoll_opt_j2n(JNIEnv *env, jobject epollEvent) {
         event = SRT_EPOLL_OUT;
     } else if (strcmp(epoll_event_field, "ERR") == 0) {
         event = SRT_EPOLL_ERR;
+    } else if (strcmp(epoll_event_field, "UPDATE") == 0) {
+        event = SRT_EPOLL_UPDATE;
     } else if (strcmp(epoll_event_field, "ET") == 0) {
         event = SRT_EPOLL_ET;
     } else {

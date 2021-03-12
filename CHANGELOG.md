@@ -5,7 +5,8 @@ Version 1.1.0
 -------------
 
 ## API changes:
-- In case an error happened, connectionTime/setRejectReason/peerName/inetAddress/port/sockName/localAddress/localPort returns an exception instead of a null
+- In case an error happened, connectionTime/setRejectReason/peerName/inetAddress/port/sockName/localAddress/localPort return an exception instead of a null
+- In case an error happened, most Epoll methods return an exception instead of a -1
 
 Version 1.0.0
 -------------
