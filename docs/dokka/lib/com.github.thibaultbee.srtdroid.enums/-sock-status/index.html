@@ -1,0 +1,92 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>SockStatus - lib</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">lib</a>&nbsp;/&nbsp;<a href="../index.html">com.github.thibaultbee.srtdroid.enums</a>&nbsp;/&nbsp;<a href="./index.html">SockStatus</a><br/>
+<br/>
+<h1>SockStatus</h1>
+<code><span class="keyword">enum</span> <span class="keyword">class </span><span class="identifier">SockStatus</span></code>
+<p>SRT socket status (from <a href="../../com.github.thibaultbee.srtdroid.models/-socket/sock-state.html">Socket.sockState</a>).</p>
+<p><strong>See Also:</strong> <a href="https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_getsockstate">srt_getsockstate</a></p>
+<h3>Enum Values</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-i-n-i-t.html">INIT</a></p>
+</td>
+<td>
+<p>Created, but not bound.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-o-p-e-n-e-d.html">OPENED</a></p>
+</td>
+<td>
+<p>Created and bound, but not in use yet.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-l-i-s-t-e-n-i-n-g.html">LISTENING</a></p>
+</td>
+<td>
+<p>Socket is in listening state.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-c-o-n-n-e-c-t-i-n-g.html">CONNECTING</a></p>
+</td>
+<td>
+<p>The connect operation was initiated, but not yet finished.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-c-o-n-n-e-c-t-e-d.html">CONNECTED</a></p>
+</td>
+<td>
+<p>The socket is connected and ready for transmission.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-b-r-o-k-e-n.html">BROKEN</a></p>
+</td>
+<td>
+<p>The socket was connected, but the connection was broken.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-c-l-o-s-i-n-g.html">CLOSING</a></p>
+</td>
+<td>
+<p>The socket may still be open and active, but closing is requested.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-c-l-o-s-e-d.html">CLOSED</a></p>
+</td>
+<td>
+<p>The socket has been closed, but not yet removed by the GC thread.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-n-o-n_-e-x-i-s-t.html">NON_EXIST</a></p>
+</td>
+<td>
+<p>The specified number does not correspond to a valid socket.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

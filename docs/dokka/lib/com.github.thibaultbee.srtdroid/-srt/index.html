@@ -1,0 +1,60 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Srt - lib</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">lib</a>&nbsp;/&nbsp;<a href="../index.html">com.github.thibaultbee.srtdroid</a>&nbsp;/&nbsp;<a href="./index.html">Srt</a><br/>
+<br/>
+<h1>Srt</h1>
+<code><span class="keyword">object </span><span class="identifier">Srt</span></code>
+<p>This class provides main SRT control. Before calling any other SRT API, you shall call <a href="start-up.html">startUp</a>.</p>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="version.html">version</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">version</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>Get SRT version</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="clean-up.html">cleanUp</a></p>
+</td>
+<td>
+<code><span class="keyword">external</span> <span class="keyword">fun </span><span class="identifier">cleanUp</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>Cleans up all global SRT resources and shall be called just before exiting the application (for example, in your main activity onRelease()).</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="set-log-level.html">setLogLevel</a></p>
+</td>
+<td>
+<code><span class="keyword">external</span> <span class="keyword">fun </span><span class="identifier">setLogLevel</span><span class="symbol">(</span><span class="identifier" id="com.github.thibaultbee.srtdroid.Srt$setLogLevel(kotlin.Int)/level">level</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Set log level</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="start-up.html">startUp</a></p>
+</td>
+<td>
+<code><span class="keyword">external</span> <span class="keyword">fun </span><span class="identifier">startUp</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>Called at the start of an application that uses the SRT library.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

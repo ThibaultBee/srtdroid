@@ -1,0 +1,386 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Socket - lib</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">lib</a>&nbsp;/&nbsp;<a href="../index.html">com.github.thibaultbee.srtdroid.models</a>&nbsp;/&nbsp;<a href="./index.html">Socket</a><br/>
+<br/>
+<h1>Socket</h1>
+<code><span class="keyword">class </span><span class="identifier">Socket</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/java/io/Closeable.html"><span class="identifier">Closeable</span></a></code>
+<p>This class represents a SRT socket.</p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">Socket</span><span class="symbol">(</span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$<init>(java.net.StandardProtocolFamily)/af">af</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/java/net/StandardProtocolFamily.html"><span class="identifier">StandardProtocolFamily</span></a><span class="symbol">)</span></code>
+<p>Deprecated version of <a href="./index.html">Socket</a> constructor. Argument is ignored.
+Also, it crashes on old Android version (where <a href="https://developer.android.com/reference/java/net/StandardProtocolFamily.html">StandardProtocolFamily</a> does not exist).</p>
+<code><span class="identifier">Socket</span><span class="symbol">(</span><span class="symbol">)</span></code>
+<p>Creates an SRT socket.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="connection-time.html">connectionTime</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">connectionTime</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>Gets the time when SRT socket was open to establish a connection.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="inet-address.html">inetAddress</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">inetAddress</span><span class="symbol">: </span><a href="https://developer.android.com/reference/java/net/InetAddress.html"><span class="identifier">InetAddress</span></a></code>
+<p>Retrieves the <a href="https://developer.android.com/reference/java/net/InetAddress.html">InetAddress</a> to which the socket is connected.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="is-bound.html">isBound</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">isBound</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>Tests if the SRT socket is bound.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="is-close.html">isClose</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">isClose</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>Tests if the SRT socket is closed.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="is-connected.html">isConnected</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">isConnected</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>Tests if the SRT socket is connected.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="is-valid.html">isValid</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">isValid</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>Check if the SRT socket is a valid SRT socket.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="local-address.html">localAddress</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">localAddress</span><span class="symbol">: </span><a href="https://developer.android.com/reference/java/net/InetAddress.html"><span class="identifier">InetAddress</span></a></code>
+<p>Extracts the <a href="https://developer.android.com/reference/java/net/InetAddress.html">InetAddress</a> to which the socket was bound.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="local-port.html">localPort</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">localPort</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>Extracts the port to which the socket was bound.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="peer-name.html">peerName</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">peerName</span><span class="symbol">: </span><a href="https://developer.android.com/reference/java/net/InetSocketAddress.html"><span class="identifier">InetSocketAddress</span></a></code>
+<p>Retrieves the remote <a href="https://developer.android.com/reference/java/net/InetSocketAddress.html">InetSocketAddress</a> to which the SRT socket is connected.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="port.html">port</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">port</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>Retrieves the port to which the SRT socket is connected.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="receive-buffer-size.html">receiveBufferSize</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">receiveBufferSize</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>Sets/gets the value of the <a href="../../com.github.thibaultbee.srtdroid.enums/-sock-opt/-r-c-v-b-u-f.html">SockOpt.RCVBUF</a> option for this SRT socket.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="reject-reason.html">rejectReason</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">rejectReason</span><span class="symbol">: </span><a href="../../com.github.thibaultbee.srtdroid.models.rejectreason/-reject-reason/index.html"><span class="identifier">RejectReason</span></a></code>
+<p>Set/get detailed reason for a failed connection attempt.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="reuse-address.html">reuseAddress</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">reuseAddress</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>Tests if <a href="../../com.github.thibaultbee.srtdroid.enums/-sock-opt/-r-e-u-s-e-a-d-d-r.html">SockOpt.REUSEADDR</a> is enabled.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="send-buffer-size.html">sendBufferSize</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">sendBufferSize</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>Sets/gets the value of the <a href="../../com.github.thibaultbee.srtdroid.enums/-sock-opt/-s-n-d-b-u-f.html">SockOpt.SNDBUF</a> option for this SRT socket.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="socket-interface.html">socketInterface</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">socketInterface</span><span class="symbol">: </span><a href="../../com.github.thibaultbee.srtdroid.interfaces/-socket-interface/index.html"><span class="identifier">SocketInterface</span></a><span class="symbol">?</span></code>
+<p>Sets up the SRT socket listener. Use it to monitor SRT socket connection.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="sock-name.html">sockName</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">sockName</span><span class="symbol">: </span><a href="https://developer.android.com/reference/java/net/InetSocketAddress.html"><span class="identifier">InetSocketAddress</span></a></code>
+<p>Extracts the <a href="https://developer.android.com/reference/java/net/InetSocketAddress.html">InetSocketAddress</a> to which the socket was bound.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="sock-state.html">sockState</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">sockState</span><span class="symbol">: </span><a href="../../com.github.thibaultbee.srtdroid.enums/-sock-status/index.html"><span class="identifier">SockStatus</span></a></code>
+<p>Gets the current status of the socket.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="so-linger.html">soLinger</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">soLinger</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>Returns setting for <a href="../../com.github.thibaultbee.srtdroid.enums/-sock-opt/-l-i-n-g-e-r.html">SockOpt.LINGER</a>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="accept.html">accept</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">accept</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/util/Pair.html"><span class="identifier">Pair</span></a><span class="symbol">&lt;</span><a href="./index.html"><span class="identifier">Socket</span></a><span class="symbol">,</span>&nbsp;<a href="https://developer.android.com/reference/java/net/InetSocketAddress.html"><span class="identifier">InetSocketAddress</span></a><span class="symbol">?</span><span class="symbol">&gt;</span></code>
+<p>Accepts a pending connection.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="available.html">available</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">available</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>Get the size of the available data in the receive buffer.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="bind.html">bind</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">bind</span><span class="symbol">(</span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$bind(java.net.InetSocketAddress)/address">address</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/java/net/InetSocketAddress.html"><span class="identifier">InetSocketAddress</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code><br/>
+<code><span class="keyword">fun </span><span class="identifier">bind</span><span class="symbol">(</span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$bind(kotlin.String, kotlin.Int)/address">address</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$bind(kotlin.String, kotlin.Int)/port">port</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code><br/>
+<code><span class="keyword">fun </span><span class="identifier">bind</span><span class="symbol">(</span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$bind(java.net.InetAddress, kotlin.Int)/address">address</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/java/net/InetAddress.html"><span class="identifier">InetAddress</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$bind(java.net.InetAddress, kotlin.Int)/port">port</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Binds the socket to a local address.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="bistats.html">bistats</a></p>
+</td>
+<td>
+<code><span class="keyword">external</span> <span class="keyword">fun </span><span class="identifier">bistats</span><span class="symbol">(</span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$bistats(kotlin.Boolean, kotlin.Boolean)/clear">clear</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$bistats(kotlin.Boolean, kotlin.Boolean)/instantaneous">instantaneous</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../-stats/index.html"><span class="identifier">Stats</span></a></code>
+<p>Reports the current statistics.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="bstats.html">bstats</a></p>
+</td>
+<td>
+<code><span class="keyword">external</span> <span class="keyword">fun </span><span class="identifier">bstats</span><span class="symbol">(</span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$bstats(kotlin.Boolean)/clear">clear</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="../-stats/index.html"><span class="identifier">Stats</span></a></code>
+<p>Reports the current statistics.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="close.html">close</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">close</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Closes the socket or group and frees all used resources.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="connect.html">connect</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">connect</span><span class="symbol">(</span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$connect(java.net.InetSocketAddress)/address">address</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/java/net/InetSocketAddress.html"><span class="identifier">InetSocketAddress</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code><br/>
+<code><span class="keyword">fun </span><span class="identifier">connect</span><span class="symbol">(</span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$connect(kotlin.String, kotlin.Int)/address">address</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$connect(kotlin.String, kotlin.Int)/port">port</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code><br/>
+<code><span class="keyword">fun </span><span class="identifier">connect</span><span class="symbol">(</span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$connect(java.net.InetAddress, kotlin.Int)/address">address</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/java/net/InetAddress.html"><span class="identifier">InetAddress</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$connect(java.net.InetAddress, kotlin.Int)/port">port</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Connects a socket to a specified address and port.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="get-input-stream.html">getInputStream</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getInputStream</span><span class="symbol">(</span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$getInputStream(com.github.thibaultbee.srtdroid.models.MsgCtrl)/msgCtrl">msgCtrl</span><span class="symbol">:</span>&nbsp;<a href="../-msg-ctrl/index.html"><span class="identifier">MsgCtrl</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">)</span><span class="symbol">: </span><a href="https://developer.android.com/reference/java/io/InputStream.html"><span class="identifier">InputStream</span></a></code>
+<p>Returns an input stream for this socket.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="get-output-stream.html">getOutputStream</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getOutputStream</span><span class="symbol">(</span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$getOutputStream(com.github.thibaultbee.srtdroid.models.MsgCtrl)/msgCtrl">msgCtrl</span><span class="symbol">:</span>&nbsp;<a href="../-msg-ctrl/index.html"><span class="identifier">MsgCtrl</span></a><span class="symbol">?</span>&nbsp;<span class="symbol">=</span>&nbsp;null<span class="symbol">)</span><span class="symbol">: </span><a href="https://developer.android.com/reference/java/io/OutputStream.html"><span class="identifier">OutputStream</span></a></code>
+<p>Returns an output stream for this socket.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="get-sock-flag.html">getSockFlag</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">getSockFlag</span><span class="symbol">(</span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$getSockFlag(com.github.thibaultbee.srtdroid.enums.SockOpt)/opt">opt</span><span class="symbol">:</span>&nbsp;<a href="../../com.github.thibaultbee.srtdroid.enums/-sock-opt/index.html"><span class="identifier">SockOpt</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a></code>
+<p>Gets the value of the given socket option.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="listen.html">listen</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">listen</span><span class="symbol">(</span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$listen(kotlin.Int)/backlog">backlog</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Sets up the listening state on a socket.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="on-listen.html">onListen</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">onListen</span><span class="symbol">(</span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$onListen(com.github.thibaultbee.srtdroid.models.Socket, kotlin.Int, java.net.InetSocketAddress, kotlin.String)/ns">ns</span><span class="symbol">:</span>&nbsp;<a href="./index.html"><span class="identifier">Socket</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$onListen(com.github.thibaultbee.srtdroid.models.Socket, kotlin.Int, java.net.InetSocketAddress, kotlin.String)/hsVersion">hsVersion</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$onListen(com.github.thibaultbee.srtdroid.models.Socket, kotlin.Int, java.net.InetSocketAddress, kotlin.String)/peerAddress">peerAddress</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/java/net/InetSocketAddress.html"><span class="identifier">InetSocketAddress</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$onListen(com.github.thibaultbee.srtdroid.models.Socket, kotlin.Int, java.net.InetSocketAddress, kotlin.String)/streamId">streamId</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>Internal method. Do not use, use <a href="../../com.github.thibaultbee.srtdroid.interfaces/-socket-interface/on-listen.html">SocketInterface.onListen</a> instead.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="recv.html">recv</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">recv</span><span class="symbol">(</span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$recv(kotlin.Int)/size">size</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/util/Pair.html"><span class="identifier">Pair</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html"><span class="identifier">ByteArray</span></a><span class="symbol">&gt;</span></code><br/>
+<code><span class="keyword">fun </span><span class="identifier">recv</span><span class="symbol">(</span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$recv(kotlin.ByteArray, kotlin.Int, kotlin.Int)/buffer">buffer</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html"><span class="identifier">ByteArray</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$recv(kotlin.ByteArray, kotlin.Int, kotlin.Int)/offset">offset</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$recv(kotlin.ByteArray, kotlin.Int, kotlin.Int)/byteCount">byteCount</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/util/Pair.html"><span class="identifier">Pair</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html"><span class="identifier">ByteArray</span></a><span class="symbol">&gt;</span></code><br/>
+<code><span class="keyword">fun </span><span class="identifier">recv</span><span class="symbol">(</span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$recv(kotlin.Int, com.github.thibaultbee.srtdroid.models.MsgCtrl)/size">size</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$recv(kotlin.Int, com.github.thibaultbee.srtdroid.models.MsgCtrl)/msgCtrl">msgCtrl</span><span class="symbol">:</span>&nbsp;<a href="../-msg-ctrl/index.html"><span class="identifier">MsgCtrl</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/util/Pair.html"><span class="identifier">Pair</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html"><span class="identifier">ByteArray</span></a><span class="symbol">&gt;</span></code><br/>
+<code><span class="keyword">fun </span><span class="identifier">recv</span><span class="symbol">(</span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$recv(kotlin.ByteArray, kotlin.Int, kotlin.Int, com.github.thibaultbee.srtdroid.models.MsgCtrl)/buffer">buffer</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html"><span class="identifier">ByteArray</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$recv(kotlin.ByteArray, kotlin.Int, kotlin.Int, com.github.thibaultbee.srtdroid.models.MsgCtrl)/offset">offset</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$recv(kotlin.ByteArray, kotlin.Int, kotlin.Int, com.github.thibaultbee.srtdroid.models.MsgCtrl)/byteCount">byteCount</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$recv(kotlin.ByteArray, kotlin.Int, kotlin.Int, com.github.thibaultbee.srtdroid.models.MsgCtrl)/msgCtrl">msgCtrl</span><span class="symbol">:</span>&nbsp;<a href="../-msg-ctrl/index.html"><span class="identifier">MsgCtrl</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://developer.android.com/reference/android/util/Pair.html"><span class="identifier">Pair</span></a><span class="symbol">&lt;</span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">,</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html"><span class="identifier">ByteArray</span></a><span class="symbol">&gt;</span></code>
+<p>Received a message from a remote device</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="recv-file.html">recvFile</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">recvFile</span><span class="symbol">(</span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$recvFile(kotlin.String, kotlin.Long, kotlin.Long, kotlin.Int)/path">path</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$recvFile(kotlin.String, kotlin.Long, kotlin.Long, kotlin.Int)/offset">offset</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a>&nbsp;<span class="symbol">=</span>&nbsp;0<span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$recvFile(kotlin.String, kotlin.Long, kotlin.Long, kotlin.Int)/size">size</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$recvFile(kotlin.String, kotlin.Long, kotlin.Long, kotlin.Int)/block">block</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;7280000<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>Receives a file. File is create in <a href="recv-file.html#com.github.thibaultbee.srtdroid.models.Socket$recvFile(kotlin.String, kotlin.Long, kotlin.Long, kotlin.Int)/path">path</a>.</p>
+<code><span class="keyword">fun </span><span class="identifier">recvFile</span><span class="symbol">(</span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$recvFile(java.io.File, kotlin.Long, kotlin.Long, kotlin.Int)/file">file</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/java/io/File.html"><span class="identifier">File</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$recvFile(java.io.File, kotlin.Long, kotlin.Long, kotlin.Int)/offset">offset</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a>&nbsp;<span class="symbol">=</span>&nbsp;0<span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$recvFile(java.io.File, kotlin.Long, kotlin.Long, kotlin.Int)/size">size</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$recvFile(java.io.File, kotlin.Long, kotlin.Long, kotlin.Int)/block">block</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;7280000<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>Receives a file. File is create in <a href="recv-file.html#com.github.thibaultbee.srtdroid.models.Socket$recvFile(java.io.File, kotlin.Long, kotlin.Long, kotlin.Int)/file">file</a>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="rendez-vous.html">rendezVous</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">rendezVous</span><span class="symbol">(</span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$rendezVous(java.net.InetSocketAddress, java.net.InetSocketAddress)/localAddress">localAddress</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/java/net/InetSocketAddress.html"><span class="identifier">InetSocketAddress</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$rendezVous(java.net.InetSocketAddress, java.net.InetSocketAddress)/remoteAddress">remoteAddress</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/java/net/InetSocketAddress.html"><span class="identifier">InetSocketAddress</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code><br/>
+<code><span class="keyword">fun </span><span class="identifier">rendezVous</span><span class="symbol">(</span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$rendezVous(kotlin.String, kotlin.String, kotlin.Int)/localAddress">localAddress</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$rendezVous(kotlin.String, kotlin.String, kotlin.Int)/remoteAddress">remoteAddress</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$rendezVous(kotlin.String, kotlin.String, kotlin.Int)/port">port</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code><br/>
+<code><span class="keyword">fun </span><span class="identifier">rendezVous</span><span class="symbol">(</span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$rendezVous(java.net.InetAddress, java.net.InetAddress, kotlin.Int)/localAddress">localAddress</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/java/net/InetAddress.html"><span class="identifier">InetAddress</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$rendezVous(java.net.InetAddress, java.net.InetAddress, kotlin.Int)/remoteAddress">remoteAddress</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/java/net/InetAddress.html"><span class="identifier">InetAddress</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$rendezVous(java.net.InetAddress, java.net.InetAddress, kotlin.Int)/port">port</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Performs a rendezvous connection.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="send.html">send</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">send</span><span class="symbol">(</span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$send(kotlin.ByteArray, kotlin.Int, kotlin.Int)/msg">msg</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html"><span class="identifier">ByteArray</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$send(kotlin.ByteArray, kotlin.Int, kotlin.Int)/offset">offset</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$send(kotlin.ByteArray, kotlin.Int, kotlin.Int)/size">size</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code><br/>
+<code><span class="keyword">fun </span><span class="identifier">send</span><span class="symbol">(</span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$send(kotlin.ByteArray)/msg">msg</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html"><span class="identifier">ByteArray</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code><br/>
+<code><span class="keyword">fun </span><span class="identifier">send</span><span class="symbol">(</span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$send(kotlin.String)/msg">msg</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code><br/>
+<code><span class="keyword">fun </span><span class="identifier">send</span><span class="symbol">(</span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$send(kotlin.ByteArray, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Boolean)/msg">msg</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html"><span class="identifier">ByteArray</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$send(kotlin.ByteArray, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Boolean)/offset">offset</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$send(kotlin.ByteArray, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Boolean)/size">size</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$send(kotlin.ByteArray, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Boolean)/ttl">ttl</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;-1<span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$send(kotlin.ByteArray, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Boolean)/inOrder">inOrder</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a>&nbsp;<span class="symbol">=</span>&nbsp;false<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code><br/>
+<code><span class="keyword">fun </span><span class="identifier">send</span><span class="symbol">(</span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$send(kotlin.ByteArray, kotlin.Int, kotlin.Boolean)/msg">msg</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html"><span class="identifier">ByteArray</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$send(kotlin.ByteArray, kotlin.Int, kotlin.Boolean)/ttl">ttl</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;-1<span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$send(kotlin.ByteArray, kotlin.Int, kotlin.Boolean)/inOrder">inOrder</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a>&nbsp;<span class="symbol">=</span>&nbsp;false<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code><br/>
+<code><span class="keyword">fun </span><span class="identifier">send</span><span class="symbol">(</span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$send(kotlin.String, kotlin.Int, kotlin.Boolean)/msg">msg</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$send(kotlin.String, kotlin.Int, kotlin.Boolean)/ttl">ttl</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;-1<span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$send(kotlin.String, kotlin.Int, kotlin.Boolean)/inOrder">inOrder</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a>&nbsp;<span class="symbol">=</span>&nbsp;false<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code><br/>
+<code><span class="keyword">fun </span><span class="identifier">send</span><span class="symbol">(</span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$send(kotlin.ByteArray, kotlin.Int, kotlin.Int, com.github.thibaultbee.srtdroid.models.MsgCtrl)/msg">msg</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html"><span class="identifier">ByteArray</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$send(kotlin.ByteArray, kotlin.Int, kotlin.Int, com.github.thibaultbee.srtdroid.models.MsgCtrl)/offset">offset</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$send(kotlin.ByteArray, kotlin.Int, kotlin.Int, com.github.thibaultbee.srtdroid.models.MsgCtrl)/size">size</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$send(kotlin.ByteArray, kotlin.Int, kotlin.Int, com.github.thibaultbee.srtdroid.models.MsgCtrl)/msgCtrl">msgCtrl</span><span class="symbol">:</span>&nbsp;<a href="../-msg-ctrl/index.html"><span class="identifier">MsgCtrl</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code><br/>
+<code><span class="keyword">fun </span><span class="identifier">send</span><span class="symbol">(</span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$send(kotlin.ByteArray, com.github.thibaultbee.srtdroid.models.MsgCtrl)/msg">msg</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html"><span class="identifier">ByteArray</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$send(kotlin.ByteArray, com.github.thibaultbee.srtdroid.models.MsgCtrl)/msgCtrl">msgCtrl</span><span class="symbol">:</span>&nbsp;<a href="../-msg-ctrl/index.html"><span class="identifier">MsgCtrl</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code><br/>
+<code><span class="keyword">fun </span><span class="identifier">send</span><span class="symbol">(</span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$send(kotlin.String, com.github.thibaultbee.srtdroid.models.MsgCtrl)/msg">msg</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$send(kotlin.String, com.github.thibaultbee.srtdroid.models.MsgCtrl)/msgCtrl">msgCtrl</span><span class="symbol">:</span>&nbsp;<a href="../-msg-ctrl/index.html"><span class="identifier">MsgCtrl</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>Sends a message to a remote party.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="send-file.html">sendFile</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">sendFile</span><span class="symbol">(</span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$sendFile(kotlin.String, kotlin.Long, kotlin.Long, kotlin.Int)/path">path</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$sendFile(kotlin.String, kotlin.Long, kotlin.Long, kotlin.Int)/offset">offset</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a>&nbsp;<span class="symbol">=</span>&nbsp;0<span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$sendFile(kotlin.String, kotlin.Long, kotlin.Long, kotlin.Int)/size">size</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$sendFile(kotlin.String, kotlin.Long, kotlin.Long, kotlin.Int)/block">block</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;364000<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code><br/>
+<code><span class="keyword">fun </span><span class="identifier">sendFile</span><span class="symbol">(</span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$sendFile(java.io.File, kotlin.Long, kotlin.Long, kotlin.Int)/file">file</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/java/io/File.html"><span class="identifier">File</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$sendFile(java.io.File, kotlin.Long, kotlin.Long, kotlin.Int)/offset">offset</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a>&nbsp;<span class="symbol">=</span>&nbsp;0<span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$sendFile(java.io.File, kotlin.Long, kotlin.Long, kotlin.Int)/size">size</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$sendFile(java.io.File, kotlin.Long, kotlin.Long, kotlin.Int)/block">block</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;364000<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code><br/>
+<code><span class="keyword">fun </span><span class="identifier">sendFile</span><span class="symbol">(</span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$sendFile(java.io.File, kotlin.Int)/file">file</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/java/io/File.html"><span class="identifier">File</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$sendFile(java.io.File, kotlin.Int)/block">block</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;364000<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>Sends a specified file.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="set-sock-flag.html">setSockFlag</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setSockFlag</span><span class="symbol">(</span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$setSockFlag(com.github.thibaultbee.srtdroid.enums.SockOpt, kotlin.Any)/opt">opt</span><span class="symbol">:</span>&nbsp;<a href="../../com.github.thibaultbee.srtdroid.enums/-sock-opt/index.html"><span class="identifier">SockOpt</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$setSockFlag(com.github.thibaultbee.srtdroid.enums.SockOpt, kotlin.Any)/value">value</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html"><span class="identifier">Any</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Sets the value of the given socket option.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

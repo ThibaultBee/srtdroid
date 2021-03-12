@@ -1,0 +1,468 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>SockOpt - lib</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">lib</a>&nbsp;/&nbsp;<a href="../index.html">com.github.thibaultbee.srtdroid.enums</a>&nbsp;/&nbsp;<a href="./index.html">SockOpt</a><br/>
+<br/>
+<h1>SockOpt</h1>
+<code><span class="keyword">enum</span> <span class="keyword">class </span><span class="identifier">SockOpt</span></code>
+<p>Parameter or returned value of <a href="../../com.github.thibaultbee.srtdroid.models/-socket/set-sock-flag.html">Socket.setSockFlag</a> and <a href="../../com.github.thibaultbee.srtdroid.models/-socket/get-sock-flag.html">Socket.getSockFlag</a>.</p>
+<p><strong>See Also:</strong> <a href="https://github.com/Haivision/srt/blob/master/docs/APISocketOptions.md">API Socket Options</a></p>
+<h3>Enum Values</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-m-s-s.html">MSS</a></p>
+</td>
+<td>
+<p>The Maximum Transfer Unit</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-s-n-d-s-y-n.html">SNDSYN</a></p>
+</td>
+<td>
+<p>If sending is blocking</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-r-c-v-s-y-n.html">RCVSYN</a></p>
+</td>
+<td>
+<p>If receiving is blocking</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-i-s-n.html">ISN</a></p>
+</td>
+<td>
+<p>Initial Sequence Number (valid only after srt_connect or srt_accept-ed sockets)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-f-c.html">FC</a></p>
+</td>
+<td>
+<p>Flight flag size (window size)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-s-n-d-b-u-f.html">SNDBUF</a></p>
+</td>
+<td>
+<p>Maximum buffer in sending queue</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-r-c-v-b-u-f.html">RCVBUF</a></p>
+</td>
+<td>
+<p>UDT receiving buffer size</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-l-i-n-g-e-r.html">LINGER</a></p>
+</td>
+<td>
+<p>Waiting for unsent data when closing</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-u-d-p_-s-n-d-b-u-f.html">UDP_SNDBUF</a></p>
+</td>
+<td>
+<p>UDP sending buffer size</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-u-d-p_-r-c-v-b-u-f.html">UDP_RCVBUF</a></p>
+</td>
+<td>
+<p>UDP receiving buffer size</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-r-e-n-d-e-z-v-o-u-s.html">RENDEZVOUS</a></p>
+</td>
+<td>
+<p>Rendezvous connection mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-s-n-d-t-i-m-e-o.html">SNDTIMEO</a></p>
+</td>
+<td>
+<p><a href="../../com.github.thibaultbee.srtdroid.models/-socket/send.html">Socket.send</a> timeout</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-r-c-v-t-i-m-e-o.html">RCVTIMEO</a></p>
+</td>
+<td>
+<p><a href="../../com.github.thibaultbee.srtdroid.models/-socket/recv.html">Socket.recv</a> timeout</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-r-e-u-s-e-a-d-d-r.html">REUSEADDR</a></p>
+</td>
+<td>
+<p>Reuse an existing port or create a new one</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-m-a-x-b-w.html">MAXBW</a></p>
+</td>
+<td>
+<p>Maximum bandwidth (bytes per second) that the connection can use</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-s-t-a-t-e.html">STATE</a></p>
+</td>
+<td>
+<p>Current socket state, see UDTSTATUS, read only</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-e-v-e-n-t.html">EVENT</a></p>
+</td>
+<td>
+<p>Current available events associated with the socket</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-s-n-d-d-a-t-a.html">SNDDATA</a></p>
+</td>
+<td>
+<p>Size of data in the sending buffer</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-r-c-v-d-a-t-a.html">RCVDATA</a></p>
+</td>
+<td>
+<p>Size of data available for recv</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-s-e-n-d-e-r.html">SENDER</a></p>
+</td>
+<td>
+<p>Sender mode (independent of conn mode), for encryption, tsbpd handshake.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-t-s-b-p-d-m-o-d-e.html">TSBPDMODE</a></p>
+</td>
+<td>
+<p>Enable/Disable TsbPd. Enable -&gt; Tx set origin timestamp, Rx deliver packet at origin time + delay</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-l-a-t-e-n-c-y.html">LATENCY</a></p>
+</td>
+<td>
+<p>NOT RECOMMENDED. SET: to both RCVLATENCY and PEERLATENCY. GET: same as RCVLATENCY.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-i-n-p-u-t-b-w.html">INPUTBW</a></p>
+</td>
+<td>
+<p>Estimated input stream rate.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-m-i-n-i-n-p-u-t-b-w.html">MININPUTBW</a></p>
+</td>
+<td>
+<p>Minimum estimate of input stream rate.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-o-h-e-a-d-b-w.html">OHEADBW</a></p>
+</td>
+<td>
+<p>MaxBW ceiling based on % over input stream rate. Applies when UDT_MAXBW=0 (auto).</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-p-a-s-s-p-h-r-a-s-e.html">PASSPHRASE</a></p>
+</td>
+<td>
+<p>Crypto PBKDF2 Passphrase size (0,10..64) 0:disable crypto</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-p-b-k-e-y-l-e-n.html">PBKEYLEN</a></p>
+</td>
+<td>
+<p>Crypto key len in bytes {16,24,32} Default: 16 (128-bit)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-k-m-s-t-a-t-e.html">KMSTATE</a></p>
+</td>
+<td>
+<p>Key Material exchange status (UDT_SRTKmState)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-i-p-t-t-l.html">IPTTL</a></p>
+</td>
+<td>
+<p>IP Time To Live (passthru for system sockopt IPPROTO_IP/IP_TTL)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-i-p-t-o-s.html">IPTOS</a></p>
+</td>
+<td>
+<p>IP Type of Service (passthru for system sockopt IPPROTO_IP/IP_TOS)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-t-l-p-k-t-d-r-o-p.html">TLPKTDROP</a></p>
+</td>
+<td>
+<p>Enable receiver pkt drop</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-s-n-d-d-r-o-p-d-e-l-a-y.html">SNDDROPDELAY</a></p>
+</td>
+<td>
+<p>Extra delay towards latency for sender TLPKTDROP decision (-1 to off)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-n-a-k-r-e-p-o-r-t.html">NAKREPORT</a></p>
+</td>
+<td>
+<p>Enable receiver to send periodic NAK reports</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-v-e-r-s-i-o-n.html">VERSION</a></p>
+</td>
+<td>
+<p>Local SRT Version</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-p-e-e-r-v-e-r-s-i-o-n.html">PEERVERSION</a></p>
+</td>
+<td>
+<p>Peer SRT Version (from SRT Handshake)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-c-o-n-n-t-i-m-e-o.html">CONNTIMEO</a></p>
+</td>
+<td>
+<p>Connect timeout in msec. Caller default: 3000, rendezvous (x 10)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-d-r-i-f-t-t-r-a-c-e-r.html">DRIFTTRACER</a></p>
+</td>
+<td>
+<p>Enable or disable drift tracer</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-s-n-d-k-m-s-t-a-t-e.html">SNDKMSTATE</a></p>
+</td>
+<td>
+<p>(GET) the current state of the encryption at the peer side</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-r-c-v-k-m-s-t-a-t-e.html">RCVKMSTATE</a></p>
+</td>
+<td>
+<p>(GET) the current state of the encryption at the agent side</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-l-o-s-s-m-a-x-t-t-l.html">LOSSMAXTTL</a></p>
+</td>
+<td>
+<p>Maximum possible packet reorder tolerance (number of packets to receive after loss to send lossreport)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-r-c-v-l-a-t-e-n-c-y.html">RCVLATENCY</a></p>
+</td>
+<td>
+<p>TsbPd receiver delay (mSec) to absorb burst of missed packet retransmission</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-p-e-e-r-l-a-t-e-n-c-y.html">PEERLATENCY</a></p>
+</td>
+<td>
+<p>Minimum value of the TsbPd receiver delay (mSec) for the opposite side (peer)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-m-i-n-v-e-r-s-i-o-n.html">MINVERSION</a></p>
+</td>
+<td>
+<p>Minimum SRT version needed for the peer (peers with less version will get connection reject)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-s-t-r-e-a-m-i-d.html">STREAMID</a></p>
+</td>
+<td>
+<p>A string set to a socket and passed to the listener's accepted socket</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-c-o-n-g-e-s-t-i-o-n.html">CONGESTION</a></p>
+</td>
+<td>
+<p>Congestion controller type selection</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-m-e-s-s-a-g-e-a-p-i.html">MESSAGEAPI</a></p>
+</td>
+<td>
+<p>In File mode, use message API (portions of data with boundaries)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-p-a-y-l-o-a-d-s-i-z-e.html">PAYLOADSIZE</a></p>
+</td>
+<td>
+<p>Maximum payload size sent in one UDP packet (0 if unlimited)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-t-r-a-n-s-t-y-p-e.html">TRANSTYPE</a></p>
+</td>
+<td>
+<p>Transmission type (set of options required for given transmission type)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-k-m-r-e-f-r-e-s-h-r-a-t-e.html">KMREFRESHRATE</a></p>
+</td>
+<td>
+<p>After sending how many packets the encryption key should be flipped to the new key</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-k-m-p-r-e-a-n-n-o-u-n-c-e.html">KMPREANNOUNCE</a></p>
+</td>
+<td>
+<p>How many packets before key flip the new key is annnounced and after key flip the old one decommissioned</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-e-n-f-o-r-c-e-d-e-n-c-r-y-p-t-i-o-n.html">ENFORCEDENCRYPTION</a></p>
+</td>
+<td>
+<p>Connection to be rejected or quickly broken when one side encryption set or bad password</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-i-p-v6-o-n-l-y.html">IPV6ONLY</a></p>
+</td>
+<td>
+<p>IPV6_V6ONLY mode</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-p-e-e-r-i-d-l-e-t-i-m-e-o.html">PEERIDLETIMEO</a></p>
+</td>
+<td>
+<p>Peer-idle timeout (max time of silence heard from peer) in ms</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-b-i-n-d-t-o-d-e-v-i-c-e.html">BINDTODEVICE</a></p>
+</td>
+<td>
+<p>Forward the <a href="-b-i-n-d-t-o-d-e-v-i-c-e.html">BINDTODEVICE</a> option on socket (pass packets only from that device)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-p-a-c-k-e-t-f-i-l-t-e-r.html">PACKETFILTER</a></p>
+</td>
+<td>
+<p>Add and configure a packet filter</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-r-e-t-r-a-n-s-m-i-t-a-l-g-o.html">RETRANSMITALGO</a></p>
+</td>
+<td>
+<p>An option to select packet retransmission algorithm</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

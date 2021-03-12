@@ -1,0 +1,193 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>RejectReasonCode - lib</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">lib</a>&nbsp;/&nbsp;<a href="../index.html">com.github.thibaultbee.srtdroid.enums</a>&nbsp;/&nbsp;<a href="./index.html">RejectReasonCode</a><br/>
+<br/>
+<h1>RejectReasonCode</h1>
+<code><span class="keyword">enum</span> <span class="keyword">class </span><span class="identifier">RejectReasonCode</span></code>
+<p>Internal reject reason for <a href="../../com.github.thibaultbee.srtdroid.models.rejectreason/-internal-reject-reason/index.html">InternalRejectReason</a>.</p>
+<p><strong>See Also:</strong> <a href="https://github.com/Haivision/srt/blob/master/docs/API-functions.md#rejection-reasons-1">Reject Reasons</a></p>
+<h3>Enum Values</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-u-n-k-n-o-w-n.html">UNKNOWN</a></p>
+</td>
+<td>
+<p>Initial set when in progress</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-s-y-s-t-e-m.html">SYSTEM</a></p>
+</td>
+<td>
+<p>Broken due to system function error</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-p-e-e-r.html">PEER</a></p>
+</td>
+<td>
+<p>Connection was rejected by peer</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-r-e-s-o-u-r-c-e.html">RESOURCE</a></p>
+</td>
+<td>
+<p>Internal problem with resource allocation</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-r-o-g-u-e.html">ROGUE</a></p>
+</td>
+<td>
+<p>Incorrect data in handshake messages</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-b-a-c-k-l-o-g.html">BACKLOG</a></p>
+</td>
+<td>
+<p>Listener's backlog exceeded</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-i-p-e.html">IPE</a></p>
+</td>
+<td>
+<p>Internal program error</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-c-l-o-s-e.html">CLOSE</a></p>
+</td>
+<td>
+<p>Socket is closing</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-v-e-r-s-i-o-n.html">VERSION</a></p>
+</td>
+<td>
+<p>Peer is older version than agent's minimum set</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-r-d-v-c-o-o-k-i-e.html">RDVCOOKIE</a></p>
+</td>
+<td>
+<p>Rendezvous cookie collision</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-b-a-d-s-e-c-r-e-t.html">BADSECRET</a></p>
+</td>
+<td>
+<p>Wrong password</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-u-n-s-e-c-u-r-e.html">UNSECURE</a></p>
+</td>
+<td>
+<p>Password required or unexpected</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-m-e-s-s-a-g-e-a-p-i.html">MESSAGEAPI</a></p>
+</td>
+<td>
+<p>Streamapi/messageapi collision</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-c-o-n-g-e-s-t-i-o-n.html">CONGESTION</a></p>
+</td>
+<td>
+<p>Incompatible congestion-controller type</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-f-i-l-t-e-r.html">FILTER</a></p>
+</td>
+<td>
+<p>Incompatible packet filter</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-g-r-o-u-p.html">GROUP</a></p>
+</td>
+<td>
+<p>Incompatible group</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-t-i-m-e-o-u-t.html">TIMEOUT</a></p>
+</td>
+<td>
+<p>Connection timeout</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="to-string.html">toString</a></p>
+</td>
+<td>
+<code><span class="keyword">external</span> <span class="keyword">fun </span><span class="identifier">toString</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a></code>
+<p>Returns a string for the reason of the connection reject.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Companion Object Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-p-r-e-d-e-f-i-n-e-d_-o-f-f-s-e-t.html">PREDEFINED_OFFSET</a></p>
+</td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">PREDEFINED_OFFSET</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>Standard server error codes offset</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-u-s-e-r-d-e-f-i-n-e-d_-o-f-f-s-e-t.html">USERDEFINED_OFFSET</a></p>
+</td>
+<td>
+<code><span class="keyword">const</span> <span class="keyword">val </span><span class="identifier">USERDEFINED_OFFSET</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>User defined error codes offset</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>
