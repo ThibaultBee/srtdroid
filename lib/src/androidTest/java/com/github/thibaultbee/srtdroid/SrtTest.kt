@@ -22,19 +22,15 @@ class SrtTest {
 
     @Test
     fun startCleanTest() {
-        val srt = Srt()
-
-        assert(srt.startUp() >= 0)
-        srt.setLogLevel(3)
-        assertEquals(0, srt.cleanUp())
+        assert(Srt.startUp() >= 0)
+        Srt.setLogLevel(3)
+        assertEquals(0, Srt.cleanUp())
     }
 
     @Test
     fun getVersionTest() {
-        val srt = Srt()
-
-        assert(srt.startUp() >= 0)
-        assert(srt.version > 0)
-        assertEquals(0, srt.cleanUp())
+        assert(Srt.startUp() >= 0)
+        assert(Srt.version > 0)
+        assertEquals(0, Srt.cleanUp())
     }
 }

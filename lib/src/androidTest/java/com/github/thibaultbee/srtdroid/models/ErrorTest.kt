@@ -33,19 +33,18 @@ import java.net.SocketException
 
 @RunWith(AndroidJUnit4::class)
 class ErrorTest {
-    private val srt = Srt()
     private var socket = Socket()
 
     @Before
     fun setUp() {
-        assert(srt.startUp() >= 0)
+        assert(Srt.startUp() >= 0)
     }
 
     @After
     fun tearDown() {
         if (socket.isValid)
             socket.close()
-        assertEquals(srt.cleanUp(), 0)
+        assertEquals(Srt.cleanUp(), 0)
     }
 
     @Test

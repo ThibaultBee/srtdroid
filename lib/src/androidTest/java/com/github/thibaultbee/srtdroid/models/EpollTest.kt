@@ -25,13 +25,12 @@ import org.junit.Before
 import org.junit.Test
 
 class EpollTest {
-    private val srt = Srt()
     private lateinit var epoll: Epoll
     private lateinit var socket: Socket
 
     @Before
     fun setUp() {
-        assert(srt.startUp() >= 0)
+        assert(Srt.startUp() >= 0)
         epoll = Epoll()
         assertTrue(epoll.isValid)
     }
@@ -44,7 +43,7 @@ class EpollTest {
             if (socket.isValid)
                 socket.close()
         }
-        assertEquals(srt.cleanUp(), 0)
+        assertEquals(Srt.cleanUp(), 0)
     }
 
     @Test

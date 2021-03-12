@@ -18,7 +18,7 @@ package com.github.thibaultbee.srtdroid
 /**
  * This class provides main SRT control. Before calling any other SRT API, you shall call [startUp].
  */
-class Srt {
+object Srt {
     init {
         System.loadLibrary("jnisrt")
     }
