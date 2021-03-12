@@ -1138,7 +1138,7 @@ class Socket : Closeable {
      * @return true if the SRT socket is closed, otherwise false
      */
     val isClose: Boolean
-        get() = (sockState == SockStatus.CLOSED) || (sockState == SockStatus.NONEXIST)
+        get() = (sockState == SockStatus.CLOSED) || (sockState == SockStatus.NON_EXIST)
 
     /**
      * Tests if the SRT socket is connected.

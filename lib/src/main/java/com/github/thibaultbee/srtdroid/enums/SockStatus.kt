@@ -15,14 +15,56 @@
  */
 package com.github.thibaultbee.srtdroid.enums
 
+import com.github.thibaultbee.srtdroid.models.Socket
+
+/**
+ * SRT socket status (from [Socket.sockState]).
+ *
+ * **See Also:** [srt_getsockstate](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_getsockstate)
+ */
 enum class SockStatus {
+    /**
+     * Created, but not bound.
+     */
     INIT,
+
+    /**
+     * Created and bound, but not in use yet.
+     */
     OPENED,
+
+    /**
+     * Socket is in listening state.
+     */
     LISTENING,
+
+    /**
+     * The connect operation was initiated, but not yet finished.
+     */
     CONNECTING,
+
+    /**
+     * The socket is connected and ready for transmission.
+     */
     CONNECTED,
+
+    /**
+     * The socket was connected, but the connection was broken.
+     */
     BROKEN,
+
+    /**
+     * The socket may still be open and active, but closing is requested.
+     */
     CLOSING,
+
+    /**
+     * The socket has been closed, but not yet removed by the GC thread.
+     */
     CLOSED,
-    NONEXIST
+
+    /**
+     * The specified number does not correspond to a valid socket.
+     */
+    NON_EXIST
 }
