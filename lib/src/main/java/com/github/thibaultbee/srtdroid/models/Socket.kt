@@ -46,7 +46,9 @@ class Socket : Closeable {
 
     /**
      * Deprecated version of [Socket] constructor. Argument is ignored.
-     * You shall assert that the SRT socket is valid with [isValid]
+     * Also, it crashes on old Android version (where [StandardProtocolFamily] does not exist).
+     *
+     * You shall assert that the SRT socket is valid with [isValid].
      *
      * **See Also:** [srt_socket](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_socket)
      */
@@ -59,6 +61,7 @@ class Socket : Closeable {
 
     /**
      * Creates an SRT socket.
+     *
      * You shall assert that the SRT socket is valid with [isValid]
      *
      * **See Also:** [srt_create_socket](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_create_socket)
