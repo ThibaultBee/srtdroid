@@ -24,16 +24,14 @@ import org.junit.Test
 
 
 class TimeTest {
-    private val srt = Srt()
-
     @Before
     fun setUp() {
-        assert(srt.startUp() >= 0)
+        assert(Srt.startUp() >= 0)
     }
 
     @After
     fun tearDown() {
-        assertEquals(srt.cleanUp(), 0)
+        assertEquals(Srt.cleanUp(), 0)
     }
 
     @Test

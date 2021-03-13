@@ -1,0 +1,8 @@
+$dokka.format:html
+$dokka.linkExtension:html
+
+com.github.thibaultbee.srtdroid
+com.github.thibaultbee.srtdroid.enums
+com.github.thibaultbee.srtdroid.interfaces
+com.github.thibaultbee.srtdroid.models
+com.github.thibaultbee.srtdroid.models.rejectreason

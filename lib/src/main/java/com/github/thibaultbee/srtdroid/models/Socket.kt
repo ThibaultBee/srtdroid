@@ -15,7 +15,6 @@
  */
 package com.github.thibaultbee.srtdroid.models
 
-import android.util.Log
 import android.util.Pair
 import com.github.thibaultbee.srtdroid.enums.ErrorType
 import com.github.thibaultbee.srtdroid.enums.RejectReasonCode
@@ -29,12 +28,30 @@ import com.github.thibaultbee.srtdroid.models.rejectreason.UserDefinedRejectReas
 import java.io.*
 import java.net.*
 
-class Socket: Closeable {
+/**
+ * This class represents a SRT socket.
+ */
+class Socket : Closeable {
+    /**
+     * Sets up the SRT socket listener. Use it to monitor SRT socket connection.
+     *
+     * **See Also:** [srt_connect_callback](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_connect_callback)
+     *
+     * @see [SocketInterface]
+     */
     var socketInterface: SocketInterface? = null
     private var srtsocket: Int
 
     private external fun socket(af: StandardProtocolFamily, type: Int, protocol: Int): Int
 
+    /**
+     * Deprecated version of [Socket] constructor. Argument is ignored.
+     * Also, it crashes on old Android version (where [StandardProtocolFamily] does not exist).
+     *
+     * You shall assert that the SRT socket is valid with [isValid].
+     *
+     * **See Also:** [srt_socket](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_socket)
+     */
     @Deprecated(message = "Use Socket() instead", replaceWith = ReplaceWith("Socket()"))
     constructor(af: StandardProtocolFamily) {
         srtsocket = socket(af, 0, 0)
@@ -42,6 +59,13 @@ class Socket: Closeable {
 
     private external fun createSocket(): Int
 
+    /**
+     * Creates an SRT socket.
+     *
+     * You shall assert that the SRT socket is valid with [isValid]
+     *
+     * **See Also:** [srt_create_socket](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_create_socket)
+     */
     constructor() {
         srtsocket = createSocket()
     }
@@ -51,24 +75,76 @@ class Socket: Closeable {
     }
 
     private external fun nativeIsValid(): Boolean
+
+    /**
+     * Check if the SRT socket is a valid SRT socket.
+     *
+     * @return true if the SRT socket is valid, otherwise false
+     */
     val isValid: Boolean
         get() = nativeIsValid()
 
     private external fun nativeBind(address: InetSocketAddress): Int
+
+    /**
+     * Binds the socket to a local address.
+     *
+     * **See Also:** [srt_bind](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_bind)
+     *
+     * @param address the [InetSocketAddress] to bind to
+     *
+     * @throws BindException if bind has failed
+     */
     fun bind(address: InetSocketAddress) {
         if (nativeBind(address) != 0) {
             throw BindException(Error.lastErrorMessage)
         }
     }
 
+    /**
+     * Binds the socket to a local address.
+     *
+     * **See Also:** [srt_bind](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_bind)
+     *
+     * @param address the address to bind to
+     * @param port the port to bind to
+     * @throws BindException if bind has failed
+     */
     fun bind(address: String, port: Int) = bind(InetSocketAddress(address, port))
+
+    /**
+     * Binds the socket to a local address.
+     *
+     * **See Also:** [srt_bind](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_bind)
+     *
+     * @param address the [InetAddress] to bind to
+     * @param port the port to bind to
+     *
+     * @throws BindException if bind has failed
+     */
     fun bind(address: InetAddress, port: Int) = bind(InetSocketAddress(address, port))
 
     private external fun nativeGetSockState(): SockStatus
+
+    /**
+     * Gets the current status of the socket.
+     *
+     * **See Also:** [srt_getsockstate](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_getsockstate)
+     *
+     * @return the current [SockStatus]
+     */
     val sockState: SockStatus
         get() = nativeGetSockState()
 
     private external fun nativeClose(): Int
+
+    /**
+     * Closes the socket or group and frees all used resources.
+     *
+     * **See Also:** [srt_close](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_close)
+     *
+     * @throws SocketException if close failed
+     */
     override fun close() {
         if (nativeClose() != 0) {
             throw SocketException(Error.lastErrorMessage)
@@ -76,6 +152,11 @@ class Socket: Closeable {
     }
 
     // Connecting
+    /**
+     * Internal method. Do not use, use [SocketInterface.onListen] instead.
+     *
+     * @see [socketInterface]
+     */
     fun onListen(
         ns: Socket,
         hsVersion: Int,
@@ -87,6 +168,16 @@ class Socket: Closeable {
     }
 
     private external fun nativeListen(backlog: Int): Int
+
+    /**
+     * Sets up the listening state on a socket.
+     *
+     * **See Also:** [srt_listen](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_listen)
+     *
+     * @param backlog the number of sockets that may be allowed to wait until they are accepted
+     * @throws SocketException if listen failed
+     * @see [socketInterface]
+     */
     fun listen(backlog: Int) {
         if (nativeListen(backlog) != 0) {
             throw SocketException(Error.lastErrorMessage)
@@ -94,6 +185,15 @@ class Socket: Closeable {
     }
 
     private external fun nativeAccept(): Pair<Socket, InetSocketAddress?>
+
+    /**
+     * Accepts a pending connection.
+     *
+     * **See Also:** [srt_accept](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_accept)
+     *
+     * @return a pair containing the new Socket connection and the IP address and port specification of the remote device.
+     * @throws SocketException if returned SRT socket is not valid
+     */
     fun accept(): Pair<Socket, InetSocketAddress?> {
         val pair = nativeAccept()
         if (!pair.first.isValid) {
@@ -103,13 +203,41 @@ class Socket: Closeable {
     }
 
     private external fun nativeConnect(address: InetSocketAddress): Int
+
+    /**
+     * Connects a socket to a specified address and port.
+     *
+     * **See Also:** [srt_connect](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_connect)
+     *
+     * @param address the [InetSocketAddress] to connect to
+     * @throws ConnectException if connection has failed
+     */
     fun connect(address: InetSocketAddress) {
         if (nativeConnect(address) != 0) {
             throw ConnectException(Error.lastErrorMessage)
         }
     }
 
+    /**
+     * Connects a socket to a specified address and port.
+     *
+     * **See Also:** [srt_connect](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_connect)
+     *
+     * @param address the address to connect to
+     * @param port the port to connect to
+     * @throws ConnectException if connection has failed
+     */
     fun connect(address: String, port: Int) = connect(InetSocketAddress(address, port))
+
+    /**
+     * Connects a socket to a specified address and port.
+     *
+     * **See Also:** [srt_connect](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_connect)
+     *
+     * @param address the [InetAddress] to connect to
+     * @param port the port to connect to
+     * @throws ConnectException if connection has failed
+     */
     fun connect(address: InetAddress, port: Int) = connect(InetSocketAddress(address, port))
 
     private external fun nativeRendezVous(
@@ -117,6 +245,15 @@ class Socket: Closeable {
         remoteAddress: InetSocketAddress
     ): Int
 
+    /**
+     * Performs a rendezvous connection.
+     *
+     * **See Also:** [srt_rendezvous](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_rendezvous)
+     *
+     * @param localAddress the local [InetSocketAddress] to bind to
+     * @param remoteAddress the remote [InetSocketAddress] to connect to
+     * @throws SocketException if rendezvous connection has failed
+     */
     fun rendezVous(
         localAddress: InetSocketAddress,
         remoteAddress: InetSocketAddress
@@ -126,34 +263,139 @@ class Socket: Closeable {
         }
     }
 
+    /**
+     * Performs a rendezvous connection.
+     *
+     * **See Also:** [srt_rendezvous](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_rendezvous)
+     *
+     * @param localAddress the local address to bind to
+     * @param remoteAddress the remote address to connect to
+     * @throws SocketException if rendezvous connection has failed
+     */
     fun rendezVous(localAddress: String, remoteAddress: String, port: Int) = rendezVous(
+        InetSocketAddress(localAddress, port),
+        InetSocketAddress(remoteAddress, port)
+    )
+
+    /**
+     * Performs a rendezvous connection.
+     *
+     * **See Also:** [srt_rendezvous](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_rendezvous)
+     *
+     * @param localAddress the local [InetAddress] to bind to
+     * @param remoteAddress the remote [InetAddress] to connect to
+     * @throws SocketException if rendezvous connection has failed
+     */
+    fun rendezVous(localAddress: InetAddress, remoteAddress: InetAddress, port: Int) = rendezVous(
         InetSocketAddress(localAddress, port),
         InetSocketAddress(remoteAddress, port)
     )
 
     // Options and properties
     private external fun nativeGetPeerName(): InetSocketAddress?
-    val peerName: InetSocketAddress?
-        get() = nativeGetPeerName()
-    val inetAddress: InetAddress?
-        get() = peerName?.address
+
+    /**
+     * Retrieves the remote [InetSocketAddress] to which the SRT socket is connected.
+     *
+     * **See Also:** [srt_getpeername](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_getpeername)
+     *
+     * @return the remote [InetSocketAddress] if SRT socket is connected and valid. Otherwise, it returns a null.
+     * @see [inetAddress] and [port]
+     * @throws [SocketException] if SRT socket is invalid or not connected
+     */
+    val peerName: InetSocketAddress
+        get() = nativeGetPeerName() ?: throw SocketException(Error.lastErrorMessage)
+
+    /**
+     * Retrieves the [InetAddress] to which the socket is connected.
+     *
+     * **See Also:** [srt_getpeername](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_getpeername)
+     *
+     * @return the remote [InetAddress] if SRT socket is connected and valid. Otherwise, it returns a null.
+     * @see [peerName] and [port]
+     * @throws [SocketException] if SRT socket is invalid or not connected
+     */
+    val inetAddress: InetAddress
+        get() = peerName.address
+
+    /**
+     * Retrieves the port to which the SRT socket is connected.
+     *
+     * **See Also:** [srt_getpeername](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_getpeername)
+     *
+     * @return the remote port if SRT socket is connected and valid. Otherwise, it returns a 0.
+     * @see [peerName] and [inetAddress]
+     * @throws [SocketException] if SRT socket is invalid or not connected
+     */
     val port: Int
-        get() = peerName?.port ?: 0
+        get() = peerName.port
 
     private external fun nativeGetSockName(): InetSocketAddress?
-    val sockName: InetSocketAddress?
-        get() = nativeGetSockName()
-    val localAddress: InetAddress?
-        get() = sockName?.address
-    val localPort: Int
-        get() = sockName?.port ?: 0
 
-    private external fun nativeGetSockFlag(opt: SockOpt): Any
+    /**
+     * Extracts the [InetSocketAddress] to which the socket was bound.
+     *
+     * **See Also:** [srt_getsockname](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_getsockname)
+     *
+     * @return if socket is bound and valid, it returns the local [InetSocketAddress]. Otherwise, it returns a null.
+     * @throws [SocketException] if SRT socket is invalid or not bound
+     * @see [localAddress] and [localPort]
+     */
+    val sockName: InetSocketAddress
+        get() = nativeGetSockName() ?: throw SocketException(Error.lastErrorMessage)
+
+    /**
+     * Extracts the [InetAddress] to which the socket was bound.
+     *
+     * **See Also:** [srt_getsockname](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_getsockname)
+     *
+     * @return if socket is bound and valid, it returns the local [InetAddress]. Otherwise, it returns a null.
+     * @throws [SocketException] if SRT socket is invalid or not bound
+     * @see [sockName] and [localPort]
+     */
+    val localAddress: InetAddress
+        get() = sockName.address
+
+    /**
+     * Extracts the port to which the socket was bound.
+     *
+     * **See Also:** [srt_getsockname](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_getsockname)
+     *
+     * @return if socket is bound and valid, it returns the local port. Otherwise, it returns a 0.
+     * @throws [SocketException] if SRT socket is invalid or not bound
+     * @see [sockName] and [localPort]
+     */
+    val localPort: Int
+        get() = sockName.port
+
+    private external fun nativeGetSockFlag(opt: SockOpt): Any?
+
+    /**
+     * Gets the value of the given socket option.
+     *
+     * **See Also:** [srt_getsockflag](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_getsockflag)
+     *
+     * @param opt the [SockOpt] to get
+     * @return an object containing the [SockOpt] value. Type depends of the specified [opt].
+     * @throws IOException if can't get [SockOpt]
+     * @see [setSockFlag]
+     */
     fun getSockFlag(opt: SockOpt): Any {
         return nativeGetSockFlag(opt) ?: throw IOException(Error.lastErrorMessage)
     }
 
     private external fun nativeSetSockFlag(opt: SockOpt, value: Any): Int
+
+    /**
+     * Sets the value of the given socket option.
+     *
+     * **See Also:** [srt_setsockflag](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_setsockflag)
+     *
+     * @param opt the [SockOpt] to set
+     * @param value the [SockOpt] value to set. Type depends of the specified [opt].
+     * @throws IOException if can't set [SockOpt]
+     * @see [getSockFlag]
+     */
     fun setSockFlag(opt: SockOpt, value: Any) {
         if (nativeSetSockFlag(opt, value) != 0) {
             throw IOException(Error.lastErrorMessage)
@@ -163,6 +405,20 @@ class Socket: Closeable {
     // Transmission
     // Send
     private external fun nativeSend(msg: ByteArray, offset: Int, size: Int): Int
+
+    /**
+     * Sends a message to a remote party.
+     *
+     * **See Also:** [srt_send](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_send)
+     *
+     * @param msg the [ByteArray] to send
+     * @param offset the offset of the [msg]
+     * @param size the size of the [msg] to send
+     * @return the number of byte sent
+     * @throws SocketException if it has failed to send message
+     * @throws SocketTimeoutException if a timeout has been triggered
+     * @see [recv]
+     */
     fun send(msg: ByteArray, offset: Int, size: Int): Int {
         val byteSent = nativeSend(msg, offset, size)
         when {
@@ -176,7 +432,30 @@ class Socket: Closeable {
         }
     }
 
+    /**
+     * Sends a message to a remote party.
+     *
+     * **See Also:** [srt_send](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_send)
+     *
+     * @param msg the [ByteArray] to send
+     * @return the number of byte sent
+     * @throws SocketException if it has failed to send message
+     * @throws SocketTimeoutException if a timeout has been triggered
+     * @see [recv]
+     */
     fun send(msg: ByteArray) = send(msg, 0, msg.size)
+
+    /**
+     * Sends a message to a remote party.
+     *
+     * **See Also:** [srt_send](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_send)
+     *
+     * @param msg the [String] to send
+     * @return the number of byte sent
+     * @throws SocketException if it has failed to send message
+     * @throws SocketTimeoutException if a timeout has been triggered
+     * @see [recv]
+     */
     fun send(msg: String) = send(msg.toByteArray())
 
     private external fun nativeSend(
@@ -187,6 +466,21 @@ class Socket: Closeable {
         inOrder: Boolean = false
     ): Int
 
+    /**
+     * Sends a message to a remote party.
+     *
+     * **See Also:** [srt_sendmsg](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_sendmsg)
+     *
+     * @param msg the [ByteArray] to send
+     * @param offset the offset of the [msg]
+     * @param size the size of the [msg] to send
+     * @param ttl the time (in ms) to wait for a successful delivery. -1 means no time limitation.
+     * @param inOrder Required to be received in the order of sending.
+     * @return the number of byte sent
+     * @throws SocketException if it has failed to send message
+     * @throws SocketTimeoutException if a timeout has been triggered
+     * @see [recv]
+     */
     fun send(
         msg: ByteArray,
         offset: Int,
@@ -206,13 +500,54 @@ class Socket: Closeable {
         }
     }
 
+    /**
+     * Sends a message to a remote party.
+     *
+     * **See Also:** [srt_sendmsg](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_sendmsg)
+     *
+     * @param msg the [ByteArray] to send
+     * @param ttl the time (in ms) to wait for a successful delivery. -1 means no time limitation.
+     * @param inOrder Required to be received in the order of sending.
+     * @return the number of byte sent
+     * @throws SocketException if it has failed to send message
+     * @throws SocketTimeoutException if a timeout has been triggered
+     * @see [recv]
+     */
     fun send(msg: ByteArray, ttl: Int = -1, inOrder: Boolean = false) =
         send(msg, 0, msg.size, ttl, inOrder)
 
+    /**
+     * Sends a message to a remote party.
+     *
+     * **See Also:** [srt_sendmsg](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_sendmsg)
+     *
+     * @param msg the [String] to send
+     * @param ttl the time (in ms) to wait for a successful delivery. -1 means no time limitation.
+     * @param inOrder Required to be received in the order of sending.
+     * @return the number of byte sent
+     * @throws SocketException if it has failed to send message
+     * @throws SocketTimeoutException if a timeout has been triggered
+     * @see [recv]
+     */
     fun send(msg: String, ttl: Int = -1, inOrder: Boolean = false) =
         send(msg.toByteArray(), ttl, inOrder)
 
     private external fun nativeSend(msg: ByteArray, offset: Int, size: Int, msgCtrl: MsgCtrl): Int
+
+    /**
+     * Sends a message to a remote party.
+     *
+     * **See Also:** [srt_sendmsg2](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_sendmsg2)
+     *
+     * @param msg the [ByteArray] to send
+     * @param offset the offset of the [msg]
+     * @param size the size of the [msg] to send
+     * @param msgCtrl the [MsgCtrl] that contains extra parameter
+     * @return the number of byte sent
+     * @throws SocketException if it has failed to send message
+     * @throws SocketTimeoutException if a timeout has been triggered
+     * @see [recv]
+     */
     fun send(msg: ByteArray, offset: Int, size: Int, msgCtrl: MsgCtrl): Int {
         val byteSent = nativeSend(msg, offset, size, msgCtrl)
         when {
@@ -226,9 +561,43 @@ class Socket: Closeable {
         }
     }
 
+    /**
+     * Sends a message to a remote party.
+     *
+     * **See Also:** [srt_sendmsg2](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_sendmsg2)
+     *
+     * @param msg the [ByteArray] to send
+     * @param msgCtrl the [MsgCtrl] that contains extra parameter
+     * @return the number of byte sent
+     * @throws SocketException if it has failed to send message
+     * @throws SocketTimeoutException if a timeout has been triggered
+     * @see [recv]
+     */
     fun send(msg: ByteArray, msgCtrl: MsgCtrl) = send(msg, 0, msg.size, msgCtrl)
+
+    /**
+     * Sends a message to a remote party.
+     *
+     * **See Also:** [srt_sendmsg2](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_sendmsg2)
+     *
+     * @param msg the [String] to send
+     * @param msgCtrl the [MsgCtrl] that contains extra parameter
+     * @return the number of byte sent
+     * @throws SocketException if it has failed to send message
+     * @throws SocketTimeoutException if a timeout has been triggered
+     * @see [recv]
+     */
     fun send(msg: String, msgCtrl: MsgCtrl) = send(msg.toByteArray(), msgCtrl)
 
+    /**
+     * Returns an output stream for this socket.
+     *
+     * **See Also:** [srt_sendmsg2](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_sendmsg2)
+     *
+     * @param msgCtrl the [MsgCtrl] that contains extra parameter
+     * @return an output stream for writing bytes to this socket.
+     * @see [getInputStream]
+     */
     fun getOutputStream(msgCtrl: MsgCtrl? = null) =
         SrtSocketOutputStream(this, msgCtrl) as OutputStream
 
@@ -278,6 +647,17 @@ class Socket: Closeable {
 
     // Recv
     private external fun nativeRecv(size: Int): Pair<Int, ByteArray>
+
+    /**
+     * Received a message from a remote device
+     *
+     * **See Also:** [srt_recv](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_recv)
+     *
+     * @param size Size of the expected message.
+     * @return a pair containing the number of bytes received and the [ByteArray] message.
+     * @throws SocketException if it has failed to send message
+     * @throws SocketTimeoutException if a timeout has been triggered
+     */
     fun recv(size: Int): Pair<Int, ByteArray> {
         val pair = nativeRecv(size)
         val byteReceived = pair.first
@@ -298,6 +678,18 @@ class Socket: Closeable {
         byteCount: Int
     ): Pair<Int, ByteArray>
 
+    /**
+     * Received a message from a remote device
+     *
+     * **See Also:** [srt_recv](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_recv)
+     *
+     * @param buffer the [ByteArray] where received data are copied to.
+     * @param offset the offset in the specified [buffer].
+     * @param byteCount the size of the specified [buffer].
+     * @return a pair containing the number of bytes received and the [ByteArray] message. The [ByteArray] points to the [buffer].
+     * @throws SocketException if it has failed to send message
+     * @throws SocketTimeoutException if a timeout has been triggered
+     */
     fun recv(buffer: ByteArray, offset: Int, byteCount: Int): Pair<Int, ByteArray> {
         val pair = nativeRecv(buffer, offset, byteCount)
         val byteReceived = pair.first
@@ -313,6 +705,18 @@ class Socket: Closeable {
     }
 
     private external fun nativeRecv(size: Int, msgCtrl: MsgCtrl): Pair<Int, ByteArray>
+
+    /**
+     * Received a message from a remote device
+     *
+     * **See Also:** [srt_recvmsg2](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_recvmsg2)
+     *
+     * @param size Size of the expected message.
+     * @param msgCtrl the [MsgCtrl] that contains extra parameter
+     * @return a pair containing the number of bytes received and the [ByteArray] message.
+     * @throws SocketException if it has failed to send message
+     * @throws SocketTimeoutException if a timeout has been triggered
+     */
     fun recv(size: Int, msgCtrl: MsgCtrl): Pair<Int, ByteArray> {
         val pair = nativeRecv(size, msgCtrl)
         val byteReceived = pair.first
@@ -331,14 +735,27 @@ class Socket: Closeable {
         buffer: ByteArray,
         offset: Int,
         byteCount: Int,
-        msgCtrl: MsgCtrl?
+        msgCtrl: MsgCtrl
     ): Pair<Int, ByteArray>
 
+    /**
+     * Received a message from a remote device
+     *
+     * **See Also:** [srt_recvmsg2](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_recvmsg2)
+     *
+     * @param buffer the [ByteArray] where received data are copied to.
+     * @param offset the offset in the specified [buffer].
+     * @param byteCount the size of the specified [buffer].
+     * @param msgCtrl the [MsgCtrl] that contains extra parameter
+     * @return a pair containing the number of bytes received and the [ByteArray] message. The [ByteArray] points to the [buffer].
+     * @throws SocketException if it has failed to send message
+     * @throws SocketTimeoutException if a timeout has been triggered
+     */
     fun recv(
         buffer: ByteArray,
         offset: Int,
         byteCount: Int,
-        msgCtrl: MsgCtrl?
+        msgCtrl: MsgCtrl
     ): Pair<Int, ByteArray> {
         val pair = nativeRecv(buffer, offset, byteCount, msgCtrl)
         val byteReceived = pair.first
@@ -353,6 +770,15 @@ class Socket: Closeable {
         }
     }
 
+    /**
+     * Returns an input stream for this socket.
+     *
+     * **See Also:** [srt_recvmsg2](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_recvmsg2)
+     *
+     * @param msgCtrl the [MsgCtrl] that contains extra parameter
+     * @return an input stream for reading bytes from this socket.
+     * @see [getOutputStream]
+     */
     fun getInputStream(msgCtrl: MsgCtrl? = null) =
         SrtSocketInputStream(this, msgCtrl) as InputStream
 
@@ -405,6 +831,20 @@ class Socket: Closeable {
         block: Int = 364000
     ): Long
 
+    /**
+     * Sends a specified file.
+     *
+     * **See Also:** [srt_sendfile](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_sendfile)
+     *
+     * @param path the path of the file to send
+     * @param offset the offset used to read file from
+     * @param size the size of the file
+     * @param block the size of the single block to read at once before writing it to a file
+     * @return the size (>0) of the transmitted data of a file.
+     * @throws SocketException if it has failed to send message
+     * @throws SocketTimeoutException if a timeout has been triggered
+     * @see [recvFile]
+     */
     fun sendFile(path: String, offset: Long = 0, size: Long, block: Int = 364000): Long {
         val byteSent = nativeSendFile(path, offset, size, block)
         when {
@@ -418,9 +858,35 @@ class Socket: Closeable {
         }
     }
 
+    /**
+     * Sends a specified file.
+     *
+     * **See Also:** [srt_sendfile](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_sendfile)
+     *
+     * @param file the [File] to send
+     * @param offset the offset used to read file from
+     * @param size the size of the file
+     * @param block the size of the single block to read at once before writing it to a file
+     * @return the size (>0) of the transmitted data of a file.
+     * @throws SocketException if it has failed to send message
+     * @throws SocketTimeoutException if a timeout has been triggered
+     * @see [recvFile]
+     */
     fun sendFile(file: File, offset: Long = 0, size: Long, block: Int = 364000) =
         sendFile(file.path, offset, size, block)
 
+    /**
+     * Sends a specified file.
+     *
+     * **See Also:** [srt_sendfile](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_sendfile)
+     *
+     * @param file the [File] to send
+     * @param block the size of the single block to read at once before writing it to a file
+     * @return the size (>0) of the transmitted data of a file.
+     * @throws SocketException if it has failed to send message
+     * @throws SocketTimeoutException if a timeout has been triggered
+     * @see [recvFile]
+     */
     fun sendFile(file: File, block: Int = 364000) =
         sendFile(file.path, 0, file.length(), block)
 
@@ -431,6 +897,20 @@ class Socket: Closeable {
         block: Int = 7280000
     ): Long
 
+    /**
+     * Receives a file. File is create in [path].
+     *
+     * **See Also:** [srt_recvfile](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_recvfile)
+     *
+     * @param path the path where to write received data
+     * @param offset the offset used to write file
+     * @param size the size of the file
+     * @param block the size of the single block to read at once before writing it to a file
+     * @return the size (>0) of the received data of a file.
+     * @throws SocketException if it has failed to send message
+     * @throws SocketTimeoutException if a timeout has been triggered
+     * @see [sendFile]
+     */
     fun recvFile(path: String, offset: Long = 0, size: Long, block: Int = 7280000): Long {
         val byteReceived = nativeRecvFile(path, offset, size, block)
         when {
@@ -444,13 +924,40 @@ class Socket: Closeable {
         }
     }
 
+    /**
+     * Receives a file. File is create in [file].
+     *
+     * **See Also:** [srt_recvfile](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_recvfile)
+     *
+     * @param file the [File] where to write received data
+     * @param offset the offset used to write file
+     * @param size the size of the file
+     * @param block the size of the single block to read at once before writing it to a file
+     * @return the size (>0) of the received data of a file.
+     * @throws SocketException if it has failed to send message
+     * @throws SocketTimeoutException if a timeout has been triggered
+     * @see [sendFile]
+     */
     fun recvFile(file: File, offset: Long = 0, size: Long, block: Int = 7280000) =
         recvFile(file.path, offset, size, block)
 
     // Reject reason
     private external fun nativeGetRejectReason(): Int
     private external fun nativeSetRejectReason(rejectReason: Int): Int
+
+    /**
+     * Set/get detailed reason for a failed connection attempt.
+     *
+     * @see [InternalRejectReason], [PredefinedRejectReason] and [UserDefinedRejectReason]
+     */
     var rejectReason: RejectReason
+        /**
+         * Get detailed reason for a failed connection attempt.
+         *
+         * **See Also:** [srt_getrejectreason](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_getrejectreason)
+         *
+         * @return the object describing the rejection reason. Could be either [InternalRejectReason], [PredefinedRejectReason] or [UserDefinedRejectReason]
+         */
         get() {
             val code = nativeGetRejectReason()
             return when {
@@ -459,6 +966,14 @@ class Socket: Closeable {
                 else -> UserDefinedRejectReason(code - RejectReasonCode.USERDEFINED_OFFSET)
             }
         }
+        /**
+         * Set detailed reason for a failed connection attempt. You can not set [InternalRejectReason].
+         *
+         * **See Also:** [srt_setrejectreason](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_setrejectreason)
+         *
+         * @param value the object describing the rejection reason. Could be either [InternalRejectReason], [PredefinedRejectReason] or [UserDefinedRejectReason]
+         * @throws [SocketException] if action has failed
+         */
         set(value) {
             val code = when (value) {
                 is InternalRejectReason -> { // Forbidden by SRT
@@ -473,53 +988,174 @@ class Socket: Closeable {
                 else -> RejectReasonCode.UNKNOWN.ordinal
             }
             if (nativeSetRejectReason(code) != 0) {
-                Log.e(this.javaClass.canonicalName, "Failed to set reject reason")
+                throw SocketException(Error.lastErrorMessage)
             }
         }
 
     // Performance tracking
+    /**
+     * Reports the current statistics.
+     *
+     * **See Also:** [srt_bstats](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_bstats)
+     *
+     * @param clear true if the statistics should be cleared after retrieval
+     * @return the current [Stats]
+     */
     external fun bstats(clear: Boolean): Stats
 
+    /**
+     * Reports the current statistics.
+     *
+     * **See Also:** [srt_bistats](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_bistats)
+     *
+     * @param clear true if the statistics should be cleared after retrieval
+     * @param instantaneous true if the statistics should use instant data, not moving averages
+     * @return the current [Stats]
+     */
     external fun bistats(clear: Boolean, instantaneous: Boolean): Stats
 
     // Time access
     private external fun nativeGetConnectionTime(): Long
+
+    /**
+     * Gets the time when SRT socket was open to establish a connection.
+     *
+     * **See Also:** [srt_connection_time](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_connection_time)
+     *
+     * @return the connection time in microseconds
+     * @throws [SocketException] if SRT socket is not valid
+     */
     val connectionTime: Long
-        get() = nativeGetConnectionTime()
+        get() {
+            val connectionTime = nativeGetConnectionTime()
+            if (connectionTime < 0) {
+                throw SocketException(Error.lastErrorMessage)
+            }
+            return connectionTime
+        }
 
     // Android Socket like API
+    /**
+     * Sets/gets the value of the [SockOpt.RCVBUF] option for this SRT socket.
+     *
+     * **See Also:** [SRTO_RCVBUF](https://github.com/Haivision/srt/blob/master/docs/APISocketOptions.md#SRTO_RCVBUF)
+     */
     var receiveBufferSize: Int
+        /**
+         * Gets the value of the [SockOpt.RCVBUF] option for this SRT socket.
+         *
+         * @return the receive buffer size in bytes
+         * @throws IOException if can't get [SockOpt]
+         */
         get() = getSockFlag(SockOpt.RCVBUF) as Int
+        /**
+         * Sets the value of the [SockOpt.RCVBUF] option for this SRT socket.
+         *
+         * @param value receive buffer size in bytes
+         * @throws IOException if can't set [SockOpt]
+         */
         set(value) {
             setSockFlag(SockOpt.RCVBUF, value)
         }
 
-    var reuseAddress: Boolean
-        get() = getSockFlag(SockOpt.REUSEADDR) as Boolean
-        set(value) {
-            setSockFlag(SockOpt.REUSEADDR, value)
-        }
-
+    /**
+     * Sets/gets the value of the [SockOpt.SNDBUF] option for this SRT socket.
+     *
+     * **See Also:** [SRTO_SNDBUF](https://github.com/Haivision/srt/blob/master/docs/APISocketOptions.md#SRTO_SNDBUF)
+     */
     var sendBufferSize: Int
+        /**
+         * Gets the value of the [SockOpt.SNDBUF] option for this SRT socket.
+         *
+         * @return the send buffer size in bytes
+         * @throws IOException if can't get [SockOpt]
+         */
         get() = getSockFlag(SockOpt.SNDBUF) as Int
+        /**
+         * Sets the value of the [SockOpt.SNDBUF] option for this SRT socket.
+         *
+         * @param value send buffer size in bytes
+         * @throws IOException if can't set [SockOpt]
+         */
         set(value) {
             setSockFlag(SockOpt.SNDBUF, value)
         }
 
+    /**
+     * Tests if [SockOpt.REUSEADDR] is enabled.
+     *
+     * **See Also:** [SRTO_REUSEADDR](https://github.com/Haivision/srt/blob/master/docs/APISocketOptions.md#srto_reuseaddr)
+     */
+    var reuseAddress: Boolean
+        /**
+         * Gets the value of the [SockOpt.REUSEADDR] option for this SRT socket.
+         *
+         * @return true if it allows the SRT socket to use the binding address used already by another SRT socket in the same application, otherwise false
+         * @throws IOException if can't get [SockOpt]
+         */
+        get() = getSockFlag(SockOpt.REUSEADDR) as Boolean
+        /**
+         * Sets the value of the [SockOpt.REUSEADDR] option for this SRT socket.
+         *
+         * @param value true if it allows the SRT socket to use the binding address used already by another SRT socket in the same application, otherwise false
+         * @throws IOException if can't set [SockOpt]
+         */
+        set(value) {
+            setSockFlag(SockOpt.REUSEADDR, value)
+        }
+
+    /**
+     * Returns setting for [SockOpt.LINGER].
+     *
+     * **See Also:** [SRTO_LINGER](https://github.com/Haivision/srt/blob/master/docs/APISocketOptions.md#srto_linger)
+     */
     var soLinger: Int
+        /**
+         * Gets the value of the [SockOpt.LINGER] option for this SRT socket.
+         *
+         * @return linger time on close in seconds
+         * @throws IOException if can't get [SockOpt]
+         */
         get() = getSockFlag(SockOpt.LINGER) as Int
+        /**
+         * Sets the value of the [SockOpt.LINGER] option for this SRT socket.
+         *
+         * @param value the linger time on close
+         * @throws IOException if can't set [SockOpt]
+         */
         set(value) {
             setSockFlag(SockOpt.LINGER, value)
         }
 
+    /**
+     * Tests if the SRT socket is bound.
+     *
+     * @return true if the SRT socket is bound, otherwise false
+     */
     val isBound: Boolean
         get() = sockState == SockStatus.OPENED
 
+    /**
+     * Tests if the SRT socket is closed.
+     *
+     * @return true if the SRT socket is closed, otherwise false
+     */
     val isClose: Boolean
-        get() = (sockState == SockStatus.CLOSED) || (sockState == SockStatus.NONEXIST)
+        get() = (sockState == SockStatus.CLOSED) || (sockState == SockStatus.NON_EXIST)
 
+    /**
+     * Tests if the SRT socket is connected.
+     *
+     * @return true if the SRT socket is connected, otherwise false
+     */
     val isConnected: Boolean
         get() = sockState == SockStatus.CONNECTED
 
+    /**
+     * Get the size of the available data in the receive buffer.
+     *
+     * @return the size of the available data in the receive buffer
+     * @throws IOException if can't get [SockOpt]
+     */
     fun available(): Int = getSockFlag(SockOpt.RCVDATA) as Int
 }

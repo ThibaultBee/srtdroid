@@ -23,8 +23,8 @@ import java.util.*
 class Utils {
     companion object {
         fun createTestFile(
-            name: String? = UUID.randomUUID().toString(),
-            message: String? = "Hello ! Did someone receive this message?"
+            name: String = UUID.randomUUID().toString(),
+            message: String = "Hello ! Did someone receive this message?"
         ): File {
             val file = File(
                 InstrumentationRegistry.getInstrumentation().context.externalCacheDir,

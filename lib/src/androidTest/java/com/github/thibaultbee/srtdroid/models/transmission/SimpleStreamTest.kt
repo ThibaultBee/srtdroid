@@ -36,12 +36,11 @@ import java.util.concurrent.Future
 
 @RunWith(AndroidJUnit4::class)
 class SimpleStreamTest {
-    private val srt = Srt()
     private lateinit var socket: Socket
 
     @Before
     fun setUp() {
-        assert(srt.startUp() >= 0)
+        assert(Srt.startUp() >= 0)
         socket = Socket()
         assertTrue(socket.isValid)
     }
@@ -49,7 +48,7 @@ class SimpleStreamTest {
     @After
     fun tearDown() {
         socket.close()
-        assertEquals(srt.cleanUp(), 0)
+        assertEquals(Srt.cleanUp(), 0)
     }
 
     @Test

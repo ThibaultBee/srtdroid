@@ -23,9 +23,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.github.thibaultbee.srtdroid.Srt
 import com.github.thibaultbee.srtdroid.chat.databinding.ActivityMainBinding
 import com.github.thibaultbee.srtdroid.chat.settings.SettingsActivity
-import com.jakewharton.rxbinding3.view.clicks
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
+import com.jakewharton.rxbinding4.view.clicks
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.disposables.CompositeDisposable
 
 
 class MainActivity : AppCompatActivity() {
@@ -33,15 +33,12 @@ class MainActivity : AppCompatActivity() {
     private val activityDisposables = CompositeDisposable()
     private lateinit var binding: ActivityMainBinding
 
-    private lateinit var srt: Srt
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        srt = Srt()
-        srt.startUp()
+        Srt.startUp()
 
         val connectionDetails: SharedPreferences =
             this.getSharedPreferences("connectionDetails", Context.MODE_PRIVATE)
@@ -81,7 +78,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        srt.cleanUp()
+        Srt.cleanUp()
         activityDisposables.clear()
     }
 

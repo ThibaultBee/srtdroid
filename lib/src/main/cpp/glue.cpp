@@ -274,7 +274,8 @@ nativeGetPeerName(JNIEnv *env, jobject ju) {
     int sockaddr_len = sizeof(ss);
     jobject inetSocketAddress = nullptr;
 
-    int res = srt_getpeername((SRTSOCKET) u, reinterpret_cast<struct sockaddr *>(&ss), &sockaddr_len);
+    int res = srt_getpeername((SRTSOCKET) u, reinterpret_cast<struct sockaddr *>(&ss),
+                              &sockaddr_len);
     if (res == 0) {
         inetSocketAddress = sockaddr_inet_n2j(env, nullptr, &ss);
     }
@@ -289,7 +290,8 @@ nativeGetSockName(JNIEnv *env, jobject ju) {
     int sockaddr_len = sizeof(ss);
     jobject inetSocketAddress = nullptr;
 
-    int res = srt_getsockname((SRTSOCKET) u, reinterpret_cast<struct sockaddr *>(&ss), &sockaddr_len);
+    int res = srt_getsockname((SRTSOCKET) u, reinterpret_cast<struct sockaddr *>(&ss),
+                              &sockaddr_len);
     if (res == 0) {
         inetSocketAddress = sockaddr_inet_n2j(env, nullptr, &ss);
     }
@@ -670,6 +672,13 @@ nativeEpollUWait(JNIEnv *env, jobject epoll, jobject fdsList, jlong timeOut) {
     return res;
 }
 
+jint JNICALL
+nativeEpollClearUSock(JNIEnv *env, jobject epoll) {
+    int eid = srt_epoll_j2n(env, epoll);
+
+    return srt_epoll_clear_usocks(eid);
+}
+
 
 jobject JNICALL
 nativeEpollSet(JNIEnv *env, jobject epoll, jobject epollFlagList) {
@@ -677,7 +686,9 @@ nativeEpollSet(JNIEnv *env, jobject epoll, jobject epollFlagList) {
     int32_t flags = srt_epoll_flags_j2n(env, epollFlagList);
 
     flags = srt_epoll_set(eid, flags);
-
+    if (flags == -1) {
+        return nullptr;
+    }
     return srt_epoll_flags_n2j(env, flags);
 }
 
@@ -686,7 +697,9 @@ nativeEpollGet(JNIEnv *env, jobject epoll) {
     int eid = srt_epoll_j2n(env, epoll);
 
     int32_t flags = srt_epoll_set(eid, -1);
-
+    if (flags == -1) {
+        return nullptr;
+    }
     return srt_epoll_flags_n2j(env, flags);
 }
 
@@ -781,16 +794,17 @@ static JNINativeMethod timeMethods[] = {
 };
 
 static JNINativeMethod epollMethods[] = {
-        {"nativeIsValid",  "()Z",                                      (void *) &nativeEpollIsValid},
-        {"create",         "()I",                                      (void *) &nativeEpollCreate},
-        {"addUSock",       "(L" SRTSOCKET_CLASS ";L" LIST_CLASS ";)I", (void *) &nativeEpollAddUSock},
-        {"updateUSock",    "(L" SRTSOCKET_CLASS ";L" LIST_CLASS ";)I", (void *) &nativeEpollUpdateUSock},
-        {"removeUSock",    "(L" SRTSOCKET_CLASS ";)I",                 (void *) &nativeEpollRemoveUSock},
-        {"wait",           "(L" LIST_CLASS ";L" LIST_CLASS ";J)I",     (void *) &nativeEpollWait},
-        {"uWait",          "(L" LIST_CLASS ";J)I",                     (void *) &nativeEpollUWait},
-        {"setFlags",       "(L" LIST_CLASS ";)L" LIST_CLASS ";",       (void *) &nativeEpollSet},
-        {"nativeGetFlags", "()L" LIST_CLASS ";",                       (void *) &nativeEpollGet},
-        {"release",        "()I",                                      (void *) &nativeEpollRelease}
+        {"nativeIsValid",     "()Z",                                      (void *) &nativeEpollIsValid},
+        {"create",            "()I",                                      (void *) &nativeEpollCreate},
+        {"nativeAddUSock",    "(L" SRTSOCKET_CLASS ";L" LIST_CLASS ";)I", (void *) &nativeEpollAddUSock},
+        {"nativeUpdateUSock", "(L" SRTSOCKET_CLASS ";L" LIST_CLASS ";)I", (void *) &nativeEpollUpdateUSock},
+        {"nativeRemoveUSock", "(L" SRTSOCKET_CLASS ";)I",                 (void *) &nativeEpollRemoveUSock},
+        {"nativeWait",        "(L" LIST_CLASS ";L" LIST_CLASS ";J)I",     (void *) &nativeEpollWait},
+        {"nativeUWait",       "(L" LIST_CLASS ";J)I",                     (void *) &nativeEpollUWait},
+        {"nativeClearUSock",  "()I",                                      (void *) &nativeEpollClearUSock},
+        {"nativeSetFlags",    "(L" LIST_CLASS ";)L" LIST_CLASS ";",       (void *) &nativeEpollSet},
+        {"nativeGetFlags",    "()L" LIST_CLASS ";",                       (void *) &nativeEpollGet},
+        {"nativeRelease",     "()I",                                      (void *) &nativeEpollRelease}
 };
 
 static int registerNativeForClassName(JNIEnv *env, const char *className,

@@ -1,7 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'org.jetbrains.dokka-android'
 
 group='com.github.ThibaultBee'
 
@@ -40,12 +40,18 @@ android {
 
 }
 
+dokka {
+    // Warning: outputDirectory is used by script/generate_lib_kdoc.sh
+    outputFormat = 'html' // use 'javadoc' to get standard java docs
+    includeNonPublic = false
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.core:core-ktx:1.3.2'
-    testImplementation 'junit:junit:4.13.1'
+    testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test:runner:1.3.0'
     androidTestImplementation 'androidx.test:rules:1.3.0'

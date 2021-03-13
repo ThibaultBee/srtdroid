@@ -1,0 +1,98 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>MsgCtrl - lib</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">lib</a>&nbsp;/&nbsp;<a href="../index.html">com.github.thibaultbee.srtdroid.models</a>&nbsp;/&nbsp;<a href="./index.html">MsgCtrl</a><br/>
+<br/>
+<h1>MsgCtrl</h1>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">MsgCtrl</span></code>
+<p>This class represents extra parameters for <a href="../-socket/send.html">Socket.send</a> and <a href="../-socket/recv.html">Socket.recv</a></p>
+<p><strong>See Also:</strong> <a href="https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_msgctrl">srt_msgctrl</a></p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">MsgCtrl</span><span class="symbol">(</span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.MsgCtrl$<init>(kotlin.Int, kotlin.Int, kotlin.Boolean, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int)/flags">flags</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;0<span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.MsgCtrl$<init>(kotlin.Int, kotlin.Int, kotlin.Boolean, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int)/ttl">ttl</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;-1<span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.MsgCtrl$<init>(kotlin.Int, kotlin.Int, kotlin.Boolean, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int)/inOrder">inOrder</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a>&nbsp;<span class="symbol">=</span>&nbsp;false<span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.MsgCtrl$<init>(kotlin.Int, kotlin.Int, kotlin.Boolean, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int)/boundary">boundary</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.MsgCtrl$<init>(kotlin.Int, kotlin.Int, kotlin.Boolean, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int)/srcTime">srcTime</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a>&nbsp;<span class="symbol">=</span>&nbsp;0<span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.MsgCtrl$<init>(kotlin.Int, kotlin.Int, kotlin.Boolean, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int)/pktSeq">pktSeq</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.MsgCtrl$<init>(kotlin.Int, kotlin.Int, kotlin.Boolean, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int)/no">no</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">)</span></code>
+<p>This class represents extra parameters for <a href="../-socket/send.html">Socket.send</a> and <a href="../-socket/recv.html">Socket.recv</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="boundary.html">boundary</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">boundary</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>Reserved for future use. Should be 0.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="flags.html">flags</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">flags</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>Reserved for future use. Should be 0.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="in-order.html">inOrder</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">inOrder</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>Required to be received in the order of sending.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="no.html">no</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">no</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>Message number that can be sent by both sender and receiver.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="pkt-seq.html">pktSeq</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">pktSeq</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>Receiver only: reports the sequence number for the packet carrying out the message being returned.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="src-time.html">srcTime</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">srcTime</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>Receiver: specifies the time when the packet was intended to be delivered to the receiving application (in microseconds since SRT clock epoch).
+Sender: specifies the application-provided timestamp to be associated with the packet.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="ttl.html">ttl</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">ttl</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>The time (in ms) to wait for a successful delivery. -1 means no time limitation.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

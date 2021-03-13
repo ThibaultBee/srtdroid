@@ -23,17 +23,14 @@ import org.junit.Before
 import org.junit.Test
 
 class RejectReasonCodeTest {
-
-    private val srt = Srt()
-
     @Before
     fun setUp() {
-        assertEquals(srt.startUp(), 0)
+        assertEquals(Srt.startUp(), 0)
     }
 
     @After
     fun tearDown() {
-        assertEquals(srt.cleanUp(), 0)
+        assertEquals(Srt.cleanUp(), 0)
     }
 
     @Test

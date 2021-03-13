@@ -1,0 +1,77 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Socket.sendFile - lib</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">lib</a>&nbsp;/&nbsp;<a href="../index.html">com.github.thibaultbee.srtdroid.models</a>&nbsp;/&nbsp;<a href="index.html">Socket</a>&nbsp;/&nbsp;<a href="./send-file.html">sendFile</a><br/>
+<br/>
+<h1>sendFile</h1>
+<a name="com.github.thibaultbee.srtdroid.models.Socket$sendFile(kotlin.String, kotlin.Long, kotlin.Long, kotlin.Int)"></a>
+<code><span class="keyword">fun </span><span class="identifier">sendFile</span><span class="symbol">(</span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$sendFile(kotlin.String, kotlin.Long, kotlin.Long, kotlin.Int)/path">path</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html"><span class="identifier">String</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$sendFile(kotlin.String, kotlin.Long, kotlin.Long, kotlin.Int)/offset">offset</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a>&nbsp;<span class="symbol">=</span>&nbsp;0<span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$sendFile(kotlin.String, kotlin.Long, kotlin.Long, kotlin.Int)/size">size</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$sendFile(kotlin.String, kotlin.Long, kotlin.Long, kotlin.Int)/block">block</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;364000<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>Sends a specified file.</p>
+<p><strong>See Also:</strong> <a href="https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_sendfile">srt_sendfile</a></p>
+<h3>Parameters</h3>
+<p><a name="path"></a>
+<code>path</code> - the path of the file to send</p>
+<p><a name="offset"></a>
+<code>offset</code> - the offset used to read file from</p>
+<p><a name="size"></a>
+<code>size</code> - the size of the file</p>
+<p><a name="block"></a>
+<code>block</code> - the size of the single block to read at once before writing it to a file</p>
+<h3>Exceptions</h3>
+<p><a name="SocketException"></a>
+<code>SocketException</code> - if it has failed to send message</p>
+<p><a name="SocketTimeoutException"></a>
+<code>SocketTimeoutException</code> - if a timeout has been triggered</p>
+<p><strong>Return</strong><br/>
+the size (&gt;0) of the transmitted data of a file.</p>
+<p><strong>See Also</strong><br/>
+<p><a href="recv-file.html">recvFile</a></p>
+</p>
+<a name="com.github.thibaultbee.srtdroid.models.Socket$sendFile(java.io.File, kotlin.Long, kotlin.Long, kotlin.Int)"></a>
+<code><span class="keyword">fun </span><span class="identifier">sendFile</span><span class="symbol">(</span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$sendFile(java.io.File, kotlin.Long, kotlin.Long, kotlin.Int)/file">file</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/java/io/File.html"><span class="identifier">File</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$sendFile(java.io.File, kotlin.Long, kotlin.Long, kotlin.Int)/offset">offset</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a>&nbsp;<span class="symbol">=</span>&nbsp;0<span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$sendFile(java.io.File, kotlin.Long, kotlin.Long, kotlin.Int)/size">size</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$sendFile(java.io.File, kotlin.Long, kotlin.Long, kotlin.Int)/block">block</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;364000<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>Sends a specified file.</p>
+<p><strong>See Also:</strong> <a href="https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_sendfile">srt_sendfile</a></p>
+<h3>Parameters</h3>
+<p><a name="file"></a>
+<code>file</code> - the <a href="https://developer.android.com/reference/java/io/File.html">File</a> to send</p>
+<p><a name="offset"></a>
+<code>offset</code> - the offset used to read file from</p>
+<p><a name="size"></a>
+<code>size</code> - the size of the file</p>
+<p><a name="block"></a>
+<code>block</code> - the size of the single block to read at once before writing it to a file</p>
+<h3>Exceptions</h3>
+<p><a name="SocketException"></a>
+<code>SocketException</code> - if it has failed to send message</p>
+<p><a name="SocketTimeoutException"></a>
+<code>SocketTimeoutException</code> - if a timeout has been triggered</p>
+<p><strong>Return</strong><br/>
+the size (&gt;0) of the transmitted data of a file.</p>
+<p><strong>See Also</strong><br/>
+<p><a href="recv-file.html">recvFile</a></p>
+</p>
+<a name="com.github.thibaultbee.srtdroid.models.Socket$sendFile(java.io.File, kotlin.Int)"></a>
+<code><span class="keyword">fun </span><span class="identifier">sendFile</span><span class="symbol">(</span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$sendFile(java.io.File, kotlin.Int)/file">file</span><span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/java/io/File.html"><span class="identifier">File</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Socket$sendFile(java.io.File, kotlin.Int)/block">block</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a>&nbsp;<span class="symbol">=</span>&nbsp;364000<span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>Sends a specified file.</p>
+<p><strong>See Also:</strong> <a href="https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_sendfile">srt_sendfile</a></p>
+<h3>Parameters</h3>
+<p><a name="file"></a>
+<code>file</code> - the <a href="https://developer.android.com/reference/java/io/File.html">File</a> to send</p>
+<p><a name="block"></a>
+<code>block</code> - the size of the single block to read at once before writing it to a file</p>
+<h3>Exceptions</h3>
+<p><a name="SocketException"></a>
+<code>SocketException</code> - if it has failed to send message</p>
+<p><a name="SocketTimeoutException"></a>
+<code>SocketTimeoutException</code> - if a timeout has been triggered</p>
+<p><strong>Return</strong><br/>
+the size (&gt;0) of the transmitted data of a file.</p>
+<p><strong>See Also</strong><br/>
+<p><a href="recv-file.html">recvFile</a></p>
+</p>
+</BODY>
+</HTML>

@@ -15,9 +15,36 @@
  */
 package com.github.thibaultbee.srtdroid.enums
 
+import com.github.thibaultbee.srtdroid.models.Epoll
+
+/**
+ * Description of [Epoll] event options.
+ *
+ * **See Also:** [srt_epoll_add_usock](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_epoll_add_usock)
+ */
 enum class EpollOpt {
+    /**
+     * Reports readiness for reading or incoming connection on a listener socket
+     */
     IN,
+
+    /**
+     * Report readiness for writing or a successful connection
+     */
     OUT,
+
+    /**
+     * Report errors on the socket
+     */
     ERR,
+
+    /**
+     * An important event has happened that requires attention
+     */
+    UPDATE,
+
+    /**
+     * The event will be edge-triggered
+     */
     ET
 }

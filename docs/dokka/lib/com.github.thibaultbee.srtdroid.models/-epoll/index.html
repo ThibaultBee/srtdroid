@@ -1,0 +1,131 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Epoll - lib</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">lib</a>&nbsp;/&nbsp;<a href="../index.html">com.github.thibaultbee.srtdroid.models</a>&nbsp;/&nbsp;<a href="./index.html">Epoll</a><br/>
+<br/>
+<h1>Epoll</h1>
+<code><span class="keyword">class </span><span class="identifier">Epoll</span></code>
+<p>This class is currently the only method for using multiple sockets in one thread with having the
+blocking operation moved to epoll waiting so that it can block on multiple sockets at once.</p>
+<p><strong>See Also:</strong> <a href="https://github.com/Haivision/srt/blob/master/docs/API-functions.md#asynchronous-operations-epoll-1">Asynchronous operations (epoll)</a></p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">Epoll</span><span class="symbol">(</span><span class="symbol">)</span></code>
+<p>This class is currently the only method for using multiple sockets in one thread with having the
+blocking operation moved to epoll waiting so that it can block on multiple sockets at once.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="flags.html">flags</a></p>
+</td>
+<td>
+<code><span class="keyword">var </span><span class="identifier">flags</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../com.github.thibaultbee.srtdroid.enums/-epoll-flag/index.html"><span class="identifier">EpollFlag</span></a><span class="symbol">&gt;</span></code>
+<p>Set or retrieves flags that change the default behavior of the epoll functions.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="is-valid.html">isValid</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">isValid</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
+<p>Tests if the <a href="./index.html">Epoll</a> is a valid one.</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Functions</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="add-u-sock.html">addUSock</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">addUSock</span><span class="symbol">(</span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Epoll$addUSock(com.github.thibaultbee.srtdroid.models.Socket, kotlin.collections.List((com.github.thibaultbee.srtdroid.enums.EpollOpt)))/socket">socket</span><span class="symbol">:</span>&nbsp;<a href="../-socket/index.html"><span class="identifier">Socket</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Epoll$addUSock(com.github.thibaultbee.srtdroid.models.Socket, kotlin.collections.List((com.github.thibaultbee.srtdroid.enums.EpollOpt)))/events">events</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../com.github.thibaultbee.srtdroid.enums/-epoll-opt/index.html"><span class="identifier">EpollOpt</span></a><span class="symbol">&gt;</span><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Adds a socket to a epoll container.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="clear-u-sock.html">clearUSock</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">clearUSock</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Removes all SRT socket subscriptions from the epoll container.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="release.html">release</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">release</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Deletes the epoll container.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="remove-u-sock.html">removeUSock</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">removeUSock</span><span class="symbol">(</span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Epoll$removeUSock(com.github.thibaultbee.srtdroid.models.Socket)/socket">socket</span><span class="symbol">:</span>&nbsp;<a href="../-socket/index.html"><span class="identifier">Socket</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Removes a specified socket from an epoll container.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="set-flags.html">setFlags</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">setFlags</span><span class="symbol">(</span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Epoll$setFlags(kotlin.collections.List((com.github.thibaultbee.srtdroid.enums.EpollFlag)))/events">events</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../com.github.thibaultbee.srtdroid.enums/-epoll-flag/index.html"><span class="identifier">EpollFlag</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../com.github.thibaultbee.srtdroid.enums/-epoll-flag/index.html"><span class="identifier">EpollFlag</span></a><span class="symbol">&gt;</span></code>
+<p>Set flags that change the default behavior of the epoll functions. Same as <a href="flags.html">flags</a> but returns list of <a href="../../com.github.thibaultbee.srtdroid.enums/-epoll-flag/index.html">EpollFlag</a>.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="update-u-sock.html">updateUSock</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">updateUSock</span><span class="symbol">(</span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Epoll$updateUSock(com.github.thibaultbee.srtdroid.models.Socket, kotlin.collections.List((com.github.thibaultbee.srtdroid.enums.EpollOpt)))/socket">socket</span><span class="symbol">:</span>&nbsp;<a href="../-socket/index.html"><span class="identifier">Socket</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Epoll$updateUSock(com.github.thibaultbee.srtdroid.models.Socket, kotlin.collections.List((com.github.thibaultbee.srtdroid.enums.EpollOpt)))/events">events</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../com.github.thibaultbee.srtdroid.enums/-epoll-opt/index.html"><span class="identifier">EpollOpt</span></a><span class="symbol">&gt;</span><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Updates a socket to a epoll container.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="u-wait.html">uWait</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">uWait</span><span class="symbol">(</span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Epoll$uWait(kotlin.collections.List((com.github.thibaultbee.srtdroid.models.EpollEvent)), kotlin.Long)/fdsSet">fdsSet</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../-epoll-event/index.html"><span class="identifier">EpollEvent</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Epoll$uWait(kotlin.collections.List((com.github.thibaultbee.srtdroid.models.EpollEvent)), kotlin.Long)/timeout">timeout</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Blocks a call until any readiness state occurs in the epoll container.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="wait.html">wait</a></p>
+</td>
+<td>
+<code><span class="keyword">fun </span><span class="identifier">wait</span><span class="symbol">(</span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Epoll$wait(kotlin.collections.List((com.github.thibaultbee.srtdroid.models.Socket)), kotlin.collections.List((com.github.thibaultbee.srtdroid.models.Socket)), kotlin.Long)/readFds">readFds</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../-socket/index.html"><span class="identifier">Socket</span></a><span class="symbol">&gt;</span>&nbsp;<span class="symbol">=</span>&nbsp;emptyList()<span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Epoll$wait(kotlin.collections.List((com.github.thibaultbee.srtdroid.models.Socket)), kotlin.collections.List((com.github.thibaultbee.srtdroid.models.Socket)), kotlin.Long)/writeFds">writeFds</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../-socket/index.html"><span class="identifier">Socket</span></a><span class="symbol">&gt;</span>&nbsp;<span class="symbol">=</span>&nbsp;emptyList()<span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Epoll$wait(kotlin.collections.List((com.github.thibaultbee.srtdroid.models.Socket)), kotlin.collections.List((com.github.thibaultbee.srtdroid.models.Socket)), kotlin.Long)/timeout">timeout</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
+<p>Blocks the call until any readiness state occurs in the epoll container.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

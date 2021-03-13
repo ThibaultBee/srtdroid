@@ -120,7 +120,7 @@ object SocketHandler {
         recvThread.isRunning = false
     }
 
-    val peerName: InetSocketAddress?
+    val peerName: InetSocketAddress
         get() = clientSocket.peerName
 
     fun close() {

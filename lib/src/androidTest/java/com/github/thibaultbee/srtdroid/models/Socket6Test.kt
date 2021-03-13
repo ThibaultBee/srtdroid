@@ -25,7 +25,6 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.net.SocketException
-import java.net.StandardProtocolFamily
 
 
 /*
@@ -34,13 +33,12 @@ import java.net.StandardProtocolFamily
 
 @RunWith(AndroidJUnit4::class)
 class Socket6Test {
-    private val srt = Srt()
     private lateinit var socket: Socket
 
     @Before
     fun setUp() {
-        assert(srt.startUp() >= 0)
-        socket = Socket(StandardProtocolFamily.INET6)
+        assert(Srt.startUp() >= 0)
+        socket = Socket()
         assertTrue(socket.isValid)
     }
 
@@ -48,7 +46,7 @@ class Socket6Test {
     fun tearDown() {
         if (socket.isValid)
             socket.close()
-        assertEquals(srt.cleanUp(), 0)
+        assertEquals(Srt.cleanUp(), 0)
     }
 
     @Test
@@ -66,12 +64,6 @@ class Socket6Test {
     }
 
     @Test
-    fun closeTest() {
-        socket.close()
-        assertTrue(socket.isClose)
-    }
-
-    @Test
     fun listenTest() {
         try {
             socket.listen(3)
@@ -81,15 +73,6 @@ class Socket6Test {
         }
         socket.bind("::1", 3333)
         socket.listen(3)
-    }
-
-    @Test
-    fun acceptTest() {
-        try {
-            socket.accept()
-        } catch (e: SocketException) {
-            assertEquals(e.message, ErrorType.ENOLISTEN.toString())
-        }
     }
 
     @Test
@@ -114,15 +97,14 @@ class Socket6Test {
     }
 
     @Test
-    fun getPeerNameTest() {
-        assertNull(socket.peerName)
-    }
-
-    @Test
     fun getSockNameTest() {
-        assertNull(socket.sockName)
+        try {
+            assertNull(socket.sockName)
+            fail()
+        } catch (e: Exception) {
+        }
         socket.bind("::1", 6666)
-        assertEquals(socket.sockName!!.address.hostAddress, "::1")
-        assertEquals(socket.sockName!!.port, 6666)
+        assertEquals(socket.sockName.address.hostAddress, "::1")
+        assertEquals(socket.sockName.port, 6666)
     }
 }

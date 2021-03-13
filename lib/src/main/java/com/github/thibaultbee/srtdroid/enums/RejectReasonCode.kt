@@ -15,29 +15,117 @@
  */
 package com.github.thibaultbee.srtdroid.enums
 
-enum class RejectReasonCode {
-    UNKNOWN,     // initial set when in progress
-    SYSTEM,      // broken due to system function error
-    PEER,        // connection was rejected by peer
-    RESOURCE,    // internal problem with resource allocation
-    ROGUE,       // incorrect data in handshake messages
-    BACKLOG,     // listener's backlog exceeded
-    IPE,         // internal program error
-    CLOSE,       // socket is closing
-    VERSION,     // peer is older version than agent's minimum set
-    RDVCOOKIE,   // rendezvous cookie collision
-    BADSECRET,   // wrong password
-    UNSECURE,    // password required or unexpected
-    MESSAGEAPI,  // streamapi/messageapi collision
-    CONGESTION,  // incompatible congestion-controller type
-    FILTER,      // incompatible packet filter
-    GROUP,       // incompatible group
-    TIMEOUT;     // connection timeout
+import com.github.thibaultbee.srtdroid.models.rejectreason.InternalRejectReason
 
+/**
+ * Internal reject reason for [InternalRejectReason].
+ *
+ * **See Also:** [Reject Reasons](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#rejection-reasons-1)
+ */
+enum class RejectReasonCode {
+    /**
+     * Initial set when in progress
+     */
+    UNKNOWN,
+
+    /**
+     * Broken due to system function error
+     */
+    SYSTEM,
+
+    /**
+     * Connection was rejected by peer
+     */
+    PEER,
+
+    /**
+     * Internal problem with resource allocation
+     */
+    RESOURCE,
+
+    /**
+     * Incorrect data in handshake messages
+     */
+    ROGUE,
+
+    /**
+     * Listener's backlog exceeded
+     */
+    BACKLOG,
+
+    /**
+     * Internal program error
+     */
+    IPE,
+
+    /**
+     * Socket is closing
+     */
+    CLOSE,
+
+    /**
+     * Peer is older version than agent's minimum set
+     */
+    VERSION,
+
+    /**
+     * Rendezvous cookie collision
+     */
+    RDVCOOKIE,
+
+    /**
+     * Wrong password
+     */
+    BADSECRET,
+
+    /**
+     * Password required or unexpected
+     */
+    UNSECURE,
+
+    /**
+     * Streamapi/messageapi collision
+     */
+    MESSAGEAPI,
+
+    /**
+     * Incompatible congestion-controller type
+     */
+    CONGESTION,
+
+    /**
+     * Incompatible packet filter
+     */
+    FILTER,
+
+    /**
+     * Incompatible group
+     */
+    GROUP,
+
+    /**
+     * Connection timeout
+     */
+    TIMEOUT;
+
+    /**
+     * Returns a string for the reason of the connection reject.
+     *
+     * **See Also:** [srt_rejectreason_str](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_rejectreason_str)
+     *
+     * @return the string reason of the connection reject.
+     */
     external override fun toString(): String
 
     companion object {
-        val PREDEFINED_OFFSET = 1000 // SRT_REJC_PREDEFINED - Standard server error codes
-        val USERDEFINED_OFFSET = 2000 //  SRT_REJC_USERDEFINED - User defined error codes
+        /**
+         * Standard server error codes offset
+         */
+        const val PREDEFINED_OFFSET = 1000 // SRT_REJC_PREDEFINED
+
+        /**
+         * User defined error codes offset
+         */
+        const val USERDEFINED_OFFSET = 2000 //  SRT_REJC_USERDEFINED
     }
 }

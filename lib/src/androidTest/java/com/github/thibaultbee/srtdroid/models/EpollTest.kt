@@ -25,13 +25,12 @@ import org.junit.Before
 import org.junit.Test
 
 class EpollTest {
-    private val srt = Srt()
     private lateinit var epoll: Epoll
     private lateinit var socket: Socket
 
     @Before
     fun setUp() {
-        assert(srt.startUp() >= 0)
+        assert(Srt.startUp() >= 0)
         epoll = Epoll()
         assertTrue(epoll.isValid)
     }
@@ -44,32 +43,50 @@ class EpollTest {
             if (socket.isValid)
                 socket.close()
         }
-        assertEquals(srt.cleanUp(), 0)
+        assertEquals(Srt.cleanUp(), 0)
     }
 
     @Test
     fun addUSockTest() {
         socket = Socket()
         assertTrue(socket.isValid)
-        assertEquals(0, epoll.addUSock(socket))
-        val epollOpt = listOf(EpollOpt.ERR, EpollOpt.ET)
-        assertEquals(0, epoll.addUSock(socket, epollOpt))
+        try {
+            epoll.addUSock(socket, listOf(EpollOpt.ERR))
+        } catch (e: Exception) {
+            fail()
+        }
+        try {
+            epoll.addUSock(socket, listOf(EpollOpt.ERR, EpollOpt.ET))
+        } catch (e: Exception) {
+            fail()
+        }
     }
 
     @Test
     fun updateUSockTest() {
         socket = Socket()
         assertTrue(socket.isValid)
-        assertEquals(0, epoll.updateUSock(socket))
-        val epollOpt = listOf(EpollOpt.ERR, EpollOpt.ET)
-        assertEquals(0, epoll.updateUSock(socket, epollOpt))
+        try {
+            epoll.updateUSock(socket, listOf(EpollOpt.ERR))
+        } catch (e: Exception) {
+            fail()
+        }
+        try {
+            epoll.updateUSock(socket, listOf(EpollOpt.ERR, EpollOpt.ET))
+        } catch (e: Exception) {
+            fail()
+        }
     }
 
     @Test
     fun removeUSockTest() {
         socket = Socket()
         assertTrue(socket.isValid)
-        assertEquals(0, epoll.removeUSock(socket))
+        try {
+            epoll.removeUSock(socket)
+        } catch (e: Exception) {
+            fail()
+        }
     }
 
     @Test
@@ -77,24 +94,41 @@ class EpollTest {
         val readFds = listOf(Socket(), Socket(), Socket())
         epoll.flags = listOf(EpollFlag.ENABLE_EMPTY)
         assertEquals(listOf(EpollFlag.ENABLE_EMPTY), epoll.flags)
-        assertEquals(-1, epoll.wait(readFds, emptyList(), 1000L))
+        try {
+            epoll.wait(readFds, emptyList(), 1000L)
+            fail()
+        } catch (e: Exception) {
+        }
         assertEquals(Error.lastError, ErrorType.ETIMEOUT)
-        assertEquals(-1, epoll.wait(readFds, timeOut = 1000L))
+        try {
+            epoll.wait(readFds, timeout = 1000L)
+            fail()
+        } catch (e: Exception) {
+        }
         assertEquals(Error.lastError, ErrorType.ETIMEOUT)
         val writeFds = listOf(Socket(), Socket())
-        assertEquals(-1, epoll.wait(readFds, writeFds, 1000L))
+        try {
+            epoll.wait(readFds, writeFds, 1000L)
+            fail()
+        } catch (e: Exception) {
+        }
         assertEquals(Error.lastError, ErrorType.ETIMEOUT)
     }
 
     @Test
     fun uWaitTest() {
-        assertEquals(-1, epoll.uWait(listOf(), 1000L))
+        try {
+            epoll.uWait(listOf(), 1000L)
+            fail()
+        } catch (e: Exception) {
+        }
         epoll.flags = listOf(EpollFlag.ENABLE_EMPTY)
         assertEquals(listOf(EpollFlag.ENABLE_EMPTY), epoll.flags)
-        assertEquals(
-            0,
+        try {
             epoll.uWait(listOf(EpollEvent(Socket(), listOf(EpollOpt.IN, EpollOpt.ET))), 1000L)
-        )
+        } catch (e: Exception) {
+            fail()
+        }
     }
 
     @Test
@@ -111,6 +145,12 @@ class EpollTest {
             epoll.setFlags(listOf(EpollFlag.CLEAR_ALL))
         )
         assertEquals(listOf<EpollFlag>(), epoll.setFlags(listOf()))
+        epoll.release()
+        try {
+            epoll.flags = listOf(EpollFlag.ENABLE_EMPTY)
+            fail()
+        } catch (e: Exception) {
+        }
     }
 
     @Test
@@ -123,7 +163,17 @@ class EpollTest {
     @Test
     fun releaseTest() {
         assertTrue(epoll.isValid)
-        assertEquals(epoll.release(), 0)
+        try {
+            epoll.release()
+        } catch (e: Exception) {
+            fail()
+        }
         assertFalse(epoll.isValid)
+        try {
+            epoll.release()
+            fail()
+        } catch (e: Exception) {
+
+        }
     }
 }

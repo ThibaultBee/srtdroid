@@ -1,0 +1,772 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>Stats - lib</title>
+<link rel="stylesheet" href="../../../style.css">
+</HEAD>
+<BODY>
+<a href="../../index.html">lib</a>&nbsp;/&nbsp;<a href="../index.html">com.github.thibaultbee.srtdroid.models</a>&nbsp;/&nbsp;<a href="./index.html">Stats</a><br/>
+<br/>
+<h1>Stats</h1>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">Stats</span></code>
+<p>This class represents SRT statistics</p>
+<p><strong>See Also:</strong> <a href="https://github.com/Haivision/srt/blob/master/docs/statistics.md">statistics.md</a></p>
+<h3>Constructors</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-init-.html">&lt;init&gt;</a></p>
+</td>
+<td>
+<code><span class="identifier">Stats</span><span class="symbol">(</span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/msTimeStamp">msTimeStamp</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/pktSentTotal">pktSentTotal</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/pktRecvTotal">pktRecvTotal</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/pktSndLossTotal">pktSndLossTotal</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/pktRcvLossTotal">pktRcvLossTotal</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/pktRetransTotal">pktRetransTotal</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/pktSentACKTotal">pktSentACKTotal</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/pktRecvACKTotal">pktRecvACKTotal</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/pktSentNAKTotal">pktSentNAKTotal</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/pktRecvNAKTotal">pktRecvNAKTotal</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/usSndDurationTotal">usSndDurationTotal</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/pktSndDropTotal">pktSndDropTotal</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/pktRcvDropTotal">pktRcvDropTotal</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/pktRcvUndecryptTotal">pktRcvUndecryptTotal</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/byteSentTotal">byteSentTotal</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/byteRecvTotal">byteRecvTotal</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/byteRcvLossTotal">byteRcvLossTotal</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/byteRetransTotal">byteRetransTotal</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/byteSndDropTotal">byteSndDropTotal</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/byteRcvDropTotal">byteRcvDropTotal</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/byteRcvUndecryptTotal">byteRcvUndecryptTotal</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/pktSent">pktSent</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/pktRecv">pktRecv</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/pktSndLoss">pktSndLoss</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/pktRcvLoss">pktRcvLoss</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/pktRetrans">pktRetrans</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/pktRcvRetrans">pktRcvRetrans</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/pktSentACK">pktSentACK</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/pktRecvACK">pktRecvACK</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/pktSentNAK">pktSentNAK</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/pktRecvNAK">pktRecvNAK</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/mbpsSendRate">mbpsSendRate</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html"><span class="identifier">Double</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/mbpsRecvRate">mbpsRecvRate</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html"><span class="identifier">Double</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/usSndDuration">usSndDuration</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/pktReorderDistance">pktReorderDistance</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/pktRcvAvgBelatedTime">pktRcvAvgBelatedTime</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html"><span class="identifier">Double</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/pktRcvBelated">pktRcvBelated</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/pktSndDrop">pktSndDrop</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/pktRcvDrop">pktRcvDrop</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/pktRcvUndecrypt">pktRcvUndecrypt</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/byteSent">byteSent</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/byteRecv">byteRecv</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/byteRcvLoss">byteRcvLoss</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/byteRetrans">byteRetrans</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/byteSndDrop">byteSndDrop</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/byteRcvDrop">byteRcvDrop</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/byteRcvUndecrypt">byteRcvUndecrypt</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/usPktSndPeriod">usPktSndPeriod</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html"><span class="identifier">Double</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/pktFlowWindow">pktFlowWindow</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/pktCongestionWindow">pktCongestionWindow</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/pktFlightSize">pktFlightSize</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/msRTT">msRTT</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html"><span class="identifier">Double</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/mbpsBandwidth">mbpsBandwidth</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html"><span class="identifier">Double</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/byteAvailSndBuf">byteAvailSndBuf</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/byteAvailRcvBuf">byteAvailRcvBuf</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/mbpsMaxBW">mbpsMaxBW</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html"><span class="identifier">Double</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/byteMSS">byteMSS</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/pktSndBuf">pktSndBuf</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/byteSndBuf">byteSndBuf</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/msSndBuf">msSndBuf</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/msSndTsbPdDelay">msSndTsbPdDelay</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/pktRcvBuf">pktRcvBuf</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/byteRcvBuf">byteRcvBuf</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/msRcvBuf">msRcvBuf</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/msRcvTsbPdDelay">msRcvTsbPdDelay</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/pktSndFilterExtraTotal">pktSndFilterExtraTotal</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/pktRcvFilterExtraTotal">pktRcvFilterExtraTotal</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/pktRcvFilterSupplyTotal">pktRcvFilterSupplyTotal</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/pktRcvFilterLossTotal">pktRcvFilterLossTotal</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/pktSndFilterExtra">pktSndFilterExtra</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/pktRcvFilterExtra">pktRcvFilterExtra</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/pktRcvFilterSupply">pktRcvFilterSupply</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/pktRcvFilterLoss">pktRcvFilterLoss</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/pktReorderTolerance">pktReorderTolerance</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/pktSentUniqueTotal">pktSentUniqueTotal</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/pktRecvUniqueTotal">pktRecvUniqueTotal</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/byteSentUniqueTotal">byteSentUniqueTotal</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/byteRecvUniqueTotal">byteRecvUniqueTotal</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/pktSentUnique">pktSentUnique</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/pktRecvUnique">pktRecvUnique</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/byteSentUnique">byteSentUnique</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Stats$<init>(kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Double, kotlin.Long, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Double, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Int, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long, kotlin.Long)/byteRecvUnique">byteRecvUnique</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span></code>
+<p>This class represents SRT statistics</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>Properties</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="byte-avail-rcv-buf.html">byteAvailRcvBuf</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">byteAvailRcvBuf</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>The available UDT receiver buffer size</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="byte-avail-snd-buf.html">byteAvailSndBuf</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">byteAvailSndBuf</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>The available UDT sender buffer size</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="byte-m-s-s.html">byteMSS</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">byteMSS</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>The MTU</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="byte-rcv-buf.html">byteRcvBuf</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">byteRcvBuf</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>The Undelivered bytes of UDT receiver</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="byte-rcv-drop.html">byteRcvDrop</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">byteRcvDrop</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>The number of too-late-to play missing bytes (estimate based on average packet size)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="byte-rcv-drop-total.html">byteRcvDropTotal</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">byteRcvDropTotal</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>The number of too-late-to play missing bytes (estimate based on average packet size)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="byte-rcv-loss.html">byteRcvLoss</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">byteRcvLoss</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>The number of lost bytes</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="byte-rcv-loss-total.html">byteRcvLossTotal</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">byteRcvLossTotal</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>The total number of lost bytes</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="byte-rcv-undecrypt.html">byteRcvUndecrypt</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">byteRcvUndecrypt</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>The number of undecrypted bytes</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="byte-rcv-undecrypt-total.html">byteRcvUndecryptTotal</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">byteRcvUndecryptTotal</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>The number of undecrypted bytes</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="byte-recv.html">byteRecv</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">byteRecv</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>The number of received bytes</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="byte-recv-total.html">byteRecvTotal</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">byteRecvTotal</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>The total number of received bytes</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="byte-recv-unique.html">byteRecvUnique</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">byteRecvUnique</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>The number of data bytes to be received by the application</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="byte-recv-unique-total.html">byteRecvUniqueTotal</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">byteRecvUniqueTotal</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>The total number of data bytes to be received by the application</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="byte-retrans.html">byteRetrans</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">byteRetrans</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>The number of retransmitted bytes</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="byte-retrans-total.html">byteRetransTotal</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">byteRetransTotal</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>The total number of retransmitted bytes</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="byte-sent.html">byteSent</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">byteSent</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>The number of sent data bytes, including retransmissions</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="byte-sent-total.html">byteSentTotal</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">byteSentTotal</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>The total number of sent data bytes, including retransmissions</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="byte-sent-unique.html">byteSentUnique</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">byteSentUnique</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>The number of data bytes, sent by the application</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="byte-sent-unique-total.html">byteSentUniqueTotal</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">byteSentUniqueTotal</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>The total number of data bytes, sent by the application</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="byte-snd-buf.html">byteSndBuf</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">byteSndBuf</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>The UnACKed bytes in UDT sender</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="byte-snd-drop.html">byteSndDrop</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">byteSndDrop</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>The number of too-late-to-send dropped bytes</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="byte-snd-drop-total.html">byteSndDropTotal</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">byteSndDropTotal</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>The number of too-late-to-send dropped bytes</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="mbps-bandwidth.html">mbpsBandwidth</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">mbpsBandwidth</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html"><span class="identifier">Double</span></a></code>
+<p>The estimated bandwidth, in Mb/s</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="mbps-max-b-w.html">mbpsMaxBW</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">mbpsMaxBW</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html"><span class="identifier">Double</span></a></code>
+<p>The Transmit Bandwidth ceiling (Mbps)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="mbps-recv-rate.html">mbpsRecvRate</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">mbpsRecvRate</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html"><span class="identifier">Double</span></a></code>
+<p>The receiving rate in Mb/s</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="mbps-send-rate.html">mbpsSendRate</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">mbpsSendRate</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html"><span class="identifier">Double</span></a></code>
+<p>The sending rate in Mb/s</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="ms-rcv-buf.html">msRcvBuf</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">msRcvBuf</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>The Undelivered timespan (msec) of UDT receiver</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="ms-rcv-tsb-pd-delay.html">msRcvTsbPdDelay</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">msRcvTsbPdDelay</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>The Timestamp-based Packet Delivery Delay</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="ms-r-t-t.html">msRTT</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">msRTT</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html"><span class="identifier">Double</span></a></code>
+<p>The RTT, in milliseconds</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="ms-snd-buf.html">msSndBuf</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">msSndBuf</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>The UnACKed timespan (msec) of UDT sender</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="ms-snd-tsb-pd-delay.html">msSndTsbPdDelay</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">msSndTsbPdDelay</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>The Timestamp-based Packet Delivery Delay</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="ms-time-stamp.html">msTimeStamp</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">msTimeStamp</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>The time since the UDT entity is started, in milliseconds</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="pkt-congestion-window.html">pktCongestionWindow</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">pktCongestionWindow</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>The congestion window size, in number of packets</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="pkt-flight-size.html">pktFlightSize</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">pktFlightSize</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>The number of packets on flight</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="pkt-flow-window.html">pktFlowWindow</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">pktFlowWindow</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>The flow window size, in number of packets</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="pkt-rcv-avg-belated-time.html">pktRcvAvgBelatedTime</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">pktRcvAvgBelatedTime</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html"><span class="identifier">Double</span></a></code>
+<p>The average time of packet delay for belated packets (packets with sequence past the ACK)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="pkt-rcv-belated.html">pktRcvBelated</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">pktRcvBelated</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>The number of received AND IGNORED packets due to having come too late</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="pkt-rcv-buf.html">pktRcvBuf</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">pktRcvBuf</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>The Undelivered packets in UDT receiver</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="pkt-rcv-drop.html">pktRcvDrop</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">pktRcvDrop</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>The number of too-late-to play missing packets</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="pkt-rcv-drop-total.html">pktRcvDropTotal</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">pktRcvDropTotal</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>The number of too-late-to play missing packets</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="pkt-rcv-filter-extra.html">pktRcvFilterExtra</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">pktRcvFilterExtra</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>The number of control packets received and not supplied back</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="pkt-rcv-filter-extra-total.html">pktRcvFilterExtraTotal</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">pktRcvFilterExtraTotal</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>The number of control packets received and not supplied back</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="pkt-rcv-filter-loss.html">pktRcvFilterLoss</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">pktRcvFilterLoss</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>The number of packet loss not coverable by filter</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="pkt-rcv-filter-loss-total.html">pktRcvFilterLossTotal</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">pktRcvFilterLossTotal</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>The number of packet loss not coverable by filter</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="pkt-rcv-filter-supply.html">pktRcvFilterSupply</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">pktRcvFilterSupply</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>The number of packets that the filter supplied extra (e.g. FEC rebuilt)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="pkt-rcv-filter-supply-total.html">pktRcvFilterSupplyTotal</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">pktRcvFilterSupplyTotal</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>The number of packets that the filter supplied extra (e.g. FEC rebuilt)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="pkt-rcv-loss.html">pktRcvLoss</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">pktRcvLoss</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>The number of lost packets (receiver side)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="pkt-rcv-loss-total.html">pktRcvLossTotal</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">pktRcvLossTotal</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>The total number of lost packets (receiver side)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="pkt-rcv-retrans.html">pktRcvRetrans</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">pktRcvRetrans</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>The number of retransmitted packets received</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="pkt-rcv-undecrypt.html">pktRcvUndecrypt</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">pktRcvUndecrypt</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>The number of undecrypted packets</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="pkt-rcv-undecrypt-total.html">pktRcvUndecryptTotal</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">pktRcvUndecryptTotal</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>The number of undecrypted packets</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="pkt-recv.html">pktRecv</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">pktRecv</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>The number of received packets</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="pkt-recv-a-c-k.html">pktRecvACK</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">pktRecvACK</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>The number of received ACK packets</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="pkt-recv-a-c-k-total.html">pktRecvACKTotal</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">pktRecvACKTotal</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>The total number of received ACK packets</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="pkt-recv-n-a-k.html">pktRecvNAK</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">pktRecvNAK</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>The number of received NAK packets</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="pkt-recv-n-a-k-total.html">pktRecvNAKTotal</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">pktRecvNAKTotal</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>The total number of received NAK packets</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="pkt-recv-total.html">pktRecvTotal</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">pktRecvTotal</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>The total number of received packets</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="pkt-recv-unique.html">pktRecvUnique</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">pktRecvUnique</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>The number of packets to be received by the application</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="pkt-recv-unique-total.html">pktRecvUniqueTotal</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">pktRecvUniqueTotal</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>The total number of packets to be received by the application</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="pkt-reorder-distance.html">pktReorderDistance</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">pktReorderDistance</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>The size of order discrepancy in received sequences</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="pkt-reorder-tolerance.html">pktReorderTolerance</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">pktReorderTolerance</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>The packet reorder tolerance value</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="pkt-retrans.html">pktRetrans</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">pktRetrans</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>The number of retransmitted packets</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="pkt-retrans-total.html">pktRetransTotal</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">pktRetransTotal</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>The total number of retransmitted packets</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="pkt-sent.html">pktSent</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">pktSent</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>The number of sent data packets, including retransmissions</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="pkt-sent-a-c-k.html">pktSentACK</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">pktSentACK</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>The number of sent ACK packets</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="pkt-sent-a-c-k-total.html">pktSentACKTotal</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">pktSentACKTotal</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>The total number of sent ACK packets</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="pkt-sent-n-a-k.html">pktSentNAK</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">pktSentNAK</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>The number of sent NAK packets</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="pkt-sent-n-a-k-total.html">pktSentNAKTotal</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">pktSentNAKTotal</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>The total number of sent NAK packets</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="pkt-sent-total.html">pktSentTotal</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">pktSentTotal</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>The total number of sent data packets, including retransmissions</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="pkt-sent-unique.html">pktSentUnique</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">pktSentUnique</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>The number of data packets sent by the application</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="pkt-sent-unique-total.html">pktSentUniqueTotal</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">pktSentUniqueTotal</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>The total number of data packets sent by the application</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="pkt-snd-buf.html">pktSndBuf</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">pktSndBuf</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>The UnACKed packets in UDT sender</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="pkt-snd-drop.html">pktSndDrop</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">pktSndDrop</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>The number of too-late-to-send dropped packets</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="pkt-snd-drop-total.html">pktSndDropTotal</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">pktSndDropTotal</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>The number of too-late-to-send dropped packets</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="pkt-snd-filter-extra.html">pktSndFilterExtra</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">pktSndFilterExtra</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>The number of control packets supplied by packet filter</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="pkt-snd-filter-extra-total.html">pktSndFilterExtraTotal</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">pktSndFilterExtraTotal</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>The number of control packets supplied by packet filter</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="pkt-snd-loss.html">pktSndLoss</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">pktSndLoss</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>The number of lost packets (sender side)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="pkt-snd-loss-total.html">pktSndLossTotal</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">pktSndLossTotal</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html"><span class="identifier">Int</span></a></code>
+<p>The total number of lost packets (sender side)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="us-pkt-snd-period.html">usPktSndPeriod</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">usPktSndPeriod</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html"><span class="identifier">Double</span></a></code>
+<p>The packet sending period, in microseconds</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="us-snd-duration.html">usSndDuration</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">usSndDuration</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>The busy sending time (i.e., idle time exclusive)</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="us-snd-duration-total.html">usSndDurationTotal</a></p>
+</td>
+<td>
+<code><span class="keyword">val </span><span class="identifier">usSndDurationTotal</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a></code>
+<p>The total time duration when UDT is sending data (idle time exclusive)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

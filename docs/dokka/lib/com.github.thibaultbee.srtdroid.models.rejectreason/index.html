@@ -1,0 +1,54 @@
+<HTML>
+<HEAD>
+<meta charset="UTF-8">
+<title>com.github.thibaultbee.srtdroid.models.rejectreason - lib</title>
+<link rel="stylesheet" href="../../style.css">
+</HEAD>
+<BODY>
+<a href="../index.html">lib</a>&nbsp;/&nbsp;<a href="./index.html">com.github.thibaultbee.srtdroid.models.rejectreason</a><br/>
+<br/>
+<h2>Package com.github.thibaultbee.srtdroid.models.rejectreason</h2>
+<h3>Types</h3>
+<table>
+<tbody>
+<tr>
+<td>
+<p><a href="-internal-reject-reason/index.html">InternalRejectReason</a></p>
+</td>
+<td>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">InternalRejectReason</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-reject-reason/index.html"><span class="identifier">RejectReason</span></a></code>
+<p>This class represents a reject reason that was triggered by internal mechanism.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-predefined-reject-reason/index.html">PredefinedRejectReason</a></p>
+</td>
+<td>
+<code><span class="keyword">class </span><span class="identifier">PredefinedRejectReason</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-reject-reason/index.html"><span class="identifier">RejectReason</span></a></code>
+<p>This class represents a reject reason that was triggered by server/application.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-reject-reason/index.html">RejectReason</a></p>
+</td>
+<td>
+<code><span class="keyword">abstract</span> <span class="keyword">class </span><span class="identifier">RejectReason</span></code>
+<p>Base class of <a href="-internal-reject-reason/index.html">InternalRejectReason</a>, <a href="-predefined-reject-reason/index.html">PredefinedRejectReason</a> and <a href="-user-defined-reject-reason/index.html">UserDefinedRejectReason</a>.
+Do not use it. Its purpose is to get an unique <a href="../com.github.thibaultbee.srtdroid.models/-socket/reject-reason.html">Socket.rejectReason</a> API.</p>
+</td>
+</tr>
+<tr>
+<td>
+<p><a href="-user-defined-reject-reason/index.html">UserDefinedRejectReason</a></p>
+</td>
+<td>
+<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">UserDefinedRejectReason</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="-reject-reason/index.html"><span class="identifier">RejectReason</span></a></code>
+<p>This class represents a reject reason that was triggered by user.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</BODY>
+</HTML>

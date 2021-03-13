@@ -17,19 +17,38 @@ package com.github.thibaultbee.srtdroid.models
 
 import com.github.thibaultbee.srtdroid.enums.ErrorType
 
-class Error {
-    companion object {
-        @JvmStatic
-        private external fun nativeGetLastErrorMessage(): String
-        val lastErrorMessage: String
-            get() = nativeGetLastErrorMessage()
+/**
+ * This class contains API to manage errors.
+ */
+object Error {
+    private external fun nativeGetLastErrorMessage(): String
 
-        @JvmStatic
-        private external fun nativeGetLastError(): ErrorType
-        val lastError: ErrorType
-            get() = nativeGetLastError()
+    /**
+     * Gets the text message for the last error.
+     *
+     * **See Also:** [srt_getlasterror_str](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_getlasterror_str)
+     *
+     * @return the last error message
+     */
+    val lastErrorMessage: String
+        get() = nativeGetLastErrorMessage()
 
-        @JvmStatic
-        external fun clearLastError()
-    }
+    private external fun nativeGetLastError(): ErrorType
+
+    /**
+     * Gets the last error code.
+     *
+     * **See Also:** [srt_getlasterror](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_getlasterror)
+     *
+     * @return the [ErrorType] of the error
+     */
+    val lastError: ErrorType
+        get() = nativeGetLastError()
+
+    /**
+     * Clears the last error code.
+     *
+     * **See Also:** [srt_clearlasterror](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_clearlasterror)
+     */
+    external fun clearLastError()
 }

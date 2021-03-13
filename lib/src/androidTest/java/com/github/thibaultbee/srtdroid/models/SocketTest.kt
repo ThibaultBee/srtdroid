@@ -31,7 +31,6 @@ import org.junit.runner.RunWith
 import java.io.File
 import java.io.IOException
 import java.net.SocketException
-import java.net.StandardProtocolFamily
 
 
 /*
@@ -40,12 +39,11 @@ import java.net.StandardProtocolFamily
 
 @RunWith(AndroidJUnit4::class)
 class SocketTest {
-    private val srt = Srt()
     private lateinit var socket: Socket
 
     @Before
     fun setUp() {
-        assert(srt.startUp() >= 0)
+        assert(Srt.startUp() >= 0)
         socket = Socket()
         assertTrue(socket.isValid)
     }
@@ -53,17 +51,7 @@ class SocketTest {
     @After
     fun tearDown() {
         socket.close()
-        assertEquals(srt.cleanUp(), 0)
-    }
-
-    @Test
-    fun inetConstructorTest() {
-        assertTrue(Socket(StandardProtocolFamily.INET).isValid)
-    }
-
-    @Test
-    fun inet6ConstructorTest() {
-        assertTrue(Socket(StandardProtocolFamily.INET6).isValid)
+        assertEquals(Srt.cleanUp(), 0)
     }
 
     @Test
@@ -133,15 +121,23 @@ class SocketTest {
 
     @Test
     fun getPeerNameTest() {
-        assertNull(socket.peerName)
+        try {
+            assertNull(socket.sockName)
+            fail()
+        } catch (e: Exception) {
+        }
     }
 
     @Test
     fun getSockNameTest() {
-        assertNull(socket.sockName)
+        try {
+            assertNull(socket.sockName)
+            fail()
+        } catch (e: Exception) {
+        }
         socket.bind("127.0.3.1", 1239)
-        assertEquals("127.0.3.1", socket.sockName!!.address.hostAddress)
-        assertEquals(1239, socket.sockName!!.port)
+        assertEquals("127.0.3.1", socket.sockName.address.hostAddress)
+        assertEquals(1239, socket.sockName.port)
     }
 
     @Test
@@ -254,7 +250,6 @@ class SocketTest {
 
     @Test
     fun setRejectReasonTest() {
-        socket.rejectReason = InternalRejectReason(RejectReasonCode.BADSECRET) // Generate an error
         socket.rejectReason = UserDefinedRejectReason(2)
         socket.rejectReason = PredefinedRejectReason(1)
     }

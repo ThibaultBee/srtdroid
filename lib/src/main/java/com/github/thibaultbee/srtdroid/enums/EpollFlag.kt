@@ -15,8 +15,26 @@
  */
 package com.github.thibaultbee.srtdroid.enums
 
+import com.github.thibaultbee.srtdroid.models.Epoll
+
+/**
+ * Use this enumeration in [Epoll.flags] and [Epoll.setFlags].
+ *
+ * **See Also:** [srt_epoll_set](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_epoll_set)
+ */
 enum class EpollFlag {
+    /**
+     * Clear all flags (set all defaults)
+     */
     CLEAR_ALL,
+
+    /**
+     * Allows the [Epoll.wait] and the [Epoll.uWait] functions to be called with the EID not subscribed to any socket.
+     */
     ENABLE_EMPTY,
+
+    /**
+     *  Forces the [Epoll.wait] and the [Epoll.uWait] functions to check if the output array is not empty.
+     */
     ENABLE_OUTPUTCHECK;
 }
