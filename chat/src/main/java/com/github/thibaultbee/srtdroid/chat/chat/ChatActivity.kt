@@ -21,13 +21,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.thibaultbee.srtdroid.chat.R
 import com.github.thibaultbee.srtdroid.chat.databinding.ActivityChatBinding
-import com.github.thibaultbee.srtdroid.chat.interfaces.SocketManagerInterface
+import com.github.thibaultbee.srtdroid.chat.interfaces.SocketHandlerListener
 import com.github.thibaultbee.srtdroid.chat.models.Message
 import com.github.thibaultbee.srtdroid.chat.singleton.SocketHandler
 import com.github.thibaultbee.srtdroid.chat.utils.DialogUtils
 
 
-class ChatActivity : AppCompatActivity(), SocketManagerInterface {
+class ChatActivity : AppCompatActivity(), SocketHandlerListener {
     private val TAG = ChatActivity::class.qualifiedName
     private lateinit var binding: ActivityChatBinding
 
@@ -46,7 +46,7 @@ class ChatActivity : AppCompatActivity(), SocketManagerInterface {
         binding.messageRecyclerView.adapter = adapter
         binding.messageRecyclerView.layoutManager = LinearLayoutManager(this)
 
-        SocketHandler.socketManagerInterface = this
+        SocketHandler.socketHandlerListener = this
     }
 
     fun sendMessage(view: View?) {
@@ -71,7 +71,7 @@ class ChatActivity : AppCompatActivity(), SocketManagerInterface {
     // SocketManagerInterface
     override fun onRecvMsg(message: String) {
         val peer = SocketHandler.peerName
-        val sender = "${peer?.address ?: "Unknown address"}:${peer?.port ?: "Unknown port"}"
+        val sender = "${peer.address}:${peer.port}"
         this.runOnUiThread { updateList(message, sender, false) }
     }
 

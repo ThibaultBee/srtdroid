@@ -15,7 +15,7 @@
  */
 package com.github.thibaultbee.srtdroid.chat.singleton
 
-import com.github.thibaultbee.srtdroid.chat.interfaces.SocketManagerInterface
+import com.github.thibaultbee.srtdroid.chat.interfaces.SocketHandlerListener
 import com.github.thibaultbee.srtdroid.chat.utils.ErrorUtils
 import com.github.thibaultbee.srtdroid.enums.SockOpt
 import com.github.thibaultbee.srtdroid.models.Socket
@@ -28,7 +28,7 @@ object SocketHandler {
     private lateinit var clientSocket: Socket
     private lateinit var recvThread: RecvThread
 
-    var socketManagerInterface: SocketManagerInterface? = null
+    var socketHandlerListener: SocketHandlerListener? = null
 
     fun createServer(ip: String, port: Int) {
         serverSocket = Socket()
@@ -68,7 +68,7 @@ object SocketHandler {
 
     fun sendMessage(message: String) {
         if (clientSocket.send(message) == -1) {
-            socketManagerInterface?.onConnectionClose(
+            socketHandlerListener?.onConnectionClose(
                 ErrorUtils.getMessage()
             )
             close()
@@ -100,9 +100,9 @@ object SocketHandler {
                 try {
                     val message =
                         recvMessage()
-                    socketManagerInterface?.onRecvMsg(message)
+                    socketHandlerListener?.onRecvMsg(message)
                 } catch (e: Exception) {
-                    socketManagerInterface?.onConnectionClose(e.message ?: "")
+                    socketHandlerListener?.onConnectionClose(e.message ?: "")
                     close()
                     isRunning = false
                 }

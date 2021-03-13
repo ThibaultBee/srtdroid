@@ -15,7 +15,7 @@
  */
 package com.github.thibaultbee.srtdroid.chat.interfaces
 
-interface SocketManagerInterface {
+interface SocketHandlerListener {
     fun onRecvMsg(message: String)
     fun onConnectionClose(reason: String)
 }

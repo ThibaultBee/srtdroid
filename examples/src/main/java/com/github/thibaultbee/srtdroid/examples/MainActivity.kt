@@ -70,12 +70,12 @@ class MainActivity : AppCompatActivity() {
                             Utils.getClientIpFromPreference(this),
                             Utils.getClientPortFromPreference(this)
                         )
-                        Utils.showAlert(this, "Success", "Noice!")
+                        Utils.showAlertDialog(this, "Success", "Noice!")
                     } catch (e: Exception) {
-                        Utils.showAlert(this, "Error", e.message ?: "")
+                        Utils.showAlertDialog(this, "Error", e.message ?: "")
                     }
                 } else {
-                    Utils.showAlert(this, "Permission", "Missing permissions")
+                    Utils.showAlertDialog(this, "Permission", "Missing permissions")
                 }
             }
             .let(activityDisposables::add)
@@ -90,12 +90,12 @@ class MainActivity : AppCompatActivity() {
                             Utils.getServerIpFromPreference(this),
                             Utils.getServerPortFromPreference(this)
                         )
-                        Utils.showAlert(this, "Success", "Noice! (check logcat)")
+                        Utils.showAlertDialog(this, "Success", "Noice! (check logcat)")
                     } catch (e: Exception) {
-                        Utils.showAlert(this, "Error", e.message ?: "")
+                        Utils.showAlertDialog(this, "Error", e.message ?: "")
                     }
                 } else {
-                    Utils.showAlert(this, "Permission", "Missing permissions")
+                    Utils.showAlertDialog(this, "Permission", "Missing permissions")
                 }
             }
             .let(activityDisposables::add)
@@ -117,12 +117,12 @@ class MainActivity : AppCompatActivity() {
                             Utils.getClientPortFromPreference(this),
                             serverFileName
                         )
-                        Utils.showAlert(this, "Success", "Check out ${file.path}")
+                        Utils.showAlertDialog(this, "Success", "Check out ${file.path}")
                     } catch (e: Exception) {
-                        Utils.showAlert(this, "Failed to recv file", e.message ?: "")
+                        Utils.showAlertDialog(this, "Failed to recv file", e.message ?: "")
                     }
                 } else {
-                    Utils.showAlert(this, "Permission", "Missing permissions")
+                    Utils.showAlertDialog(this, "Permission", "Missing permissions")
                 }
             }
             .let(activityDisposables::add)
@@ -143,16 +143,16 @@ class MainActivity : AppCompatActivity() {
                             Utils.getServerIpFromPreference(this),
                             Utils.getServerPortFromPreference(this)
                         )
-                        Utils.showAlert(
+                        Utils.showAlertDialog(
                             this,
                             "Success",
                             "Noice!\nSpeed = ${stats.mbpsRate}\nLoss = ${stats.pktLossTotal} pkt ( ${stats.lossPercent} %)"
                         )
                     } catch (e: Exception) {
-                        Utils.showAlert(this, "Error", e.message ?: "")
+                        Utils.showAlertDialog(this, "Error", e.message ?: "")
                     }
                 } else {
-                    Utils.showAlert(this, "Permission", "Missing permissions")
+                    Utils.showAlertDialog(this, "Permission", "Missing permissions")
                 }
             }
             .let(activityDisposables::add)
