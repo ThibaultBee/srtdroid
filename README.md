@@ -2,7 +2,7 @@
 
 # srtdroid: Secure Reliable Transport (SRT) Protocol for Android
 
-Low level API for SRT library on Android. SRT is an open source transport technology that optimizes streaming performance across unpredictable networks. More information on https://github.com/Haivision/srt.
+Low level API for SRT library on Android. SRT is an open source transport technology that optimizes streaming performance across unpredictable networks. More information on [SRT](https://github.com/Haivision/srt).
 
 srtdroid is a binder built on [SRT](https://github.com/Haivision/srt). It is a not a new implementation of SRT protocol.
 
@@ -23,12 +23,12 @@ dependencies {
 }
 ```
 
-
 ## Samples
 
 To test srtdroid, you will need 2 Android devices: one client and one server.
-On the server side, configure listening IP to "0.0.0.0" or to server ethernet IP.
-On the client side, configure connecting IP to server IP.
+
+On the server side, configure local IP to `0.0.0.0`.
+On the client side, configure remote IP to server device IP.
 The port must be the same value for both.
 
 ### Examples
@@ -54,12 +54,12 @@ Srt `recv`, `recvdMsg` are called `recv()` in srtdroid. Alternatively, you can u
 
 ## Permissions
 
-You need to add the INTERNET permission in your AndroidManifest.xml:
+You need to add the `INTERNET` permission in your AndroidManifest.xml:
 ```xml
     <uses-permission android:name="android.permission.INTERNET" />
 ```
 
-To use, sendFile and recvFile, you might also add READ_EXTERNAL_STORAGE and WRITE_EXTERNAL_STORAGE
+To use, `sendFile` and `recvFile`, you also need to add `READ_EXTERNAL_STORAGE` and `WRITE_EXTERNAL_STORAGE`:
 ```xml
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
