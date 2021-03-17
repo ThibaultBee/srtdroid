@@ -28,7 +28,7 @@ data class MsgCtrl(
     /**
      * The time (in ms) to wait for a successful delivery. -1 means no time limitation.
      */
-    val ttl: Int = -1,
+    val ttl: Int = -1, // SRT_MSGTTL_INF
     /**
      * Required to be received in the order of sending.
      */
@@ -36,7 +36,7 @@ data class MsgCtrl(
     /**
      * Reserved for future use. Should be 0.
      */
-    val boundary: Int,
+    val boundary: Int = 0, // PB_SUBSEQUENT
     /**
      * Receiver: specifies the time when the packet was intended to be delivered to the receiving application (in microseconds since SRT clock epoch).
      * Sender: specifies the application-provided timestamp to be associated with the packet.
@@ -45,9 +45,9 @@ data class MsgCtrl(
     /**
      * Receiver only: reports the sequence number for the packet carrying out the message being returned.
      */
-    val pktSeq: Int,
+    val pktSeq: Int = -1, // SRT_SEQNO_NONE
     /**
      * Message number that can be sent by both sender and receiver.
      */
-    val no: Int
+    val no: Int = -1 // SRT_MSGNO_NONE
 )
