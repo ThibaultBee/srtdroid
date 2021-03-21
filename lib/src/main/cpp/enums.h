@@ -17,6 +17,7 @@
 #include <jni.h>
 
 #include "srt/srt.h"
+#include "srt/srt.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -32,6 +33,7 @@ extern "C" {
 #define SOCKOPT_CLASS "com/github/thibaultbee/srtdroid/enums/SockOpt"
 #define SOCKSTATUS_CLASS "com/github/thibaultbee/srtdroid/enums/SockStatus"
 #define TRANSTYPE_CLASS "com/github/thibaultbee/srtdroid/enums/Transtype"
+#define BOUNDARY_CLASS "com/github/thibaultbee/srtdroid/enums/Boundary"
 
 /**
  * @brief Convert Java address family to native value
@@ -104,6 +106,24 @@ jobject srt_sockstatus_n2j(JNIEnv *env, SRT_SOCKSTATUS sockstatus);
  * @return return corresponding SRT reject reason
  */
 int srt_reject_reason_j2n(JNIEnv *env, jobject rejectReason);
+
+/**
+ * @brief Convert native boundary to Java SRT Boundary
+ *
+ * @param env Java environment
+ * @param native_boundary Native boundary
+ * @return return corresponding Java SRT Boundary
+ */
+jobject srt_boundary_n2j(JNIEnv *env, int native_boundary);
+
+/**
+ * @brief Convert Java SRT Boundary to native SRT boundary
+ *
+ * @param env Java environment
+ * @param boundary Java SRT Boundary
+ * @return return corresponding SRT native boundary
+ */
+int srt_boundary_j2n(JNIEnv *env, jobject boundary);
 
 /**
  * @brief Convert Java SRT error to native SRT error

@@ -9,6 +9,7 @@ Version 1.1.0
 - In case an error happened, connectionTime/setRejectReason/peerName/inetAddress/port/sockName/localAddress/localPort return an exception instead of a null
 - In case an error happened, most Epoll methods return an exception instead of a -1
 - Fix a typo: SockStatus NONEXIST become NON_EXIST
+- MsgCtrl.boundary is a Boundary type and no longer an Int
 
 Version 1.0.0
 -------------

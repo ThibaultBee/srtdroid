@@ -568,6 +568,79 @@ int srt_error_j2n(JNIEnv *env, jobject errorType) {
     return error_type;
 }
 
+
+jobject srt_boundary_n2j(JNIEnv *env, int native_boundary) {
+    jclass boundaryClazz = env->FindClass(BOUNDARY_CLASS);
+    if (!boundaryClazz) {
+        LOGE(TAG, "Can't get "
+                BOUNDARY_CLASS
+                " class");
+        return nullptr;
+    }
+
+    char *boundary_field = nullptr;
+    switch (native_boundary) {
+        case 0:
+            boundary_field = strdup("SUBSEQUENT");
+            break;
+        case 1:
+            boundary_field = strdup("LAST");
+            break;
+        case 2:
+            boundary_field = strdup("FIRST");
+            break;
+        case 3:
+            boundary_field = strdup("SOLO");
+            break;
+        default:
+            LOGE(TAG, "Boundary: unknown value %d", native_boundary);
+    }
+
+    jfieldID boundaryField = env->GetStaticFieldID(boundaryClazz, boundary_field,
+                                                   "L" BOUNDARY_CLASS ";");
+    if (!boundaryField) {
+        LOGE(TAG, "Can't get boundary field");
+        env->DeleteLocalRef(boundaryClazz);
+        return nullptr;
+    }
+
+    jobject boundary = env->GetStaticObjectField(boundaryClazz, boundaryField);
+
+    if (boundary_field != nullptr) {
+        free(boundary_field);
+    }
+
+    env->DeleteLocalRef(boundaryClazz);
+
+    return boundary;
+}
+
+int srt_boundary_j2n(JNIEnv *env, jobject boundary) {
+    const char *boundary_field = enums_get_field_id(env, boundary);
+    if (!boundary_field) {
+        LOGE(TAG, "Can't get boundary");
+        return 0;
+    }
+
+    int native_boundary = 0;
+    if (strcmp(boundary_field, "SUBSEQUENT") == 0) {
+        native_boundary = 0;
+    } else if (strcmp(boundary_field, "LAST") == 0) {
+        native_boundary = 1;
+    } else if (strcmp(boundary_field, "FIRST") == 0) {
+        native_boundary = 2;
+    } else if (strcmp(boundary_field, "SOLO") == 0) {
+        native_boundary = 3;
+    } else {
+        LOGE(TAG, "Boundary: unknown value %s", boundary_field);
+    }
+
+    free((void *) boundary_field);
+
+    return native_boundary;
+}
+
+
 jobject srt_error_n2j(JNIEnv *env, int error_type) {
     jclass errorTypeClazz = env->FindClass(ERRORTYPE_CLASS);
     if (!errorTypeClazz) {

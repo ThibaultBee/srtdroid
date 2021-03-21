@@ -576,7 +576,8 @@ srt_msgctrl_j2n(JNIEnv *env, jobject msgCtrl) {
         return nullptr;
     }
 
-    jfieldID msgCtrlBondaryField = env->GetFieldID(msgCtrlClazz, "boundary", "I");
+    jfieldID msgCtrlBondaryField = env->GetFieldID(msgCtrlClazz, "boundary",
+                                                   "L" BOUNDARY_CLASS ";");
     if (!msgCtrlBondaryField) {
         LOGE(TAG, "Can't get boundary field");
         env->DeleteLocalRef(msgCtrlClazz);
@@ -609,7 +610,8 @@ srt_msgctrl_j2n(JNIEnv *env, jobject msgCtrl) {
         srt_msgctrl->flags = env->GetIntField(msgCtrl, msgCtrlFlagsField);
         srt_msgctrl->msgttl = env->GetIntField(msgCtrl, msgCtrlTtlField);
         srt_msgctrl->inorder = env->GetBooleanField(msgCtrl, msgCtrlInOrderField);
-        srt_msgctrl->boundary = env->GetIntField(msgCtrl, msgCtrlBondaryField);
+        srt_msgctrl->boundary = srt_boundary_j2n(env,
+                                                 env->GetObjectField(msgCtrl, msgCtrlBondaryField));
         srt_msgctrl->srctime = (uint64_t) env->GetLongField(msgCtrl, msgCtrlSrcTimeField);
         srt_msgctrl->pktseq = env->GetIntField(msgCtrl, msgCtrlPktSeqField);
         srt_msgctrl->msgno = env->GetIntField(msgCtrl, msgCtrlNoField);

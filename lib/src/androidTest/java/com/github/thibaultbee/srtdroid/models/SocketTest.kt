@@ -185,7 +185,7 @@ class SocketTest {
 
     @Test
     fun sendMsg3Test() {
-        val msgCtrl = MsgCtrl(boundary = 1, pktSeq = 1, no = 1)
+        val msgCtrl = MsgCtrl(boundary = Boundary.SUBSEQUENT, pktSeq = 1, no = 1)
         try {
             socket.send("Hello World !", msgCtrl)
             fail()
@@ -211,7 +211,7 @@ class SocketTest {
         try {
             socket.recv(
                 4 /*Int nb bytes*/,
-                MsgCtrl(flags = 0, boundary = 0, pktSeq = 0, no = 10)
+                MsgCtrl(flags = 0, boundary = Boundary.FIRST, pktSeq = 0, no = 10)
             )
             fail()
         } catch (e: SocketException) {

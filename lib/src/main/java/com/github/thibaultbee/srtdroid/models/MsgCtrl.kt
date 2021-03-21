@@ -15,6 +15,8 @@
  */
 package com.github.thibaultbee.srtdroid.models
 
+import com.github.thibaultbee.srtdroid.enums.Boundary
+
 /**
  * This class represents extra parameters for [Socket.send] and [Socket.recv]
  *
@@ -34,9 +36,9 @@ data class MsgCtrl(
      */
     val inOrder: Boolean = false,
     /**
-     * Reserved for future use. Should be 0.
+     * Reserved for future use. Should be [Boundary.SUBSEQUENT].
      */
-    val boundary: Int = 0, // PB_SUBSEQUENT
+    val boundary: Boundary = Boundary.SUBSEQUENT,
     /**
      * Receiver: specifies the time when the packet was intended to be delivered to the receiving application (in microseconds since SRT clock epoch).
      * Sender: specifies the application-provided timestamp to be associated with the packet.
