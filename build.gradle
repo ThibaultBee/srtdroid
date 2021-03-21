@@ -8,7 +8,8 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.2'
+        // Warning: going to 4.1.2 causes an increase of the compilation time and results jitpack timeout...
+        classpath 'com.android.tools.build:gradle:4.1.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
         classpath "org.jetbrains.dokka:dokka-android-gradle-plugin:$dokka_version"
