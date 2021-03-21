@@ -1,7 +1,10 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext.kotlin_version = '1.4.31'
+    /**
+     * Warning: New kotlin version (1.4.30) takes too long too build and it causes jitpack build timeout...
+     */
+    ext.kotlin_version = '1.4.20'
     ext.dokka_version = '0.9.18'
     repositories {
         google()
