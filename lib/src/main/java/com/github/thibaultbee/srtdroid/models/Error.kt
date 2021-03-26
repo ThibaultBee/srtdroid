@@ -15,12 +15,18 @@
  */
 package com.github.thibaultbee.srtdroid.models
 
+import com.github.thibaultbee.srtdroid.Srt
 import com.github.thibaultbee.srtdroid.enums.ErrorType
 
 /**
  * This class contains API to manage errors.
+ * Once it has been called, you must release Srt context with [Srt.cleanUp] when application leaves.
  */
 object Error {
+    init {
+        Srt.startUp()
+    }
+
     private external fun nativeGetLastErrorMessage(): String
 
     /**

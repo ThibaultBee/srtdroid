@@ -45,7 +45,6 @@ class FileTest {
 
     @Before
     fun setUp() {
-        assert(Srt.startUp() >= 0)
         socket = Socket()
         socket.setSockFlag(SockOpt.TRANSTYPE, Transtype.FILE)
         assertTrue(socket.isValid)

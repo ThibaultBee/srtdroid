@@ -15,6 +15,7 @@
  */
 package com.github.thibaultbee.srtdroid.models
 
+import com.github.thibaultbee.srtdroid.Srt
 import com.github.thibaultbee.srtdroid.enums.EpollFlag
 import com.github.thibaultbee.srtdroid.enums.EpollOpt
 import java.security.InvalidParameterException
@@ -22,10 +23,17 @@ import java.security.InvalidParameterException
 /**
  * This class is currently the only method for using multiple sockets in one thread with having the
  * blocking operation moved to epoll waiting so that it can block on multiple sockets at once.
+ * Once it has been called, you must release Srt context with [Srt.cleanUp] when application leaves.
  *
  * **See Also:** [Asynchronous operations (epoll)](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#asynchronous-operations-epoll-1)
  */
 class Epoll {
+    companion object {
+        init {
+            Srt.startUp()
+        }
+    }
+    
     private var eid: Int
 
     init {

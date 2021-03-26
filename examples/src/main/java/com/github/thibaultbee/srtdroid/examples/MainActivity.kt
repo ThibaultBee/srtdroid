@@ -52,8 +52,6 @@ class MainActivity : AppCompatActivity() {
             .replace(R.id.preferenceServerLayout, MainServerSettingsFragment())
             .commit()
 
-        Srt.startUp()
-
         bindProperties()
     }
 

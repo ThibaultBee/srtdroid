@@ -20,7 +20,8 @@
 <a href="../com.github.thibaultbee.srtdroid.models/-epoll/index.html">com.github.thibaultbee.srtdroid.models.Epoll</a></td>
 <td>
 <p>This class is currently the only method for using multiple sockets in one thread with having the
-blocking operation moved to epoll waiting so that it can block on multiple sockets at once.</p>
+blocking operation moved to epoll waiting so that it can block on multiple sockets at once.
+Once it has been called, you must release Srt context with <a href="../com.github.thibaultbee.srtdroid/-srt/clean-up.html">Srt.cleanUp</a> when application leaves.</p>
 </td>
 </tr>
 <tr>
@@ -48,14 +49,16 @@ blocking operation moved to epoll waiting so that it can block on multiple socke
 <td>
 <a href="../com.github.thibaultbee.srtdroid.models/-error/index.html">com.github.thibaultbee.srtdroid.models.Error</a></td>
 <td>
-<p>This class contains API to manage errors.</p>
+<p>This class contains API to manage errors.
+Once it has been called, you must release Srt context with <a href="../com.github.thibaultbee.srtdroid/-srt/clean-up.html">Srt.cleanUp</a> when application leaves.</p>
 </td>
 </tr>
 <tr>
 <td>
 <a href="../com.github.thibaultbee.srtdroid.enums/-error-type/index.html">com.github.thibaultbee.srtdroid.enums.ErrorType</a></td>
 <td>
-<p>SRT error codes</p>
+<p>SRT error codes.
+Once it has been called, you must release Srt context with <a href="../com.github.thibaultbee.srtdroid/-srt/clean-up.html">Srt.cleanUp</a> when application leaves.</p>
 </td>
 </tr>
 <tr>
@@ -99,14 +102,16 @@ Do not use it. Its purpose is to get an unique <a href="../com.github.thibaultbe
 <td>
 <a href="../com.github.thibaultbee.srtdroid.enums/-reject-reason-code/index.html">com.github.thibaultbee.srtdroid.enums.RejectReasonCode</a></td>
 <td>
-<p>Internal reject reason for <a href="../com.github.thibaultbee.srtdroid.models.rejectreason/-internal-reject-reason/index.html">InternalRejectReason</a>.</p>
+<p>Internal reject reason for <a href="../com.github.thibaultbee.srtdroid.models.rejectreason/-internal-reject-reason/index.html">InternalRejectReason</a>.
+Once it has been called, you must release Srt context with <a href="../com.github.thibaultbee.srtdroid/-srt/clean-up.html">Srt.cleanUp</a> when application leaves.</p>
 </td>
 </tr>
 <tr>
 <td>
 <a href="../com.github.thibaultbee.srtdroid.models/-socket/index.html">com.github.thibaultbee.srtdroid.models.Socket</a></td>
 <td>
-<p>This class represents a SRT socket.</p>
+<p>This class represents a SRT socket.
+Once it has been called, you must release Srt context with <a href="../com.github.thibaultbee.srtdroid/-srt/clean-up.html">Srt.cleanUp</a> when application leaves.</p>
 </td>
 </tr>
 <tr>
@@ -148,7 +153,8 @@ Do not use it. Its purpose is to get an unique <a href="../com.github.thibaultbe
 <td>
 <a href="../com.github.thibaultbee.srtdroid.models/-time/index.html">com.github.thibaultbee.srtdroid.models.Time</a></td>
 <td>
-<p>This class contains time utils.</p>
+<p>This class contains time utils.
+Once it has been called, you must release Srt context with <a href="../com.github.thibaultbee.srtdroid/-srt/clean-up.html">Srt.cleanUp</a> when application leaves.</p>
 </td>
 </tr>
 <tr>

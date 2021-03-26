@@ -21,7 +21,6 @@ import com.github.thibaultbee.srtdroid.enums.ErrorType
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
-import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.net.SocketException
@@ -34,11 +33,6 @@ import java.net.SocketException
 @RunWith(AndroidJUnit4::class)
 class ErrorTest {
     private var socket = Socket()
-
-    @Before
-    fun setUp() {
-        assert(Srt.startUp() >= 0)
-    }
 
     @After
     fun tearDown() {

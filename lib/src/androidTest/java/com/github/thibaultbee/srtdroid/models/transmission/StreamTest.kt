@@ -22,7 +22,6 @@ import com.github.thibaultbee.srtdroid.enums.Transtype
 import com.github.thibaultbee.srtdroid.models.Socket
 import org.junit.After
 import org.junit.Assert.*
-import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.io.IOException
@@ -40,11 +39,6 @@ import kotlin.random.Random
 
 @RunWith(AndroidJUnit4::class)
 class StreamTest {
-    @Before
-    fun setUp() {
-        assert(Srt.startUp() >= 0)
-    }
-
     @After
     fun tearDown() {
         assertEquals(Srt.cleanUp(), 0)

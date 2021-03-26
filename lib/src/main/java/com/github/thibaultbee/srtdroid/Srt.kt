@@ -24,7 +24,7 @@ object Srt {
     }
 
     /**
-     * Called at the start of an application that uses the SRT library.
+     * Uses to create an SRT context. It is automatically called by other class. You don't have to call it anymore.
      *
      * **See Also:** [srt_startup](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_startup)
      *

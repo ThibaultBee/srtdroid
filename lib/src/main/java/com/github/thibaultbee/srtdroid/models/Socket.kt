@@ -16,6 +16,7 @@
 package com.github.thibaultbee.srtdroid.models
 
 import android.util.Pair
+import com.github.thibaultbee.srtdroid.Srt
 import com.github.thibaultbee.srtdroid.enums.ErrorType
 import com.github.thibaultbee.srtdroid.enums.RejectReasonCode
 import com.github.thibaultbee.srtdroid.enums.SockOpt
@@ -30,8 +31,14 @@ import java.net.*
 
 /**
  * This class represents a SRT socket.
+ * Once it has been called, you must release Srt context with [Srt.cleanUp] when application leaves.
  */
 class Socket : Closeable {
+    companion object {
+        init {
+            Srt.startUp()
+        }
+    }
     /**
      * Sets up the SRT socket listener. Use it to monitor SRT socket connection.
      *

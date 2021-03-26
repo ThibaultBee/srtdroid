@@ -38,8 +38,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        Srt.startUp()
-
         val connectionDetails: SharedPreferences =
             this.getSharedPreferences("connectionDetails", Context.MODE_PRIVATE)
         if (connectionDetails.contains("isServer")) {

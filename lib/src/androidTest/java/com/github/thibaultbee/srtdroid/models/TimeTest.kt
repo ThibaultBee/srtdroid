@@ -19,16 +19,10 @@ import com.github.thibaultbee.srtdroid.Srt
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
-import org.junit.Before
 import org.junit.Test
 
 
 class TimeTest {
-    @Before
-    fun setUp() {
-        assert(Srt.startUp() >= 0)
-    }
-
     @After
     fun tearDown() {
         assertEquals(Srt.cleanUp(), 0)

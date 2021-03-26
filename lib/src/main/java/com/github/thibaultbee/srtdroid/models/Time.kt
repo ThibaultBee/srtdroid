@@ -15,10 +15,17 @@
  */
 package com.github.thibaultbee.srtdroid.models
 
+import com.github.thibaultbee.srtdroid.Srt
+
 /**
  * This class contains time utils.
+ * Once it has been called, you must release Srt context with [Srt.cleanUp] when application leaves.
  */
 object Time {
+    init {
+        Srt.startUp()
+    }
+
     /**
      * Gets time in microseconds elapsed since epoch using SRT internal clock.
      *

@@ -19,15 +19,9 @@ import com.github.thibaultbee.srtdroid.Srt
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
-import org.junit.Before
 import org.junit.Test
 
 class RejectReasonCodeTest {
-    @Before
-    fun setUp() {
-        assertEquals(Srt.startUp(), 0)
-    }
-
     @After
     fun tearDown() {
         assertEquals(Srt.cleanUp(), 0)

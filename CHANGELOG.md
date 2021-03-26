@@ -5,6 +5,7 @@ Version 1.1.0
 -------------
 
 ## API changes:
+- You don't have to call Srt.startUp(), it is called when you access to an SRT class.
 - Srt() is now static: directly use Srt object. Same for Time() and Error(), but it doesn't affect API usage.
 - In case an error happened, connectionTime/setRejectReason/peerName/inetAddress/port/sockName/localAddress/localPort return an exception instead of a null
 - In case an error happened, most Epoll methods return an exception instead of a -1

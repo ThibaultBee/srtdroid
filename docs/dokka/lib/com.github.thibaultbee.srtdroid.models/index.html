@@ -18,7 +18,8 @@
 <td>
 <code><span class="keyword">class </span><span class="identifier">Epoll</span></code>
 <p>This class is currently the only method for using multiple sockets in one thread with having the
-blocking operation moved to epoll waiting so that it can block on multiple sockets at once.</p>
+blocking operation moved to epoll waiting so that it can block on multiple sockets at once.
+Once it has been called, you must release Srt context with <a href="../com.github.thibaultbee.srtdroid/-srt/clean-up.html">Srt.cleanUp</a> when application leaves.</p>
 </td>
 </tr>
 <tr>
@@ -36,7 +37,8 @@ blocking operation moved to epoll waiting so that it can block on multiple socke
 </td>
 <td>
 <code><span class="keyword">object </span><span class="identifier">Error</span></code>
-<p>This class contains API to manage errors.</p>
+<p>This class contains API to manage errors.
+Once it has been called, you must release Srt context with <a href="../com.github.thibaultbee.srtdroid/-srt/clean-up.html">Srt.cleanUp</a> when application leaves.</p>
 </td>
 </tr>
 <tr>
@@ -54,7 +56,8 @@ blocking operation moved to epoll waiting so that it can block on multiple socke
 </td>
 <td>
 <code><span class="keyword">class </span><span class="identifier">Socket</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/java/io/Closeable.html"><span class="identifier">Closeable</span></a></code>
-<p>This class represents a SRT socket.</p>
+<p>This class represents a SRT socket.
+Once it has been called, you must release Srt context with <a href="../com.github.thibaultbee.srtdroid/-srt/clean-up.html">Srt.cleanUp</a> when application leaves.</p>
 </td>
 </tr>
 <tr>
@@ -72,7 +75,8 @@ blocking operation moved to epoll waiting so that it can block on multiple socke
 </td>
 <td>
 <code><span class="keyword">object </span><span class="identifier">Time</span></code>
-<p>This class contains time utils.</p>
+<p>This class contains time utils.
+Once it has been called, you must release Srt context with <a href="../com.github.thibaultbee.srtdroid/-srt/clean-up.html">Srt.cleanUp</a> when application leaves.</p>
 </td>
 </tr>
 </tbody>

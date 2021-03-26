@@ -43,7 +43,6 @@ class SocketTest {
 
     @Before
     fun setUp() {
-        assert(Srt.startUp() >= 0)
         socket = Socket()
         assertTrue(socket.isValid)
     }
