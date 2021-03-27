@@ -28,6 +28,7 @@ import com.github.thibaultbee.srtdroid.models.rejectreason.RejectReason
 import com.github.thibaultbee.srtdroid.models.rejectreason.UserDefinedRejectReason
 import java.io.*
 import java.net.*
+import java.nio.ByteBuffer
 
 /**
  * This class represents a SRT socket.
@@ -39,6 +40,7 @@ class Socket : Closeable {
             Srt.startUp()
         }
     }
+
     /**
      * Sets up the SRT socket listener. Use it to monitor SRT socket connection.
      *
@@ -412,6 +414,31 @@ class Socket : Closeable {
     // Transmission
     // Send
     private external fun nativeSend(msg: ByteArray, offset: Int, size: Int): Int
+    private external fun nativeSend(msg: ByteBuffer, offset: Int, size: Int): Int
+
+    /**
+     * Sends a message to a remote party.
+     *
+     * **See Also:** [srt_send](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_send)
+     *
+     * @param msg the [ByteBuffer] to send. It must be allocate with [ByteBuffer.allocateDirect]. It sends ByteBuffer from [ByteBuffer.position] to [ByteBuffer.limit].
+     * @return the number of byte sent
+     * @throws SocketException if it has failed to send message
+     * @throws SocketTimeoutException if a timeout has been triggered
+     * @see [recv]
+     */
+    fun send(msg: ByteBuffer): Int {
+        val byteSent = nativeSend(msg, msg.position(), msg.remaining())
+        when {
+            byteSent < 0 -> {
+                throw SocketException(Error.lastErrorMessage)
+            }
+            byteSent == 0 -> {
+                throw SocketTimeoutException(ErrorType.ESCLOSED.toString())
+            }
+            else -> return byteSent
+        }
+    }
 
     /**
      * Sends a message to a remote party.
@@ -466,12 +493,50 @@ class Socket : Closeable {
     fun send(msg: String) = send(msg.toByteArray())
 
     private external fun nativeSend(
+        msg: ByteBuffer,
+        offset: Int,
+        size: Int,
+        ttl: Int = -1,
+        inOrder: Boolean = false
+    ): Int
+
+    private external fun nativeSend(
         msg: ByteArray,
         offset: Int,
         size: Int,
         ttl: Int = -1,
         inOrder: Boolean = false
     ): Int
+
+    /**
+     * Sends a message to a remote party.
+     *
+     * **See Also:** [srt_sendmsg](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_sendmsg)
+     *
+     * @param msg the [ByteBuffer] to send. It must be allocate with [ByteBuffer.allocateDirect]. It sends ByteBuffer from [ByteBuffer.position] to [ByteBuffer.limit].
+     * @param ttl the time (in ms) to wait for a successful delivery. -1 means no time limitation.
+     * @param inOrder Required to be received in the order of sending.
+     * @return the number of byte sent
+     * @throws SocketException if it has failed to send message
+     * @throws SocketTimeoutException if a timeout has been triggered
+     * @see [recv]
+     */
+    fun send(
+        msg: ByteBuffer,
+        ttl: Int = -1,
+        inOrder: Boolean = false
+    ): Int {
+        val byteSent = nativeSend(msg, msg.position(), msg.remaining(), ttl, inOrder)
+        when {
+            byteSent < 0 -> {
+                throw SocketException(Error.lastErrorMessage)
+            }
+            byteSent == 0 -> {
+                throw SocketTimeoutException(ErrorType.ESCLOSED.toString())
+            }
+            else -> return byteSent
+        }
+    }
 
     /**
      * Sends a message to a remote party.
@@ -539,7 +604,33 @@ class Socket : Closeable {
     fun send(msg: String, ttl: Int = -1, inOrder: Boolean = false) =
         send(msg.toByteArray(), ttl, inOrder)
 
+    private external fun nativeSend(msg: ByteBuffer, offset: Int, size: Int, msgCtrl: MsgCtrl): Int
     private external fun nativeSend(msg: ByteArray, offset: Int, size: Int, msgCtrl: MsgCtrl): Int
+
+    /**
+     * Sends a message to a remote party.
+     *
+     * **See Also:** [srt_sendmsg2](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_sendmsg2)
+     *
+     * @param msg the [ByteBuffer] to send. It must be allocate with [ByteBuffer.allocateDirect]. It sends ByteBuffer from [ByteBuffer.position] to [ByteBuffer.limit].
+     * @param msgCtrl the [MsgCtrl] that contains extra parameter
+     * @return the number of byte sent
+     * @throws SocketException if it has failed to send message
+     * @throws SocketTimeoutException if a timeout has been triggered
+     * @see [recv]
+     */
+    fun send(msg: ByteBuffer, msgCtrl: MsgCtrl): Int {
+        val byteSent = nativeSend(msg, msg.position(), msg.remaining(), msgCtrl)
+        when {
+            byteSent < 0 -> {
+                throw SocketException(Error.lastErrorMessage)
+            }
+            byteSent == 0 -> {
+                throw SocketTimeoutException(ErrorType.ESCLOSED.toString())
+            }
+            else -> return byteSent
+        }
+    }
 
     /**
      * Sends a message to a remote party.

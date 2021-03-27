@@ -337,6 +337,17 @@ nativeSetSockOpt(JNIEnv *env,
 
 // Transmission
 jint JNICALL
+nativeSend2(JNIEnv *env, jobject ju, jobject byteBuffer, jint offset, jint len) {
+    SRTSOCKET u = srt_socket_j2n(env, ju);
+
+    char *buf = (char *) env->GetDirectBufferAddress(byteBuffer);
+
+    int res = srt_send(u, &buf[offset], len);
+
+    return res;
+}
+
+jint JNICALL
 nativeSend(JNIEnv *env, jobject ju, jbyteArray byteArray, jint offset, jint len) {
     SRTSOCKET u = srt_socket_j2n(env, ju);
     char *buf = (char *) env->GetByteArrayElements(byteArray, nullptr);
@@ -347,6 +358,23 @@ nativeSend(JNIEnv *env, jobject ju, jbyteArray byteArray, jint offset, jint len)
 
     return res;
 }
+
+jint JNICALL
+nativeSendMsg2(JNIEnv *env,
+               jobject ju,
+               jobject byteBuffer,
+               jint offset,
+               jint len,
+               jint ttl/* = -1*/,
+               jboolean inOrder/* = false*/) {
+    SRTSOCKET u = srt_socket_j2n(env, ju);
+    char *buf = (char *) env->GetDirectBufferAddress(byteBuffer);
+
+    int res = srt_sendmsg(u, &buf[offset], len, (int) ttl, inOrder);
+
+    return res;
+}
+
 
 jint JNICALL
 nativeSendMsg(JNIEnv *env,
@@ -367,12 +395,32 @@ nativeSendMsg(JNIEnv *env,
 }
 
 jint JNICALL
-nativeSendMsg2(JNIEnv *env,
-               jobject ju,
-               jbyteArray byteArray,
-               jint offset,
-               jint len,
-               jobject msgCtrl) {
+nativeSendMsgCtrl2(JNIEnv *env,
+                   jobject ju,
+                   jobject byteBuffer,
+                   jint offset,
+                   jint len,
+                   jobject msgCtrl) {
+    SRTSOCKET u = srt_socket_j2n(env, ju);
+    SRT_MSGCTRL *msgctrl = srt_msgctrl_j2n(env, msgCtrl);
+    char *buf = (char *) env->GetDirectBufferAddress(byteBuffer);
+
+    int res = srt_sendmsg2(u, &buf[offset], len, msgctrl);
+
+    if (msgctrl != nullptr) {
+        free(msgctrl);
+    }
+
+    return res;
+}
+
+jint JNICALL
+nativeSendMsgCtrl(JNIEnv *env,
+                  jobject ju,
+                  jbyteArray byteArray,
+                  jint offset,
+                  jint len,
+                  jobject msgCtrl) {
     SRTSOCKET u = srt_socket_j2n(env, ju);
     SRT_MSGCTRL *msgctrl = srt_msgctrl_j2n(env, msgCtrl);
     char *buf = (char *) env->GetByteArrayElements(byteArray, nullptr);
@@ -759,9 +807,12 @@ static JNINativeMethod socketMethods[] = {
         {"nativeGetSockName",       "()L" INETSOCKETADDRESS_CLASS ";",                               (void *) &nativeGetSockName},
         {"nativeGetSockFlag",       "(L" SOCKOPT_CLASS ";)Ljava/lang/Object;",                       (void *) &nativeGetSockOpt},
         {"nativeSetSockFlag",       "(L" SOCKOPT_CLASS ";Ljava/lang/Object;)I",                      (void *) &nativeSetSockOpt},
+        {"nativeSend",              "(Ljava/nio/ByteBuffer;II)I",                                    (void *) &nativeSend2},
         {"nativeSend",              "([BII)I",                                                       (void *) &nativeSend},
+        {"nativeSend",              "(Ljava/nio/ByteBuffer;IIIZ)I",                                  (void *) &nativeSendMsg2},
         {"nativeSend",              "([BIIIZ)I",                                                     (void *) &nativeSendMsg},
-        {"nativeSend",              "([BIIL" MSGCTRL_CLASS ";)I",                                    (void *) &nativeSendMsg2},
+        {"nativeSend",              "(Ljava/nio/ByteBuffer;IIL" MSGCTRL_CLASS ";)I",                 (void *) &nativeSendMsgCtrl2},
+        {"nativeSend",              "([BIIL" MSGCTRL_CLASS ";)I",                                    (void *) &nativeSendMsgCtrl},
         {"nativeRecv",              "(I)L" PAIR_CLASS ";",                                           (void *) &nativeRecv},
         {"nativeRecv",              "([BII)L" PAIR_CLASS ";",                                        (void *) &nativeRecvA},
         {"nativeRecv",              "(IL" MSGCTRL_CLASS ";)L" PAIR_CLASS ";",                        (void *) &nativeRecvMsg2},

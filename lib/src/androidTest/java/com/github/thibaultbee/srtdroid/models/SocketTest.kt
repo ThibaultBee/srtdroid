@@ -31,6 +31,7 @@ import org.junit.runner.RunWith
 import java.io.File
 import java.io.IOException
 import java.net.SocketException
+import java.nio.ByteBuffer
 
 
 /*
@@ -163,7 +164,17 @@ class SocketTest {
     }
 
     @Test
-    fun sendMsg1Test() {
+    fun sendByteBufferTest() {
+        try {
+            socket.send(ByteBuffer.allocateDirect(10))
+            fail()
+        } catch (e: SocketException) {
+            assertEquals(e.message, ErrorType.ENOCONN.toString())
+        }
+    }
+
+    @Test
+    fun sendByteArrayTest() {
         try {
             socket.send("Hello World !")
             fail()
@@ -173,7 +184,17 @@ class SocketTest {
     }
 
     @Test
-    fun sendMsg2Test() {
+    fun sendByteBuffer2Test() {
+        try {
+            socket.send(ByteBuffer.allocateDirect(10), -1, false)
+            fail()
+        } catch (e: SocketException) {
+            assertEquals(e.message, ErrorType.ENOCONN.toString())
+        }
+    }
+
+    @Test
+    fun sendByteArray2Test() {
         try {
             socket.send("Hello World !", -1, false)
             fail()
@@ -183,7 +204,18 @@ class SocketTest {
     }
 
     @Test
-    fun sendMsg3Test() {
+    fun sendByteBuffer3Test() {
+        val msgCtrl = MsgCtrl(boundary = Boundary.SUBSEQUENT, pktSeq = 1, no = 1)
+        try {
+            socket.send(ByteBuffer.allocateDirect(10), msgCtrl)
+            fail()
+        } catch (e: SocketException) {
+            assertEquals(e.message, ErrorType.ENOCONN.toString())
+        }
+    }
+
+    @Test
+    fun sendByteArray3Test() {
         val msgCtrl = MsgCtrl(boundary = Boundary.SUBSEQUENT, pktSeq = 1, no = 1)
         try {
             socket.send("Hello World !", msgCtrl)
