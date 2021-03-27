@@ -166,7 +166,7 @@ class Socket : Closeable {
      *
      * @see [socketInterface]
      */
-    fun onListen(
+    private fun onListen(
         ns: Socket,
         hsVersion: Int,
         peerAddress: InetSocketAddress,
