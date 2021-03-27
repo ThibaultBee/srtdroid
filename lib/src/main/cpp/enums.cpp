@@ -393,7 +393,7 @@ jobject srt_sockstatus_n2j(JNIEnv *env, SRT_SOCKSTATUS sockstatus) {
             sockstatus_field = strdup("CLOSED");
             break;
         case SRTS_NONEXIST:
-            sockstatus_field = strdup("NONEXIST");
+            sockstatus_field = strdup("NON_EXIST");
             break;
         default:
             LOGE(TAG, "SRT_SOCKSTATUS: unknown value %d", sockstatus);
