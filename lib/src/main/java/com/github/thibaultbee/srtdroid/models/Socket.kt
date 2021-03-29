@@ -428,6 +428,8 @@ class Socket : Closeable {
      * @see [recv]
      */
     fun send(msg: ByteBuffer): Int {
+        require(msg.isDirect) { "msg must be a direct ByteBuffer" }
+
         val byteSent = nativeSend(msg, msg.position(), msg.remaining())
         when {
             byteSent < 0 -> {
@@ -526,6 +528,8 @@ class Socket : Closeable {
         ttl: Int = -1,
         inOrder: Boolean = false
     ): Int {
+        require(msg.isDirect) { "msg must be a direct ByteBuffer" }
+
         val byteSent = nativeSend(msg, msg.position(), msg.remaining(), ttl, inOrder)
         when {
             byteSent < 0 -> {
@@ -620,6 +624,8 @@ class Socket : Closeable {
      * @see [recv]
      */
     fun send(msg: ByteBuffer, msgCtrl: MsgCtrl): Int {
+        require(msg.isDirect) { "msg must be a direct ByteBuffer" }
+
         val byteSent = nativeSend(msg, msg.position(), msg.remaining(), msgCtrl)
         when {
             byteSent < 0 -> {
