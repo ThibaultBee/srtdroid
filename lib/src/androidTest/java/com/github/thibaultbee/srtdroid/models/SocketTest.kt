@@ -22,7 +22,7 @@ import com.github.thibaultbee.srtdroid.enums.*
 import com.github.thibaultbee.srtdroid.models.rejectreason.InternalRejectReason
 import com.github.thibaultbee.srtdroid.models.rejectreason.PredefinedRejectReason
 import com.github.thibaultbee.srtdroid.models.rejectreason.UserDefinedRejectReason
-import com.github.thibaultbee.srtdroid.utils.Utils.Companion.createTestFile
+import com.github.thibaultbee.srtdroid.utils.Utils.createTestFile
 import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before

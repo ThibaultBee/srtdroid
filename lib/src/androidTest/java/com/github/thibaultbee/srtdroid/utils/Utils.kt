@@ -18,22 +18,43 @@ package com.github.thibaultbee.srtdroid.utils
 import androidx.test.platform.app.InstrumentationRegistry
 import java.io.File
 import java.io.FileWriter
+import java.nio.ByteBuffer
 import java.util.*
+import kotlin.random.Random
 
-class Utils {
-    companion object {
-        fun createTestFile(
-            name: String = UUID.randomUUID().toString(),
-            message: String = "Hello ! Did someone receive this message?"
-        ): File {
-            val file = File(
-                InstrumentationRegistry.getInstrumentation().context.externalCacheDir,
-                name
-            )
-            val fw = FileWriter(file)
-            fw.write(message)
-            fw.close()
-            return file
-        }
+object Utils {
+    /**
+     * Generates a randomized ByteBuffer
+     * @param size size of buffer to generates
+     * @return random ByteBuffer
+     */
+    fun generateRandomDirectBuffer(size: Int): ByteBuffer {
+        val buffer = ByteBuffer.allocateDirect(size)
+        buffer.put(Random.nextBytes(size))
+        buffer.rewind()
+        return buffer
+    }
+
+    /**
+     * Generates a randomized ByteArray
+     * @param size size of buffer to generates
+     * @return random ByteBuffer
+     */
+    fun generateRandomArray(size: Int): ByteArray {
+        return Random.nextBytes(size)
+    }
+
+    fun createTestFile(
+        name: String = UUID.randomUUID().toString(),
+        message: String = "Hello ! Did someone receive this message?"
+    ): File {
+        val file = File(
+            InstrumentationRegistry.getInstrumentation().context.externalCacheDir,
+            name
+        )
+        val fw = FileWriter(file)
+        fw.write(message)
+        fw.close()
+        return file
     }
 }
