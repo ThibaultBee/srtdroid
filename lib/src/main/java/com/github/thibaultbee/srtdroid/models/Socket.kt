@@ -794,7 +794,7 @@ class Socket : Closeable {
      * @throws SocketException if it has failed to send message
      * @throws SocketTimeoutException if a timeout has been triggered
      */
-    fun recv(buffer: ByteArray, offset: Int, byteCount: Int): Pair<Int, ByteArray> {
+    fun recv(buffer: ByteArray, offset: Int = 0, byteCount: Int = buffer.size): Pair<Int, ByteArray> {
         val pair = nativeRecv(buffer, offset, byteCount)
         val byteReceived = pair.first
         when {
@@ -857,8 +857,8 @@ class Socket : Closeable {
      */
     fun recv(
         buffer: ByteArray,
-        offset: Int,
-        byteCount: Int,
+        offset: Int = 0,
+        byteCount: Int = buffer.size,
         msgCtrl: MsgCtrl
     ): Pair<Int, ByteArray> {
         val pair = nativeRecv(buffer, offset, byteCount, msgCtrl)

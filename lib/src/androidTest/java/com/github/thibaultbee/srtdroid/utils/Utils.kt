@@ -16,6 +16,7 @@
 package com.github.thibaultbee.srtdroid.utils
 
 import androidx.test.platform.app.InstrumentationRegistry
+import org.junit.Assert
 import java.io.File
 import java.io.FileWriter
 import java.nio.ByteBuffer
@@ -56,5 +57,23 @@ object Utils {
         fw.write(message)
         fw.close()
         return file
+    }
+
+    /**
+     * Check ByteBuffer content equality. If they are not, an
+     * [AssertionError] is thrown.
+     * @param expected expected ByteBuffer
+     * @param actual resulted ByteBuffer to compare with
+     * @throws [AssertionError] if they are not contents equal
+     */
+    fun assertByteBufferEquals(expected: ByteBuffer, actual: ByteBuffer) {
+        Assert.assertEquals(expected.remaining(), actual.remaining())
+        while(expected.hasRemaining()) {
+            Assert.assertEquals(
+                "Not equals at position ${expected.position()}",
+                expected.get(),
+                actual.get()
+            )
+        }
     }
 }

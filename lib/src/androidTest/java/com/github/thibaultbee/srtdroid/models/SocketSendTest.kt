@@ -15,7 +15,7 @@ import java.util.concurrent.Executors
 import java.util.concurrent.Future
 import java.util.concurrent.TimeUnit
 
-class SocketSendRecvTest {
+class SocketSendTest {
     private lateinit var socket: Socket
     private val server = ServerRecv()
 
@@ -43,8 +43,8 @@ class SocketSendRecvTest {
         socket.getOutputStream().use {
             it.write(expectedArray)
         }
-        val resultedArray = futureResult.get(1000, TimeUnit.MILLISECONDS)
-        assertArrayEquals(expectedArray, resultedArray)
+        val actualArray = futureResult.get(1000, TimeUnit.MILLISECONDS)
+        assertArrayEquals(expectedArray, actualArray)
     }
 
     @Test
@@ -55,8 +55,8 @@ class SocketSendRecvTest {
 
         val expectedBuffer = Utils.generateRandomDirectBuffer(bufferSize)
         socket.send(expectedBuffer)
-        val resultedArray = futureResult.get(1000, TimeUnit.MILLISECONDS)
-        assertByteBufferEquals(expectedBuffer, ByteBuffer.wrap(resultedArray))
+        val actualArray = futureResult.get(1000, TimeUnit.MILLISECONDS)
+        Utils.assertByteBufferEquals(expectedBuffer, ByteBuffer.wrap(actualArray))
     }
 
     @Test
@@ -69,8 +69,8 @@ class SocketSendRecvTest {
         val expectedBuffer = Utils.generateRandomDirectBuffer(bufferSize)
         expectedBuffer.position(offset)
         socket.send(expectedBuffer)
-        val resultedArray = futureResult.get(1000, TimeUnit.MILLISECONDS)
-        assertByteBufferEquals(expectedBuffer, ByteBuffer.wrap(resultedArray))
+        val actualArray = futureResult.get(1000, TimeUnit.MILLISECONDS)
+        Utils.assertByteBufferEquals(expectedBuffer, ByteBuffer.wrap(actualArray))
     }
 
     @Test
@@ -85,8 +85,40 @@ class SocketSendRecvTest {
         expectedBuffer.position(offset)
         expectedBuffer.limit(offset + length)
         socket.send(expectedBuffer)
-        val resultedArray = futureResult.get(1000, TimeUnit.MILLISECONDS)
-        assertByteBufferEquals(expectedBuffer, ByteBuffer.wrap(resultedArray))
+        val actualArray = futureResult.get(1000, TimeUnit.MILLISECONDS)
+        Utils.assertByteBufferEquals(expectedBuffer, ByteBuffer.wrap(actualArray))
+    }
+
+    @Test
+    fun sendByteBuffer2WithOffsetAndLength() {
+        val bufferSize = 1000
+        val offset = 10
+        val length = 100
+        val futureResult = server.enqueue(length)
+        socket.connect(InetAddress.getLoopbackAddress(), server.port)
+
+        val expectedBuffer = Utils.generateRandomDirectBuffer(bufferSize)
+        expectedBuffer.position(offset)
+        expectedBuffer.limit(offset + length)
+        socket.send(expectedBuffer, ttl = 1000, inOrder = false)
+        val actualArray = futureResult.get(1000, TimeUnit.MILLISECONDS)
+        Utils.assertByteBufferEquals(expectedBuffer, ByteBuffer.wrap(actualArray))
+    }
+
+    @Test
+    fun sendByteBuffer3WithOffsetAndLength() {
+        val bufferSize = 1000
+        val offset = 10
+        val length = 100
+        val futureResult = server.enqueue(length)
+        socket.connect(InetAddress.getLoopbackAddress(), server.port)
+
+        val expectedBuffer = Utils.generateRandomDirectBuffer(bufferSize)
+        expectedBuffer.position(offset)
+        expectedBuffer.limit(offset + length)
+        socket.send(expectedBuffer, MsgCtrl(inOrder = false))
+        val actualArray = futureResult.get(1000, TimeUnit.MILLISECONDS)
+        Utils.assertByteBufferEquals(expectedBuffer, ByteBuffer.wrap(actualArray))
     }
 
     @Test
@@ -97,8 +129,8 @@ class SocketSendRecvTest {
 
         val expectedArray = Utils.generateRandomArray(arraySize)
         socket.send(expectedArray)
-        val resultedArray = futureResult.get(1000, TimeUnit.MILLISECONDS)
-        assertArrayEquals(expectedArray, resultedArray)
+        val actualArray = futureResult.get(1000, TimeUnit.MILLISECONDS)
+        assertArrayEquals(expectedArray, actualArray)
     }
 
     @Test
@@ -110,8 +142,8 @@ class SocketSendRecvTest {
 
         val expectedArray = Utils.generateRandomArray(arraySize)
         socket.send(expectedArray, offset = offset, size = arraySize - offset)
-        val resultedArray = futureResult.get(1000, TimeUnit.MILLISECONDS)
-        assertArrayEquals(expectedArray.copyOfRange(offset, arraySize), resultedArray)
+        val actualArray = futureResult.get(1000, TimeUnit.MILLISECONDS)
+        assertArrayEquals(expectedArray.copyOfRange(offset, arraySize), actualArray)
     }
 
     @Test
@@ -124,19 +156,39 @@ class SocketSendRecvTest {
 
         val expectedArray = Utils.generateRandomArray(arraySize)
         socket.send(expectedArray, offset = offset, size = length)
-        val resultedArray = futureResult.get(1000, TimeUnit.MILLISECONDS)
-        assertArrayEquals(expectedArray.copyOfRange(offset, offset + length), resultedArray)
+        val actualArray = futureResult.get(1000, TimeUnit.MILLISECONDS)
+        assertArrayEquals(expectedArray.copyOfRange(offset, offset + length), actualArray)
     }
 
+    @Test
+    fun sendByteArray2WithOffsetAndLength() {
+        val arraySize = 1000
+        val offset = 10
+        val length = 100
+        val futureResult = server.enqueue(length)
+        socket.connect(InetAddress.getLoopbackAddress(), server.port)
 
-    private fun assertByteBufferEquals(expectedBuffer: ByteBuffer, resultedBuffer: ByteBuffer) {
-        assertEquals(expectedBuffer.remaining(), resultedBuffer.remaining())
-        while(expectedBuffer.hasRemaining()) {
-            assertEquals("Not equals at position ${expectedBuffer.position()}", expectedBuffer.get(), resultedBuffer.get())
-        }
+        val expectedArray = Utils.generateRandomArray(arraySize)
+        socket.send(expectedArray, offset = offset, size = length, ttl = 1000, inOrder = false)
+        val actualArray = futureResult.get(1000, TimeUnit.MILLISECONDS)
+        assertArrayEquals(expectedArray.copyOfRange(offset, offset + length), actualArray)
     }
 
-    internal class ServerRecv() {
+    @Test
+    fun sendByteArray3WithOffsetAndLength() {
+        val arraySize = 1000
+        val offset = 10
+        val length = 100
+        val futureResult = server.enqueue(length)
+        socket.connect(InetAddress.getLoopbackAddress(), server.port)
+
+        val expectedArray = Utils.generateRandomArray(arraySize)
+        socket.send(expectedArray, offset = offset, size = length, MsgCtrl(inOrder = false))
+        val actualArray = futureResult.get(1000, TimeUnit.MILLISECONDS)
+        assertArrayEquals(expectedArray.copyOfRange(offset, offset + length), actualArray)
+    }
+
+    internal class ServerRecv {
         private val executor = Executors.newCachedThreadPool()
         private val serverSocket = Socket()
 
