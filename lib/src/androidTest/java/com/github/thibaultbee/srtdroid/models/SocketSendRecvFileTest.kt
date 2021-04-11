@@ -1,32 +1,15 @@
-/*
- * Copyright (C) 2021 Thibault B.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-package com.github.thibaultbee.srtdroid.models.transmission
+package com.github.thibaultbee.srtdroid.models
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.github.thibaultbee.srtdroid.Srt
 import com.github.thibaultbee.srtdroid.enums.SockOpt
 import com.github.thibaultbee.srtdroid.enums.Transtype
-import com.github.thibaultbee.srtdroid.models.Socket
 import com.github.thibaultbee.srtdroid.utils.Utils
 import org.junit.After
-import org.junit.Assert.*
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
 import java.io.File
 import java.net.InetAddress
 import java.util.*
@@ -34,14 +17,9 @@ import java.util.concurrent.Callable
 import java.util.concurrent.Executors
 import java.util.concurrent.Future
 
-
-/*
- * Theses tests are written to check if SRT API can be called from the Kotlin part.
- */
-
-@RunWith(AndroidJUnit4::class)
-class FileTest {
+class SocketSendRecvFileTest {
     private lateinit var socket: Socket
+    private val server = MockSendServer()
 
     @Before
     fun setUp() {
@@ -53,6 +31,7 @@ class FileTest {
     @After
     fun tearDown() {
         socket.close()
+        server.shutdown()
         assertEquals(Srt.cleanUp(), 0)
     }
 
@@ -62,7 +41,7 @@ class FileTest {
         val message = UUID.randomUUID().toString()
         val sendFile = Utils.createTestFile(message = message)
 
-        server.enqueue(sendFile)
+        val futureResult = server.enqueue(sendFile)
         socket.connect(InetAddress.getLoopbackAddress(), server.port)
 
         val recvFile = File(
@@ -70,13 +49,13 @@ class FileTest {
             UUID.randomUUID().toString()
         )
         assertEquals(sendFile.length(), socket.recvFile(recvFile, size = sendFile.length()))
+        assertEquals(sendFile.length(), futureResult.get())
     }
 
     internal class MockSendServer {
         private val executor = Executors.newCachedThreadPool()
         private val serverSocket = Socket()
         val port: Int
-        private var socket: Socket? = null
 
         init {
             serverSocket.reuseAddress = true
@@ -85,18 +64,18 @@ class FileTest {
             port = serverSocket.localPort
         }
 
-        fun enqueue(file: File): Future<Long?> {
+        fun enqueue(file: File): Future<*> {
             return executor.submit(Callable {
                 serverSocket.listen(1)
                 val pair = serverSocket.accept()
-                assertNotNull(pair.second)
-                socket = pair.first
-                socket?.sendFile(file)
+                val comSocket = pair.first
+                val numOfSentBytes =comSocket.sendFile(file)
+                comSocket.close()
+                numOfSentBytes
             })
         }
 
         fun shutdown() {
-            socket?.close()
             serverSocket.close()
             executor.shutdown()
         }
