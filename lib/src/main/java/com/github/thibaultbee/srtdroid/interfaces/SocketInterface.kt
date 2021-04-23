@@ -15,6 +15,7 @@
  */
 package com.github.thibaultbee.srtdroid.interfaces
 
+import com.github.thibaultbee.srtdroid.enums.ErrorType
 import com.github.thibaultbee.srtdroid.enums.SockOpt
 import com.github.thibaultbee.srtdroid.models.Socket
 import java.net.InetSocketAddress
@@ -24,15 +25,28 @@ import java.net.InetSocketAddress
  */
 interface SocketInterface {
     /**
-     * Calls to handle the incoming connection on the listening socket (and is about to be returned by srt_accept), but before the connection has been accepted..
+     * Called to handle the incoming connection on the listening socket (and is about to be returned by srt_accept), but before the connection has been accepted.
      *
      * **See Also:** [srt_listen_callback](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_listen_callback)
      *
      * @param ns the new SRT socket of the new connection
      * @param hsVersion the handshake version
-     * @param peerAddress the address of the incomming connection
+     * @param peerAddress the address of the incoming connection
      * @param streamId the value set to [SockOpt.STREAMID] option set on the peer side
      * @return return 0, if the connection is to be accepted. If you return -1, this will be understood as a request to reject the incoming connection.
      */
     fun onListen(ns: Socket, hsVersion: Int, peerAddress: InetSocketAddress, streamId: String): Int
+
+    /**
+     * Called just after a pending connection in the background has been resolved and the connection has failed.
+     *
+     * **See Also:** [srt_connect_callback](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_connect_callback)
+     *
+     * @param ns the new SRT socket of the new connection
+     * @param error the reason connect has been lost
+     * @param peerAddress the address of the peer device
+     * @param token the token value, if it was used for group connection, otherwise -1
+     * @return return 0, if the connection is to be accepted. If you return -1, this will be understood as a request to reject the incoming connection.
+     */
+    fun onConnectionLost(ns: Socket, error: ErrorType, peerAddress: InetSocketAddress, token: Int)
 }

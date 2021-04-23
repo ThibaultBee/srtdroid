@@ -211,6 +211,20 @@ class Socket : Closeable {
         return pair
     }
 
+    /**
+     * Internal method. Do not use, use [SocketInterface.onConnectionLost] instead.
+     *
+     * @see [socketInterface]
+     */
+    private fun onConnect(
+            ns: Socket,
+            error: ErrorType,
+            peerAddress: InetSocketAddress,
+            token: Int
+    ) {
+        socketInterface?.onConnectionLost(ns, error, peerAddress, token)
+    }
+
     private external fun nativeConnect(address: InetSocketAddress): Int
 
     /**

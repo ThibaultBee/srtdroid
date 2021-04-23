@@ -641,14 +641,7 @@ int srt_boundary_j2n(JNIEnv *env, jobject boundary) {
 }
 
 
-jobject srt_error_n2j(JNIEnv *env, int error_type) {
-    jclass errorTypeClazz = env->FindClass(ERRORTYPE_CLASS);
-    if (!errorTypeClazz) {
-        LOGE(TAG, "Can't get "
-                ERRORTYPE_CLASS
-                " class");
-        return nullptr;
-    }
+jobject srt_error_n2j_clz(JNIEnv *env, jclass errorTypeClazz, int error_type) {
 
     char *error_type_field = nullptr;
     switch (error_type) {
@@ -783,7 +776,6 @@ jobject srt_error_n2j(JNIEnv *env, int error_type) {
                                                     "L" ERRORTYPE_CLASS ";");
     if (!errorTypeField) {
         LOGE(TAG, "Can't get ErrorType field");
-        env->DeleteLocalRef(errorTypeClazz);
         return nullptr;
     }
 
@@ -792,6 +784,20 @@ jobject srt_error_n2j(JNIEnv *env, int error_type) {
     if (error_type_field != nullptr) {
         free(error_type_field);
     }
+
+    return errorType;
+}
+
+jobject srt_error_n2j(JNIEnv *env, int error_type) {
+    jclass errorTypeClazz = env->FindClass(ERRORTYPE_CLASS);
+    if (!errorTypeClazz) {
+        LOGE(TAG, "Can't get "
+                ERRORTYPE_CLASS
+                " class");
+        return nullptr;
+    }
+
+    jobject errorType = srt_error_n2j_clz(env, errorTypeClazz, error_type);
 
     env->DeleteLocalRef(errorTypeClazz);
 

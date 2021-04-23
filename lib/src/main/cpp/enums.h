@@ -135,6 +135,17 @@ int srt_boundary_j2n(JNIEnv *env, jobject boundary);
 int srt_error_j2n(JNIEnv *env, jobject errorType);
 
 /**
+ * @brief Same as srt_error_n2j() but specify class instead of internally using env->FindClass().
+ * Usefull when you don't have access to your application classloader.
+ *
+ * @param env Java environment
+ * @param errorTypeClazz Error type class
+ * @param error_type Native SRT error
+ * @return return corresponding Java SRT error
+ */
+jobject srt_error_n2j_clz(JNIEnv *env, jclass errorTypeClazz, int error_type);
+
+/**
  * @brief Convert native SRT error to Java SRT error
  *
  * @param env Java environment

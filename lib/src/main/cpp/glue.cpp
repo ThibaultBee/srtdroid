@@ -22,18 +22,13 @@
 #include "log.h"
 #include "enums.h"
 #include "structs.h"
+#include "callbackcontext.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 #define TAG "SRTJniGlue"
-
-typedef struct callback_context {
-    JavaVM *vm;
-    jobject callingSocket;
-    jclass sockAddrClazz;
-} CallbackContext;
 
 int onListenCallback(JNIEnv *env, jobject ju, jclass sockAddrClazz, SRTSOCKET ns, int hs_version,
                      const struct sockaddr *peeraddr, const char *streamid) {
@@ -66,7 +61,7 @@ int onListenCallback(JNIEnv *env, jobject ju, jclass sockAddrClazz, SRTSOCKET ns
 
 int srt_listen_cb(void *opaque, SRTSOCKET ns, int hs_version,
                   const struct sockaddr *peeraddr, const char *streamid) {
-    CallbackContext *cbCtx = static_cast<CallbackContext *>(opaque);
+    auto *cbCtx = static_cast<CallbackContext *>(opaque);
 
     if (cbCtx == nullptr) {
         LOGE(TAG, "Failed to get CallbackContext");
@@ -76,13 +71,12 @@ int srt_listen_cb(void *opaque, SRTSOCKET ns, int hs_version,
     JavaVM *vm = cbCtx->vm;
     JNIEnv *env = nullptr;
     if (vm->GetEnv((void **) &env, JNI_VERSION_1_6) == JNI_EDETACHED) {
-        if (vm->AttachCurrentThread(&env, NULL) != JNI_OK) {
+        if (vm->AttachCurrentThread(&env, nullptr) != JNI_OK) {
             LOGE(TAG, "Failed to attach current thread");
         }
     } else {
         LOGE(TAG, "Failed to get env");
     }
-
 
     int res = onListenCallback(env, cbCtx->callingSocket, cbCtx->sockAddrClazz, ns, hs_version,
                                peeraddr, streamid);
@@ -90,6 +84,65 @@ int srt_listen_cb(void *opaque, SRTSOCKET ns, int hs_version,
     vm->DetachCurrentThread();
 
     return res;
+}
+
+void onConnectCallback(JNIEnv *env,
+                       CallbackContext *cb,
+                       SRTSOCKET ns,
+                       int errorcode,
+                       const struct sockaddr *peeraddr,
+                       int token) {
+    jclass socketClazz = env->GetObjectClass(cb->callingSocket);
+    if (!socketClazz) {
+        LOGE(TAG, "Can't get Socket class");
+        return;
+    }
+
+    jmethodID onConnectID = env->GetMethodID(socketClazz, "onConnect",
+                                             "(L" SRTSOCKET_CLASS ";L" ERRORTYPE_CLASS ";L" INETSOCKETADDRESS_CLASS ";I)V");
+    if (!onConnectID) {
+        LOGE(TAG, "Can't get onConnect methodID");
+        env->DeleteLocalRef(socketClazz);
+        return;
+    }
+
+    jobject nsSocket = srt_socket_n2j(env, socketClazz, ns);
+    jobject peerAddress = sockaddr_inet_n2j(env, cb->sockAddrClazz,
+                                            (sockaddr_storage *) peeraddr);
+    jobject error = srt_error_n2j_clz(env, cb->errorTypeClazz, errorcode);
+
+    env->CallVoidMethod(cb->callingSocket, onConnectID, nsSocket, error, peerAddress,
+                        token);
+
+    env->DeleteLocalRef(socketClazz);
+}
+
+
+void srt_connect_cb(void *opaque, SRTSOCKET ns, int errorcode, const struct sockaddr *peeraddr,
+                    int token) {
+    auto *cbCtx = static_cast<CallbackContext *>(opaque);
+
+    if (cbCtx == nullptr) {
+        LOGE(TAG, "Failed to get CallbackContext");
+        return;
+    }
+
+    JavaVM *vm = cbCtx->vm;
+    JNIEnv *env = nullptr;
+    if (vm->GetEnv((void **) &env, JNI_VERSION_1_6) == JNI_EDETACHED) {
+        if (vm->AttachCurrentThread(&env, nullptr) != JNI_OK) {
+            LOGE(TAG, "Failed to attach current thread");
+        }
+    } else {
+        LOGE(TAG, "Failed to get env");
+    }
+
+    onConnectCallback(env, cbCtx, ns, errorcode,
+                      peeraddr, token);
+
+    vm->DetachCurrentThread();
+
+    delete cbCtx;
 }
 
 // SRT Logger callback
@@ -199,13 +252,11 @@ jint JNICALL
 nativeListen(JNIEnv *env, jobject ju, jint backlog) {
     SRTSOCKET u = srt_socket_j2n(env, ju);
 
-    CallbackContext *cbCtx = static_cast<CallbackContext *>(malloc(sizeof(CallbackContext)));
-    env->GetJavaVM(&(cbCtx->vm));
-    cbCtx->sockAddrClazz = static_cast<jclass>(env->NewGlobalRef(
-            env->FindClass(INETSOCKETADDRESS_CLASS)));
-    cbCtx->callingSocket = env->NewGlobalRef(ju);
+    // Add callback hook
+    auto *cbCtx = new CallbackContext(env, ju);
     srt_listen_callback(u, srt_listen_cb,
                         (void *) cbCtx); // TODO: free cbCtx but could not find a way to free callback opaque parameter
+
     return srt_listen((SRTSOCKET) u, (int) backlog);
 }
 
@@ -233,6 +284,10 @@ nativeConnect(JNIEnv *env, jobject ju, jobject inetSocketAddress) {
     SRTSOCKET u = srt_socket_j2n(env, ju);
     int size = 0;
     const struct sockaddr_storage *ss = sockaddr_inet_j2n(env, inetSocketAddress, &size);
+
+    // Add callback hook
+    auto *cbCtx = new CallbackContext(env, ju);
+    srt_connect_callback(u, srt_connect_cb, (void *) cbCtx);
 
     int res = srt_connect((SRTSOCKET) u, reinterpret_cast<const sockaddr *>(ss), size);
 
