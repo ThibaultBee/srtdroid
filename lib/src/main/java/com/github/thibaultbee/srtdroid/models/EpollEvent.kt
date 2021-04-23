@@ -20,7 +20,7 @@ import com.github.thibaultbee.srtdroid.enums.EpollOpt
 /**
  * This class represents SRT socket and their events.
  *
- * **See Also:** [srt_epoll_uwait](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_epoll_uwait)
+ * **See Also:** [srt_epoll_uwait](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_epoll_uwait)
  *
  * @param socket the SRT socket
  * @param events list of [EpollOpt] that report readiness of this socket

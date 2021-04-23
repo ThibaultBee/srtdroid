@@ -21,7 +21,7 @@ import com.github.thibaultbee.srtdroid.Srt
  * SRT error codes.
  * Once it has been called, you must release Srt context with [Srt.cleanUp] when application leaves.
  *
- * **See Also:** [Error Codes](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#error-codes)
+ * **See Also:** [Error Codes](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#error-codes)
  */
 enum class ErrorType {
     /**
@@ -235,7 +235,7 @@ enum class ErrorType {
     /**
      * Returns a string message that represents a given SRT error code
      *
-     * **See Also:** [srt_strerror](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_strerror)
+     * **See Also:** [srt_strerror](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_strerror)
      *
      * @return the string message that represents a given SRT error code.
      */

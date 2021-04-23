@@ -22,7 +22,7 @@ import com.github.thibaultbee.srtdroid.models.rejectreason.InternalRejectReason
  * Internal reject reason for [InternalRejectReason].
  * Once it has been called, you must release Srt context with [Srt.cleanUp] when application leaves.
  *
- * **See Also:** [Reject Reasons](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#rejection-reasons-1)
+ * **See Also:** [Reject Reasons](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#rejection-reasons-1)
  */
 enum class RejectReasonCode {
     /**
@@ -113,7 +113,7 @@ enum class RejectReasonCode {
     /**
      * Returns a string for the reason of the connection reject.
      *
-     * **See Also:** [srt_rejectreason_str](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_rejectreason_str)
+     * **See Also:** [srt_rejectreason_str](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_rejectreason_str)
      *
      * @return the string reason of the connection reject.
      */

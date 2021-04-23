@@ -20,7 +20,7 @@ import com.github.thibaultbee.srtdroid.models.Epoll
 /**
  * Use this enumeration in [Epoll.flags] and [Epoll.setFlags].
  *
- * **See Also:** [srt_epoll_set](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_epoll_set)
+ * **See Also:** [srt_epoll_set](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_epoll_set)
  */
 enum class EpollFlag {
     /**

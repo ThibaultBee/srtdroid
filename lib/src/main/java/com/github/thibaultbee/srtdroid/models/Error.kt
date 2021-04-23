@@ -32,7 +32,7 @@ object Error {
     /**
      * Gets the text message for the last error.
      *
-     * **See Also:** [srt_getlasterror_str](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_getlasterror_str)
+     * **See Also:** [srt_getlasterror_str](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_getlasterror_str)
      *
      * @return the last error message
      */
@@ -44,7 +44,7 @@ object Error {
     /**
      * Gets the last error code.
      *
-     * **See Also:** [srt_getlasterror](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_getlasterror)
+     * **See Also:** [srt_getlasterror](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_getlasterror)
      *
      * @return the [ErrorType] of the error
      */
@@ -54,7 +54,7 @@ object Error {
     /**
      * Clears the last error code.
      *
-     * **See Also:** [srt_clearlasterror](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_clearlasterror)
+     * **See Also:** [srt_clearlasterror](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_clearlasterror)
      */
     external fun clearLastError()
 }

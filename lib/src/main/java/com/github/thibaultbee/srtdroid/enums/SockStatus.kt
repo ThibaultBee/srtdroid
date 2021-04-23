@@ -20,7 +20,7 @@ import com.github.thibaultbee.srtdroid.models.Socket
 /**
  * SRT socket status (from [Socket.sockState]).
  *
- * **See Also:** [srt_getsockstate](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_getsockstate)
+ * **See Also:** [srt_getsockstate](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_getsockstate)
  */
 enum class SockStatus {
     /**

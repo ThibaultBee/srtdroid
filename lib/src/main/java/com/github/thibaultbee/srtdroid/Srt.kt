@@ -26,7 +26,7 @@ object Srt {
     /**
      * Uses to create an SRT context. It is automatically called by other class. You don't have to call it anymore.
      *
-     * **See Also:** [srt_startup](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_startup)
+     * **See Also:** [srt_startup](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_startup)
      *
      * @return a value >= 0 on success, otherwise -1
      * @see [cleanUp]
@@ -36,7 +36,7 @@ object Srt {
     /**
      * Cleans up all global SRT resources and shall be called just before exiting the application (for example, in your main activity onRelease()).
      *
-     * **See Also:** [srt_cleanup](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_cleanup)
+     * **See Also:** [srt_cleanup](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_cleanup)
      *
      * @return a reserved for future use value
      * @see [startUp]
@@ -48,7 +48,7 @@ object Srt {
     /**
      * Get SRT version
      *
-     * **See Also:** [srt_getversion](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_getversion)
+     * **See Also:** [srt_getversion](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_getversion)
      *
      * @return hexadecimal version (0xXXYYZZ - x.y.z)
      */
@@ -65,7 +65,7 @@ object Srt {
      * - LOG_NOTICE:    5	normal but significant condition
      * - LOG_DEBUG:	    7	debug-level messages
      *
-     * **See Also:** [srt_setloglevel](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_setloglevel)
+     * **See Also:** [srt_setloglevel](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_setloglevel)
      *
      * @param level log level
      */

@@ -20,7 +20,7 @@ import com.github.thibaultbee.srtdroid.models.Socket
 /**
  * Parameter or returned value of [Socket.setSockFlag] and [Socket.getSockFlag].
  *
- * **See Also:** [API Socket Options](https://github.com/Haivision/srt/blob/master/docs/APISocketOptions.md)
+ * **See Also:** [API Socket Options](https://github.com/Haivision/srt/blob/master/docs/API/API-socket-options.md)
  */
 enum class SockOpt {
     /**

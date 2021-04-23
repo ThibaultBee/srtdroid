@@ -20,7 +20,7 @@ import com.github.thibaultbee.srtdroid.models.Epoll
 /**
  * Description of [Epoll] event options.
  *
- * **See Also:** [srt_epoll_add_usock](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_epoll_add_usock)
+ * **See Also:** [srt_epoll_add_usock](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_epoll_add_usock)
  */
 enum class EpollOpt {
     /**

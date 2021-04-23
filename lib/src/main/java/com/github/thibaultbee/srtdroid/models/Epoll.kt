@@ -25,7 +25,7 @@ import java.security.InvalidParameterException
  * blocking operation moved to epoll waiting so that it can block on multiple sockets at once.
  * Once it has been called, you must release Srt context with [Srt.cleanUp] when application leaves.
  *
- * **See Also:** [Asynchronous operations (epoll)](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#asynchronous-operations-epoll-1)
+ * **See Also:** [Asynchronous operations (epoll)](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#asynchronous-operations-epoll-1)
  */
 class Epoll {
     companion object {
@@ -57,7 +57,7 @@ class Epoll {
     /**
      * Adds a socket to a epoll container.
      *
-     * **See Also:** [srt_epoll_add_usock](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_epoll_add_usock)
+     * **See Also:** [srt_epoll_add_usock](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_epoll_add_usock)
      *
      * @param socket the SRT socket to add
      * @param events list of selected [EpollOpt]. Set null if you want to subscribe a socket for all events.
@@ -74,7 +74,7 @@ class Epoll {
     /**
      * Updates a socket to a epoll container.
      *
-     * **See Also:** [srt_epoll_update_usock](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_epoll_update_usock)
+     * **See Also:** [srt_epoll_update_usock](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_epoll_update_usock)
      *
      * @param socket the SRT socket to add
      * @param events list of selected [EpollOpt]. Set null if you want to subscribe a socket for all events.
@@ -91,7 +91,7 @@ class Epoll {
     /**
      * Removes a specified socket from an epoll container.
      *
-     * **See Also:** [srt_epoll_remove_usock](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_epoll_remove_usock)
+     * **See Also:** [srt_epoll_remove_usock](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_epoll_remove_usock)
      *
      * @param socket the SRT socket to add
      * @throws InvalidParameterException if [Epoll] is not valid
@@ -111,7 +111,7 @@ class Epoll {
     /**
      * Blocks the call until any readiness state occurs in the epoll container.
      *
-     * **See Also:** [srt_epoll_wait](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_epoll_wait)
+     * **See Also:** [srt_epoll_wait](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_epoll_wait)
      *
      * @param readFds List of SRT sockets that are read-ready
      * @param writeFds List of SRT sockets that are write-ready
@@ -133,7 +133,7 @@ class Epoll {
     /**
      * Blocks a call until any readiness state occurs in the epoll container.
      *
-     * **See Also:** [srt_epoll_uwait](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_epoll_uwait)
+     * **See Also:** [srt_epoll_uwait](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_epoll_uwait)
      *
      * @param fdsSet List of [EpollEvent]
      * @param timeout Timeout specified in milliseconds. Set to -1, if you want to block indefinitely
@@ -152,7 +152,7 @@ class Epoll {
     /**
      * Removes all SRT socket subscriptions from the epoll container.
      *
-     * **See Also:** [srt_epoll_clear_usocks](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_epoll_clear_usocks)
+     * **See Also:** [srt_epoll_clear_usocks](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_epoll_clear_usocks)
      *
      * @throws InvalidParameterException if [Epoll] is not valid
      */
@@ -168,7 +168,7 @@ class Epoll {
     /**
      * Set flags that change the default behavior of the epoll functions. Same as [flags] but returns list of [EpollFlag].
      *
-     * **See Also:** [srt_epoll_set](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_epoll_set)
+     * **See Also:** [srt_epoll_set](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_epoll_set)
      *
      * @param [EpollFlag] to set
      * @see [flags]
@@ -179,7 +179,7 @@ class Epoll {
     /**
      * Set or retrieves flags that change the default behavior of the epoll functions.
      *
-     * **See Also:** [srt_epoll_set](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_epoll_set)
+     * **See Also:** [srt_epoll_set](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_epoll_set)
      */
     var flags: List<EpollFlag>
         /**
@@ -204,7 +204,7 @@ class Epoll {
     /**
      * Deletes the epoll container.
      *
-     * **See Also:** [srt_epoll_release](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_epoll_release)
+     * **See Also:** [srt_epoll_release](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_epoll_release)
      *
      * @throws InvalidParameterException if [Epoll] is not valid
      */

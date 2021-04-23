@@ -19,7 +19,7 @@ package com.github.thibaultbee.srtdroid.enums
  * The defined encryption state as performed by the Key Material Exchange, used by
  * [SockOpt.RCVKMSTATE], [SockOpt.SNDKMSTATE] and [SockOpt.KMSTATE] options
  *
- * **See Also:** [srt_km_state](https://github.com/Haivision/srt/blob/master/docs/APISocketOptions.md#srt_km_state)
+ * **See Also:** [srt_km_state](https://github.com/Haivision/srt/blob/master/docs/API/API-socket-options.md#srt_km_state)
  */
 enum class KMState {
     /**

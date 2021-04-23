@@ -20,7 +20,7 @@ import com.github.thibaultbee.srtdroid.enums.Boundary
 /**
  * This class represents extra parameters for [Socket.send] and [Socket.recv]
  *
- * **See Also:** [srt_msgctrl](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_msgctrl)
+ * **See Also:** [srt_msgctrl](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_msgctrl)
  */
 data class MsgCtrl(
     /**

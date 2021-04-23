@@ -18,7 +18,7 @@ package com.github.thibaultbee.srtdroid.enums
 /**
  * Used by [SockOpt.TRANSTYPE] option.
  *
- * **See Also:** [srt_transtype](https://github.com/Haivision/srt/blob/master/docs/APISocketOptions.md#srt_transtype)
+ * **See Also:** [srt_transtype](https://github.com/Haivision/srt/blob/master/docs/API/API-socket-options.md#srt_transtype)
  */
 enum class Transtype {
     /**

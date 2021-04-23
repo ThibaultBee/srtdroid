@@ -44,7 +44,7 @@ class Socket : Closeable {
     /**
      * Sets up the SRT socket listener. Use it to monitor SRT socket connection.
      *
-     * **See Also:** [srt_connect_callback](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_connect_callback)
+     * **See Also:** [srt_connect_callback](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_connect_callback)
      *
      * @see [SocketInterface]
      */
@@ -59,7 +59,7 @@ class Socket : Closeable {
      *
      * You shall assert that the SRT socket is valid with [isValid].
      *
-     * **See Also:** [srt_socket](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_socket)
+     * **See Also:** [srt_socket](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_socket)
      */
     @Deprecated(message = "Use Socket() instead", replaceWith = ReplaceWith("Socket()"))
     constructor(af: StandardProtocolFamily) {
@@ -73,7 +73,7 @@ class Socket : Closeable {
      *
      * You shall assert that the SRT socket is valid with [isValid]
      *
-     * **See Also:** [srt_create_socket](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_create_socket)
+     * **See Also:** [srt_create_socket](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_create_socket)
      */
     constructor() {
         srtsocket = createSocket()
@@ -98,7 +98,7 @@ class Socket : Closeable {
     /**
      * Binds the socket to a local address.
      *
-     * **See Also:** [srt_bind](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_bind)
+     * **See Also:** [srt_bind](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_bind)
      *
      * @param address the [InetSocketAddress] to bind to
      *
@@ -113,7 +113,7 @@ class Socket : Closeable {
     /**
      * Binds the socket to a local address.
      *
-     * **See Also:** [srt_bind](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_bind)
+     * **See Also:** [srt_bind](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_bind)
      *
      * @param address the address to bind to
      * @param port the port to bind to
@@ -124,7 +124,7 @@ class Socket : Closeable {
     /**
      * Binds the socket to a local address.
      *
-     * **See Also:** [srt_bind](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_bind)
+     * **See Also:** [srt_bind](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_bind)
      *
      * @param address the [InetAddress] to bind to
      * @param port the port to bind to
@@ -138,7 +138,7 @@ class Socket : Closeable {
     /**
      * Gets the current status of the socket.
      *
-     * **See Also:** [srt_getsockstate](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_getsockstate)
+     * **See Also:** [srt_getsockstate](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_getsockstate)
      *
      * @return the current [SockStatus]
      */
@@ -150,7 +150,7 @@ class Socket : Closeable {
     /**
      * Closes the socket or group and frees all used resources.
      *
-     * **See Also:** [srt_close](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_close)
+     * **See Also:** [srt_close](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_close)
      *
      * @throws SocketException if close failed
      */
@@ -181,7 +181,7 @@ class Socket : Closeable {
     /**
      * Sets up the listening state on a socket.
      *
-     * **See Also:** [srt_listen](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_listen)
+     * **See Also:** [srt_listen](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_listen)
      *
      * @param backlog the number of sockets that may be allowed to wait until they are accepted
      * @throws SocketException if listen failed
@@ -198,7 +198,7 @@ class Socket : Closeable {
     /**
      * Accepts a pending connection.
      *
-     * **See Also:** [srt_accept](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_accept)
+     * **See Also:** [srt_accept](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_accept)
      *
      * @return a pair containing the new Socket connection and the IP address and port specification of the remote device.
      * @throws SocketException if returned SRT socket is not valid
@@ -230,7 +230,7 @@ class Socket : Closeable {
     /**
      * Connects a socket to a specified address and port.
      *
-     * **See Also:** [srt_connect](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_connect)
+     * **See Also:** [srt_connect](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_connect)
      *
      * @param address the [InetSocketAddress] to connect to
      * @throws ConnectException if connection has failed
@@ -244,7 +244,7 @@ class Socket : Closeable {
     /**
      * Connects a socket to a specified address and port.
      *
-     * **See Also:** [srt_connect](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_connect)
+     * **See Also:** [srt_connect](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_connect)
      *
      * @param address the address to connect to
      * @param port the port to connect to
@@ -255,7 +255,7 @@ class Socket : Closeable {
     /**
      * Connects a socket to a specified address and port.
      *
-     * **See Also:** [srt_connect](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_connect)
+     * **See Also:** [srt_connect](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_connect)
      *
      * @param address the [InetAddress] to connect to
      * @param port the port to connect to
@@ -271,7 +271,7 @@ class Socket : Closeable {
     /**
      * Performs a rendezvous connection.
      *
-     * **See Also:** [srt_rendezvous](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_rendezvous)
+     * **See Also:** [srt_rendezvous](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_rendezvous)
      *
      * @param localAddress the local [InetSocketAddress] to bind to
      * @param remoteAddress the remote [InetSocketAddress] to connect to
@@ -289,7 +289,7 @@ class Socket : Closeable {
     /**
      * Performs a rendezvous connection.
      *
-     * **See Also:** [srt_rendezvous](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_rendezvous)
+     * **See Also:** [srt_rendezvous](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_rendezvous)
      *
      * @param localAddress the local address to bind to
      * @param remoteAddress the remote address to connect to
@@ -303,7 +303,7 @@ class Socket : Closeable {
     /**
      * Performs a rendezvous connection.
      *
-     * **See Also:** [srt_rendezvous](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_rendezvous)
+     * **See Also:** [srt_rendezvous](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_rendezvous)
      *
      * @param localAddress the local [InetAddress] to bind to
      * @param remoteAddress the remote [InetAddress] to connect to
@@ -320,7 +320,7 @@ class Socket : Closeable {
     /**
      * Retrieves the remote [InetSocketAddress] to which the SRT socket is connected.
      *
-     * **See Also:** [srt_getpeername](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_getpeername)
+     * **See Also:** [srt_getpeername](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_getpeername)
      *
      * @return the remote [InetSocketAddress] if SRT socket is connected and valid. Otherwise, it returns a null.
      * @see [inetAddress] and [port]
@@ -332,7 +332,7 @@ class Socket : Closeable {
     /**
      * Retrieves the [InetAddress] to which the socket is connected.
      *
-     * **See Also:** [srt_getpeername](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_getpeername)
+     * **See Also:** [srt_getpeername](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_getpeername)
      *
      * @return the remote [InetAddress] if SRT socket is connected and valid. Otherwise, it returns a null.
      * @see [peerName] and [port]
@@ -344,7 +344,7 @@ class Socket : Closeable {
     /**
      * Retrieves the port to which the SRT socket is connected.
      *
-     * **See Also:** [srt_getpeername](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_getpeername)
+     * **See Also:** [srt_getpeername](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_getpeername)
      *
      * @return the remote port if SRT socket is connected and valid. Otherwise, it returns a 0.
      * @see [peerName] and [inetAddress]
@@ -358,7 +358,7 @@ class Socket : Closeable {
     /**
      * Extracts the [InetSocketAddress] to which the socket was bound.
      *
-     * **See Also:** [srt_getsockname](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_getsockname)
+     * **See Also:** [srt_getsockname](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_getsockname)
      *
      * @return if socket is bound and valid, it returns the local [InetSocketAddress]. Otherwise, it returns a null.
      * @throws [SocketException] if SRT socket is invalid or not bound
@@ -370,7 +370,7 @@ class Socket : Closeable {
     /**
      * Extracts the [InetAddress] to which the socket was bound.
      *
-     * **See Also:** [srt_getsockname](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_getsockname)
+     * **See Also:** [srt_getsockname](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_getsockname)
      *
      * @return if socket is bound and valid, it returns the local [InetAddress]. Otherwise, it returns a null.
      * @throws [SocketException] if SRT socket is invalid or not bound
@@ -382,7 +382,7 @@ class Socket : Closeable {
     /**
      * Extracts the port to which the socket was bound.
      *
-     * **See Also:** [srt_getsockname](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_getsockname)
+     * **See Also:** [srt_getsockname](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_getsockname)
      *
      * @return if socket is bound and valid, it returns the local port. Otherwise, it returns a 0.
      * @throws [SocketException] if SRT socket is invalid or not bound
@@ -396,7 +396,7 @@ class Socket : Closeable {
     /**
      * Gets the value of the given socket option.
      *
-     * **See Also:** [srt_getsockflag](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_getsockflag)
+     * **See Also:** [srt_getsockflag](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_getsockflag)
      *
      * @param opt the [SockOpt] to get
      * @return an object containing the [SockOpt] value. Type depends of the specified [opt].
@@ -412,7 +412,7 @@ class Socket : Closeable {
     /**
      * Sets the value of the given socket option.
      *
-     * **See Also:** [srt_setsockflag](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_setsockflag)
+     * **See Also:** [srt_setsockflag](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_setsockflag)
      *
      * @param opt the [SockOpt] to set
      * @param value the [SockOpt] value to set. Type depends of the specified [opt].
@@ -433,7 +433,7 @@ class Socket : Closeable {
     /**
      * Sends a message to a remote party.
      *
-     * **See Also:** [srt_send](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_send)
+     * **See Also:** [srt_send](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_send)
      *
      * @param msg the [ByteBuffer] to send. It must be allocate with [ByteBuffer.allocateDirect]. It sends ByteBuffer from [ByteBuffer.position] to [ByteBuffer.limit].
      * @return the number of byte sent
@@ -459,7 +459,7 @@ class Socket : Closeable {
     /**
      * Sends a message to a remote party.
      *
-     * **See Also:** [srt_send](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_send)
+     * **See Also:** [srt_send](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_send)
      *
      * @param msg the [ByteArray] to send
      * @param offset the offset of the [msg]
@@ -485,7 +485,7 @@ class Socket : Closeable {
     /**
      * Sends a message to a remote party.
      *
-     * **See Also:** [srt_send](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_send)
+     * **See Also:** [srt_send](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_send)
      *
      * @param msg the [ByteArray] to send
      * @return the number of byte sent
@@ -498,7 +498,7 @@ class Socket : Closeable {
     /**
      * Sends a message to a remote party.
      *
-     * **See Also:** [srt_send](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_send)
+     * **See Also:** [srt_send](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_send)
      *
      * @param msg the [String] to send
      * @return the number of byte sent
@@ -527,7 +527,7 @@ class Socket : Closeable {
     /**
      * Sends a message to a remote party.
      *
-     * **See Also:** [srt_sendmsg](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_sendmsg)
+     * **See Also:** [srt_sendmsg](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_sendmsg)
      *
      * @param msg the [ByteBuffer] to send. It must be allocate with [ByteBuffer.allocateDirect]. It sends ByteBuffer from [ByteBuffer.position] to [ByteBuffer.limit].
      * @param ttl the time (in ms) to wait for a successful delivery. -1 means no time limitation.
@@ -559,7 +559,7 @@ class Socket : Closeable {
     /**
      * Sends a message to a remote party.
      *
-     * **See Also:** [srt_sendmsg](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_sendmsg)
+     * **See Also:** [srt_sendmsg](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_sendmsg)
      *
      * @param msg the [ByteArray] to send
      * @param offset the offset of the [msg]
@@ -593,7 +593,7 @@ class Socket : Closeable {
     /**
      * Sends a message to a remote party.
      *
-     * **See Also:** [srt_sendmsg](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_sendmsg)
+     * **See Also:** [srt_sendmsg](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_sendmsg)
      *
      * @param msg the [ByteArray] to send
      * @param ttl the time (in ms) to wait for a successful delivery. -1 means no time limitation.
@@ -609,7 +609,7 @@ class Socket : Closeable {
     /**
      * Sends a message to a remote party.
      *
-     * **See Also:** [srt_sendmsg](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_sendmsg)
+     * **See Also:** [srt_sendmsg](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_sendmsg)
      *
      * @param msg the [String] to send
      * @param ttl the time (in ms) to wait for a successful delivery. -1 means no time limitation.
@@ -628,7 +628,7 @@ class Socket : Closeable {
     /**
      * Sends a message to a remote party.
      *
-     * **See Also:** [srt_sendmsg2](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_sendmsg2)
+     * **See Also:** [srt_sendmsg2](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_sendmsg2)
      *
      * @param msg the [ByteBuffer] to send. It must be allocate with [ByteBuffer.allocateDirect]. It sends ByteBuffer from [ByteBuffer.position] to [ByteBuffer.limit].
      * @param msgCtrl the [MsgCtrl] that contains extra parameter
@@ -655,7 +655,7 @@ class Socket : Closeable {
     /**
      * Sends a message to a remote party.
      *
-     * **See Also:** [srt_sendmsg2](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_sendmsg2)
+     * **See Also:** [srt_sendmsg2](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_sendmsg2)
      *
      * @param msg the [ByteArray] to send
      * @param offset the offset of the [msg]
@@ -682,7 +682,7 @@ class Socket : Closeable {
     /**
      * Sends a message to a remote party.
      *
-     * **See Also:** [srt_sendmsg2](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_sendmsg2)
+     * **See Also:** [srt_sendmsg2](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_sendmsg2)
      *
      * @param msg the [ByteArray] to send
      * @param msgCtrl the [MsgCtrl] that contains extra parameter
@@ -696,7 +696,7 @@ class Socket : Closeable {
     /**
      * Sends a message to a remote party.
      *
-     * **See Also:** [srt_sendmsg2](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_sendmsg2)
+     * **See Also:** [srt_sendmsg2](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_sendmsg2)
      *
      * @param msg the [String] to send
      * @param msgCtrl the [MsgCtrl] that contains extra parameter
@@ -710,7 +710,7 @@ class Socket : Closeable {
     /**
      * Returns an output stream for this socket.
      *
-     * **See Also:** [srt_sendmsg2](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_sendmsg2)
+     * **See Also:** [srt_sendmsg2](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_sendmsg2)
      *
      * @param msgCtrl the [MsgCtrl] that contains extra parameter
      * @return an output stream for writing bytes to this socket.
@@ -769,7 +769,7 @@ class Socket : Closeable {
     /**
      * Received a message from a remote device
      *
-     * **See Also:** [srt_recv](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_recv)
+     * **See Also:** [srt_recv](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_recv)
      *
      * @param size Size of the expected message.
      * @return a pair containing the number of bytes received and the [ByteArray] message.
@@ -799,7 +799,7 @@ class Socket : Closeable {
     /**
      * Received a message from a remote device
      *
-     * **See Also:** [srt_recv](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_recv)
+     * **See Also:** [srt_recv](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_recv)
      *
      * @param buffer the [ByteArray] where received data are copied to.
      * @param offset the offset in the specified [buffer].
@@ -827,7 +827,7 @@ class Socket : Closeable {
     /**
      * Received a message from a remote device
      *
-     * **See Also:** [srt_recvmsg2](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_recvmsg2)
+     * **See Also:** [srt_recvmsg2](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_recvmsg2)
      *
      * @param size Size of the expected message.
      * @param msgCtrl the [MsgCtrl] that contains extra parameter
@@ -859,7 +859,7 @@ class Socket : Closeable {
     /**
      * Received a message from a remote device
      *
-     * **See Also:** [srt_recvmsg2](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_recvmsg2)
+     * **See Also:** [srt_recvmsg2](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_recvmsg2)
      *
      * @param buffer the [ByteArray] where received data are copied to.
      * @param offset the offset in the specified [buffer].
@@ -891,7 +891,7 @@ class Socket : Closeable {
     /**
      * Returns an input stream for this socket.
      *
-     * **See Also:** [srt_recvmsg2](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_recvmsg2)
+     * **See Also:** [srt_recvmsg2](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_recvmsg2)
      *
      * @param msgCtrl the [MsgCtrl] that contains extra parameter
      * @return an input stream for reading bytes from this socket.
@@ -952,7 +952,7 @@ class Socket : Closeable {
     /**
      * Sends a specified file.
      *
-     * **See Also:** [srt_sendfile](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_sendfile)
+     * **See Also:** [srt_sendfile](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_sendfile)
      *
      * @param path the path of the file to send
      * @param offset the offset used to read file from
@@ -979,7 +979,7 @@ class Socket : Closeable {
     /**
      * Sends a specified file.
      *
-     * **See Also:** [srt_sendfile](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_sendfile)
+     * **See Also:** [srt_sendfile](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_sendfile)
      *
      * @param file the [File] to send
      * @param offset the offset used to read file from
@@ -996,7 +996,7 @@ class Socket : Closeable {
     /**
      * Sends a specified file.
      *
-     * **See Also:** [srt_sendfile](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_sendfile)
+     * **See Also:** [srt_sendfile](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_sendfile)
      *
      * @param file the [File] to send
      * @param block the size of the single block to read at once before writing it to a file
@@ -1018,7 +1018,7 @@ class Socket : Closeable {
     /**
      * Receives a file. File is create in [path].
      *
-     * **See Also:** [srt_recvfile](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_recvfile)
+     * **See Also:** [srt_recvfile](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_recvfile)
      *
      * @param path the path where to write received data
      * @param offset the offset used to write file
@@ -1045,7 +1045,7 @@ class Socket : Closeable {
     /**
      * Receives a file. File is create in [file].
      *
-     * **See Also:** [srt_recvfile](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_recvfile)
+     * **See Also:** [srt_recvfile](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_recvfile)
      *
      * @param file the [File] where to write received data
      * @param offset the offset used to write file
@@ -1072,7 +1072,7 @@ class Socket : Closeable {
         /**
          * Get detailed reason for a failed connection attempt.
          *
-         * **See Also:** [srt_getrejectreason](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_getrejectreason)
+         * **See Also:** [srt_getrejectreason](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_getrejectreason)
          *
          * @return the object describing the rejection reason. Could be either [InternalRejectReason], [PredefinedRejectReason] or [UserDefinedRejectReason]
          */
@@ -1087,7 +1087,7 @@ class Socket : Closeable {
         /**
          * Set detailed reason for a failed connection attempt. You can not set [InternalRejectReason].
          *
-         * **See Also:** [srt_setrejectreason](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_setrejectreason)
+         * **See Also:** [srt_setrejectreason](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_setrejectreason)
          *
          * @param value the object describing the rejection reason. Could be either [InternalRejectReason], [PredefinedRejectReason] or [UserDefinedRejectReason]
          * @throws [SocketException] if action has failed
@@ -1114,7 +1114,7 @@ class Socket : Closeable {
     /**
      * Reports the current statistics.
      *
-     * **See Also:** [srt_bstats](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_bstats)
+     * **See Also:** [srt_bstats](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_bstats)
      *
      * @param clear true if the statistics should be cleared after retrieval
      * @return the current [Stats]
@@ -1124,7 +1124,7 @@ class Socket : Closeable {
     /**
      * Reports the current statistics.
      *
-     * **See Also:** [srt_bistats](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_bistats)
+     * **See Also:** [srt_bistats](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_bistats)
      *
      * @param clear true if the statistics should be cleared after retrieval
      * @param instantaneous true if the statistics should use instant data, not moving averages
@@ -1138,7 +1138,7 @@ class Socket : Closeable {
     /**
      * Gets the time when SRT socket was open to establish a connection.
      *
-     * **See Also:** [srt_connection_time](https://github.com/Haivision/srt/blob/master/docs/API-functions.md#srt_connection_time)
+     * **See Also:** [srt_connection_time](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_connection_time)
      *
      * @return the connection time in microseconds
      * @throws [SocketException] if SRT socket is not valid
@@ -1156,7 +1156,7 @@ class Socket : Closeable {
     /**
      * Sets/gets the value of the [SockOpt.RCVBUF] option for this SRT socket.
      *
-     * **See Also:** [SRTO_RCVBUF](https://github.com/Haivision/srt/blob/master/docs/APISocketOptions.md#SRTO_RCVBUF)
+     * **See Also:** [SRTO_RCVBUF](https://github.com/Haivision/srt/blob/master/docs/API/API-socket-options.md#SRTO_RCVBUF)
      */
     var receiveBufferSize: Int
         /**
@@ -1179,7 +1179,7 @@ class Socket : Closeable {
     /**
      * Sets/gets the value of the [SockOpt.SNDBUF] option for this SRT socket.
      *
-     * **See Also:** [SRTO_SNDBUF](https://github.com/Haivision/srt/blob/master/docs/APISocketOptions.md#SRTO_SNDBUF)
+     * **See Also:** [SRTO_SNDBUF](https://github.com/Haivision/srt/blob/master/docs/API/API-socket-options.md#SRTO_SNDBUF)
      */
     var sendBufferSize: Int
         /**
@@ -1202,7 +1202,7 @@ class Socket : Closeable {
     /**
      * Tests if [SockOpt.REUSEADDR] is enabled.
      *
-     * **See Also:** [SRTO_REUSEADDR](https://github.com/Haivision/srt/blob/master/docs/APISocketOptions.md#srto_reuseaddr)
+     * **See Also:** [SRTO_REUSEADDR](https://github.com/Haivision/srt/blob/master/docs/API/API-socket-options.md#srto_reuseaddr)
      */
     var reuseAddress: Boolean
         /**
@@ -1225,7 +1225,7 @@ class Socket : Closeable {
     /**
      * Returns setting for [SockOpt.LINGER].
      *
-     * **See Also:** [SRTO_LINGER](https://github.com/Haivision/srt/blob/master/docs/APISocketOptions.md#srto_linger)
+     * **See Also:** [SRTO_LINGER](https://github.com/Haivision/srt/blob/master/docs/API/API-socket-options.md#srto_linger)
      */
     var soLinger: Int
         /**
