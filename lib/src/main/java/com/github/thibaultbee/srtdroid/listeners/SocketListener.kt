@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.thibaultbee.srtdroid.interfaces
+package com.github.thibaultbee.srtdroid.listeners
 
 import com.github.thibaultbee.srtdroid.enums.ErrorType
 import com.github.thibaultbee.srtdroid.enums.SockOpt
@@ -23,7 +23,7 @@ import java.net.InetSocketAddress
 /**
  * This interface is used by [Socket] to notify SRT socket events.
  */
-interface SocketInterface {
+interface SocketListener {
     /**
      * Called to handle the incoming connection on the listening socket (and is about to be returned by srt_accept), but before the connection has been accepted.
      *

@@ -1,12 +1,10 @@
 package com.github.thibaultbee.srtdroid.models
 
-import android.util.Log
 import com.github.thibaultbee.srtdroid.Srt
 import com.github.thibaultbee.srtdroid.enums.ErrorType
 import com.github.thibaultbee.srtdroid.enums.SockOpt
 import com.github.thibaultbee.srtdroid.enums.Transtype
-import com.github.thibaultbee.srtdroid.interfaces.SocketInterface
-import com.github.thibaultbee.srtdroid.utils.Utils
+import com.github.thibaultbee.srtdroid.listeners.SocketListener
 import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
@@ -14,7 +12,6 @@ import org.junit.Test
 import java.lang.Thread.sleep
 import java.net.InetAddress
 import java.net.InetSocketAddress
-import java.nio.ByteBuffer
 import java.util.concurrent.*
 
 class SocketCallbackTest {
@@ -39,7 +36,7 @@ class SocketCallbackTest {
         val server = ServerConnectClose()
 
         val futureResult = server.enqueue()
-        socket.socketInterface = object : SocketInterface {
+        socket.listener = object : SocketListener {
             override fun onListen(ns: Socket, hsVersion: Int, peerAddress: InetSocketAddress, streamId: String) = 0
 
             override fun onConnectionLost(ns: Socket, error: ErrorType, peerAddress: InetSocketAddress, token: Int) {

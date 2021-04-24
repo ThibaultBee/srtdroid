@@ -21,7 +21,7 @@ import com.github.thibaultbee.srtdroid.enums.ErrorType
 import com.github.thibaultbee.srtdroid.enums.RejectReasonCode
 import com.github.thibaultbee.srtdroid.enums.SockOpt
 import com.github.thibaultbee.srtdroid.enums.SockStatus
-import com.github.thibaultbee.srtdroid.interfaces.SocketInterface
+import com.github.thibaultbee.srtdroid.listeners.SocketListener
 import com.github.thibaultbee.srtdroid.models.rejectreason.InternalRejectReason
 import com.github.thibaultbee.srtdroid.models.rejectreason.PredefinedRejectReason
 import com.github.thibaultbee.srtdroid.models.rejectreason.RejectReason
@@ -46,9 +46,9 @@ class Socket : Closeable {
      *
      * **See Also:** [srt_connect_callback](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_connect_callback)
      *
-     * @see [SocketInterface]
+     * @see [SocketListener]
      */
-    var socketInterface: SocketInterface? = null
+    var listener: SocketListener? = null
     private var srtsocket: Int
 
     private external fun socket(af: StandardProtocolFamily, type: Int, protocol: Int): Int
@@ -162,9 +162,9 @@ class Socket : Closeable {
 
     // Connecting
     /**
-     * Internal method. Do not use, use [SocketInterface.onListen] instead.
+     * Internal method. Do not use, use [SocketListener.onListen] instead.
      *
-     * @see [socketInterface]
+     * @see [listener]
      */
     private fun onListen(
         ns: Socket,
@@ -172,7 +172,7 @@ class Socket : Closeable {
         peerAddress: InetSocketAddress,
         streamId: String
     ): Int {
-        return socketInterface?.onListen(ns, hsVersion, peerAddress, streamId)
+        return listener?.onListen(ns, hsVersion, peerAddress, streamId)
             ?: 0 // By default, accept incoming connection
     }
 
@@ -185,7 +185,7 @@ class Socket : Closeable {
      *
      * @param backlog the number of sockets that may be allowed to wait until they are accepted
      * @throws SocketException if listen failed
-     * @see [socketInterface]
+     * @see [listener]
      */
     fun listen(backlog: Int) {
         if (nativeListen(backlog) != 0) {
@@ -212,9 +212,9 @@ class Socket : Closeable {
     }
 
     /**
-     * Internal method. Do not use, use [SocketInterface.onConnectionLost] instead.
+     * Internal method. Do not use, use [SocketListener.onConnectionLost] instead.
      *
-     * @see [socketInterface]
+     * @see [listener]
      */
     private fun onConnect(
             ns: Socket,
@@ -222,7 +222,7 @@ class Socket : Closeable {
             peerAddress: InetSocketAddress,
             token: Int
     ) {
-        socketInterface?.onConnectionLost(ns, error, peerAddress, token)
+        listener?.onConnectionLost(ns, error, peerAddress, token)
     }
 
     private external fun nativeConnect(address: InetSocketAddress): Int

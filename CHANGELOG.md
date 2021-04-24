@@ -11,6 +11,7 @@ Version 1.1.0
 - In case an error happened, most Epoll methods return an exception instead of a -1
 - Fix a typo: SockStatus NONEXIST become NON_EXIST
 - MsgCtrl.boundary is a Boundary type and no longer an Int
+- Calls socket.listener instead of socket.socketInterface.
 
 Version 1.0.0
 -------------
