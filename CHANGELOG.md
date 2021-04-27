@@ -6,6 +6,7 @@ Version 1.1.0
 
 ## Dependencies:
 - srt 1.4.3
+- openssl 1.1.1k
 
 ## API changes:
 - You don't have to call Srt.startUp(), it is called when you access to an SRT class.

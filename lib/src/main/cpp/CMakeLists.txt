@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.6)
 
 include(ExternalProject)
 
-set(OPENSSL_VERSION "1.1.1j")
+set(OPENSSL_VERSION "1.1.1k")
 set(SRT_VERSION "1.4.3")
 
 # OpenSSL - needs few executable such as perl and mv in PATH
