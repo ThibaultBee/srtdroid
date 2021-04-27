@@ -4,6 +4,9 @@ Change Log
 Version 1.1.0
 -------------
 
+## Dependencies:
+- srt 1.4.3
+
 ## API changes:
 - You don't have to call Srt.startUp(), it is called when you access to an SRT class.
 - Srt() is now static: directly use Srt object. Same for Time() and Error(), but it doesn't affect API usage.
