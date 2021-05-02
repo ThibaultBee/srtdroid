@@ -25,26 +25,6 @@ import java.io.FileOutputStream
 
 
 object Utils {
-    fun getServerIpFromPreference(context: Context): String {
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        return sharedPreferences.getString("ip_server_key", "")!!
-    }
-
-    fun getServerPortFromPreference(context: Context): Int {
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        return Integer.valueOf(sharedPreferences.getString("port_server_key", "0")!!)
-    }
-
-    fun getClientIpFromPreference(context: Context): String {
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        return sharedPreferences.getString("ip_client_key", "")!!
-    }
-
-    fun getClientPortFromPreference(context: Context): Int {
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        return Integer.valueOf(sharedPreferences.getString("port_client_key", "0")!!)
-    }
-
     fun showAlertDialog(context: Context, title: String, message: String = "") {
         AlertDialog.Builder(context)
             .setTitle(title)
@@ -60,8 +40,8 @@ object Utils {
     }
 
     fun writeFile(file: File, text: String) {
-        val fos = FileOutputStream(file)
-        fos.write(text.toByteArray())
-        fos.close()
+        FileOutputStream(file).use {
+            it.write(text.toByteArray())
+        }
     }
 }

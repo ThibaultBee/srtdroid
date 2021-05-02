@@ -19,27 +19,26 @@ import android.Manifest
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.github.thibaultbee.srtdroid.Srt
-import com.github.thibaultbee.srtdroid.enums.SockOpt
-import com.github.thibaultbee.srtdroid.enums.Transtype
 import com.github.thibaultbee.srtdroid.examples.databinding.ActivityMainBinding
-import com.github.thibaultbee.srtdroid.models.Socket
-import com.google.common.primitives.Ints
-import com.google.common.primitives.Longs
 import com.jakewharton.rxbinding4.view.clicks
 import com.tbruyelle.rxpermissions3.RxPermissions
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
-import java.io.File
+import io.reactivex.rxjava3.schedulers.Schedulers
+import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
-    private val TAG = MainActivity::class.qualifiedName
+    private val TAG = this::class.qualifiedName
     private val activityDisposables = CompositeDisposable()
+
     private lateinit var binding: ActivityMainBinding
 
-    private lateinit var srt: Srt
-
-    private val serverFileName = "MyFileToSend"
+    private val viewModel: MainViewModel by lazy {
+        ViewModelProvider(this).get(MainViewModel::class.java)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,238 +58,87 @@ class MainActivity : AppCompatActivity() {
         val rxPermissions = RxPermissions(this)
 
         binding.testClientButton.clicks()
-            .observeOn(AndroidSchedulers.mainThread())
-            .compose(rxPermissions.ensure(Manifest.permission.INTERNET))
-            .subscribe { granted ->
-                if (granted) {
-                    try {
-                        launchTestClient(
-                            Utils.getClientIpFromPreference(this),
-                            Utils.getClientPortFromPreference(this)
-                        )
-                        Utils.showAlertDialog(this, "Success", "Noice!")
-                    } catch (e: Exception) {
-                        Utils.showAlertDialog(this, "Error", e.message ?: "")
-                    }
-                } else {
-                    Utils.showAlertDialog(this, "Permission", "Missing permissions")
-                }
+            .throttleFirst(3, TimeUnit.SECONDS) // 3s = SRT default SRTO_CONNTIMEO
+            .observeOn(Schedulers.io()) // Do not execute SRT networking operation on main thread
+            .switchMap {
+                Observable.just(viewModel.launchTestClient())
             }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe()
             .let(activityDisposables::add)
 
         binding.testServerButton.clicks()
-            .observeOn(AndroidSchedulers.mainThread())
-            .compose(rxPermissions.ensure(Manifest.permission.INTERNET))
-            .subscribe { granted ->
-                if (granted) {
-                    try {
-                        launchTestServer(
-                            Utils.getServerIpFromPreference(this),
-                            Utils.getServerPortFromPreference(this)
-                        )
-                        Utils.showAlertDialog(this, "Success", "Noice! (check logcat)")
-                    } catch (e: Exception) {
-                        Utils.showAlertDialog(this, "Error", e.message ?: "")
-                    }
-                } else {
-                    Utils.showAlertDialog(this, "Permission", "Missing permissions")
-                }
+            .observeOn(Schedulers.io()) // Do not execute SRT networking operation on main thread
+            .switchMap {
+                Observable.just(viewModel.launchTestServer())
             }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe()
             .let(activityDisposables::add)
 
         binding.recvFileButton.clicks()
+            .throttleFirst(3, TimeUnit.SECONDS) // 3s = SRT default SRTO_CONNTIMEO
             .observeOn(AndroidSchedulers.mainThread())
             .compose(
-                rxPermissions.ensureEachCombined(
-                    Manifest.permission.INTERNET,
+                rxPermissions.ensure(
                     Manifest.permission.WRITE_EXTERNAL_STORAGE
                 )
             )
-            .subscribe { permission ->
-                if (permission.granted) {
-                    try {
-                        Log.i(TAG, "Will get file $serverFileName from server")
-                        val file = launchRecvFile(
-                            Utils.getClientIpFromPreference(this),
-                            Utils.getClientPortFromPreference(this),
-                            serverFileName
-                        )
-                        Utils.showAlertDialog(this, "Success", "Check out ${file.path}")
-                    } catch (e: Exception) {
-                        Utils.showAlertDialog(this, "Failed to recv file", e.message ?: "")
-                    }
+            .observeOn(Schedulers.io()) // Do not execute SRT networking operation on main thread
+            .switchMap { granted ->
+                if (granted) {
+                    Observable.just(viewModel.launchRecvFile(this.filesDir))
                 } else {
-                    Utils.showAlertDialog(this, "Permission", "Missing permissions")
+                    Utils.showAlertDialog(
+                        this,
+                        getString(R.string.Permission),
+                        "Missing permission: WRITE_EXTERNAL_STORAGE"
+                    )
+                    null
                 }
             }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe()
             .let(activityDisposables::add)
 
         binding.sendFileButton.clicks()
             .observeOn(AndroidSchedulers.mainThread())
             .compose(
                 rxPermissions.ensureEachCombined(
-                    Manifest.permission.INTERNET,
                     Manifest.permission.READ_EXTERNAL_STORAGE,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE
                 )
             )
-            .subscribe { permission ->
+            .observeOn(Schedulers.io()) // Do not execute SRT networking operation on main thread
+            .switchMap { permission ->
                 if (permission.granted) {
-                    try {
-                        val stats = launchSendFile(
-                            Utils.getServerIpFromPreference(this),
-                            Utils.getServerPortFromPreference(this)
-                        )
-                        Utils.showAlertDialog(
-                            this,
-                            "Success",
-                            "Noice!\nSpeed = ${stats.mbpsRate}\nLoss = ${stats.pktLossTotal} pkt ( ${stats.lossPercent} %)"
-                        )
-                    } catch (e: Exception) {
-                        Utils.showAlertDialog(this, "Error", e.message ?: "")
-                    }
+                    Observable.just(viewModel.launchSendFile(this.filesDir))
                 } else {
-                    Utils.showAlertDialog(this, "Permission", "Missing permissions")
+                    Utils.showAlertDialog(
+                        this,
+                        getString(R.string.Permission),
+                        "Missing permissions: WRITE_EXTERNAL_STORAGE or READ_EXTERNAL_STORAGE"
+                    )
+                    null
                 }
             }
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe()
             .let(activityDisposables::add)
-    }
 
-
-    // To be tested with examples/test-c-server.c
-    private fun launchTestClient(ip: String, port: Int) {
-        val socket = Socket()
-        if (!socket.isValid) {
-            throw Exception("Invalid socket")
+        viewModel.error.observe(this) {
+            Utils.showAlertDialog(this, getString(R.string.Error), it)
         }
 
-        try {
-            socket.setSockFlag(SockOpt.SENDER, 1)
-            socket.connect(ip, port)
-
-            repeat(100) {
-                socket.send("This message should be sent to the other side")
-            }
-        } finally {
-            Thread.sleep(1000) // If session is close too early, last msg will not be receive by server
-            socket.close()
+        viewModel.success.observe(this) {
+            Utils.showAlertDialog(this, getString(R.string.Success), "Noice! $it")
         }
     }
 
-    // To be tested with examples/test-c-client.c
-    private fun launchTestServer(ip: String, port: Int) {
-        val socket = Socket()
-        if (!socket.isValid) {
-            throw Exception("Invalid socket")
-        }
-
-        try {
-            socket.setSockFlag(SockOpt.RCVSYN, true)
-            socket.bind(ip, port)
-            socket.listen(2)
-
-            val peer = socket.accept()
-            val clientSocket = peer.first
-
-            repeat(100) {
-                val pair = clientSocket.recv(2048)
-                val message = pair.second
-                Log.i(TAG, "#$it >> Got msg of length ${message.size} << ${String(message)}")
-            }
-        } finally {
-            Thread.sleep(1000) // If session is close too early, last msg will not be receive by server
-            socket.close()
-        }
-    }
-
-    // To be tested with examples/sendfile.c
-    private fun launchRecvFile(ip: String, port: Int, serverFileName: String): File {
-        val socket = Socket()
-        if (!socket.isValid) {
-            throw Exception("Invalid socket")
-        }
-
-        return try {
-            socket.setSockFlag(SockOpt.TRANSTYPE, Transtype.FILE)
-            socket.connect(ip, port)
-
-            // Request server file
-            socket.send(Ints.toByteArray(serverFileName.length).reversedArray())
-
-            socket.send(serverFileName)
-
-            val fileSize = Longs.fromByteArray(socket.recv(Longs.BYTES).second.reversedArray())
-
-            // Where file will be written
-            val myFile = File(this.filesDir, "RecvFile")
-            if (fileSize != socket.recvFile(myFile, 0, fileSize)) {
-                throw Exception("Failed to recv file from $ip:$port: ${Utils.getErrorMessage()}")
-            }
-            myFile
-        } finally {
-            Thread.sleep(1000) // If session is close too early, last msg will not be receive by server
-            socket.close()
-        }
-    }
-
-    // To be tested with examples/recvfile.c
-    private fun launchSendFile(ip: String, port: Int): SimpleStats {
-        val socket = Socket()
-        if (!socket.isValid) {
-            throw Exception("Invalid socket")
-        }
-
-        return try {
-            socket.setSockFlag(SockOpt.TRANSTYPE, Transtype.FILE)
-            socket.bind(ip, port)
-            socket.listen(2)
-
-            val peer = socket.accept()
-            val clientSocket = peer.first
-
-            // Get file name length
-            var pair = clientSocket.recv(Ints.BYTES)
-            val res = pair.first
-            val fileNameLength = Ints.fromByteArray(pair.second.reversedArray())
-            when {
-                res > 0 -> Log.i(TAG, "File name is $fileNameLength char long")
-            }
-
-            // Get file name
-            pair = clientSocket.recv(fileNameLength)
-            val fileName = String(pair.second)
-            Log.i(TAG, "File name is $fileName")
-
-            val file = File("${this.filesDir}/$fileName")
-            if (!file.exists()) {
-                Log.w(TAG, "File ${file.path} does not exist. Try to create it")
-                Utils.writeFile(file, "myServerFileContent. Hello Client! This is server.")
-            }
-            if (!file.exists()) {
-                throw Exception("Failed to get file ${file.path}")
-            }
-
-            // Send file size
-            clientSocket.send(Longs.toByteArray(file.length()).reversedArray())
-
-            // Send file
-            clientSocket.sendFile(file)
-
-            val stats = clientSocket.bstats(true)
-            val simpleStats = SimpleStats(
-                stats.mbpsSendRate,
-                stats.pktSndLossTotal,
-                100 * stats.pktSndLossTotal / stats.pktSent.toInt()
-            )
-            simpleStats
-        } finally {
-            socket.close()
-        }
-    }
 
     override fun onDestroy() {
         super.onDestroy()
-        srt.cleanUp()
+        Srt.cleanUp()
         activityDisposables.clear()
     }
 }

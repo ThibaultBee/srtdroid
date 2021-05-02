@@ -15,4 +15,11 @@
     <string name="server_tests">Server tests</string>
     <string name="recvfile">RecvFile</string>
     <string name="sendfile">SendFile</string>
+    <string name="ip_server_key">ip_server_key</string>
+    <string name="port_server_key">port_server_key</string>
+    <string name="ip_client_key">ip_client_key</string>
+    <string name="port_client_key">port_client_key</string>
+    <string name="Error">error</string>
+    <string name="Success">success</string>
+    <string name="Permission">permission</string>
 </resources>

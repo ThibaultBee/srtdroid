@@ -7,14 +7,14 @@
     <EditTextPreference
         android:defaultValue="@string/default_server_ip"
         android:dialogTitle="IP"
-        android:key="ip_server_key"
+        android:key="@string/ip_server_key"
         android:title="@string/ip"
         app:useSimpleSummaryProvider="true" />
 
     <EditTextPreference
         android:defaultValue="@string/default_port"
         android:dialogTitle="Port"
-        android:key="port_server_key"
+        android:key="@string/port_server_key"
         android:title="@string/port"
         app:useSimpleSummaryProvider="true" />
 
