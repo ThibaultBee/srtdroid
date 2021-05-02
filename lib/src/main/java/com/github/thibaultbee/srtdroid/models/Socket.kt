@@ -32,6 +32,7 @@ import java.nio.ByteBuffer
 
 /**
  * This class represents a SRT socket.
+ * To avoid creating an unresponsive UI, don't perform SRT network operations on the main thread.
  * Once it has been called, you must release Srt context with [Srt.cleanUp] when application leaves.
  */
 class Socket : Closeable {
