@@ -4,7 +4,7 @@
 
 Low level API for SRT library on Android. SRT is an open source transport technology that optimizes streaming performance across unpredictable networks. More information on [SRT](https://github.com/Haivision/srt).
 
-srtdroid is a binder built on [SRT](https://github.com/Haivision/srt). It is a not a new implementation of SRT protocol.
+srtdroid is a binder/wrapper built on [SRT](https://github.com/Haivision/srt). It is a not a new implementation of SRT protocol.
 
 ## Setup
 
@@ -25,27 +25,25 @@ dependencies {
 
 ## Samples
 
-To test srtdroid, you will need 2 Android devices: one client and one server.
+srtdroid comes with 2 sample apps:
+* [examples](#examples)
+* [chat](#chat)
 
 On the server side, configure local IP to `0.0.0.0`.
 On the client side, configure remote IP to server device IP.
 The port must be the same value for both.
 
-### Examples
+### [examples](./examples)
 
-In examples folder.
 Examples are the srtdroid counterpart of [SRT examples folder](https://github.com/Haivision/srt/tree/master/examples).
-You will find both client and server examples.
 
-### Chat
+### [chat](./chat)
 
-In chat folder.
-Chat is an SRT utility to send and receive messages. It provides both a client and a server.
+A SRT Instant Messaging (IM).
 
 ## API
 
-As srtdroid is a simple wrapper, it provides a limited [API documentation](https://thibaultbee.github.io/srtdroid/dokka/lib). For an extensive SRT API documentation refers to the official [SRT API documentation](https://github.com/Haivision/srt/blob/master/docs/API.md).
-You must create a [Srt object](https://github.com/ThibaultBee/srtdroid/blob/master/lib/src/main/java/com/github/thibaultbee/srtdroid/Srt.kt) before calling any other API. It will load SRT, ssl and crypto libraries.
+As srtdroid is a simple wrapper, it provides a minimalist [API documentation](https://thibaultbee.github.io/srtdroid/dokka/lib). For an extensive SRT API documentation refers to the official [SRT API documentation](https://github.com/Haivision/srt/blob/master/docs/API.md).
 
 ### Read/write
 
