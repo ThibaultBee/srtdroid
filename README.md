@@ -6,6 +6,8 @@ Low level API for SRT library on Android. SRT is an open source transport techno
 
 srtdroid is a binder/wrapper built on [SRT](https://github.com/Haivision/srt). It is a not a new implementation of SRT protocol.
 
+For a **live streaming SDK** based on [SRT](https://github.com/Haivision/srt), check [StreamPack](https://github.com/ThibaultBee/StreamPack).
+
 ## Setup
 
 Get srtdroid lastest artifacts on [jitpack.io](https://jitpack.io/#ThibaultBee/srtdroid)
@@ -45,7 +47,7 @@ A SRT Instant Messaging (IM).
 
 As srtdroid is a simple wrapper, it provides a minimalist [API documentation](https://thibaultbee.github.io/srtdroid/dokka/lib). For an extensive SRT API documentation refers to the official [SRT API documentation](https://github.com/Haivision/srt/blob/master/docs/API.md).
 
-### Read/write
+### Send/recv
 
 Srt `send`, `sendMsg` and `sendMsg` are called `send()` in srtdroid. Alternatively, you can use the `OutputStream` API.
 Srt `recv`, `recvdMsg` are called `recv()` in srtdroid. Alternatively, you can use the `InputStream` API.
