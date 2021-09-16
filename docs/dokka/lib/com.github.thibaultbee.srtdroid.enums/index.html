@@ -1,101 +1,192 @@
-<HTML>
-<HEAD>
-<meta charset="UTF-8">
-<title>com.github.thibaultbee.srtdroid.enums - lib</title>
-<link rel="stylesheet" href="../../style.css">
-</HEAD>
-<BODY>
-<a href="../index.html">lib</a>&nbsp;/&nbsp;<a href="./index.html">com.github.thibaultbee.srtdroid.enums</a><br/>
-<br/>
-<h2>Package com.github.thibaultbee.srtdroid.enums</h2>
-<h3>Types</h3>
-<table>
-<tbody>
-<tr>
-<td>
-<p><a href="-boundary/index.html">Boundary</a></p>
-</td>
-<td>
-<code><span class="keyword">enum</span> <span class="keyword">class </span><span class="identifier">Boundary</span></code>
-<p>To be use as <a href="../com.github.thibaultbee.srtdroid.models/-msg-ctrl/boundary.html">MsgCtrl.boundary</a></p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="-epoll-flag/index.html">EpollFlag</a></p>
-</td>
-<td>
-<code><span class="keyword">enum</span> <span class="keyword">class </span><span class="identifier">EpollFlag</span></code>
-<p>Use this enumeration in <a href="../com.github.thibaultbee.srtdroid.models/-epoll/flags.html">Epoll.flags</a> and <a href="../com.github.thibaultbee.srtdroid.models/-epoll/set-flags.html">Epoll.setFlags</a>.</p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="-epoll-opt/index.html">EpollOpt</a></p>
-</td>
-<td>
-<code><span class="keyword">enum</span> <span class="keyword">class </span><span class="identifier">EpollOpt</span></code>
-<p>Description of <a href="../com.github.thibaultbee.srtdroid.models/-epoll/index.html">Epoll</a> event options.</p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="-error-type/index.html">ErrorType</a></p>
-</td>
-<td>
-<code><span class="keyword">enum</span> <span class="keyword">class </span><span class="identifier">ErrorType</span></code>
-<p>SRT error codes.
-Once it has been called, you must release Srt context with <a href="../com.github.thibaultbee.srtdroid/-srt/clean-up.html">Srt.cleanUp</a> when application leaves.</p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="-k-m-state/index.html">KMState</a></p>
-</td>
-<td>
-<code><span class="keyword">enum</span> <span class="keyword">class </span><span class="identifier">KMState</span></code>
-<p>The defined encryption state as performed by the Key Material Exchange, used by
-<a href="-sock-opt/-r-c-v-k-m-s-t-a-t-e.html">SockOpt.RCVKMSTATE</a>, <a href="-sock-opt/-s-n-d-k-m-s-t-a-t-e.html">SockOpt.SNDKMSTATE</a> and <a href="-sock-opt/-k-m-s-t-a-t-e.html">SockOpt.KMSTATE</a> options</p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="-reject-reason-code/index.html">RejectReasonCode</a></p>
-</td>
-<td>
-<code><span class="keyword">enum</span> <span class="keyword">class </span><span class="identifier">RejectReasonCode</span></code>
-<p>Internal reject reason for <a href="../com.github.thibaultbee.srtdroid.models.rejectreason/-internal-reject-reason/index.html">InternalRejectReason</a>.
-Once it has been called, you must release Srt context with <a href="../com.github.thibaultbee.srtdroid/-srt/clean-up.html">Srt.cleanUp</a> when application leaves.</p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="-sock-opt/index.html">SockOpt</a></p>
-</td>
-<td>
-<code><span class="keyword">enum</span> <span class="keyword">class </span><span class="identifier">SockOpt</span></code>
-<p>Parameter or returned value of <a href="../com.github.thibaultbee.srtdroid.models/-socket/set-sock-flag.html">Socket.setSockFlag</a> and <a href="../com.github.thibaultbee.srtdroid.models/-socket/get-sock-flag.html">Socket.getSockFlag</a>.</p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="-sock-status/index.html">SockStatus</a></p>
-</td>
-<td>
-<code><span class="keyword">enum</span> <span class="keyword">class </span><span class="identifier">SockStatus</span></code>
-<p>SRT socket status (from <a href="../com.github.thibaultbee.srtdroid.models/-socket/sock-state.html">Socket.sockState</a>).</p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="-transtype/index.html">Transtype</a></p>
-</td>
-<td>
-<code><span class="keyword">enum</span> <span class="keyword">class </span><span class="identifier">Transtype</span></code>
-<p>Used by <a href="-sock-opt/-t-r-a-n-s-t-y-p-e.html">SockOpt.TRANSTYPE</a> option.</p>
-</td>
-</tr>
-</tbody>
-</table>
-</BODY>
-</HTML>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>com.github.thibaultbee.srtdroid.enums</title>
+<link href="../../../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../";</script><script type="text/javascript" src="../../scripts/sourceset_dependencies.js" async="async"></script><link href="../../styles/style.css" rel="Stylesheet"><link href="../../styles/logo-styles.css" rel="Stylesheet"><link href="../../styles/jetbrains-mono.css" rel="Stylesheet"><link href="../../styles/main.css" rel="Stylesheet"><script type="text/javascript" src="../../scripts/clipboard.js" async="async"></script><script type="text/javascript" src="../../scripts/navigation-loader.js" async="async"></script><script type="text/javascript" src="../../scripts/platform-content-handler.js" async="async"></script><script type="text/javascript" src="../../scripts/main.js" async="async"></script>  </head>
+  <body>
+    <div id="container">
+      <div id="leftColumn"><a href="../../index.html">
+          <div id="logo"></div>
+        </a>
+        <div id="paneSearch"></div>
+        <div id="sideMenu"></div>
+      </div>
+      <div id="main">
+        <div id="leftToggler"><span class="icon-toggler"></span></div>
+<script type="text/javascript" src="../../scripts/main.js"></script>        <div class="main-content" id="content" pageIds="lib::com.github.thibaultbee.srtdroid.enums////PointingToDeclaration//1946847589">
+          <div class="navigation-wrapper" id="navigation-wrapper">
+            <div class="breadcrumbs"><a href="../../index.html">lib</a>/<a href="index.html">com.github.thibaultbee.srtdroid.enums</a></div>
+            <div class="pull-right d-flex">
+              <div id="searchBar"></div>
+            </div>
+          </div>
+          <div class="cover ">
+            <h1 class="cover"><span>Package com.</span><wbr></wbr><span>github.</span><wbr></wbr><span>thibaultbee.</span><wbr></wbr><span>srtdroid.</span><wbr></wbr><span>enums</span></h1>
+          </div>
+          <div class="tabbedcontent">
+            <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Types">Types</button></div>
+            <div class="tabs-section-body">
+              <h2 class="">Types</h2>
+              <div class="table" data-togglable="Types"><a data-name="-527583466%2FClasslikes%2F1946847589" anchor-label="Boundary" id="-527583466%2FClasslikes%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="-boundary/index.html">Boundary</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-527583466%2FClasslikes%2F1946847589"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace">enum <a href="-boundary/index.html">Boundary</a> : <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-enum/index.html">Enum</a>&lt;<a href="-boundary/index.html">Boundary</a>&gt; <span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="-527583466%2FClasslikes%2F1946847589" anchor-label="Boundary" id="-527583466%2FClasslikes%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a><div class="brief "><a data-name="-527583466%2FClasslikes%2F1946847589" anchor-label="Boundary" id="-527583466%2FClasslikes%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>To be use as <a href="../com.github.thibaultbee.srtdroid.models/-msg-ctrl/boundary.html">MsgCtrl.boundary</a></div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-1780481774%2FClasslikes%2F1946847589" anchor-label="EpollFlag" id="-1780481774%2FClasslikes%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="-epoll-flag/index.html">EpollFlag</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1780481774%2FClasslikes%2F1946847589"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace">enum <a href="-epoll-flag/index.html">EpollFlag</a> : <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-enum/index.html">Enum</a>&lt;<a href="-epoll-flag/index.html">EpollFlag</a>&gt; <span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="-1780481774%2FClasslikes%2F1946847589" anchor-label="EpollFlag" id="-1780481774%2FClasslikes%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a><div class="brief "><a data-name="-1780481774%2FClasslikes%2F1946847589" anchor-label="EpollFlag" id="-1780481774%2FClasslikes%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>Use this enumeration in <a href="../com.github.thibaultbee.srtdroid.models/-epoll/flags.html">Epoll.flags</a> and <a href="../com.github.thibaultbee.srtdroid.models/-epoll/set-flags.html">Epoll.setFlags</a>.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="1130561649%2FClasslikes%2F1946847589" anchor-label="EpollOpt" id="1130561649%2FClasslikes%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="-epoll-opt/index.html">EpollOpt</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1130561649%2FClasslikes%2F1946847589"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace">enum <a href="-epoll-opt/index.html">EpollOpt</a> : <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-enum/index.html">Enum</a>&lt;<a href="-epoll-opt/index.html">EpollOpt</a>&gt; <span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="1130561649%2FClasslikes%2F1946847589" anchor-label="EpollOpt" id="1130561649%2FClasslikes%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a><div class="brief "><a data-name="1130561649%2FClasslikes%2F1946847589" anchor-label="EpollOpt" id="1130561649%2FClasslikes%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>Description of <a href="../com.github.thibaultbee.srtdroid.models/-epoll/index.html">Epoll</a> event options.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="1106234144%2FClasslikes%2F1946847589" anchor-label="ErrorType" id="1106234144%2FClasslikes%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="-error-type/index.html">ErrorType</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1106234144%2FClasslikes%2F1946847589"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace">enum <a href="-error-type/index.html">ErrorType</a> : <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-enum/index.html">Enum</a>&lt;<a href="-error-type/index.html">ErrorType</a>&gt; <span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="1106234144%2FClasslikes%2F1946847589" anchor-label="ErrorType" id="1106234144%2FClasslikes%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a><div class="brief "><a data-name="1106234144%2FClasslikes%2F1946847589" anchor-label="ErrorType" id="1106234144%2FClasslikes%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>SRT error codes.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="402687219%2FClasslikes%2F1946847589" anchor-label="KMState" id="402687219%2FClasslikes%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="-k-m-state/index.html">KMState</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="402687219%2FClasslikes%2F1946847589"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace">enum <a href="-k-m-state/index.html">KMState</a> : <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-enum/index.html">Enum</a>&lt;<a href="-k-m-state/index.html">KMState</a>&gt; <span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="402687219%2FClasslikes%2F1946847589" anchor-label="KMState" id="402687219%2FClasslikes%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a><div class="brief "><a data-name="402687219%2FClasslikes%2F1946847589" anchor-label="KMState" id="402687219%2FClasslikes%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>The defined encryption state as performed by the Key Material Exchange, used by <a href="-sock-opt/-r-c-v-k-m-s-t-a-t-e/index.html">SockOpt.RCVKMSTATE</a>, <a href="-sock-opt/-s-n-d-k-m-s-t-a-t-e/index.html">SockOpt.SNDKMSTATE</a> and <a href="-sock-opt/-k-m-s-t-a-t-e/index.html">SockOpt.KMSTATE</a> optionsSee Also:<a href="https://github.com/Haivision/srt/blob/master/docs/API/API-socket-options.md#srt_km_state">srt_km_state</a></div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-1472262224%2FClasslikes%2F1946847589" anchor-label="RejectReasonCode" id="-1472262224%2FClasslikes%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="-reject-reason-code/index.html">RejectReasonCode</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1472262224%2FClasslikes%2F1946847589"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace">enum <a href="-reject-reason-code/index.html">RejectReasonCode</a> : <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-enum/index.html">Enum</a>&lt;<a href="-reject-reason-code/index.html">RejectReasonCode</a>&gt; <span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="-1472262224%2FClasslikes%2F1946847589" anchor-label="RejectReasonCode" id="-1472262224%2FClasslikes%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a><div class="brief "><a data-name="-1472262224%2FClasslikes%2F1946847589" anchor-label="RejectReasonCode" id="-1472262224%2FClasslikes%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>Internal reject reason for <a href="../com.github.thibaultbee.srtdroid.models.rejectreason/-internal-reject-reason/index.html">InternalRejectReason</a>.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-13769453%2FClasslikes%2F1946847589" anchor-label="SockOpt" id="-13769453%2FClasslikes%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="-sock-opt/index.html">SockOpt</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-13769453%2FClasslikes%2F1946847589"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace">enum <a href="-sock-opt/index.html">SockOpt</a> : <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-enum/index.html">Enum</a>&lt;<a href="-sock-opt/index.html">SockOpt</a>&gt; <span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="-13769453%2FClasslikes%2F1946847589" anchor-label="SockOpt" id="-13769453%2FClasslikes%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a><div class="brief "><a data-name="-13769453%2FClasslikes%2F1946847589" anchor-label="SockOpt" id="-13769453%2FClasslikes%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>Parameter or returned value of <a href="../com.github.thibaultbee.srtdroid.models/-socket/set-sock-flag.html">Socket.setSockFlag</a> and <a href="../com.github.thibaultbee.srtdroid.models/-socket/get-sock-flag.html">Socket.getSockFlag</a>.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="1703343146%2FClasslikes%2F1946847589" anchor-label="SockStatus" id="1703343146%2FClasslikes%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="-sock-status/index.html">SockStatus</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1703343146%2FClasslikes%2F1946847589"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace">enum <a href="-sock-status/index.html">SockStatus</a> : <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-enum/index.html">Enum</a>&lt;<a href="-sock-status/index.html">SockStatus</a>&gt; <span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="1703343146%2FClasslikes%2F1946847589" anchor-label="SockStatus" id="1703343146%2FClasslikes%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a><div class="brief "><a data-name="1703343146%2FClasslikes%2F1946847589" anchor-label="SockStatus" id="1703343146%2FClasslikes%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>SRT socket status (from <a href="../com.github.thibaultbee.srtdroid.models/-socket/sock-state.html">Socket.sockState</a>).</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-514294112%2FClasslikes%2F1946847589" anchor-label="Transtype" id="-514294112%2FClasslikes%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="-transtype/index.html">Transtype</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-514294112%2FClasslikes%2F1946847589"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace">enum <a href="-transtype/index.html">Transtype</a> : <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-enum/index.html">Enum</a>&lt;<a href="-transtype/index.html">Transtype</a>&gt; <span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="-514294112%2FClasslikes%2F1946847589" anchor-label="Transtype" id="-514294112%2FClasslikes%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a><div class="brief "><a data-name="-514294112%2FClasslikes%2F1946847589" anchor-label="Transtype" id="-514294112%2FClasslikes%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>Used by <a href="-sock-opt/-t-r-a-n-s-t-y-p-e/index.html">SockOpt.TRANSTYPE</a> option.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="go-to-top-icon"><a href="#content"></a></span><span>© 2021 Copyright</span><span class="pull-right"><span>Generated by </span><a href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span></div>
+      </div>
+    </div>
+  </body>
+</html>
+

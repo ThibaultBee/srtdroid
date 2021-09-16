@@ -5,7 +5,7 @@ buildscript {
      * Warning: New kotlin version (1.4.30) takes too long too build and it causes jitpack build timeout...
      */
     ext.kotlin_version = '1.4.20'
-    ext.dokka_version = '0.9.18'
+    ext.dokka_version = '1.5.0'
     repositories {
         google()
         jcenter()
@@ -14,7 +14,7 @@ buildscript {
         classpath 'com.android.tools.build:gradle:4.1.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
-        classpath "org.jetbrains.dokka:dokka-android-gradle-plugin:$dokka_version"
+        classpath "org.jetbrains.dokka:dokka-gradle-plugin:$dokka_version"
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }

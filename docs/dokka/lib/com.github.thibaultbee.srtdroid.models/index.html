@@ -1,86 +1,158 @@
-<HTML>
-<HEAD>
-<meta charset="UTF-8">
-<title>com.github.thibaultbee.srtdroid.models - lib</title>
-<link rel="stylesheet" href="../../style.css">
-</HEAD>
-<BODY>
-<a href="../index.html">lib</a>&nbsp;/&nbsp;<a href="./index.html">com.github.thibaultbee.srtdroid.models</a><br/>
-<br/>
-<h2>Package com.github.thibaultbee.srtdroid.models</h2>
-<h3>Types</h3>
-<table>
-<tbody>
-<tr>
-<td>
-<p><a href="-epoll/index.html">Epoll</a></p>
-</td>
-<td>
-<code><span class="keyword">class </span><span class="identifier">Epoll</span></code>
-<p>This class is currently the only method for using multiple sockets in one thread with having the
-blocking operation moved to epoll waiting so that it can block on multiple sockets at once.
-Once it has been called, you must release Srt context with <a href="../com.github.thibaultbee.srtdroid/-srt/clean-up.html">Srt.cleanUp</a> when application leaves.</p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="-epoll-event/index.html">EpollEvent</a></p>
-</td>
-<td>
-<code><span class="keyword">class </span><span class="identifier">EpollEvent</span></code>
-<p>This class represents SRT socket and their events.</p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="-error/index.html">Error</a></p>
-</td>
-<td>
-<code><span class="keyword">object </span><span class="identifier">Error</span></code>
-<p>This class contains API to manage errors.
-Once it has been called, you must release Srt context with <a href="../com.github.thibaultbee.srtdroid/-srt/clean-up.html">Srt.cleanUp</a> when application leaves.</p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="-msg-ctrl/index.html">MsgCtrl</a></p>
-</td>
-<td>
-<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">MsgCtrl</span></code>
-<p>This class represents extra parameters for <a href="-socket/send.html">Socket.send</a> and <a href="-socket/recv.html">Socket.recv</a></p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="-socket/index.html">Socket</a></p>
-</td>
-<td>
-<code><span class="keyword">class </span><span class="identifier">Socket</span>&nbsp;<span class="symbol">:</span>&nbsp;<a href="https://developer.android.com/reference/java/io/Closeable.html"><span class="identifier">Closeable</span></a></code>
-<p>This class represents a SRT socket.
-To avoid creating an unresponsive UI, don't perform SRT network operations on the main thread.
-Once it has been called, you must release Srt context with <a href="../com.github.thibaultbee.srtdroid/-srt/clean-up.html">Srt.cleanUp</a> when application leaves.</p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="-stats/index.html">Stats</a></p>
-</td>
-<td>
-<code><span class="keyword">data</span> <span class="keyword">class </span><span class="identifier">Stats</span></code>
-<p>This class represents SRT statistics</p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="-time/index.html">Time</a></p>
-</td>
-<td>
-<code><span class="keyword">object </span><span class="identifier">Time</span></code>
-<p>This class contains time utils.
-Once it has been called, you must release Srt context with <a href="../com.github.thibaultbee.srtdroid/-srt/clean-up.html">Srt.cleanUp</a> when application leaves.</p>
-</td>
-</tr>
-</tbody>
-</table>
-</BODY>
-</HTML>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>com.github.thibaultbee.srtdroid.models</title>
+<link href="../../../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../";</script><script type="text/javascript" src="../../scripts/sourceset_dependencies.js" async="async"></script><link href="../../styles/style.css" rel="Stylesheet"><link href="../../styles/logo-styles.css" rel="Stylesheet"><link href="../../styles/jetbrains-mono.css" rel="Stylesheet"><link href="../../styles/main.css" rel="Stylesheet"><script type="text/javascript" src="../../scripts/clipboard.js" async="async"></script><script type="text/javascript" src="../../scripts/navigation-loader.js" async="async"></script><script type="text/javascript" src="../../scripts/platform-content-handler.js" async="async"></script><script type="text/javascript" src="../../scripts/main.js" async="async"></script>  </head>
+  <body>
+    <div id="container">
+      <div id="leftColumn"><a href="../../index.html">
+          <div id="logo"></div>
+        </a>
+        <div id="paneSearch"></div>
+        <div id="sideMenu"></div>
+      </div>
+      <div id="main">
+        <div id="leftToggler"><span class="icon-toggler"></span></div>
+<script type="text/javascript" src="../../scripts/main.js"></script>        <div class="main-content" id="content" pageIds="lib::com.github.thibaultbee.srtdroid.models////PointingToDeclaration//1946847589">
+          <div class="navigation-wrapper" id="navigation-wrapper">
+            <div class="breadcrumbs"><a href="../../index.html">lib</a>/<a href="index.html">com.github.thibaultbee.srtdroid.models</a></div>
+            <div class="pull-right d-flex">
+              <div id="searchBar"></div>
+            </div>
+          </div>
+          <div class="cover ">
+            <h1 class="cover"><span>Package com.</span><wbr></wbr><span>github.</span><wbr></wbr><span>thibaultbee.</span><wbr></wbr><span>srtdroid.</span><wbr></wbr><span>models</span></h1>
+          </div>
+          <div class="tabbedcontent">
+            <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Types">Types</button></div>
+            <div class="tabs-section-body">
+              <h2 class="">Types</h2>
+              <div class="table" data-togglable="Types"><a data-name="613894558%2FClasslikes%2F1946847589" anchor-label="Epoll" id="613894558%2FClasslikes%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="-epoll/index.html">Epoll</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="613894558%2FClasslikes%2F1946847589"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace">class <a href="-epoll/index.html">Epoll</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="613894558%2FClasslikes%2F1946847589" anchor-label="Epoll" id="613894558%2FClasslikes%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a><div class="brief "><a data-name="613894558%2FClasslikes%2F1946847589" anchor-label="Epoll" id="613894558%2FClasslikes%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>This class is currently the only method for using multiple sockets in one thread with having the blocking operation moved to epoll waiting so that it can block on multiple sockets at once.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="562157994%2FClasslikes%2F1946847589" anchor-label="EpollEvent" id="562157994%2FClasslikes%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="-epoll-event/index.html">EpollEvent</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="562157994%2FClasslikes%2F1946847589"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace">class <a href="-epoll-event/index.html">EpollEvent</a>(socket: <a href="-socket/index.html">Socket</a>, events: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a>&lt;<a href="../com.github.thibaultbee.srtdroid.enums/-epoll-opt/index.html">EpollOpt</a>&gt;)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="562157994%2FClasslikes%2F1946847589" anchor-label="EpollEvent" id="562157994%2FClasslikes%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a><div class="brief "><a data-name="562157994%2FClasslikes%2F1946847589" anchor-label="EpollEvent" id="562157994%2FClasslikes%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>This class represents SRT socket and their events.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="11881914%2FClasslikes%2F1946847589" anchor-label="Error" id="11881914%2FClasslikes%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="-error/index.html">Error</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="11881914%2FClasslikes%2F1946847589"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace">object <a href="-error/index.html">Error</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="11881914%2FClasslikes%2F1946847589" anchor-label="Error" id="11881914%2FClasslikes%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a><div class="brief "><a data-name="11881914%2FClasslikes%2F1946847589" anchor-label="Error" id="11881914%2FClasslikes%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>This class contains API to manage errors.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-561756554%2FClasslikes%2F1946847589" anchor-label="MsgCtrl" id="-561756554%2FClasslikes%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="-msg-ctrl/index.html">MsgCtrl</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-561756554%2FClasslikes%2F1946847589"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace">data class <a href="-msg-ctrl/index.html">MsgCtrl</a>(flags: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, ttl: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, inOrder: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a>, boundary: <a href="../com.github.thibaultbee.srtdroid.enums/-boundary/index.html">Boundary</a>, srcTime: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a>, pktSeq: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, no: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="-561756554%2FClasslikes%2F1946847589" anchor-label="MsgCtrl" id="-561756554%2FClasslikes%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a><div class="brief "><a data-name="-561756554%2FClasslikes%2F1946847589" anchor-label="MsgCtrl" id="-561756554%2FClasslikes%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>This class represents extra parameters for <a href="-socket/send.html">Socket.send</a> and <a href="-socket/recv.html">Socket.recv</a>See Also:<a href="https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_msgctrl">srt_msgctrl</a></div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="496799661%2FClasslikes%2F1946847589" anchor-label="Socket" id="496799661%2FClasslikes%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="-socket/index.html">Socket</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="496799661%2FClasslikes%2F1946847589"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace">class <a href="-socket/index.html">Socket</a> : <a href="https://developer.android.com/reference/kotlin/java/io/Closeable.html">Closeable</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="496799661%2FClasslikes%2F1946847589" anchor-label="Socket" id="496799661%2FClasslikes%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a><div class="brief "><a data-name="496799661%2FClasslikes%2F1946847589" anchor-label="Socket" id="496799661%2FClasslikes%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>This class represents a SRT socket.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="2136187651%2FClasslikes%2F1946847589" anchor-label="Stats" id="2136187651%2FClasslikes%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="-stats/index.html">Stats</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2136187651%2FClasslikes%2F1946847589"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace">data class <a href="-stats/index.html">Stats</a>(msTimeStamp: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a>, pktSentTotal: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a>, pktRecvTotal: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a>, pktSndLossTotal: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, pktRcvLossTotal: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, pktRetransTotal: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, pktSentACKTotal: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, pktRecvACKTotal: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, pktSentNAKTotal: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, pktRecvNAKTotal: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, usSndDurationTotal: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a>, pktSndDropTotal: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, pktRcvDropTotal: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, pktRcvUndecryptTotal: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, byteSentTotal: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a>, byteRecvTotal: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a>, byteRcvLossTotal: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a>, byteRetransTotal: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a>, byteSndDropTotal: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a>, byteRcvDropTotal: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a>, byteRcvUndecryptTotal: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a>, pktSent: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a>, pktRecv: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a>, pktSndLoss: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, pktRcvLoss: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, pktRetrans: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, pktRcvRetrans: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, pktSentACK: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, pktRecvACK: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, pktSentNAK: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, pktRecvNAK: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, mbpsSendRate: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a>, mbpsRecvRate: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a>, usSndDuration: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a>, pktReorderDistance: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, pktRcvAvgBelatedTime: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a>, pktRcvBelated: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a>, pktSndDrop: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, pktRcvDrop: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, pktRcvUndecrypt: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, byteSent: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a>, byteRecv: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a>, byteRcvLoss: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a>, byteRetrans: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a>, byteSndDrop: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a>, byteRcvDrop: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a>, byteRcvUndecrypt: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a>, usPktSndPeriod: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a>, pktFlowWindow: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, pktCongestionWindow: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, pktFlightSize: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, msRTT: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a>, mbpsBandwidth: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a>, byteAvailSndBuf: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, byteAvailRcvBuf: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, mbpsMaxBW: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a>, byteMSS: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, pktSndBuf: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, byteSndBuf: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, msSndBuf: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, msSndTsbPdDelay: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, pktRcvBuf: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, byteRcvBuf: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, msRcvBuf: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, msRcvTsbPdDelay: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, pktSndFilterExtraTotal: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, pktRcvFilterExtraTotal: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, pktRcvFilterSupplyTotal: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, pktRcvFilterLossTotal: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, pktSndFilterExtra: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, pktRcvFilterExtra: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, pktRcvFilterSupply: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, pktRcvFilterLoss: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, pktReorderTolerance: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a>, pktSentUniqueTotal: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a>, pktRecvUniqueTotal: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a>, byteSentUniqueTotal: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a>, byteRecvUniqueTotal: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a>, pktSentUnique: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a>, pktRecvUnique: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a>, byteSentUnique: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a>, byteRecvUnique: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a>)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="2136187651%2FClasslikes%2F1946847589" anchor-label="Stats" id="2136187651%2FClasslikes%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a><div class="brief "><a data-name="2136187651%2FClasslikes%2F1946847589" anchor-label="Stats" id="2136187651%2FClasslikes%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>This class represents SRT statisticsSee Also:<a href="https://github.com/Haivision/srt/blob/master/docs/statistics.md">statistics.md</a></div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-45216429%2FClasslikes%2F1946847589" anchor-label="Time" id="-45216429%2FClasslikes%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="-time/index.html">Time</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-45216429%2FClasslikes%2F1946847589"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace">object <a href="-time/index.html">Time</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="-45216429%2FClasslikes%2F1946847589" anchor-label="Time" id="-45216429%2FClasslikes%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a><div class="brief "><a data-name="-45216429%2FClasslikes%2F1946847589" anchor-label="Time" id="-45216429%2FClasslikes%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>This class contains time utils.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="go-to-top-icon"><a href="#content"></a></span><span>© 2021 Copyright</span><span class="pull-right"><span>Generated by </span><a href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span></div>
+      </div>
+    </div>
+  </body>
+</html>
+

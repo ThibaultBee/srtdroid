@@ -1,133 +1,238 @@
-<HTML>
-<HEAD>
-<meta charset="UTF-8">
-<title>Epoll - lib</title>
-<link rel="stylesheet" href="../../../style.css">
-</HEAD>
-<BODY>
-<a href="../../index.html">lib</a>&nbsp;/&nbsp;<a href="../index.html">com.github.thibaultbee.srtdroid.models</a>&nbsp;/&nbsp;<a href="./index.html">Epoll</a><br/>
-<br/>
-<h1>Epoll</h1>
-<code><span class="keyword">class </span><span class="identifier">Epoll</span></code>
-<p>This class is currently the only method for using multiple sockets in one thread with having the
-blocking operation moved to epoll waiting so that it can block on multiple sockets at once.
-Once it has been called, you must release Srt context with <a href="../../com.github.thibaultbee.srtdroid/-srt/clean-up.html">Srt.cleanUp</a> when application leaves.</p>
-<p><strong>See Also:</strong> <a href="https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#asynchronous-operations-epoll-1">Asynchronous operations (epoll)</a></p>
-<h3>Constructors</h3>
-<table>
-<tbody>
-<tr>
-<td>
-<p><a href="-init-.html">&lt;init&gt;</a></p>
-</td>
-<td>
-<code><span class="identifier">Epoll</span><span class="symbol">(</span><span class="symbol">)</span></code>
-<p>This class is currently the only method for using multiple sockets in one thread with having the
-blocking operation moved to epoll waiting so that it can block on multiple sockets at once.
-Once it has been called, you must release Srt context with <a href="../../com.github.thibaultbee.srtdroid/-srt/clean-up.html">Srt.cleanUp</a> when application leaves.</p>
-</td>
-</tr>
-</tbody>
-</table>
-<h3>Properties</h3>
-<table>
-<tbody>
-<tr>
-<td>
-<p><a href="flags.html">flags</a></p>
-</td>
-<td>
-<code><span class="keyword">var </span><span class="identifier">flags</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../com.github.thibaultbee.srtdroid.enums/-epoll-flag/index.html"><span class="identifier">EpollFlag</span></a><span class="symbol">&gt;</span></code>
-<p>Set or retrieves flags that change the default behavior of the epoll functions.</p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="is-valid.html">isValid</a></p>
-</td>
-<td>
-<code><span class="keyword">val </span><span class="identifier">isValid</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html"><span class="identifier">Boolean</span></a></code>
-<p>Tests if the <a href="./index.html">Epoll</a> is a valid one.</p>
-</td>
-</tr>
-</tbody>
-</table>
-<h3>Functions</h3>
-<table>
-<tbody>
-<tr>
-<td>
-<p><a href="add-u-sock.html">addUSock</a></p>
-</td>
-<td>
-<code><span class="keyword">fun </span><span class="identifier">addUSock</span><span class="symbol">(</span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Epoll$addUSock(com.github.thibaultbee.srtdroid.models.Socket, kotlin.collections.List((com.github.thibaultbee.srtdroid.enums.EpollOpt)))/socket">socket</span><span class="symbol">:</span>&nbsp;<a href="../-socket/index.html"><span class="identifier">Socket</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Epoll$addUSock(com.github.thibaultbee.srtdroid.models.Socket, kotlin.collections.List((com.github.thibaultbee.srtdroid.enums.EpollOpt)))/events">events</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../com.github.thibaultbee.srtdroid.enums/-epoll-opt/index.html"><span class="identifier">EpollOpt</span></a><span class="symbol">&gt;</span><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
-<p>Adds a socket to a epoll container.</p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="clear-u-sock.html">clearUSock</a></p>
-</td>
-<td>
-<code><span class="keyword">fun </span><span class="identifier">clearUSock</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
-<p>Removes all SRT socket subscriptions from the epoll container.</p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="release.html">release</a></p>
-</td>
-<td>
-<code><span class="keyword">fun </span><span class="identifier">release</span><span class="symbol">(</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
-<p>Deletes the epoll container.</p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="remove-u-sock.html">removeUSock</a></p>
-</td>
-<td>
-<code><span class="keyword">fun </span><span class="identifier">removeUSock</span><span class="symbol">(</span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Epoll$removeUSock(com.github.thibaultbee.srtdroid.models.Socket)/socket">socket</span><span class="symbol">:</span>&nbsp;<a href="../-socket/index.html"><span class="identifier">Socket</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
-<p>Removes a specified socket from an epoll container.</p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="set-flags.html">setFlags</a></p>
-</td>
-<td>
-<code><span class="keyword">fun </span><span class="identifier">setFlags</span><span class="symbol">(</span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Epoll$setFlags(kotlin.collections.List((com.github.thibaultbee.srtdroid.enums.EpollFlag)))/events">events</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../com.github.thibaultbee.srtdroid.enums/-epoll-flag/index.html"><span class="identifier">EpollFlag</span></a><span class="symbol">&gt;</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../com.github.thibaultbee.srtdroid.enums/-epoll-flag/index.html"><span class="identifier">EpollFlag</span></a><span class="symbol">&gt;</span></code>
-<p>Set flags that change the default behavior of the epoll functions. Same as <a href="flags.html">flags</a> but returns list of <a href="../../com.github.thibaultbee.srtdroid.enums/-epoll-flag/index.html">EpollFlag</a>.</p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="update-u-sock.html">updateUSock</a></p>
-</td>
-<td>
-<code><span class="keyword">fun </span><span class="identifier">updateUSock</span><span class="symbol">(</span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Epoll$updateUSock(com.github.thibaultbee.srtdroid.models.Socket, kotlin.collections.List((com.github.thibaultbee.srtdroid.enums.EpollOpt)))/socket">socket</span><span class="symbol">:</span>&nbsp;<a href="../-socket/index.html"><span class="identifier">Socket</span></a><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Epoll$updateUSock(com.github.thibaultbee.srtdroid.models.Socket, kotlin.collections.List((com.github.thibaultbee.srtdroid.enums.EpollOpt)))/events">events</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../../com.github.thibaultbee.srtdroid.enums/-epoll-opt/index.html"><span class="identifier">EpollOpt</span></a><span class="symbol">&gt;</span><span class="symbol">?</span><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
-<p>Updates a socket to a epoll container.</p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="u-wait.html">uWait</a></p>
-</td>
-<td>
-<code><span class="keyword">fun </span><span class="identifier">uWait</span><span class="symbol">(</span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Epoll$uWait(kotlin.collections.List((com.github.thibaultbee.srtdroid.models.EpollEvent)), kotlin.Long)/fdsSet">fdsSet</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../-epoll-event/index.html"><span class="identifier">EpollEvent</span></a><span class="symbol">&gt;</span><span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Epoll$uWait(kotlin.collections.List((com.github.thibaultbee.srtdroid.models.EpollEvent)), kotlin.Long)/timeout">timeout</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
-<p>Blocks a call until any readiness state occurs in the epoll container.</p>
-</td>
-</tr>
-<tr>
-<td>
-<p><a href="wait.html">wait</a></p>
-</td>
-<td>
-<code><span class="keyword">fun </span><span class="identifier">wait</span><span class="symbol">(</span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Epoll$wait(kotlin.collections.List((com.github.thibaultbee.srtdroid.models.Socket)), kotlin.collections.List((com.github.thibaultbee.srtdroid.models.Socket)), kotlin.Long)/readFds">readFds</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../-socket/index.html"><span class="identifier">Socket</span></a><span class="symbol">&gt;</span>&nbsp;<span class="symbol">=</span>&nbsp;emptyList()<span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Epoll$wait(kotlin.collections.List((com.github.thibaultbee.srtdroid.models.Socket)), kotlin.collections.List((com.github.thibaultbee.srtdroid.models.Socket)), kotlin.Long)/writeFds">writeFds</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html"><span class="identifier">List</span></a><span class="symbol">&lt;</span><a href="../-socket/index.html"><span class="identifier">Socket</span></a><span class="symbol">&gt;</span>&nbsp;<span class="symbol">=</span>&nbsp;emptyList()<span class="symbol">, </span><span class="identifier" id="com.github.thibaultbee.srtdroid.models.Epoll$wait(kotlin.collections.List((com.github.thibaultbee.srtdroid.models.Socket)), kotlin.collections.List((com.github.thibaultbee.srtdroid.models.Socket)), kotlin.Long)/timeout">timeout</span><span class="symbol">:</span>&nbsp;<a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html"><span class="identifier">Long</span></a><span class="symbol">)</span><span class="symbol">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html"><span class="identifier">Unit</span></a></code>
-<p>Blocks the call until any readiness state occurs in the epoll container.</p>
-</td>
-</tr>
-</tbody>
-</table>
-</BODY>
-</HTML>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>Epoll</title>
+<link href="../../../../../../images/logo-icon.svg" rel="icon" type="image/svg"><script>var pathToRoot = "../../../";</script><script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async="async"></script><link href="../../../styles/style.css" rel="Stylesheet"><link href="../../../styles/logo-styles.css" rel="Stylesheet"><link href="../../../styles/jetbrains-mono.css" rel="Stylesheet"><link href="../../../styles/main.css" rel="Stylesheet"><script type="text/javascript" src="../../../scripts/clipboard.js" async="async"></script><script type="text/javascript" src="../../../scripts/navigation-loader.js" async="async"></script><script type="text/javascript" src="../../../scripts/platform-content-handler.js" async="async"></script><script type="text/javascript" src="../../../scripts/main.js" async="async"></script>  </head>
+  <body>
+    <div id="container">
+      <div id="leftColumn"><a href="../../../index.html">
+          <div id="logo"></div>
+        </a>
+        <div id="paneSearch"></div>
+        <div id="sideMenu"></div>
+      </div>
+      <div id="main">
+        <div id="leftToggler"><span class="icon-toggler"></span></div>
+<script type="text/javascript" src="../../../scripts/main.js"></script>        <div class="main-content" id="content" pageIds="lib::com.github.thibaultbee.srtdroid.models/Epoll///PointingToDeclaration//1946847589">
+          <div class="navigation-wrapper" id="navigation-wrapper">
+            <div class="breadcrumbs"><a href="../../../index.html">lib</a>/<a href="../index.html">com.github.thibaultbee.srtdroid.models</a>/<a href="index.html">Epoll</a></div>
+            <div class="pull-right d-flex">
+              <div id="searchBar"></div>
+            </div>
+          </div>
+          <div class="cover ">
+            <h1 class="cover"><span>Epoll</span></h1>
+            <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace">class <a href="index.html">Epoll</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><p class="paragraph">This class is currently the only method for using multiple sockets in one thread with having the blocking operation moved to epoll waiting so that it can block on multiple sockets at once. Once it has been called, you must release Srt context with <a href="../../com.github.thibaultbee.srtdroid/-srt/clean-up.html">Srt.cleanUp</a> when application leaves.</p><p class="paragraph">See Also:<a href="https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#asynchronous-operations-epoll-1">Asynchronous operations (epoll)</a></p></div></div>
+          </div>
+          <div class="tabbedcontent">
+            <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="Types">Types</button><button class="section-tab" data-togglable="Constructors">Constructors</button><button class="section-tab" data-togglable="Functions">Functions</button><button class="section-tab" data-togglable="Properties">Properties</button></div>
+            <div class="tabs-section-body">
+              <h2 class="tabbedcontent">Constructors</h2>
+              <div class="table" data-togglable="Constructors"><a data-name="747168853%2FConstructors%2F1946847589" anchor-label="Epoll" id="747168853%2FConstructors%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+                  <div class="main-subrow keyValue TabbedContent">
+                    <div class=""><span class="inline-flex"><a href="-epoll.html">Epoll</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="747168853%2FConstructors%2F1946847589"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace">fun <a href="-epoll.html">Epoll</a>()<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <h2 class="">Types</h2>
+              <div class="table" data-togglable="Types"><a data-name="-757532512%2FClasslikes%2F1946847589" anchor-label="Companion" id="-757532512%2FClasslikes%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="-companion/index.html">Companion</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-757532512%2FClasslikes%2F1946847589"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace">object <a href="-companion/index.html">Companion</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+</div>
+</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <h2 class="">Functions</h2>
+              <div class="table" data-togglable="Functions"><a data-name="1151476113%2FFunctions%2F1946847589" anchor-label="addUSock" id="1151476113%2FFunctions%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="add-u-sock.html">addUSock</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1151476113%2FFunctions%2F1946847589"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace">fun <a href="add-u-sock.html">addUSock</a>(socket: <a href="../-socket/index.html">Socket</a>, events: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a>&lt;<a href="../../com.github.thibaultbee.srtdroid.enums/-epoll-opt/index.html">EpollOpt</a>&gt;?)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="1151476113%2FFunctions%2F1946847589" anchor-label="addUSock" id="1151476113%2FFunctions%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a><div class="brief "><a data-name="1151476113%2FFunctions%2F1946847589" anchor-label="addUSock" id="1151476113%2FFunctions%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>Adds a socket to a epoll container.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-1573355115%2FFunctions%2F1946847589" anchor-label="clearUSock" id="-1573355115%2FFunctions%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="clear-u-sock.html">clearUSock</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1573355115%2FFunctions%2F1946847589"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace">fun <a href="clear-u-sock.html">clearUSock</a>()<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="-1573355115%2FFunctions%2F1946847589" anchor-label="clearUSock" id="-1573355115%2FFunctions%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a><div class="brief "><a data-name="-1573355115%2FFunctions%2F1946847589" anchor-label="clearUSock" id="-1573355115%2FFunctions%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>Removes all SRT socket subscriptions from the epoll container.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="1303215154%2FFunctions%2F1946847589" anchor-label="release" id="1303215154%2FFunctions%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="release.html">release</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1303215154%2FFunctions%2F1946847589"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace">fun <a href="release.html">release</a>()<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="1303215154%2FFunctions%2F1946847589" anchor-label="release" id="1303215154%2FFunctions%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a><div class="brief "><a data-name="1303215154%2FFunctions%2F1946847589" anchor-label="release" id="1303215154%2FFunctions%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>Deletes the epoll container.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="948452763%2FFunctions%2F1946847589" anchor-label="removeUSock" id="948452763%2FFunctions%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="remove-u-sock.html">removeUSock</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="948452763%2FFunctions%2F1946847589"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace">fun <a href="remove-u-sock.html">removeUSock</a>(socket: <a href="../-socket/index.html">Socket</a>)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="948452763%2FFunctions%2F1946847589" anchor-label="removeUSock" id="948452763%2FFunctions%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a><div class="brief "><a data-name="948452763%2FFunctions%2F1946847589" anchor-label="removeUSock" id="948452763%2FFunctions%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>Removes a specified socket from an epoll container.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-954311704%2FFunctions%2F1946847589" anchor-label="setFlags" id="-954311704%2FFunctions%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="set-flags.html">setFlags</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-954311704%2FFunctions%2F1946847589"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace">fun <a href="set-flags.html">setFlags</a>(events: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a>&lt;<a href="../../com.github.thibaultbee.srtdroid.enums/-epoll-flag/index.html">EpollFlag</a>&gt;): <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a>&lt;<a href="../../com.github.thibaultbee.srtdroid.enums/-epoll-flag/index.html">EpollFlag</a>&gt;<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="-954311704%2FFunctions%2F1946847589" anchor-label="setFlags" id="-954311704%2FFunctions%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a><div class="brief "><a data-name="-954311704%2FFunctions%2F1946847589" anchor-label="setFlags" id="-954311704%2FFunctions%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>Set flags that change the default behavior of the epoll functions.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="-673220751%2FFunctions%2F1946847589" anchor-label="updateUSock" id="-673220751%2FFunctions%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="update-u-sock.html">updateUSock</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-673220751%2FFunctions%2F1946847589"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace">fun <a href="update-u-sock.html">updateUSock</a>(socket: <a href="../-socket/index.html">Socket</a>, events: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a>&lt;<a href="../../com.github.thibaultbee.srtdroid.enums/-epoll-opt/index.html">EpollOpt</a>&gt;?)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="-673220751%2FFunctions%2F1946847589" anchor-label="updateUSock" id="-673220751%2FFunctions%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a><div class="brief "><a data-name="-673220751%2FFunctions%2F1946847589" anchor-label="updateUSock" id="-673220751%2FFunctions%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>Updates a socket to a epoll container.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="1229796827%2FFunctions%2F1946847589" anchor-label="uWait" id="1229796827%2FFunctions%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="u-wait.html">uWait</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1229796827%2FFunctions%2F1946847589"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace">fun <a href="u-wait.html">uWait</a>(fdsSet: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a>&lt;<a href="../-epoll-event/index.html">EpollEvent</a>&gt;, timeout: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a>)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="1229796827%2FFunctions%2F1946847589" anchor-label="uWait" id="1229796827%2FFunctions%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a><div class="brief "><a data-name="1229796827%2FFunctions%2F1946847589" anchor-label="uWait" id="1229796827%2FFunctions%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>Blocks a call until any readiness state occurs in the epoll container.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="986669037%2FFunctions%2F1946847589" anchor-label="wait" id="986669037%2FFunctions%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="wait.html">wait</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="986669037%2FFunctions%2F1946847589"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title"><div class="divergent-group" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release"><div class="with-platform-tags"><span class="pull-right"></span></div>
+
+  <div>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-depenent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><div class="symbol monospace">fun <a href="wait.html">wait</a>(readFds: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a>&lt;<a href="../-socket/index.html">Socket</a>&gt; = emptyList(), writeFds: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a>&lt;<a href="../-socket/index.html">Socket</a>&gt; = emptyList(), timeout: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a>)<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+  </div>
+<a data-name="986669037%2FFunctions%2F1946847589" anchor-label="wait" id="986669037%2FFunctions%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a><div class="brief "><a data-name="986669037%2FFunctions%2F1946847589" anchor-label="wait" id="986669037%2FFunctions%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>Blocks the call until any readiness state occurs in the epoll container.</div></div>
+</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <h2 class="">Properties</h2>
+              <div class="table" data-togglable="Properties"><a data-name="1618541746%2FProperties%2F1946847589" anchor-label="flags" id="1618541746%2FProperties%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="flags.html">flags</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1618541746%2FProperties%2F1946847589"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><a data-name="1618541746%2FProperties%2F1946847589" anchor-label="flags" id="1618541746%2FProperties%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a><div class="symbol monospace">var <a href="flags.html">flags</a>: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.collections/-list/index.html">List</a>&lt;<a href="../../com.github.thibaultbee.srtdroid.enums/-epoll-flag/index.html">EpollFlag</a>&gt;<span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="1618541746%2FProperties%2F1946847589" anchor-label="flags" id="1618541746%2FProperties%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>Set or retrieves flags that change the default behavior of the epoll functions.</div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+<a data-name="244790695%2FProperties%2F1946847589" anchor-label="isValid" id="244790695%2FProperties%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>
+                <div class="table-row" data-filterable-current=":lib:dokkaHtml/release" data-filterable-set=":lib:dokkaHtml/release">
+                  <div class="main-subrow keyValue ">
+                    <div class=""><span class="inline-flex"><a href="is-valid.html">isValid</a><span class="anchor-wrapper"><span class="anchor-icon" pointing-to="244790695%2FProperties%2F1946847589"></span>
+                          <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                        </span></span></div>
+                    <div>
+                      <div class="title">
+                        <div class="platform-hinted " data-platform-hinted="data-platform-hinted" data-togglable="Properties"><div class="content sourceset-depenent-content" data-active="" data-togglable=":lib:dokkaHtml/release"><a data-name="244790695%2FProperties%2F1946847589" anchor-label="isValid" id="244790695%2FProperties%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a><div class="symbol monospace">val <a href="is-valid.html">isValid</a>: <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div><div class="brief "><a data-name="244790695%2FProperties%2F1946847589" anchor-label="isValid" id="244790695%2FProperties%2F1946847589" data-filterable-set=":lib:dokkaHtml/release"></a>Tests if the <a href="index.html">Epoll</a> is a valid one.</div></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="go-to-top-icon"><a href="#content"></a></span><span>© 2021 Copyright</span><span class="pull-right"><span>Generated by </span><a href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span></div>
+      </div>
+    </div>
+  </body>
+</html>
+
