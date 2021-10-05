@@ -1,6 +1,16 @@
 Change Log
 ==========
 
+Version 1.2.0
+-------------
+
+## Dependencies:
+- srt 1.4.4
+- openssl 1.1.1k
+
+## Features:
+- New API guide
+
 Version 1.1.0
 -------------
 
