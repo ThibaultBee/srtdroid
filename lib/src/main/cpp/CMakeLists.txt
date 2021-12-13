@@ -62,6 +62,6 @@ add_dependencies(srt srt_project)
 set_target_properties(srt PROPERTIES IMPORTED_LOCATION ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/libsrt.so)
 
 # Target library
-add_library(jnisrt SHARED glue.cpp enums.cpp structs.cpp callbackcontext.cpp)
+add_library(srtdroid SHARED glue.cpp structs.cpp callbackcontext.cpp)
 include_directories(${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/include)
-target_link_libraries(jnisrt log android srt)
+target_link_libraries(srtdroid log android srt)

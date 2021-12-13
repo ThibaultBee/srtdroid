@@ -20,7 +20,7 @@ package com.github.thibaultbee.srtdroid
  */
 object Srt {
     init {
-        System.loadLibrary("jnisrt")
+        System.loadLibrary("srtdroid")
     }
 
     /**
