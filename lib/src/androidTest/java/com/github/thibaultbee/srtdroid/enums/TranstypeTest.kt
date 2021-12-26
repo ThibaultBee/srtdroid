@@ -13,21 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.github.thibaultbee.srtdroid.enums
 
-class CallbackContext {
-public:
-    JavaVM *vm;
-    jobject callingSocket;
-    jclass sockAddrClazz;
+import com.github.thibaultbee.srtdroid.models.Socket
+import org.junit.Test
 
+class TranstypeTest {
+    @Test
+    fun nativeConversion() {
+        val socket = Socket()
+        Transtype.values()
+            .filter { it != Transtype.INVALID }
+            .forEach {
+                socket.setSockFlag(
+                    SockOpt.TRANSTYPE,
+                    it
+                ) // Is read only. Can't test getSocketFlag
 
-    /**
-     * Initializes a CallbackContext. It purpores is to be pass as an opaque pointer for SRT callback.
-     *
-     * @param env JNI environment
-     * @return a CallbackContext structure
-     */
-    CallbackContext(JNIEnv *env, jobject callingSocket);
-
-    ~CallbackContext();
-};
+            }
+    }
+}

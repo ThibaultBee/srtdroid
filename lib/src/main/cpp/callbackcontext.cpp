@@ -15,9 +15,9 @@
  */
 
 #include <jni.h>
+#include "Enums/ErrorType.h"
 #include "structs.h"
 #include "callbackcontext.h"
-#include "enums.h"
 
 
 CallbackContext::CallbackContext(JNIEnv *env, jobject callingSocket) {
@@ -25,8 +25,6 @@ CallbackContext::CallbackContext(JNIEnv *env, jobject callingSocket) {
 
     this->sockAddrClazz = static_cast<jclass>(env->NewGlobalRef(
             env->FindClass(INETSOCKETADDRESS_CLASS)));
-    this->errorTypeClazz = static_cast<jclass>(env->NewGlobalRef(
-            env->FindClass(ERRORTYPE_CLASS)));
     this->callingSocket = env->NewGlobalRef(callingSocket);
 }
 
@@ -37,7 +35,6 @@ CallbackContext::~CallbackContext() {
     if (env != nullptr) {
         env->DeleteGlobalRef(this->callingSocket);
         env->DeleteGlobalRef(this->sockAddrClazz);
-        env->DeleteGlobalRef(this->errorTypeClazz);
     }
 }
 

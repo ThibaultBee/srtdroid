@@ -13,21 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+#pragma once
 
-class CallbackContext {
+#include <map>
+#include "srt/srt.h"
+#include "Enums.h"
+
+using namespace std;
+
+class EpollFlag {
 public:
-    JavaVM *vm;
-    jobject callingSocket;
-    jclass sockAddrClazz;
-
-
-    /**
-     * Initializes a CallbackContext. It purpores is to be pass as an opaque pointer for SRT callback.
-     *
-     * @param env JNI environment
-     * @return a CallbackContext structure
-     */
-    CallbackContext(JNIEnv *env, jobject callingSocket);
-
-    ~CallbackContext();
+    inline static const char *clazzIdentifier = EPOLLFLAG_CLASS;
+    inline static int fallbackError = -1;
+    inline static map<string, int> map = {{"CLEAR_ALL",          0},
+                                          {"ENABLE_EMPTY",       SRT_EPOLL_ENABLE_EMPTY},
+                                          {"ENABLE_OUTPUTCHECK", SRT_EPOLL_ENABLE_OUTPUTCHECK}
+    };
 };
+

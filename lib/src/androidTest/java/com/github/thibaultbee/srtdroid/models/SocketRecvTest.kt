@@ -8,6 +8,7 @@ import org.junit.After
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
+import java.lang.Thread.sleep
 import java.net.InetAddress
 import java.util.concurrent.Callable
 import java.util.concurrent.Executors
@@ -54,6 +55,7 @@ class SocketRecvTest {
         val arraySize = 1000
         val expectedArray = Utils.generateRandomArray(arraySize)
         val futureResult = server.enqueue(expectedArray)
+        sleep(1000)
         socket.connect(InetAddress.getLoopbackAddress(), server.port)
 
         val actualArray = socket.recv(arraySize).second

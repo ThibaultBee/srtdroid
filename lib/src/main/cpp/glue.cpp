@@ -20,28 +20,25 @@
 #include "srt/logging_api.h"
 
 #include "log.h"
-#include "enums.h"
 #include "structs.h"
 #include "callbackcontext.h"
+#include "Enums/EnumsSingleton.h"
+#include "Enums/ErrorType.h"
+#include "Enums/ErrorType.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-#define TAG "SRTJniGlue"
 
 int onListenCallback(JNIEnv *env, jobject ju, jclass sockAddrClazz, SRTSOCKET ns, int hs_version,
                      const struct sockaddr *peeraddr, const char *streamid) {
     jclass socketClazz = env->GetObjectClass(ju);
     if (!socketClazz) {
-        LOGE(TAG, "Can't get Socket class");
+        LOGE("Can't get Socket class");
         return 0;
     }
 
     jmethodID onListenID = env->GetMethodID(socketClazz, "onListen",
                                             "(L" SRTSOCKET_CLASS ";IL" INETSOCKETADDRESS_CLASS ";Ljava/lang/String;)I");
     if (!onListenID) {
-        LOGE(TAG, "Can't get onListen methodID");
+        LOGE("Can't get onListen methodID");
         env->DeleteLocalRef(socketClazz);
         return 0;
     }
@@ -64,7 +61,7 @@ int srt_listen_cb(void *opaque, SRTSOCKET ns, int hs_version,
     auto *cbCtx = static_cast<CallbackContext *>(opaque);
 
     if (cbCtx == nullptr) {
-        LOGE(TAG, "Failed to get CallbackContext");
+        LOGE("Failed to get CallbackContext");
         return 0;
     }
 
@@ -72,10 +69,10 @@ int srt_listen_cb(void *opaque, SRTSOCKET ns, int hs_version,
     JNIEnv *env = nullptr;
     if (vm->GetEnv((void **) &env, JNI_VERSION_1_6) == JNI_EDETACHED) {
         if (vm->AttachCurrentThread(&env, nullptr) != JNI_OK) {
-            LOGE(TAG, "Failed to attach current thread");
+            LOGE("Failed to attach current thread");
         }
     } else {
-        LOGE(TAG, "Failed to get env");
+        LOGE("Failed to get env");
     }
 
     int res = onListenCallback(env, cbCtx->callingSocket, cbCtx->sockAddrClazz, ns, hs_version,
@@ -94,14 +91,14 @@ void onConnectCallback(JNIEnv *env,
                        int token) {
     jclass socketClazz = env->GetObjectClass(cb->callingSocket);
     if (!socketClazz) {
-        LOGE(TAG, "Can't get Socket class");
+        LOGE("Can't get Socket class");
         return;
     }
 
     jmethodID onConnectID = env->GetMethodID(socketClazz, "onConnect",
                                              "(L" SRTSOCKET_CLASS ";L" ERRORTYPE_CLASS ";L" INETSOCKETADDRESS_CLASS ";I)V");
     if (!onConnectID) {
-        LOGE(TAG, "Can't get onConnect methodID");
+        LOGE("Can't get onConnect methodID");
         env->DeleteLocalRef(socketClazz);
         return;
     }
@@ -109,7 +106,8 @@ void onConnectCallback(JNIEnv *env,
     jobject nsSocket = srt_socket_n2j(env, socketClazz, ns);
     jobject peerAddress = sockaddr_inet_n2j(env, cb->sockAddrClazz,
                                             (sockaddr_storage *) peeraddr);
-    jobject error = srt_error_n2j_clz(env, cb->errorTypeClazz, errorcode);
+    jobject error = EnumsSingleton::getInstance(env)->errorType->getJavaValue(env,
+                                                                              (SRT_ERRNO) errorcode);
 
     env->CallVoidMethod(cb->callingSocket, onConnectID, nsSocket, error, peerAddress,
                         token);
@@ -123,7 +121,7 @@ void srt_connect_cb(void *opaque, SRTSOCKET ns, int errorcode, const struct sock
     auto *cbCtx = static_cast<CallbackContext *>(opaque);
 
     if (cbCtx == nullptr) {
-        LOGE(TAG, "Failed to get CallbackContext");
+        LOGE("Failed to get CallbackContext");
         return;
     }
 
@@ -131,10 +129,10 @@ void srt_connect_cb(void *opaque, SRTSOCKET ns, int errorcode, const struct sock
     JNIEnv *env = nullptr;
     if (vm->GetEnv((void **) &env, JNI_VERSION_1_6) == JNI_EDETACHED) {
         if (vm->AttachCurrentThread(&env, nullptr) != JNI_OK) {
-            LOGE(TAG, "Failed to attach current thread");
+            LOGE("Failed to attach current thread");
         }
     } else {
-        LOGE(TAG, "Failed to get env");
+        LOGE("Failed to get env");
     }
 
     onConnectCallback(env, cbCtx, ns, errorcode,
@@ -167,7 +165,7 @@ void srt_logger_cb(void *opaque, int level, const char *file, int line, const ch
             android_log_level = ANDROID_LOG_DEBUG;
             break;
         default:
-            LOGE(TAG, "Unknown log level %d", level);
+            LOGE("Unknown log level %d", level);
     }
 
     __android_log_print(android_log_level, "libsrt", "%s@%d:%s %s", file, line, area, message);
@@ -198,14 +196,14 @@ nativeIsValid(JNIEnv *env, jobject ju) {
     return static_cast<jboolean>(u != SRT_INVALID_SOCK);
 }
 
-jint JNICALL SRT_ATR_DEPRECATED
+jint JNICALL
 nativeSocket(JNIEnv *env, jobject obj,
              jobject addressFamily,
              jint type,
              jint protocol) {
-    int af = address_family_j2n(env, addressFamily);
+    int af = EnumsSingleton::getInstance(env)->addressFamily->getNativeValue(env, addressFamily);
     if (af <= 0) {
-        LOGE(TAG, "Bad value for address family");
+        LOGE("Bad value for address family");
         return af;
     }
 
@@ -237,7 +235,7 @@ nativeGetSockState(JNIEnv *env, jobject ju) {
     SRTSOCKET u = srt_socket_j2n(env, ju);
     SRT_SOCKSTATUS sock_status = srt_getsockstate((SRTSOCKET) u);
 
-    return srt_sockstatus_n2j(env, sock_status);
+    return EnumsSingleton::getInstance(env)->sockStatus->getJavaValue(env, sock_status);
 }
 
 jint JNICALL
@@ -371,7 +369,7 @@ nativeSetSockOpt(JNIEnv *env,
                  jobject sockOpt,
                  jobject optVal) {
     SRTSOCKET u = srt_socket_j2n(env, ju);
-    int sockopt = srt_sockopt_j2n(env, sockOpt);
+    int sockopt = EnumsSingleton::getInstance(env)->sockOpt->getNativeValue(env, sockOpt);
     if (sockopt <= 0) {
         return sockopt;
     }
@@ -624,12 +622,13 @@ jobject JNICALL
 nativeGetLastError(JNIEnv *env, jobject obj) {
     int err = srt_getlasterror(nullptr);
 
-    return srt_error_n2j(env, err);
+    return EnumsSingleton::getInstance(env)->errorType->getJavaValue(env, (SRT_ERRNO)err);
 }
 
 jstring JNICALL
-nativeStrError(JNIEnv *env, jobject obj) {
-    int error_type = srt_error_j2n(env, obj);
+nativeStrError(JNIEnv *env, jobject
+obj) {
+    int error_type = EnumsSingleton::getInstance(env)->errorType->getNativeValue(env, obj);
     return env->NewStringUTF(srt_strerror(error_type, 0));
 }
 
@@ -647,8 +646,10 @@ nativeGetRejectReason(JNIEnv *env, jobject ju) {
 }
 
 jstring JNICALL
-nativeRejectReasonStr(JNIEnv *env, jobject obj) {
-    int reject_reason = srt_reject_reason_j2n(env, obj);
+nativeRejectReasonStr(JNIEnv *env, jobject
+obj) {
+    int reject_reason = EnumsSingleton::getInstance(env)->rejectReasonCode->getNativeValue(env,
+                                                                                           obj);
     return env->NewStringUTF(srt_rejectreason_str(reject_reason));
 }
 
@@ -917,12 +918,12 @@ static int registerNativeForClassName(JNIEnv *env, const char *className,
                                       JNINativeMethod *methods, int methodsSize) {
     jclass clazz = env->FindClass(className);
     if (clazz == nullptr) {
-        LOGE(TAG, "Unable to find class '%s'", className);
+        LOGE("Unable to find class '%s'", className);
         return JNI_FALSE;
     }
     int res = 0;
     if ((res = env->RegisterNatives(clazz, methods, methodsSize)) < 0) {
-        LOGE(TAG, "RegisterNatives failed for '%s' (reason %d)", className, res);
+        LOGE("RegisterNatives failed for '%s' (reason %d)", className, res);
         return JNI_FALSE;
     }
 
@@ -934,60 +935,56 @@ jint JNI_OnLoad(JavaVM *vm, void * /*reserved*/) {
     jint result;
 
     if ((result = vm->GetEnv((void **) &env, JNI_VERSION_1_6)) != JNI_OK) {
-        LOGE(TAG, "GetEnv failed");
+        LOGE("GetEnv failed");
         return result;
     }
 
     if ((registerNativeForClassName(env, SRT_CLASS, srtMethods,
                                     sizeof(srtMethods) / sizeof(srtMethods[0])) != JNI_TRUE)) {
-        LOGE(TAG, "SRT RegisterNatives failed");
+        LOGE("SRT RegisterNatives failed");
         return -1;
     }
 
     if ((registerNativeForClassName(env, SRTSOCKET_CLASS, socketMethods,
                                     sizeof(socketMethods) / sizeof(socketMethods[0])) !=
          JNI_TRUE)) {
-        LOGE(TAG, "Socket RegisterNatives failed");
+        LOGE("Socket RegisterNatives failed");
         return -1;
     }
 
     if ((registerNativeForClassName(env, REJECT_REASON_CLASS, rejectReasonMethods,
                                     sizeof(rejectReasonMethods) / sizeof(rejectReasonMethods[0])) !=
          JNI_TRUE)) {
-        LOGE(TAG, "RejectReason RegisterNatives failed");
+        LOGE("RejectReason RegisterNatives failed");
         return -1;
     }
 
     if ((registerNativeForClassName(env, ERROR_CLASS, errorMethods,
                                     sizeof(errorMethods) / sizeof(errorMethods[0])) != JNI_TRUE)) {
-        LOGE(TAG, "Error RegisterNatives failed");
+        LOGE("Error RegisterNatives failed");
         return -1;
     }
 
     if ((registerNativeForClassName(env, ERRORTYPE_CLASS, errorTypeMethods,
                                     sizeof(errorTypeMethods) / sizeof(errorTypeMethods[0])) !=
          JNI_TRUE)) {
-        LOGE(TAG, "ErrorType RegisterNatives failed");
+        LOGE("ErrorType RegisterNatives failed");
         return -1;
     }
 
     if ((registerNativeForClassName(env, TIME_CLASS, timeMethods,
                                     sizeof(timeMethods) / sizeof(timeMethods[0])) !=
          JNI_TRUE)) {
-        LOGE(TAG, "Time RegisterNatives failed");
+        LOGE("Time RegisterNatives failed");
         return -1;
     }
 
     if ((registerNativeForClassName(env, EPOLL_CLASS, epollMethods,
                                     sizeof(epollMethods) / sizeof(epollMethods[0])) !=
          JNI_TRUE)) {
-        LOGE(TAG, "Epoll RegisterNatives failed");
+        LOGE("Epoll RegisterNatives failed");
         return -1;
     }
 
     return JNI_VERSION_1_6;
 }
-
-#ifdef __cplusplus
-}
-#endif

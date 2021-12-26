@@ -38,6 +38,7 @@ extern "C" {
 #define BOOLEAN_CLASS "java/lang/Boolean"
 #define INT_CLASS "java/lang/Integer"
 
+#define ENUM_PACKAGE "com.github.thibaultbee.srtdroid.enums"
 /**
  * @brief Convert Java InetSocketAddres to sockaddr_storage
  *

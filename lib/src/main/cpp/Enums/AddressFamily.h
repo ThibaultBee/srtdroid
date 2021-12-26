@@ -13,21 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+#include <netdb.h>
+#include <map>
 
-class CallbackContext {
+using namespace std;
+
+class AddressFamily {
 public:
-    JavaVM *vm;
-    jobject callingSocket;
-    jclass sockAddrClazz;
-
-
-    /**
-     * Initializes a CallbackContext. It purpores is to be pass as an opaque pointer for SRT callback.
-     *
-     * @param env JNI environment
-     * @return a CallbackContext structure
-     */
-    CallbackContext(JNIEnv *env, jobject callingSocket);
-
-    ~CallbackContext();
+    inline static int fallbackError = -EIO;
+    inline static map<string, int> map = {{"INET",  AF_INET},
+                                          {"INET6", AF_INET6}};
 };
