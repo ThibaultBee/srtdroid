@@ -13,10 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-#include <jni.h>
 #include "Models/Models.h"
-#include "callbackcontext.h"
+#include "CallbackContext.h"
 
 
 CallbackContext::CallbackContext(JNIEnv *env, jobject callingSocket) {
