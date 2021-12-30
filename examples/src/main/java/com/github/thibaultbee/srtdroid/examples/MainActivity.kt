@@ -15,27 +15,18 @@
  */
 package com.github.thibaultbee.srtdroid.examples
 
-import android.Manifest
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.github.thibaultbee.srtdroid.Srt
 import com.github.thibaultbee.srtdroid.examples.databinding.ActivityMainBinding
-import com.jakewharton.rxbinding4.view.clicks
-import com.tbruyelle.rxpermissions3.RxPermissions
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.schedulers.Schedulers
-import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
-    private val TAG = this::class.qualifiedName
-    private val activityDisposables = CompositeDisposable()
+    companion object {
+        private val TAG = MainActivity::class.qualifiedName
+    }
 
     private lateinit var binding: ActivityMainBinding
-
     private val viewModel: MainViewModel by lazy {
         ViewModelProvider(this).get(MainViewModel::class.java)
     }
@@ -55,76 +46,37 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun bindProperties() {
-        val rxPermissions = RxPermissions(this)
-
-        binding.testClientButton.clicks()
-            .throttleFirst(3, TimeUnit.SECONDS) // 3s = SRT default SRTO_CONNTIMEO
-            .observeOn(Schedulers.io()) // Do not execute SRT networking operation on main thread
-            .switchMap {
-                Observable.just(viewModel.launchTestClient())
+        binding.testClientButton.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                viewModel.launchTestClient()
+            } else {
+                viewModel.cancelTestClient()
             }
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe()
-            .let(activityDisposables::add)
+        }
 
-        binding.testServerButton.clicks()
-            .observeOn(Schedulers.io()) // Do not execute SRT networking operation on main thread
-            .switchMap {
-                Observable.just(viewModel.launchTestServer())
+        binding.testServerButton.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                viewModel.launchTestServer()
+            } else {
+                viewModel.cancelTestServer()
             }
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe()
-            .let(activityDisposables::add)
+        }
 
-        binding.recvFileButton.clicks()
-            .throttleFirst(3, TimeUnit.SECONDS) // 3s = SRT default SRTO_CONNTIMEO
-            .observeOn(AndroidSchedulers.mainThread())
-            .compose(
-                rxPermissions.ensure(
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-                )
-            )
-            .observeOn(Schedulers.io()) // Do not execute SRT networking operation on main thread
-            .switchMap { granted ->
-                if (granted) {
-                    Observable.just(viewModel.launchRecvFile(this.filesDir))
-                } else {
-                    Utils.showAlertDialog(
-                        this,
-                        getString(R.string.Permission),
-                        "Missing permission: WRITE_EXTERNAL_STORAGE"
-                    )
-                    null
-                }
+        binding.recvFileButton.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                viewModel.launchRecvFile()
+            } else {
+                viewModel.cancelRecvFile()
             }
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe()
-            .let(activityDisposables::add)
+        }
 
-        binding.sendFileButton.clicks()
-            .observeOn(AndroidSchedulers.mainThread())
-            .compose(
-                rxPermissions.ensureEachCombined(
-                    Manifest.permission.READ_EXTERNAL_STORAGE,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-                )
-            )
-            .observeOn(Schedulers.io()) // Do not execute SRT networking operation on main thread
-            .switchMap { permission ->
-                if (permission.granted) {
-                    Observable.just(viewModel.launchSendFile(this.filesDir))
-                } else {
-                    Utils.showAlertDialog(
-                        this,
-                        getString(R.string.Permission),
-                        "Missing permissions: WRITE_EXTERNAL_STORAGE or READ_EXTERNAL_STORAGE"
-                    )
-                    null
-                }
+        binding.sendFileButton.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                viewModel.launchSendFile()
+            } else {
+                viewModel.cancelSendFile()
             }
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe()
-            .let(activityDisposables::add)
+        }
 
         viewModel.error.observe(this) {
             Utils.showAlertDialog(this, getString(R.string.Error), it)
@@ -133,12 +85,27 @@ class MainActivity : AppCompatActivity() {
         viewModel.success.observe(this) {
             Utils.showAlertDialog(this, getString(R.string.Success), "Noice! $it")
         }
+
+        viewModel.testClientCompletion.observe(this) {
+            binding.testClientButton.isChecked = false
+        }
+
+        viewModel.testServerCompletion.observe(this) {
+            binding.testServerButton.isChecked = false
+        }
+
+        viewModel.recvFileCompletion.observe(this) {
+            binding.recvFileButton.isChecked = false
+        }
+
+        viewModel.sendFileCompletion.observe(this) {
+            binding.sendFileButton.isChecked = false
+        }
     }
 
 
     override fun onDestroy() {
         super.onDestroy()
         Srt.cleanUp()
-        activityDisposables.clear()
     }
 }

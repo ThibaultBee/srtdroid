@@ -3,16 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:baselineAligned="false"
     android:orientation="horizontal"
-    tools:context=".MainActivity"
-    android:baselineAligned="false">
+    tools:context=".MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_weight="1"
         android:gravity="center"
-        android:orientation="vertical"
-        android:layout_weight="1">
+        android:orientation="vertical">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/preferenceClientLayout"
@@ -21,26 +21,28 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <Button
+        <ToggleButton
             android:id="@+id/testClientButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/testclient" />
+            android:textOff="@string/testclient"
+            android:textOn="@string/cancel" />
 
-        <Button
+        <ToggleButton
             android:id="@+id/recvFileButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/recvfile" />
+            android:textOff="@string/recvfile"
+            android:textOn="@string/cancel" />
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_weight="1"
         android:gravity="center"
-        android:orientation="vertical"
-        android:layout_weight="1">
+        android:orientation="vertical">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/preferenceServerLayout"
@@ -49,17 +51,19 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <Button
+        <ToggleButton
             android:id="@+id/testServerButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/testserver" />
+            android:textOff="@string/testserver"
+            android:textOn="@string/cancel" />
 
-        <Button
+        <ToggleButton
             android:id="@+id/sendFileButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/sendfile" />
+            android:textOff="@string/sendfile"
+            android:textOn="@string/cancel" />
 
     </LinearLayout>
 </LinearLayout>

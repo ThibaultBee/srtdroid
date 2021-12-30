@@ -21,5 +21,4 @@
     <string name="port_client_key">port_client_key</string>
     <string name="Error">error</string>
     <string name="Success">success</string>
-    <string name="Permission">permission</string>
 </resources>
