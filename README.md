@@ -4,9 +4,9 @@
 
 Low level API for SRT library on Android. SRT is an open source transport technology that optimizes streaming performance across unpredictable networks. More information on [SRT](https://github.com/Haivision/srt).
 
-srtdroid is a binder/wrapper built on [SRT](https://github.com/Haivision/srt). It is a not a new implementation of SRT protocol.
+srtdroid is a binder/wrapper for Android built on [SRT](https://github.com/Haivision/srt). It is a not a new implementation of SRT protocol.
 
-For a **live streaming SDK** based on [SRT](https://github.com/Haivision/srt), check [StreamPack](https://github.com/ThibaultBee/StreamPack).
+For a **live streaming SDK** based on [SRT](https://github.com/Haivision/srt), go to [StreamPack](https://github.com/ThibaultBee/StreamPack).
 
 ## Setup
 
@@ -59,16 +59,16 @@ You need to add the `INTERNET` permission in your AndroidManifest.xml:
     <uses-permission android:name="android.permission.INTERNET" />
 ```
 
-To use, `sendFile` and `recvFile`, you also need to add `READ_EXTERNAL_STORAGE` and `WRITE_EXTERNAL_STORAGE`:
+To use, `sendFile` and `recvFile`, you might also need to add `READ_EXTERNAL_STORAGE` and `WRITE_EXTERNAL_STORAGE`:
 ```xml
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 ```
-For Android > 6.0, you have to request permissions at runtime.
+Then, you have to request permissions at runtime.
 
 ## Build
 
-Srtdroid downloads and builds [SRT](https://github.com/Haivision/srt) and [OpenSSL](https://www.openssl.org) (ssl and crypto) libraries. The first compilation will take a while.
+srtdroid downloads and builds [SRT](https://github.com/Haivision/srt) and [OpenSSL](https://www.openssl.org) (ssl and crypto) libraries. The first compilation will take a while.
 
 ### Linux
 
@@ -79,7 +79,7 @@ sudo apt-get install build-essential
 
 ### Windows
 
-Srtdroid does not build on Windows because OpenSSL is really tricky to compile on Windows.
+srtdroid does not build on Windows because OpenSSL is really tricky to compile on Windows.
 
 ### macOS
 
