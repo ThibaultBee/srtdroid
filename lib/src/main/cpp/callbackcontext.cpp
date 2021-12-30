@@ -15,8 +15,7 @@
  */
 
 #include <jni.h>
-#include "Enums/ErrorType.h"
-#include "structs.h"
+#include "Models/Models.h"
 #include "callbackcontext.h"
 
 

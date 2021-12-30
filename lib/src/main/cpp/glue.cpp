@@ -20,11 +20,21 @@
 #include "srt/logging_api.h"
 
 #include "log.h"
-#include "structs.h"
 #include "callbackcontext.h"
 #include "Enums/EnumsSingleton.h"
 #include "Enums/ErrorType.h"
 #include "Enums/ErrorType.h"
+#include "Models/Models.h"
+#include "Models/EpollFlags.h"
+#include "Models/Socket.h"
+#include "Models/InetSocketAddress.h"
+#include "Models/OptVal.h"
+#include "Models/MsgCtrl.h"
+#include "Models/Pair.h"
+#include "Models/Stats.h"
+#include "Models/Epoll.h"
+#include "Models/EpollOpts.h"
+#include "Models/EpollEvent.h"
 
 
 int onListenCallback(JNIEnv *env, jobject ju, jclass sockAddrClazz, SRTSOCKET ns, int hs_version,
@@ -36,16 +46,16 @@ int onListenCallback(JNIEnv *env, jobject ju, jclass sockAddrClazz, SRTSOCKET ns
     }
 
     jmethodID onListenID = env->GetMethodID(socketClazz, "onListen",
-                                            "(L" SRTSOCKET_CLASS ";IL" INETSOCKETADDRESS_CLASS ";Ljava/lang/String;)I");
+                                            "(L" SOCKET_CLASS ";IL" INETSOCKETADDRESS_CLASS ";Ljava/lang/String;)I");
     if (!onListenID) {
         LOGE("Can't get onListen methodID");
         env->DeleteLocalRef(socketClazz);
         return 0;
     }
 
-    jobject nsSocket = srt_socket_n2j(env, socketClazz, ns);
-    jobject peerAddress = sockaddr_inet_n2j(env, sockAddrClazz,
-                                            (sockaddr_storage *) peeraddr);
+    jobject nsSocket = Socket::getJava(env, socketClazz, ns);
+    jobject peerAddress = InetSocketAddress::getJava(env, sockAddrClazz,
+                                                     (sockaddr_storage *) peeraddr);
     jstring streamId = env->NewStringUTF(streamid);
 
     int res = env->CallIntMethod(ju, onListenID, nsSocket, (jint) hs_version, peerAddress,
@@ -96,16 +106,16 @@ void onConnectCallback(JNIEnv *env,
     }
 
     jmethodID onConnectID = env->GetMethodID(socketClazz, "onConnect",
-                                             "(L" SRTSOCKET_CLASS ";L" ERRORTYPE_CLASS ";L" INETSOCKETADDRESS_CLASS ";I)V");
+                                             "(L" SOCKET_CLASS ";L" ERRORTYPE_CLASS ";L" INETSOCKETADDRESS_CLASS ";I)V");
     if (!onConnectID) {
         LOGE("Can't get onConnect methodID");
         env->DeleteLocalRef(socketClazz);
         return;
     }
 
-    jobject nsSocket = srt_socket_n2j(env, socketClazz, ns);
-    jobject peerAddress = sockaddr_inet_n2j(env, cb->sockAddrClazz,
-                                            (sockaddr_storage *) peeraddr);
+    jobject nsSocket = Socket::getJava(env, socketClazz, ns);
+    jobject peerAddress = InetSocketAddress::getJava(env, cb->sockAddrClazz,
+                                                     (sockaddr_storage *) peeraddr);
     jobject error = EnumsSingleton::getInstance(env)->errorType->getJavaValue(env,
                                                                               (SRT_ERRNO) errorcode);
 
@@ -191,7 +201,7 @@ nativeGetVersion(JNIEnv *env, jobject obj) {
 // Creating and configuring sockets
 jboolean JNICALL
 nativeIsValid(JNIEnv *env, jobject ju) {
-    SRTSOCKET u = srt_socket_j2n(env, ju);
+    SRTSOCKET u = Socket::getNative(env, ju);
 
     return static_cast<jboolean>(u != SRT_INVALID_SOCK);
 }
@@ -217,9 +227,9 @@ nativeCreateSocket(JNIEnv *env, jobject obj) {
 
 jint JNICALL
 nativeBind(JNIEnv *env, jobject ju, jobject inetSocketAddress) {
-    SRTSOCKET u = srt_socket_j2n(env, ju);
+    SRTSOCKET u = Socket::getNative(env, ju);
     int size = 0;
-    const struct sockaddr_storage *ss = sockaddr_inet_j2n(env, inetSocketAddress, &size);
+    const struct sockaddr_storage *ss = InetSocketAddress::getNative(env, inetSocketAddress, &size);
 
     int res = srt_bind(u, reinterpret_cast<const struct sockaddr *>(ss), size);
 
@@ -232,7 +242,7 @@ nativeBind(JNIEnv *env, jobject ju, jobject inetSocketAddress) {
 
 jobject JNICALL
 nativeGetSockState(JNIEnv *env, jobject ju) {
-    SRTSOCKET u = srt_socket_j2n(env, ju);
+    SRTSOCKET u = Socket::getNative(env, ju);
     SRT_SOCKSTATUS sock_status = srt_getsockstate((SRTSOCKET) u);
 
     return EnumsSingleton::getInstance(env)->sockStatus->getJavaValue(env, sock_status);
@@ -240,7 +250,7 @@ nativeGetSockState(JNIEnv *env, jobject ju) {
 
 jint JNICALL
 nativeClose(JNIEnv *env, jobject ju) {
-    SRTSOCKET u = srt_socket_j2n(env, ju);
+    SRTSOCKET u = Socket::getNative(env, ju);
 
     return (srt_close((SRTSOCKET) u));
 }
@@ -248,7 +258,7 @@ nativeClose(JNIEnv *env, jobject ju) {
 // Connecting
 jint JNICALL
 nativeListen(JNIEnv *env, jobject ju, jint backlog) {
-    SRTSOCKET u = srt_socket_j2n(env, ju);
+    SRTSOCKET u = Socket::getNative(env, ju);
 
     // Add callback hook
     auto *cbCtx = new CallbackContext(env, ju);
@@ -260,7 +270,7 @@ nativeListen(JNIEnv *env, jobject ju, jint backlog) {
 
 jobject JNICALL
 nativeAccept(JNIEnv *env, jobject ju) {
-    SRTSOCKET u = srt_socket_j2n(env, ju);
+    SRTSOCKET u = Socket::getNative(env, ju);
     struct sockaddr_storage ss = {0};
     int sockaddr_len = sizeof(ss);
     jobject inetSocketAddress = nullptr;
@@ -268,20 +278,20 @@ nativeAccept(JNIEnv *env, jobject ju) {
     SRTSOCKET new_u = srt_accept((SRTSOCKET) u, reinterpret_cast<struct sockaddr *>(&ss),
                                  &sockaddr_len);
     if (new_u != -1) {
-        inetSocketAddress = sockaddr_inet_n2j(env, nullptr, &ss);
+        inetSocketAddress = InetSocketAddress::getJava(env, &ss);
     }
 
-    jobject res = pair_new(env, srt_socket_n2j(env, nullptr, new_u),
-                           inetSocketAddress);
+    jobject res = Pair::newJavaPair(env, Socket::getJava(env, new_u),
+                                    inetSocketAddress);
 
     return res;
 }
 
 jint JNICALL
 nativeConnect(JNIEnv *env, jobject ju, jobject inetSocketAddress) {
-    SRTSOCKET u = srt_socket_j2n(env, ju);
+    SRTSOCKET u = Socket::getNative(env, ju);
     int size = 0;
-    const struct sockaddr_storage *ss = sockaddr_inet_j2n(env, inetSocketAddress, &size);
+    const struct sockaddr_storage *ss = InetSocketAddress::getNative(env, inetSocketAddress, &size);
 
     // Add callback hook
     auto *cbCtx = new CallbackContext(env, ju);
@@ -298,12 +308,12 @@ nativeConnect(JNIEnv *env, jobject ju, jobject inetSocketAddress) {
 
 jint JNICALL
 nativeRendezVous(JNIEnv *env, jobject ju, jobject localAddress, jobject remoteAddress) {
-    SRTSOCKET u = srt_socket_j2n(env, ju);
+    SRTSOCKET u = Socket::getNative(env, ju);
     int local_addr_size = 0, remote_addr_size = 0;
-    const struct sockaddr_storage *local_ss = sockaddr_inet_j2n(env, localAddress,
-                                                                &local_addr_size);
-    const struct sockaddr_storage *remote_ss = sockaddr_inet_j2n(env, remoteAddress,
-                                                                 &remote_addr_size);
+    const struct sockaddr_storage *local_ss = InetSocketAddress::getNative(env, localAddress,
+                                                                           &local_addr_size);
+    const struct sockaddr_storage *remote_ss = InetSocketAddress::getNative(env, remoteAddress,
+                                                                            &remote_addr_size);
     int res = srt_rendezvous((SRTSOCKET) u, reinterpret_cast<const sockaddr *>(local_ss),
                              local_addr_size, reinterpret_cast<const sockaddr *>(remote_ss),
                              remote_addr_size);
@@ -322,7 +332,7 @@ nativeRendezVous(JNIEnv *env, jobject ju, jobject localAddress, jobject remoteAd
 // Options and properties
 jobject JNICALL
 nativeGetPeerName(JNIEnv *env, jobject ju) {
-    SRTSOCKET u = srt_socket_j2n(env, ju);
+    SRTSOCKET u = Socket::getNative(env, ju);
     struct sockaddr_storage ss = {0};
     int sockaddr_len = sizeof(ss);
     jobject inetSocketAddress = nullptr;
@@ -330,7 +340,7 @@ nativeGetPeerName(JNIEnv *env, jobject ju) {
     int res = srt_getpeername((SRTSOCKET) u, reinterpret_cast<struct sockaddr *>(&ss),
                               &sockaddr_len);
     if (res == 0) {
-        inetSocketAddress = sockaddr_inet_n2j(env, nullptr, &ss);
+        inetSocketAddress = InetSocketAddress::getJava(env, &ss);
     }
 
     return inetSocketAddress;
@@ -338,7 +348,7 @@ nativeGetPeerName(JNIEnv *env, jobject ju) {
 
 jobject JNICALL
 nativeGetSockName(JNIEnv *env, jobject ju) {
-    SRTSOCKET u = srt_socket_j2n(env, ju);
+    SRTSOCKET u = Socket::getNative(env, ju);
     struct sockaddr_storage ss = {0};
     int sockaddr_len = sizeof(ss);
     jobject inetSocketAddress = nullptr;
@@ -346,7 +356,7 @@ nativeGetSockName(JNIEnv *env, jobject ju) {
     int res = srt_getsockname((SRTSOCKET) u, reinterpret_cast<struct sockaddr *>(&ss),
                               &sockaddr_len);
     if (res == 0) {
-        inetSocketAddress = sockaddr_inet_n2j(env, nullptr, &ss);
+        inetSocketAddress = InetSocketAddress::getJava(env, &ss);
     }
 
     return inetSocketAddress;
@@ -356,9 +366,9 @@ jobject JNICALL
 nativeGetSockOpt(JNIEnv *env,
                  jobject ju,
                  jobject sockOpt) {
-    SRTSOCKET u = srt_socket_j2n(env, ju);
+    SRTSOCKET u = Socket::getNative(env, ju);
 
-    jobject optVal = srt_optval_n2j(env, u, 0 /*level: ignored*/, sockOpt);
+    jobject optVal = OptVal::getJava(env, u, 0 /*level: ignored*/, sockOpt);
 
     return optVal;
 }
@@ -368,13 +378,13 @@ nativeSetSockOpt(JNIEnv *env,
                  jobject ju,
                  jobject sockOpt,
                  jobject optVal) {
-    SRTSOCKET u = srt_socket_j2n(env, ju);
+    SRTSOCKET u = Socket::getNative(env, ju);
     int sockopt = EnumsSingleton::getInstance(env)->sockOpt->getNativeValue(env, sockOpt);
     if (sockopt <= 0) {
         return sockopt;
     }
     int optval_len = 0;
-    const void *optval = srt_optval_j2n(env, optVal, &optval_len);
+    const void *optval = OptVal::getNative(env, optVal, &optval_len);
 
     if (!optval) {
         return -EFAULT;
@@ -391,7 +401,7 @@ nativeSetSockOpt(JNIEnv *env,
 // Transmission
 jint JNICALL
 nativeSend2(JNIEnv *env, jobject ju, jobject byteBuffer, jint offset, jint len) {
-    SRTSOCKET u = srt_socket_j2n(env, ju);
+    SRTSOCKET u = Socket::getNative(env, ju);
 
     char *buf = (char *) env->GetDirectBufferAddress(byteBuffer);
 
@@ -402,7 +412,7 @@ nativeSend2(JNIEnv *env, jobject ju, jobject byteBuffer, jint offset, jint len) 
 
 jint JNICALL
 nativeSend(JNIEnv *env, jobject ju, jbyteArray byteArray, jint offset, jint len) {
-    SRTSOCKET u = srt_socket_j2n(env, ju);
+    SRTSOCKET u = Socket::getNative(env, ju);
     char *buf = (char *) env->GetByteArrayElements(byteArray, nullptr);
 
     int res = srt_send(u, &buf[offset], len);
@@ -420,7 +430,7 @@ nativeSendMsg2(JNIEnv *env,
                jint len,
                jint ttl/* = -1*/,
                jboolean inOrder/* = false*/) {
-    SRTSOCKET u = srt_socket_j2n(env, ju);
+    SRTSOCKET u = Socket::getNative(env, ju);
     char *buf = (char *) env->GetDirectBufferAddress(byteBuffer);
 
     int res = srt_sendmsg(u, &buf[offset], len, (int) ttl, inOrder);
@@ -437,7 +447,7 @@ nativeSendMsg(JNIEnv *env,
               jint len,
               jint ttl/* = -1*/,
               jboolean inOrder/* = false*/) {
-    SRTSOCKET u = srt_socket_j2n(env, ju);
+    SRTSOCKET u = Socket::getNative(env, ju);
     char *buf = (char *) env->GetByteArrayElements(byteArray, nullptr);
 
     int res = srt_sendmsg(u, &buf[offset], len, (int) ttl, inOrder);
@@ -454,8 +464,8 @@ nativeSendMsgCtrl2(JNIEnv *env,
                    jint offset,
                    jint len,
                    jobject msgCtrl) {
-    SRTSOCKET u = srt_socket_j2n(env, ju);
-    SRT_MSGCTRL *msgctrl = srt_msgctrl_j2n(env, msgCtrl);
+    SRTSOCKET u = Socket::getNative(env, ju);
+    SRT_MSGCTRL *msgctrl = MsgCtrl::getNative(env, msgCtrl);
     char *buf = (char *) env->GetDirectBufferAddress(byteBuffer);
 
     int res = srt_sendmsg2(u, &buf[offset], len, msgctrl);
@@ -474,8 +484,8 @@ nativeSendMsgCtrl(JNIEnv *env,
                   jint offset,
                   jint len,
                   jobject msgCtrl) {
-    SRTSOCKET u = srt_socket_j2n(env, ju);
-    SRT_MSGCTRL *msgctrl = srt_msgctrl_j2n(env, msgCtrl);
+    SRTSOCKET u = Socket::getNative(env, ju);
+    SRT_MSGCTRL *msgctrl = MsgCtrl::getNative(env, msgCtrl);
     char *buf = (char *) env->GetByteArrayElements(byteArray, nullptr);
 
     int res = srt_sendmsg2(u, &buf[offset], len, msgctrl);
@@ -490,7 +500,7 @@ nativeSendMsgCtrl(JNIEnv *env,
 
 jobject JNICALL
 nativeRecv(JNIEnv *env, jobject ju, jint len) {
-    SRTSOCKET u = srt_socket_j2n(env, ju);
+    SRTSOCKET u = Socket::getNative(env, ju);
     jbyteArray byteArray;
     auto *buf = (char *) malloc(sizeof(char) * len);
 
@@ -507,12 +517,12 @@ nativeRecv(JNIEnv *env, jobject ju, jint len) {
         free(buf);
     }
 
-    return pair_new(env, int_new(env, res), byteArray);
+    return Pair::newJavaPair(env, Primitive::newJavaInt(env, res), byteArray);
 }
 
 jobject JNICALL
 nativeRecvA(JNIEnv *env, jobject ju, jbyteArray byteArray, jint offset, jint len) {
-    SRTSOCKET u = srt_socket_j2n(env, ju);
+    SRTSOCKET u = Socket::getNative(env, ju);
     int bufferLength = env->GetArrayLength(byteArray);
     int res = -1;
     if (bufferLength >= (offset + len)) {
@@ -521,7 +531,7 @@ nativeRecvA(JNIEnv *env, jobject ju, jbyteArray byteArray, jint offset, jint len
         env->ReleaseByteArrayElements(byteArray, reinterpret_cast<jbyte *>(buf), 0); // 0 - free buf
     }
 
-    return pair_new(env, int_new(env, res), byteArray);
+    return Pair::newJavaPair(env, Primitive::newJavaInt(env, res), byteArray);
 }
 
 jobject JNICALL
@@ -529,8 +539,8 @@ nativeRecvMsg2(JNIEnv *env,
                jobject ju,
                jint len,
                jobject msgCtrl) {
-    SRTSOCKET u = srt_socket_j2n(env, ju);
-    SRT_MSGCTRL *msgctrl = srt_msgctrl_j2n(env, msgCtrl);
+    SRTSOCKET u = Socket::getNative(env, ju);
+    SRT_MSGCTRL *msgctrl = MsgCtrl::getNative(env, msgCtrl);
     jbyteArray byteArray;
     auto *buf = (char *) malloc(sizeof(char) * len);
 
@@ -550,7 +560,7 @@ nativeRecvMsg2(JNIEnv *env,
         free(msgctrl);
     }
 
-    return pair_new(env, int_new(env, res), byteArray);
+    return Pair::newJavaPair(env, Primitive::newJavaInt(env, res), byteArray);
 }
 
 jobject JNICALL
@@ -560,8 +570,8 @@ nativeRecvMsg2A(JNIEnv *env,
                 jint offset,
                 jint len,
                 jobject msgCtrl) {
-    SRTSOCKET u = srt_socket_j2n(env, ju);
-    SRT_MSGCTRL *msgctrl = srt_msgctrl_j2n(env, msgCtrl);
+    SRTSOCKET u = Socket::getNative(env, ju);
+    SRT_MSGCTRL *msgctrl = MsgCtrl::getNative(env, msgCtrl);
     int bufferLength = env->GetArrayLength(byteArray);
     int res = -1;
     if (bufferLength >= (offset + len)) {
@@ -574,7 +584,7 @@ nativeRecvMsg2A(JNIEnv *env,
         free(msgctrl);
     }
 
-    return pair_new(env, int_new(env, res), byteArray);
+    return Pair::newJavaPair(env, Primitive::newJavaInt(env, res), byteArray);
 }
 
 jlong JNICALL
@@ -584,7 +594,7 @@ nativeSendFile(JNIEnv *env,
                jlong fileOffset,
                jlong size,
                jint block) {
-    SRTSOCKET u = srt_socket_j2n(env, ju);
+    SRTSOCKET u = Socket::getNative(env, ju);
     const char *path = env->GetStringUTFChars(filePath, nullptr);
     auto offset = (int64_t) fileOffset;
     int64_t res = srt_sendfile(u, path, &offset, (int64_t) size, block);
@@ -601,7 +611,7 @@ nativeRecvFile(JNIEnv *env,
                jlong fileOffset,
                jlong size,
                jint block) {
-    SRTSOCKET u = srt_socket_j2n(env, ju);
+    SRTSOCKET u = Socket::getNative(env, ju);
     const char *path = env->GetStringUTFChars(filePath, nullptr);
     auto offset = (int64_t) fileOffset;
     int64_t res = srt_recvfile(u, path, &offset, (int64_t) size, block);
@@ -622,7 +632,7 @@ jobject JNICALL
 nativeGetLastError(JNIEnv *env, jobject obj) {
     int err = srt_getlasterror(nullptr);
 
-    return EnumsSingleton::getInstance(env)->errorType->getJavaValue(env, (SRT_ERRNO)err);
+    return EnumsSingleton::getInstance(env)->errorType->getJavaValue(env, (SRT_ERRNO) err);
 }
 
 jstring JNICALL
@@ -641,7 +651,7 @@ nativeClearLastError(JNIEnv *env, jobject obj) {
 // Reject reason
 jint JNICALL
 nativeGetRejectReason(JNIEnv *env, jobject ju) {
-    SRTSOCKET u = srt_socket_j2n(env, ju);
+    SRTSOCKET u = Socket::getNative(env, ju);
     return srt_getrejectreason(u);
 }
 
@@ -655,7 +665,7 @@ obj) {
 
 jint JNICALL
 nativeSetRejectReason(JNIEnv *env, jobject ju, jint rejectReason) {
-    SRTSOCKET u = srt_socket_j2n(env, ju);
+    SRTSOCKET u = Socket::getNative(env, ju);
     return srt_setrejectreason(u, rejectReason);
 }
 
@@ -663,28 +673,28 @@ nativeSetRejectReason(JNIEnv *env, jobject ju, jint rejectReason) {
 // Performance tracking
 jobject JNICALL
 nativebstats(JNIEnv *env, jobject ju, jboolean clear) {
-    SRTSOCKET u = srt_socket_j2n(env, ju);
+    SRTSOCKET u = Socket::getNative(env, ju);
     SRT_TRACEBSTATS tracebstats;
 
     srt_bstats(u, &tracebstats, clear);
 
-    return srt_stats_n2j(env, tracebstats);
+    return Stats::getJava(env, tracebstats);
 }
 
 jobject JNICALL
 nativebistats(JNIEnv *env, jobject ju, jboolean clear, jboolean instantaneous) {
-    SRTSOCKET u = srt_socket_j2n(env, ju);
+    SRTSOCKET u = Socket::getNative(env, ju);
     SRT_TRACEBSTATS tracebstats;
 
     srt_bistats(u, &tracebstats, clear, instantaneous);
 
-    return srt_stats_n2j(env, tracebstats);
+    return Stats::getJava(env, tracebstats);
 }
 
 // Asynchronous operations (epoll)
 jboolean JNICALL
 nativeEpollIsValid(JNIEnv *env, jobject epoll) {
-    int eid = srt_epoll_j2n(env, epoll);
+    int eid = Epoll::getNative(env, epoll);
 
     return static_cast<jboolean>(eid != -1);
 }
@@ -696,11 +706,11 @@ nativeEpollCreate(JNIEnv *env, jobject epoll) {
 
 jint JNICALL
 nativeEpollAddUSock(JNIEnv *env, jobject epoll, jobject ju, jobject epollEventList) {
-    int eid = srt_epoll_j2n(env, epoll);
-    SRTSOCKET u = srt_socket_j2n(env, ju);
+    int eid = Epoll::getNative(env, epoll);
+    SRTSOCKET u = Socket::getNative(env, ju);
 
     if (epollEventList) {
-        int events = srt_epoll_opts_j2n(env, epollEventList);
+        int events = EpollOpts::getNativeEpollOpts(env, epollEventList);
         return srt_epoll_add_usock(eid, u, &events);
     } else {
         return srt_epoll_add_usock(eid, u, nullptr);
@@ -709,11 +719,11 @@ nativeEpollAddUSock(JNIEnv *env, jobject epoll, jobject ju, jobject epollEventLi
 
 jint JNICALL
 nativeEpollUpdateUSock(JNIEnv *env, jobject epoll, jobject ju, jobject epollEventList) {
-    int eid = srt_epoll_j2n(env, epoll);
-    SRTSOCKET u = srt_socket_j2n(env, ju);
+    int eid = Epoll::getNative(env, epoll);
+    SRTSOCKET u = Socket::getNative(env, ju);
 
     if (epollEventList) {
-        int events = srt_epoll_opts_j2n(env, epollEventList);
+        int events = EpollOpts::getNativeEpollOpts(env, epollEventList);
         return srt_epoll_update_usock(eid, u, &events);
     } else {
         return srt_epoll_update_usock(eid, u, nullptr);
@@ -722,8 +732,8 @@ nativeEpollUpdateUSock(JNIEnv *env, jobject epoll, jobject ju, jobject epollEven
 
 jint JNICALL
 nativeEpollRemoveUSock(JNIEnv *env, jobject epoll, jobject ju) {
-    int eid = srt_epoll_j2n(env, epoll);
-    SRTSOCKET u = srt_socket_j2n(env, ju);
+    int eid = Epoll::getNative(env, epoll);
+    SRTSOCKET u = Socket::getNative(env, ju);
 
     return srt_epoll_remove_usock(eid, u);
 }
@@ -731,17 +741,17 @@ nativeEpollRemoveUSock(JNIEnv *env, jobject epoll, jobject ju) {
 jint JNICALL
 nativeEpollWait(JNIEnv *env, jobject epoll, jobject readFdsList, jobject writeFdsList,
                 jlong timeOut) {
-    int eid = srt_epoll_j2n(env, epoll);
+    int eid = Epoll::getNative(env, epoll);
     int nReadFds = 0;
     int nWriteFds = 0;
     SRTSOCKET *readfds = nullptr;
     SRTSOCKET *writefds = nullptr;
 
     if (readFdsList) {
-        readfds = srt_sockets_j2n(env, readFdsList, &nReadFds);
+        readfds = Socket::getNativeSockets(env, readFdsList, &nReadFds);
     }
     if (writeFdsList) {
-        writefds = srt_sockets_j2n(env, writeFdsList, &nWriteFds);
+        writefds =  Socket::getNativeSockets(env, writeFdsList, &nWriteFds);
     }
 
     int res = srt_epoll_wait(eid, readfds, &nReadFds, writefds, &nWriteFds, timeOut, nullptr, 0,
@@ -759,12 +769,12 @@ nativeEpollWait(JNIEnv *env, jobject epoll, jobject readFdsList, jobject writeFd
 
 jint JNICALL
 nativeEpollUWait(JNIEnv *env, jobject epoll, jobject fdsList, jlong timeOut) {
-    int eid = srt_epoll_j2n(env, epoll);
+    int eid = Epoll::getNative(env, epoll);
     SRT_EPOLL_EVENT *epoll_events = nullptr;
     int nEpollEvents = 0;
 
     if (fdsList) {
-        epoll_events = srt_epoll_events_j2n(env, fdsList, &nEpollEvents);
+        epoll_events = EpollEvent::getNativeEpollEvents(env, fdsList, &nEpollEvents);
     }
 
     int res = srt_epoll_uwait(eid, epoll_events, nEpollEvents, timeOut);
@@ -778,7 +788,7 @@ nativeEpollUWait(JNIEnv *env, jobject epoll, jobject fdsList, jlong timeOut) {
 
 jint JNICALL
 nativeEpollClearUSock(JNIEnv *env, jobject epoll) {
-    int eid = srt_epoll_j2n(env, epoll);
+    int eid = Epoll::getNative(env, epoll);
 
     return srt_epoll_clear_usocks(eid);
 }
@@ -786,33 +796,33 @@ nativeEpollClearUSock(JNIEnv *env, jobject epoll) {
 
 jobject JNICALL
 nativeEpollSet(JNIEnv *env, jobject epoll, jobject epollFlagList) {
-    int eid = srt_epoll_j2n(env, epoll);
-    int32_t flags = srt_epoll_flags_j2n(env, epollFlagList);
+    int eid = Epoll::getNative(env, epoll);
+    int32_t flags = EpollFlags::getNative(env, epollFlagList);
 
     flags = srt_epoll_set(eid, flags);
     if (flags == -1) {
         return nullptr;
     }
-    return srt_epoll_flags_n2j(env, flags);
+    return EpollFlags::getJava(env, flags);
 }
 
 jobject JNICALL
 nativeEpollGet(JNIEnv *env, jobject epoll) {
-    int eid = srt_epoll_j2n(env, epoll);
+    int eid = Epoll::getNative(env, epoll);
 
     int32_t flags = srt_epoll_set(eid, -1);
     if (flags == -1) {
         return nullptr;
     }
-    return srt_epoll_flags_n2j(env, flags);
+    return EpollFlags::getJava(env, flags);
 }
 
 jint JNICALL
 nativeEpollRelease(JNIEnv *env, jobject epoll) {
-    int eid = srt_epoll_j2n(env, epoll);
+    int eid = Epoll::getNative(env, epoll);
 
     int res = srt_epoll_release(eid);
-    srt_epoll_set_eid(env, epoll, -1);
+    Epoll::setJava(env, epoll, -1);
 
     return res;
 }
@@ -834,7 +844,7 @@ nativeNow(JNIEnv *env, jobject obj) {
 jlong JNICALL
 nativeGetConnectionTime(JNIEnv *env,
                         jobject ju) {
-    SRTSOCKET u = srt_socket_j2n(env, ju);
+    SRTSOCKET u = Socket::getNative(env, ju);
 
     return (jlong) srt_connection_time(u);
 }
@@ -901,17 +911,17 @@ static JNINativeMethod timeMethods[] = {
 };
 
 static JNINativeMethod epollMethods[] = {
-        {"nativeIsValid",     "()Z",                                      (void *) &nativeEpollIsValid},
-        {"create",            "()I",                                      (void *) &nativeEpollCreate},
-        {"nativeAddUSock",    "(L" SRTSOCKET_CLASS ";L" LIST_CLASS ";)I", (void *) &nativeEpollAddUSock},
-        {"nativeUpdateUSock", "(L" SRTSOCKET_CLASS ";L" LIST_CLASS ";)I", (void *) &nativeEpollUpdateUSock},
-        {"nativeRemoveUSock", "(L" SRTSOCKET_CLASS ";)I",                 (void *) &nativeEpollRemoveUSock},
-        {"nativeWait",        "(L" LIST_CLASS ";L" LIST_CLASS ";J)I",     (void *) &nativeEpollWait},
-        {"nativeUWait",       "(L" LIST_CLASS ";J)I",                     (void *) &nativeEpollUWait},
-        {"nativeClearUSock",  "()I",                                      (void *) &nativeEpollClearUSock},
-        {"nativeSetFlags",    "(L" LIST_CLASS ";)L" LIST_CLASS ";",       (void *) &nativeEpollSet},
-        {"nativeGetFlags",    "()L" LIST_CLASS ";",                       (void *) &nativeEpollGet},
-        {"nativeRelease",     "()I",                                      (void *) &nativeEpollRelease}
+        {"nativeIsValid",     "()Z",                   (void *) &nativeEpollIsValid},
+        {"create",            "()I",                   (void *) &nativeEpollCreate},
+        {"nativeAddUSock",    "(L" SOCKET_CLASS ";L" LIST_CLASS ";)I", (void *) &nativeEpollAddUSock},
+        {"nativeUpdateUSock", "(L" SOCKET_CLASS ";L" LIST_CLASS ";)I", (void *) &nativeEpollUpdateUSock},
+        {"nativeRemoveUSock", "(L" SOCKET_CLASS ";)I", (void *) &nativeEpollRemoveUSock},
+        {"nativeWait",        "(L" LIST_CLASS ";L" LIST_CLASS ";J)I", (void *) &nativeEpollWait},
+        {"nativeUWait",       "(L" LIST_CLASS ";J)I", (void *) &nativeEpollUWait},
+        {"nativeClearUSock",  "()I",                   (void *) &nativeEpollClearUSock},
+        {"nativeSetFlags",    "(L" LIST_CLASS ";)L" LIST_CLASS ";", (void *) &nativeEpollSet},
+        {"nativeGetFlags",    "()L" LIST_CLASS ";", (void *) &nativeEpollGet},
+        {"nativeRelease",     "()I",                   (void *) &nativeEpollRelease}
 };
 
 static int registerNativeForClassName(JNIEnv *env, const char *className,
@@ -945,7 +955,7 @@ jint JNI_OnLoad(JavaVM *vm, void * /*reserved*/) {
         return -1;
     }
 
-    if ((registerNativeForClassName(env, SRTSOCKET_CLASS, socketMethods,
+    if ((registerNativeForClassName(env, SOCKET_CLASS, socketMethods,
                                     sizeof(socketMethods) / sizeof(socketMethods[0])) !=
          JNI_TRUE)) {
         LOGE("Socket RegisterNatives failed");
