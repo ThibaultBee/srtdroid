@@ -1,2 +1,2 @@
-include ':chat', ':lib', ":examples"
+include ':lib', ":examples"
 rootProject.name='srtdroid'

@@ -30,4 +30,3 @@ jobs:
         name: apks
         path: |
           examples/build/outputs/apk/debug/examples-debug.apk
-          chat/build/outputs/apk/debug/chat-debug.apk
