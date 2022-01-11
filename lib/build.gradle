@@ -1,6 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'maven-publish'
 apply plugin: 'org.jetbrains.dokka'
 
 group='com.github.ThibaultBee'
@@ -8,7 +8,7 @@ group='com.github.ThibaultBee'
 android {
     compileSdkVersion 31
     buildToolsVersion "30.0.3"
-    ndkVersion '23.0.7196353'
+    ndkVersion '21.4.7075529'
 
     defaultConfig {
         minSdkVersion 21
@@ -47,6 +47,15 @@ dokkaHtml {
             skipDeprecated.set(true)
             includeNonPublic.set(false)
             skipEmptyPackages.set(true)
+        }
+    }
+}
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+            }
         }
     }
 }
