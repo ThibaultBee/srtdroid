@@ -12,20 +12,13 @@ not a new implementation of SRT protocol.
 For a **live streaming SDK** based on [SRT](https://github.com/Haivision/srt), go
 to [StreamPack](https://github.com/ThibaultBee/StreamPack).
 
-## Setup
+## Install
 
-Get srtdroid lastest artifacts on [jitpack.io](https://jitpack.io/#ThibaultBee/srtdroid)
+Get srtdroid latest artifacts on MavenCentral.
 
 ```gradle
-allprojects {
-    repositories {
-        ...
-        maven { url 'https://jitpack.io' }
-    }
-}
-
 dependencies {
-    implementation 'com.github.ThibaultBee:srtdroid:1.2.0'
+    implementation 'io.github.thibaultbee:srtdroid:1.2.0'
 }
 ```
 
