@@ -1,28 +1,32 @@
 name: Android build
 
-on: [push]
+on: [ push ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up JDK 12
-      uses: actions/setup-java@v1
-      with:
-        java-version: 12
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
-    - name: Build with Gradle
-      run: ./gradlew build
-    - name: Upload library artifacts
-      uses: actions/upload-artifact@v2
-      with:
-        name: lib
-        path: lib/build/outputs/aar
-    - name: Upload APKs
-      uses: actions/upload-artifact@v2
-      with:
-        name: apks
-        path: |
-          examples/build/outputs/apk/debug/examples-debug.apk
+      - uses: actions/checkout@v2
+      - name: Set up JDK 12
+        uses: actions/setup-java@v1
+        with:
+          java-version: 12
+      - name: Setup git config (for patch command)
+        run: |
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "<>"
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Build with Gradle
+        run: ./gradlew build
+      - name: Upload library artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: lib
+          path: lib/build/outputs/aar
+      - name: Upload APKs
+        uses: actions/upload-artifact@v2
+        with:
+          name: apks
+          path: |
+            examples/build/outputs/apk/debug/examples-debug.apk
