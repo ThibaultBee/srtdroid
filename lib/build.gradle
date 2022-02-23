@@ -3,8 +3,6 @@ apply plugin: 'kotlin-android'
 apply plugin: 'maven-publish'
 apply plugin: 'org.jetbrains.dokka'
 
-group='com.github.ThibaultBee'
-
 android {
     compileSdkVersion 31
     buildToolsVersion "30.0.3"
@@ -50,11 +48,54 @@ dokkaHtml {
         }
     }
 }
+
 afterEvaluate {
     publishing {
         publications {
             release(MavenPublication) {
                 from components.release
+
+                groupId = "io.github.thibaultbee"
+                artifactId = "srtdroid"
+                version = "${rootProject.versionName}"
+
+                pom {
+                    name = "srtdroid"
+                    packaging = "aar"
+                    description = "Secure Reliable Transport (SRT) Protocol for Android"
+                    url = "https://github.com/ThibaultBee/srtdroid"
+
+                    scm {
+                        url = "https://github.com/ThibaultBee/srtdroid"
+                        connection = "scm:git:git://github.com/ThibaultBee/srtdroid.git"
+                        developerConnection = "scm:git:ssh://github.com/ThibaultBee/srtdroid.git"
+                    }
+
+                    licenses {
+                        license {
+                            name = "Apache License, Version 2.0"
+                            url = "https://www.apache.org/licenses/LICENSE-2.0.txt"
+                            distribution = "repo"
+                        }
+                    }
+
+                    developers {
+                        developer {
+                            name = "Thibault B. & SRT team"
+                            organizationUrl = "https://github.com/ThibaultBee"
+                        }
+                    }
+                }
+            }
+        }
+        repositories {
+            maven {
+                name = "OSSRH"
+                url = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+                credentials {
+                    username = System.getenv("MAVEN_USERNAME")
+                    password = System.getenv("MAVEN_PASSWORD")
+                }
             }
         }
     }
