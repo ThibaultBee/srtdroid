@@ -21,10 +21,21 @@ jobs:
           git config --global user.name "GitHub Actions Bot"
           git config --global user.email "<>"
       - name: Validate Gradle wrapper
-        uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
-      - name: Publish package
-        uses: gradle/gradle-build-action@937999e9cc2425eddc7fd62d1053baf041147db7
-        with:
-          arguments: publish
+        uses: gradle/wrapper-validation-action@v1
+      - name: Decode the secret key
+        run: echo $GPG_KEYRING_FILE_CONTENT | base64 --decode > ~/secring.gpg
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GPG_KEYRING_FILE_CONTENT: "${{ secrets.GPG_KEYRING_FILE_CONTENT }}"
+      - name: Publish package
+        uses: gradle/gradle-build-action@v2
+        with:
+          arguments: |
+            publish
+            -Psigning.secretKeyRingFile=$(echo ~/secring.gpg)
+            -Psigning.password=$GPG_PASSPHRASE
+            -Psigning.keyId=$GPG_KEY_ID
+        env:
+          MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
+          GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}

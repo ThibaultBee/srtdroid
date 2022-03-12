@@ -2,6 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'maven-publish'
 apply plugin: 'org.jetbrains.dokka'
+apply plugin: 'signing'
 
 android {
     compileSdkVersion 31
@@ -49,6 +50,10 @@ dokkaHtml {
     }
 }
 
+ext {
+    isReleasedVersion = !project.version.endsWith("-SNAPSHOT")
+}
+
 afterEvaluate {
     publishing {
         publications {
@@ -91,12 +96,20 @@ afterEvaluate {
         repositories {
             maven {
                 name = "OSSRH"
-                url = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+                if (!isReleasedVersion) {
+                    url "https://oss.sonatype.org/content/repositories/snapshots"
+                } else {
+                    url "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+                }
                 credentials {
                     username = System.getenv("MAVEN_USERNAME")
                     password = System.getenv("MAVEN_PASSWORD")
                 }
             }
+        }
+        signing {
+            required { isReleasedVersion && gradle.taskGraph.hasTask("uploadArchives") }
+            sign publishing.publications.release
         }
     }
 }
