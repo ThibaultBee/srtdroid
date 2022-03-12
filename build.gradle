@@ -3,10 +3,7 @@ buildscript {
         versionCode = 2
         versionName = "1.2.0"
 
-        /**
-         * Warning: New kotlin version (1.4.30) takes too long too build and it causes jitpack build timeout...
-         */
-        kotlin_version = '1.4.20'
+        kotlin_version = '1.6.10'
         dokka_version = '1.5.0'
     }
     repositories {
