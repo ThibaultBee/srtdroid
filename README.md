@@ -1,5 +1,3 @@
-[![](https://jitpack.io/v/ThibaultBee/srtdroid.svg)](https://jitpack.io/#ThibaultBee/srtdroid)
-
 # srtdroid: Secure Reliable Transport (SRT) Protocol for Android
 
 Low level API for SRT library on Android. SRT is an open source transport technology that optimizes
@@ -18,7 +16,7 @@ Get srtdroid latest artifacts on MavenCentral.
 
 ```gradle
 dependencies {
-    implementation 'io.github.thibaultbee:srtdroid:1.2.0'
+    implementation 'io.github.thibaultbee:srtdroid:1.3.0'
 }
 ```
 
