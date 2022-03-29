@@ -6,7 +6,7 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.github.thibaultbee.srtdroid.examples"
+        applicationId "io.github.thibaultbee.srtdroid.examples"
         minSdkVersion 21
         targetSdkVersion 31
         versionCode rootProject.versionCode

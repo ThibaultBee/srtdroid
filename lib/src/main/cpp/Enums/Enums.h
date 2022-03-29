@@ -15,13 +15,13 @@
  */
 #pragma once
 
-#define ENUM_PACKAGE "com.github.thibaultbee.srtdroid.enums"
-#define BOUNDARY_CLASS "com/github/thibaultbee/srtdroid/enums/Boundary"
-#define EPOLLFLAG_CLASS "com/github/thibaultbee/srtdroid/enums/EpollFlag"
-#define EPOLLOPT_CLASS "com/github/thibaultbee/srtdroid/enums/EpollOpt"
-#define ERRORTYPE_CLASS "com/github/thibaultbee/srtdroid/enums/ErrorType"
-#define KMSTATE_CLASS "com/github/thibaultbee/srtdroid/enums/KMState"
-#define REJECT_REASON_CLASS "com/github/thibaultbee/srtdroid/enums/RejectReasonCode"
-#define SOCKOPT_CLASS "com/github/thibaultbee/srtdroid/enums/SockOpt"
-#define SOCKSTATUS_CLASS "com/github/thibaultbee/srtdroid/enums/SockStatus"
-#define TRANSTYPE_CLASS "com/github/thibaultbee/srtdroid/enums/Transtype"
+#define ENUM_PACKAGE "io.github.thibaultbee.srtdroid.enums"
+#define BOUNDARY_CLASS "io/github/thibaultbee/srtdroid/enums/Boundary"
+#define EPOLLFLAG_CLASS "io/github/thibaultbee/srtdroid/enums/EpollFlag"
+#define EPOLLOPT_CLASS "io/github/thibaultbee/srtdroid/enums/EpollOpt"
+#define ERRORTYPE_CLASS "io/github/thibaultbee/srtdroid/enums/ErrorType"
+#define KMSTATE_CLASS "io/github/thibaultbee/srtdroid/enums/KMState"
+#define REJECT_REASON_CLASS "io/github/thibaultbee/srtdroid/enums/RejectReasonCode"
+#define SOCKOPT_CLASS "io/github/thibaultbee/srtdroid/enums/SockOpt"
+#define SOCKSTATUS_CLASS "io/github/thibaultbee/srtdroid/enums/SockStatus"
+#define TRANSTYPE_CLASS "io/github/thibaultbee/srtdroid/enums/Transtype"
