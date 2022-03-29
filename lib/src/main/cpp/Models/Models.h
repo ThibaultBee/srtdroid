@@ -23,10 +23,10 @@
 #define LIST_CLASS "java/util/List"
 
 
-#define ERROR_CLASS "com/github/thibaultbee/srtdroid/models/Error"
-#define SRT_CLASS "com/github/thibaultbee/srtdroid/Srt"
-#define TIME_CLASS "com/github/thibaultbee/srtdroid/models/Time"
-#define EPOLL_CLASS "com/github/thibaultbee/srtdroid/models/Epoll"
-#define MSGCTRL_CLASS "com/github/thibaultbee/srtdroid/models/MsgCtrl"
-#define SOCKET_CLASS "com/github/thibaultbee/srtdroid/models/Socket"
-#define STATS_CLASS "com/github/thibaultbee/srtdroid/models/Stats"
+#define ERROR_CLASS "io/github/thibaultbee/srtdroid/models/Error"
+#define SRT_CLASS "io/github/thibaultbee/srtdroid/Srt"
+#define TIME_CLASS "io/github/thibaultbee/srtdroid/models/Time"
+#define EPOLL_CLASS "io/github/thibaultbee/srtdroid/models/Epoll"
+#define MSGCTRL_CLASS "io/github/thibaultbee/srtdroid/models/MsgCtrl"
+#define SOCKET_CLASS "io/github/thibaultbee/srtdroid/models/Socket"
+#define STATS_CLASS "io/github/thibaultbee/srtdroid/models/Stats"
