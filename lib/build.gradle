@@ -40,6 +40,8 @@ android {
 }
 
 dokkaHtml {
+    moduleName.set("${rootProject.name}")
+
     dokkaSourceSets {
         named("main") {
             noAndroidSdkLink.set(false)
