@@ -11,21 +11,21 @@ Version 1.3.0
 
 ## API changes:
 
-- Package has been move to maven central and rename from `com.github.thibaultbee`
+- Package has been moved to maven central and renamed from `com.github.thibaultbee`
   to `io.github.thibaultbee`
 
 ## Features:
 
-- Rewrite the native part to be more C++ like
-- Upgrade Kotlin version to `1.6.10` and android gradle plugin
-- Remove `jcenter` as a dependencies repository
+- Rewrites the native part to be more C++ like
+- Upgrades Kotlin version to `1.6.10` and android gradle plugin
+- Removes `jcenter` as a dependencies repository
 - Improves sample: do not run task on main thread
 
 ## Other changes:
 
 - Run `build` action on push to project
 - Run `docs` action on published release
-- Remove `chat` example to simplify maintenance
+- Removes `chat` example to simplify maintenance
 
 Version 1.2.0
 -------------
