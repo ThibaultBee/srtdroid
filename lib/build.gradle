@@ -99,9 +99,9 @@ afterEvaluate {
             maven {
                 name = "OSSRH"
                 if (!isReleasedVersion) {
-                    url "https://oss.sonatype.org/content/repositories/snapshots"
+                    url "https://s01.oss.sonatype.org/content/repositories/snapshots"
                 } else {
-                    url "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+                    url "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2"
                 }
                 credentials {
                     username = System.getenv("MAVEN_USERNAME")
