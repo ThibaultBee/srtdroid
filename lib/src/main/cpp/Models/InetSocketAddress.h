@@ -17,6 +17,16 @@
 
 class InetSocketAddress {
 public:
+    static void
+    getNative(JNIEnv *env, jobject inetSocketAddress, struct sockaddr_storage *iss) {
+        int size = 0;
+        struct sockaddr_storage *ss = getNative(env, inetSocketAddress, &size);
+        if (ss != nullptr) {
+            memcpy(iss, ss, size);
+            free(ss);
+        }
+    }
+
     static struct sockaddr_storage *
     getNative(JNIEnv *env, jobject inetSocketAddress, int *size) {
         // Get InetSocketAddress class

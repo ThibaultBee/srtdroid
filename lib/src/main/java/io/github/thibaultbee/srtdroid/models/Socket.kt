@@ -17,10 +17,7 @@ package io.github.thibaultbee.srtdroid.models
 
 import android.util.Pair
 import io.github.thibaultbee.srtdroid.Srt
-import io.github.thibaultbee.srtdroid.enums.ErrorType
-import io.github.thibaultbee.srtdroid.enums.RejectReasonCode
-import io.github.thibaultbee.srtdroid.enums.SockOpt
-import io.github.thibaultbee.srtdroid.enums.SockStatus
+import io.github.thibaultbee.srtdroid.enums.*
 import io.github.thibaultbee.srtdroid.listeners.SocketListener
 import io.github.thibaultbee.srtdroid.models.rejectreason.InternalRejectReason
 import io.github.thibaultbee.srtdroid.models.rejectreason.PredefinedRejectReason
@@ -31,11 +28,12 @@ import java.net.*
 import java.nio.ByteBuffer
 
 /**
- * This class represents a SRT socket.
+ * This class represents a SRT socket or a SRT group socket.
+ *
  * To avoid creating an unresponsive UI, don't perform SRT network operations on the main thread.
  * Once it has been called, you must release Srt context with [Srt.cleanUp] when application leaves.
  */
-class Socket : Closeable {
+open class Socket : Closeable {
     companion object {
         init {
             Srt.startUp()
@@ -50,7 +48,7 @@ class Socket : Closeable {
      * @see [SocketListener]
      */
     var listener: SocketListener? = null
-    private var srtsocket: Int
+    protected var srtsocket: Int
 
     private external fun socket(af: StandardProtocolFamily, type: Int, protocol: Int): Int
 
@@ -80,7 +78,7 @@ class Socket : Closeable {
         srtsocket = createSocket()
     }
 
-    private constructor(socket: Int) {
+    internal constructor(socket: Int) {
         srtsocket = socket
     }
 
@@ -314,6 +312,19 @@ class Socket : Closeable {
         InetSocketAddress(localAddress, port),
         InetSocketAddress(remoteAddress, port)
     )
+
+    // Socket Group Management
+    private external fun nativeGroupOf(): Int
+
+    /**
+     * Retrieves the group SRT socket ID that corresponds to the member socket ID member.
+     *
+     * **See Also:** [srt_groupof](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_groupof)
+     *
+     * @return group SRT socket ID of the member socket.
+     */
+    val groupOf: SocketGroup
+        get() = SocketGroup(nativeGroupOf())
 
     // Options and properties
     private external fun nativeGetPeerName(): InetSocketAddress?
@@ -809,7 +820,11 @@ class Socket : Closeable {
      * @throws SocketException if it has failed to send message
      * @throws SocketTimeoutException if a timeout has been triggered
      */
-    fun recv(buffer: ByteArray, offset: Int = 0, byteCount: Int = buffer.size): Pair<Int, ByteArray> {
+    fun recv(
+        buffer: ByteArray,
+        offset: Int = 0,
+        byteCount: Int = buffer.size
+    ): Pair<Int, ByteArray> {
         val pair = nativeRecv(buffer, offset, byteCount)
         val byteReceived = pair.first
         when {

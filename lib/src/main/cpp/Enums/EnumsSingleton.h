@@ -13,13 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+#pragma once
 
 #include "AddressFamily.h"
 #include "Boundary.h"
 #include "EpollFlag.h"
 #include "EpollOpt.h"
 #include "ErrorType.h"
+#include "GroupType.h"
 #include "KMState.h"
+#include "MemberStatus.h"
 #include "RejectReasonCode.h"
 #include "SockOpt.h"
 #include "SockStatus.h"
@@ -39,8 +42,13 @@ private:
                                                     EpollOpt::clazzIdentifier);
         errorType = new EnumConverter<SRT_ERRNO>(env, ErrorType::map, ErrorType::fallbackError,
                                                  ErrorType::clazzIdentifier);
+        groupType = new EnumConverter<SRT_GROUP_TYPE>(env, GroupType::map, GroupType::fallbackError,
+                                                      GroupType::clazzIdentifier);
         kmState = new EnumConverter<SRT_KM_STATE>(env, KMState::map, KMState::fallbackError,
                                                   KMState::clazzIdentifier);
+        memberStatus = new EnumConverter<SRT_MEMBERSTATUS>(env, MemberStatus::map,
+                                                           MemberStatus::fallbackError,
+                                                           MemberStatus::clazzIdentifier);
         rejectReasonCode = new EnumConverter<SRT_REJECT_REASON>(env,
                                                                 RejectReasonCode::map,
                                                                 RejectReasonCode::fallbackError,
@@ -63,7 +71,9 @@ public:
     EnumConverter<int> *epollFlag;
     EnumConverter<SRT_EPOLL_OPT> *epollOpt;
     EnumConverter<SRT_ERRNO> *errorType;
+    EnumConverter<SRT_GROUP_TYPE> *groupType;
     EnumConverter<SRT_KM_STATE> *kmState;
+    EnumConverter<SRT_MEMBERSTATUS> *memberStatus;
     EnumConverter<SRT_REJECT_REASON> *rejectReasonCode;
     EnumConverter<int> *sockOpt;
     EnumConverter<SRT_SOCKSTATUS> *sockStatus;

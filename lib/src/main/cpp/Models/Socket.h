@@ -42,9 +42,9 @@ public:
 
     static jobject getJava(JNIEnv *env, SRTSOCKET srtsocket) {
         jclass srtSocketClazz = env->FindClass(SOCKET_CLASS);
-        jobject inetSocketAddress = getJava(env, srtSocketClazz, srtsocket);
+        jobject srttSocket = getJava(env, srtSocketClazz, srtsocket);
         env->DeleteLocalRef(srtSocketClazz);
-        return inetSocketAddress;
+        return srttSocket;
     }
 
     static jobject getJava(JNIEnv *env, jclass clazz, SRTSOCKET srtsocket) {

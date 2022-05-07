@@ -23,7 +23,6 @@
 #include "CallbackContext.h"
 #include "Enums/EnumsSingleton.h"
 #include "Enums/ErrorType.h"
-#include "Enums/ErrorType.h"
 #include "Models/Models.h"
 #include "Models/EpollFlags.h"
 #include "Models/Socket.h"
@@ -35,6 +34,8 @@
 #include "Models/Epoll.h"
 #include "Models/EpollOpts.h"
 #include "Models/EpollEvent.h"
+#include "Models/OptionConfig.h"
+#include "Models/GroupData.h"
 
 
 int onListenCallback(JNIEnv *env, jobject ju, jclass sockAddrClazz, SRTSOCKET ns, int hs_version,
@@ -328,6 +329,74 @@ nativeRendezVous(JNIEnv *env, jobject ju, jobject localAddress, jobject remoteAd
 
     return res;
 }
+
+// Socket Group Management
+jint JNICALL
+nativeCreateGroup(JNIEnv *env, jobject groupType) {
+    SRT_GROUP_TYPE group_type = EnumsSingleton::getInstance(env)->groupType->getNativeValue(env,
+                                                                                            groupType);
+    return srt_create_group(group_type);
+}
+
+jint JNICALL
+nativeGroupOf(JNIEnv *env, jobject ju) {
+    SRTSOCKET u = Socket::getNative(env, ju);
+    return srt_groupof(u);
+}
+
+jobject JNICALL
+nativeGroupData(JNIEnv *env, jobject ju) {
+    SRTSOCKET u = Socket::getNative(env, ju);
+    SRT_SOCKGROUPDATA *group_data = nullptr;
+    size_t size = 0;
+    jobject groupData = List::newJavaList(env);
+
+    int res = srt_group_data(u, group_data, &size);
+    if (res >= 0) {
+        if (group_data != nullptr) {
+            for (int i = 0; i < size; i++) {
+                if (List::add(env, groupData, GroupData::getJava(env, group_data[i])) == 0) {
+                    LOGE("Can't add group data %d", i);
+                }
+            }
+        }
+    }
+
+    return groupData;
+}
+
+
+jlong JNICALL
+nativeCreateConfig(JNIEnv *env) {
+    return (jlong) srt_create_config();
+}
+
+jint JNICALL
+nativeAdd(JNIEnv *env, jobject optionConfig, jobject sockOpt, jobject optVal) {
+    SRT_SOCKOPT_CONFIG *sockopt_config = OptionConfig::getNative(env, optionConfig);
+    int sockopt = EnumsSingleton::getInstance(env)->sockOpt->getNativeValue(env, sockOpt);
+    if (sockopt <= 0) {
+        return sockopt;
+    }
+    int optval_len = 0;
+    const void *optval = OptVal::getNative(env, optVal, &optval_len);
+
+    if (!optval) {
+        return -EFAULT;
+    }
+
+    int res = srt_config_add(sockopt_config, (SRT_SOCKOPT) sockopt, optval, optval_len);
+    free((void *) optval);
+
+    return res;
+}
+
+void JNICALL
+nativeDeleteConfig(JNIEnv *env, jobject optionConfig) {
+    SRT_SOCKOPT_CONFIG *sockopt_config = OptionConfig::getNative(env, optionConfig);
+    srt_delete_config(sockopt_config);
+}
+
 
 // Options and properties
 jobject JNICALL
@@ -751,7 +820,7 @@ nativeEpollWait(JNIEnv *env, jobject epoll, jobject readFdsList, jobject writeFd
         readfds = Socket::getNativeSockets(env, readFdsList, &nReadFds);
     }
     if (writeFdsList) {
-        writefds =  Socket::getNativeSockets(env, writeFdsList, &nWriteFds);
+        writefds = Socket::getNativeSockets(env, writeFdsList, &nWriteFds);
     }
 
     int res = srt_epoll_wait(eid, readfds, &nReadFds, writefds, &nWriteFds, timeOut, nullptr, 0,
@@ -892,6 +961,18 @@ static JNINativeMethod socketMethods[] = {
         {"nativeGetConnectionTime", "()J",                                                           (void *) &nativeGetConnectionTime}
 };
 
+static JNINativeMethod socketGroupMethods[] = {
+        {"nativeCreateGroup", "(L" GROUPTYPE_CLASS ";)I", (void *) &nativeCreateGroup},
+        {"nativeGroupOf",     "()I",                      (void *) &nativeGroupOf},
+        {"nativeGroupData",   "()L" LIST_CLASS ";",       (void *) &nativeGroupData}
+};
+
+static JNINativeMethod sockOptGroupConfigMethods[] = {
+        {"nativeCreate", "()J",                                      (void *) &nativeCreateConfig},
+        {"nativeAdd",    "(L" SOCKOPT_CLASS ";Ljava/lang/Object;)I", (void *) &nativeAdd},
+        {"nativeDelete", "()V",                                      (void *) &nativeDeleteConfig}
+};
+
 static JNINativeMethod rejectReasonMethods[] = {
         {"toString", "()Ljava/lang/String;", (void *) &nativeRejectReasonStr}
 };
@@ -911,17 +992,17 @@ static JNINativeMethod timeMethods[] = {
 };
 
 static JNINativeMethod epollMethods[] = {
-        {"nativeIsValid",     "()Z",                   (void *) &nativeEpollIsValid},
-        {"create",            "()I",                   (void *) &nativeEpollCreate},
+        {"nativeIsValid",     "()Z",                                   (void *) &nativeEpollIsValid},
+        {"create",            "()I",                                   (void *) &nativeEpollCreate},
         {"nativeAddUSock",    "(L" SOCKET_CLASS ";L" LIST_CLASS ";)I", (void *) &nativeEpollAddUSock},
         {"nativeUpdateUSock", "(L" SOCKET_CLASS ";L" LIST_CLASS ";)I", (void *) &nativeEpollUpdateUSock},
-        {"nativeRemoveUSock", "(L" SOCKET_CLASS ";)I", (void *) &nativeEpollRemoveUSock},
-        {"nativeWait",        "(L" LIST_CLASS ";L" LIST_CLASS ";J)I", (void *) &nativeEpollWait},
-        {"nativeUWait",       "(L" LIST_CLASS ";J)I", (void *) &nativeEpollUWait},
-        {"nativeClearUSock",  "()I",                   (void *) &nativeEpollClearUSock},
-        {"nativeSetFlags",    "(L" LIST_CLASS ";)L" LIST_CLASS ";", (void *) &nativeEpollSet},
-        {"nativeGetFlags",    "()L" LIST_CLASS ";", (void *) &nativeEpollGet},
-        {"nativeRelease",     "()I",                   (void *) &nativeEpollRelease}
+        {"nativeRemoveUSock", "(L" SOCKET_CLASS ";)I",                 (void *) &nativeEpollRemoveUSock},
+        {"nativeWait",        "(L" LIST_CLASS ";L" LIST_CLASS ";J)I",  (void *) &nativeEpollWait},
+        {"nativeUWait",       "(L" LIST_CLASS ";J)I",                  (void *) &nativeEpollUWait},
+        {"nativeClearUSock",  "()I",                                   (void *) &nativeEpollClearUSock},
+        {"nativeSetFlags",    "(L" LIST_CLASS ";)L" LIST_CLASS ";",    (void *) &nativeEpollSet},
+        {"nativeGetFlags",    "()L" LIST_CLASS ";",                    (void *) &nativeEpollGet},
+        {"nativeRelease",     "()I",                                   (void *) &nativeEpollRelease}
 };
 
 static int registerNativeForClassName(JNIEnv *env, const char *className,
@@ -959,6 +1040,21 @@ jint JNI_OnLoad(JavaVM *vm, void * /*reserved*/) {
                                     sizeof(socketMethods) / sizeof(socketMethods[0])) !=
          JNI_TRUE)) {
         LOGE("Socket RegisterNatives failed");
+        return -1;
+    }
+
+    if ((registerNativeForClassName(env, SOCKET_GROUP_CLASS, socketGroupMethods,
+                                    sizeof(socketGroupMethods) / sizeof(socketGroupMethods[0])) !=
+         JNI_TRUE)) {
+        LOGE("SocketGroup RegisterNatives failed");
+        return -1;
+    }
+
+    if ((registerNativeForClassName(env, SOCKOPTGROUPCONFIG_CLASS, sockOptGroupConfigMethods,
+                                    sizeof(sockOptGroupConfigMethods) /
+                                    sizeof(sockOptGroupConfigMethods[0])) !=
+         JNI_TRUE)) {
+        LOGE("SockOpt Config RegisterNatives failed");
         return -1;
     }
 

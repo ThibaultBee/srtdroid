@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Thibault B.
+ * Copyright (C) 2022 Thibault B.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,14 +15,20 @@
  */
 #pragma once
 
-#include <netdb.h>
 #include <map>
+#include "srt/srt.h"
+#include "Enums.h"
 
 using namespace std;
 
-class AddressFamily {
+class MemberStatus {
 public:
-    inline static int fallbackError = -EIO;
-    inline static map<string, int> map = {{"INET",  AF_INET},
-                                          {"INET6", AF_INET6}};
+    inline static const char *clazzIdentifier = MEMBERSTATUS_CLASS;
+    inline static SRT_MEMBERSTATUS fallbackError = SRT_GST_PENDING;
+    inline static map <string, SRT_MEMBERSTATUS> map = {{"PENDING", SRT_GST_PENDING},
+                                                        {"IDLE",    SRT_GST_IDLE},
+                                                        {"RUNNING", SRT_GST_RUNNING},
+                                                        {"BROKEN",  SRT_GST_BROKEN}
+    };
 };
+

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Thibault B.
+ * Copyright (C) 2022 Thibault B.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,14 +15,19 @@
  */
 #pragma once
 
-#include <netdb.h>
 #include <map>
+#include "srt/srt.h"
+#include "Enums.h"
 
 using namespace std;
 
-class AddressFamily {
+class GroupType {
 public:
-    inline static int fallbackError = -EIO;
-    inline static map<string, int> map = {{"INET",  AF_INET},
-                                          {"INET6", AF_INET6}};
+    inline static const char *clazzIdentifier = GROUPTYPE_CLASS;
+    inline static SRT_GROUP_TYPE fallbackError = SRT_GTYPE_UNDEFINED;
+    inline static map <string, SRT_GROUP_TYPE> map = {{"BROADCAST", SRT_GTYPE_BROADCAST},
+                                                      {"BACKUP",    SRT_GTYPE_BACKUP}
+                                                      //{"BALANCING", SRT_GTYPE_BALANCING}
+    };
 };
+
