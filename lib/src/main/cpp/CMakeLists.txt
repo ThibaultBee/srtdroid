@@ -3,14 +3,13 @@ cmake_minimum_required(VERSION 3.6)
 include(ExternalProject)
 find_program(GIT "git")
 
-set(OPENSSL_VERSION "openssl-3.0.1")
+set(OPENSSL_VERSION "openssl-3.0.3")
 set(SRT_VERSION "1.5.0")
 
 # OpenSSL - needs few executable such as perl and mv in PATH
 ExternalProject_Add(openssl_project
         GIT_REPOSITORY https://github.com/openssl/openssl.git
         GIT_TAG ${OPENSSL_VERSION}
-        PATCH_COMMAND ${GIT} am ${CMAKE_CURRENT_SOURCE_DIR}/patches/0001-android-x86-target-Add-latomic-for-clang.patch
         CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env PATH=${CMAKE_C_COMPILER_EXTERNAL_TOOLCHAIN}/bin:$ENV{PATH} CC=${CMAKE_C_COMPILER} ANDROID_NDK_ROOT=${ANDROID_NDK} perl <SOURCE_DIR>/Configure android-${ANDROID_ARCH_NAME} -D__ANDROID_API__=${ANDROID_NATIVE_API_LEVEL} --openssldir=${CMAKE_LIBRARY_OUTPUT_DIRECTORY} --libdir="" --prefix=${CMAKE_LIBRARY_OUTPUT_DIRECTORY}
         BUILD_COMMAND ${CMAKE_COMMAND} -E env PATH=${CMAKE_C_COMPILER_EXTERNAL_TOOLCHAIN}/bin:$ENV{PATH} ANDROID_NDK_ROOT=${ANDROID_NDK} make
         BUILD_BYPRODUCTS ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/libssl.so ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/libcrypto.so
