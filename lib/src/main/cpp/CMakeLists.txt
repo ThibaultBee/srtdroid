@@ -4,7 +4,7 @@ include(ExternalProject)
 find_program(GIT "git")
 
 set(OPENSSL_VERSION "openssl-3.0.3")
-set(SRT_VERSION "1.5.1-rc.0")
+set(SRT_VERSION "1.5.1")
 
 # OpenSSL - needs few executable such as perl and mv in PATH
 ExternalProject_Add(openssl_project
