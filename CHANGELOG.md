@@ -1,6 +1,14 @@
 Change Log
 ==========
 
+Version 1.5.0
+-------------
+
+## Dependencies:
+
+- srt 1.5.1
+- openssl 3.0.1
+
 Version 1.4.0
 -------------
 
