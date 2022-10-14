@@ -66,5 +66,5 @@ enum class SockStatus {
     /**
      * The specified number does not correspond to a valid socket.
      */
-    NON_EXIST
+    NONEXIST
 }
