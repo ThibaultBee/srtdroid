@@ -1,6 +1,18 @@
 Change Log
 ==========
 
+Version 1.5.1
+-------------
+
+## Dependencies:
+
+- srt 1.5.1
+- openssl 3.0.7
+
+## API changes:
+
+- `SockStatus` `NON_EXIST` is now `NONEXIST` to fix a crash when using `NON_EXIST`
+
 Version 1.5.0
 -------------
 
