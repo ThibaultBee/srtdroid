@@ -89,7 +89,7 @@ class Socket6Test {
     @Test
     fun rendezVousTest() {
         try {
-            socket.rendezVous("::", "2001:0db8:0000:85a3:0000:0000:ac1f:8001", 5555)
+            socket.rendezVous("::1", "::2", 5555)
             fail()
         } catch (e: SocketException) {
             assertEquals(e.message, ErrorType.ENOSERVER.toString())
