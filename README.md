@@ -16,7 +16,7 @@ Get srtdroid latest artifacts on MavenCentral.
 
 ```gradle
 dependencies {
-    implementation 'io.github.thibaultbee:srtdroid:1.5.1'
+    implementation 'io.github.thibaultbee:srtdroid:1.5.2'
 }
 ```
 

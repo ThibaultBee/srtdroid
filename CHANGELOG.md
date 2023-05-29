@@ -1,6 +1,18 @@
 Change Log
 ==========
 
+Version 1.5.2
+-------------
+
+## Dependencies:
+
+- srt 1.5.1
+- openssl 3.0.7
+
+## Features:
+
+- Add support for Android >= 19. Thanks to [@yoobi](https://github.com/yoobi)
+
 Version 1.5.1
 -------------
 
