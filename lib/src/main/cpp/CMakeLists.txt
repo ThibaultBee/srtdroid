@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.6)
 include(ExternalProject)
 find_program(GIT "git")
 
-set(OPENSSL_VERSION "openssl-3.0.7")
+set(OPENSSL_VERSION "openssl-3.0.9")
 set(SRT_VERSION "1.5.2")
 
 # OpenSSL - needs few executable such as perl and mv in PATH
