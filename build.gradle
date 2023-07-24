@@ -1,7 +1,7 @@
 buildscript {
     ext {
-        versionCode = 001_005_002
-        versionName = "1.5.2"
+        versionCode = 001_006_000
+        versionName = "1.6.0"
 
         kotlin_version = '1.6.10'
         dokka_version = '1.5.0'
