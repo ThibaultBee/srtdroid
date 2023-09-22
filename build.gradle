@@ -3,7 +3,7 @@ buildscript {
         versionCode = 001_006_000
         versionName = "1.6.0"
 
-        kotlin_version = '1.6.10'
+        kotlin_version = '1.6.21'
         dokka_version = '1.5.0'
     }
     repositories {
@@ -11,7 +11,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.4'
+        classpath 'com.android.tools.build:gradle:8.1.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
         classpath "org.jetbrains.dokka:dokka-gradle-plugin:$dokka_version"

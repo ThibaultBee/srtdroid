@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.6)
 
+project(srtdroid)
+
 include(ExternalProject)
 find_program(GIT "git")
 

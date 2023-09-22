@@ -5,15 +5,12 @@ apply plugin: 'org.jetbrains.dokka'
 apply plugin: 'signing'
 
 android {
-    compileSdkVersion 31
-    buildToolsVersion "30.0.3"
     ndkVersion '21.4.7075529'
 
     defaultConfig {
-        minSdkVersion 19
-        targetSdkVersion 31
-        versionCode rootProject.versionCode
-        versionName rootProject.versionName
+        minSdk 19
+        compileSdk 31
+        targetSdk 31
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
@@ -36,7 +33,14 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    namespace 'io.github.thibaultbee.srtdroid'
 
+    publishing {
+        singleVariant('release') {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
 }
 
 dokkaHtml {
@@ -56,63 +60,62 @@ ext {
     isReleasedVersion = !project.version.endsWith("-SNAPSHOT")
 }
 
-afterEvaluate {
-    publishing {
-        publications {
-            release(MavenPublication) {
-                from components.release
+publishing {
+    publications {
+        release(MavenPublication) {
+            groupId = "io.github.thibaultbee"
+            artifactId = "srtdroid"
+            version = "${rootProject.versionName}"
 
-                groupId = "io.github.thibaultbee"
-                artifactId = "srtdroid"
-                version = "${rootProject.versionName}"
+            pom {
+                name = "srtdroid"
+                packaging = "aar"
+                description = "Secure Reliable Transport (SRT) Protocol for Android"
+                url = "https://github.com/ThibaultBee/srtdroid"
 
-                pom {
-                    name = "srtdroid"
-                    packaging = "aar"
-                    description = "Secure Reliable Transport (SRT) Protocol for Android"
+                scm {
                     url = "https://github.com/ThibaultBee/srtdroid"
+                    connection = "scm:git:git://github.com/ThibaultBee/srtdroid.git"
+                    developerConnection = "scm:git:ssh://github.com/ThibaultBee/srtdroid.git"
+                }
 
-                    scm {
-                        url = "https://github.com/ThibaultBee/srtdroid"
-                        connection = "scm:git:git://github.com/ThibaultBee/srtdroid.git"
-                        developerConnection = "scm:git:ssh://github.com/ThibaultBee/srtdroid.git"
+                licenses {
+                    license {
+                        name = "Apache License, Version 2.0"
+                        url = "https://www.apache.org/licenses/LICENSE-2.0.txt"
+                        distribution = "repo"
                     }
+                }
 
-                    licenses {
-                        license {
-                            name = "Apache License, Version 2.0"
-                            url = "https://www.apache.org/licenses/LICENSE-2.0.txt"
-                            distribution = "repo"
-                        }
-                    }
-
-                    developers {
-                        developer {
-                            name = "Thibault B. & SRT team"
-                            organizationUrl = "https://github.com/ThibaultBee"
-                        }
+                developers {
+                    developer {
+                        name = "Thibault B. & SRT team"
+                        organizationUrl = "https://github.com/ThibaultBee"
                     }
                 }
             }
-        }
-        repositories {
-            maven {
-                name = "OSSRH"
-                if (!isReleasedVersion) {
-                    url "https://s01.oss.sonatype.org/content/repositories/snapshots"
-                } else {
-                    url "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2"
-                }
-                credentials {
-                    username = System.getenv("MAVEN_USERNAME")
-                    password = System.getenv("MAVEN_PASSWORD")
-                }
+            afterEvaluate {
+                from components.release
             }
         }
-        signing {
-            required { isReleasedVersion && gradle.taskGraph.hasTask("uploadArchives") }
-            sign publishing.publications.release
+    }
+    repositories {
+        maven {
+            name = "OSSRH"
+            if (!isReleasedVersion) {
+                url "https://s01.oss.sonatype.org/content/repositories/snapshots"
+            } else {
+                url "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2"
+            }
+            credentials {
+                username = System.getenv("MAVEN_USERNAME")
+                password = System.getenv("MAVEN_PASSWORD")
+            }
         }
+    }
+    signing {
+        required { isReleasedVersion && gradle.taskGraph.hasTask("uploadArchives") }
+        sign publishing.publications.release
     }
 }
 
