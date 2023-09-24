@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 buildscript {
     ext {
         versionCode = 001_006_000
@@ -26,6 +28,20 @@ allprojects {
     }
 }
 
-task clean(type: Delete) {
+subprojects {
+    afterEvaluate{
+        tasks.withType(KotlinCompile).tap {
+            configureEach {
+                if (project.plugins.hasPlugin("com.android.application") || project.plugins.hasPlugin("com.android.library")) {
+                    kotlinOptions.jvmTarget = android.compileOptions.sourceCompatibility
+                } else {
+                    kotlinOptions.jvmTarget = sourceCompatibility
+                }
+            }
+        }
+    }
+}
+
+tasks.register('clean', Delete) {
     delete rootProject.buildDir
 }
