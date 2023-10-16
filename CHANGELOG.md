@@ -1,6 +1,22 @@
 Change Log
 ==========
 
+Version 1.7.0
+-------------
+
+## Dependencies:
+
+- srt 1.5.3
+- openssl 3.0.9
+
+## Features:
+
+- Add and test support for Android 34
+- Add source and documentation jars to maven central
+- Upgrade to Kotlin 1.8
+- Upgrade gradle and Android gradle plugin
+- Upgrade GitHub Actions to fix warnings
+
 Version 1.6.0
 -------------
 

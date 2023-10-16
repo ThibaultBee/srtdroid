@@ -2,8 +2,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 buildscript {
     ext {
-        versionCode = 001_006_000
-        versionName = "1.6.0"
+        versionCode = 001_007_000
+        versionName = "1.7.0"
 
         kotlin_version = '1.8.22'
         dokka_version = '1.8.20'
