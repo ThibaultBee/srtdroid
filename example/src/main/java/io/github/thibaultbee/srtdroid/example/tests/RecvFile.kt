@@ -1,9 +1,9 @@
-package io.github.thibaultbee.srtdroid.examples.tests
+package io.github.thibaultbee.srtdroid.example.tests
 
 import android.util.Log
 import io.github.thibaultbee.srtdroid.enums.SockOpt
 import io.github.thibaultbee.srtdroid.enums.Transtype
-import io.github.thibaultbee.srtdroid.examples.Utils
+import io.github.thibaultbee.srtdroid.example.Utils
 import io.github.thibaultbee.srtdroid.models.Socket
 import com.google.common.primitives.Ints
 import com.google.common.primitives.Longs

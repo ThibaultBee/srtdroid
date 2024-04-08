@@ -13,11 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.thibaultbee.srtdroid.examples
+package io.github.thibaultbee.srtdroid.example
 
 import android.os.Bundle
 import androidx.preference.PreferenceFragmentCompat
-import io.github.thibaultbee.srtdroid.examples.R
 
 class MainClientSettingsFragment : PreferenceFragmentCompat() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {

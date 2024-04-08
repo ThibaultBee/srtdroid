@@ -13,12 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.thibaultbee.srtdroid.examples
+package io.github.thibaultbee.srtdroid.example
 
 import android.content.Context
 import android.content.DialogInterface
 import androidx.appcompat.app.AlertDialog
-import io.github.thibaultbee.srtdroid.examples.R
 import io.github.thibaultbee.srtdroid.models.Error
 import java.io.File
 import java.io.FileOutputStream

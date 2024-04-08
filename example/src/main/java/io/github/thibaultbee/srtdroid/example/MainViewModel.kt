@@ -1,13 +1,13 @@
-package io.github.thibaultbee.srtdroid.examples
+package io.github.thibaultbee.srtdroid.example
 
 import android.app.Application
 import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import io.github.thibaultbee.srtdroid.examples.tests.RecvFile
-import io.github.thibaultbee.srtdroid.examples.tests.SendFile
-import io.github.thibaultbee.srtdroid.examples.tests.TestClient
-import io.github.thibaultbee.srtdroid.examples.tests.TestServer
+import io.github.thibaultbee.srtdroid.example.tests.RecvFile
+import io.github.thibaultbee.srtdroid.example.tests.SendFile
+import io.github.thibaultbee.srtdroid.example.tests.TestClient
+import io.github.thibaultbee.srtdroid.example.tests.TestServer
 import java.util.concurrent.Executors
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {

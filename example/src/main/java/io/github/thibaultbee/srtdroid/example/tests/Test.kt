@@ -1,4 +1,4 @@
-package io.github.thibaultbee.srtdroid.examples.tests
+package io.github.thibaultbee.srtdroid.example.tests
 
 import io.github.thibaultbee.srtdroid.models.Socket
 import java.util.concurrent.ExecutorService

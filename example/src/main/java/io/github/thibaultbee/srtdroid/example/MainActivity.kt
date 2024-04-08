@@ -13,14 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package io.github.thibaultbee.srtdroid.examples
+package io.github.thibaultbee.srtdroid.example
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import io.github.thibaultbee.srtdroid.examples.R
 import io.github.thibaultbee.srtdroid.Srt
-import io.github.thibaultbee.srtdroid.examples.databinding.ActivityMainBinding
+import io.github.thibaultbee.srtdroid.example.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     companion object {

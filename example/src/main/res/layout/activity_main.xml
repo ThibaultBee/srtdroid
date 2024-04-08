@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:baselineAligned="false"
     android:orientation="horizontal"
-    tools:context="io.github.thibaultbee.srtdroid.examples.MainActivity">
+    tools:context="io.github.thibaultbee.srtdroid.example.MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

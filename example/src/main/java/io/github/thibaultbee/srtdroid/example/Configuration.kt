@@ -1,8 +1,7 @@
-package io.github.thibaultbee.srtdroid.examples
+package io.github.thibaultbee.srtdroid.example
 
 import android.content.Context
 import androidx.preference.PreferenceManager
-import io.github.thibaultbee.srtdroid.examples.R
 
 class Configuration(context: Context) {
     private val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)

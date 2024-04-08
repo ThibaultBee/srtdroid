@@ -1,2 +1,2 @@
-include ':lib', ":examples"
+include ':lib', ":example"
 rootProject.name='srtdroid'

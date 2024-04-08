@@ -3,7 +3,7 @@ apply plugin: 'kotlin-android'
 
 android {
     defaultConfig {
-        applicationId "io.github.thibaultbee.srtdroid.examples"
+        applicationId "io.github.thibaultbee.srtdroid.example"
         minSdk 19
         compileSdk 34
         targetSdk 34
@@ -36,7 +36,7 @@ android {
     buildFeatures {
         viewBinding true
     }
-    namespace 'io.github.thibaultbee.srtdroid.examples'
+    namespace 'io.github.thibaultbee.srtdroid.example'
 
 }
 
