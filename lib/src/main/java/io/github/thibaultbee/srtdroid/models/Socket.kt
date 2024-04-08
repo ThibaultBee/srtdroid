@@ -26,8 +26,18 @@ import io.github.thibaultbee.srtdroid.models.rejectreason.InternalRejectReason
 import io.github.thibaultbee.srtdroid.models.rejectreason.PredefinedRejectReason
 import io.github.thibaultbee.srtdroid.models.rejectreason.RejectReason
 import io.github.thibaultbee.srtdroid.models.rejectreason.UserDefinedRejectReason
-import java.io.*
-import java.net.*
+import java.io.Closeable
+import java.io.File
+import java.io.IOException
+import java.io.InputStream
+import java.io.OutputStream
+import java.net.BindException
+import java.net.ConnectException
+import java.net.InetAddress
+import java.net.InetSocketAddress
+import java.net.SocketException
+import java.net.SocketTimeoutException
+import java.net.StandardProtocolFamily
 import java.nio.ByteBuffer
 
 /**
@@ -35,8 +45,19 @@ import java.nio.ByteBuffer
  * To avoid creating an unresponsive UI, don't perform SRT network operations on the main thread.
  * Once it has been called, you must release Srt context with [Srt.cleanUp] when application leaves.
  */
-class Socket : Closeable {
+class Socket
+private constructor(private val srtsocket: Int) : Closeable {
     companion object {
+        @JvmStatic
+        private external fun nativeCreateSocket(): Int
+
+        @JvmStatic
+        private external fun nativeCreateSocket(
+            af: StandardProtocolFamily,
+            type: Int,
+            protocol: Int
+        ): Int
+
         init {
             Srt.startUp()
         }
@@ -50,9 +71,6 @@ class Socket : Closeable {
      * @see [SocketListener]
      */
     var listener: SocketListener? = null
-    private var srtsocket: Int
-
-    private external fun socket(af: StandardProtocolFamily, type: Int, protocol: Int): Int
 
     /**
      * Deprecated version of [Socket] constructor. Argument is ignored.
@@ -63,11 +81,7 @@ class Socket : Closeable {
      * **See Also:** [srt_socket](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_socket)
      */
     @Deprecated(message = "Use Socket() instead", replaceWith = ReplaceWith("Socket()"))
-    constructor(af: StandardProtocolFamily) {
-        srtsocket = socket(af, 0, 0)
-    }
-
-    private external fun createSocket(): Int
+    constructor(af: StandardProtocolFamily) : this(nativeCreateSocket(af, 0, 0))
 
     /**
      * Creates an SRT socket.
@@ -76,13 +90,7 @@ class Socket : Closeable {
      *
      * **See Also:** [srt_create_socket](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_create_socket)
      */
-    constructor() {
-        srtsocket = createSocket()
-    }
-
-    private constructor(socket: Int) {
-        srtsocket = socket
-    }
+    constructor() : this(nativeCreateSocket())
 
     private external fun nativeIsValid(): Boolean
 
@@ -450,9 +458,11 @@ class Socket : Closeable {
             byteSent < 0 -> {
                 throw SocketException(Error.lastErrorMessage)
             }
+
             byteSent == 0 -> {
                 throw SocketTimeoutException(ErrorType.ESCLOSED.toString())
             }
+
             else -> return byteSent
         }
     }
@@ -476,9 +486,11 @@ class Socket : Closeable {
             byteSent < 0 -> {
                 throw SocketException(Error.lastErrorMessage)
             }
+
             byteSent == 0 -> {
                 throw SocketTimeoutException(ErrorType.ESCLOSED.toString())
             }
+
             else -> return byteSent
         }
     }
@@ -550,9 +562,11 @@ class Socket : Closeable {
             byteSent < 0 -> {
                 throw SocketException(Error.lastErrorMessage)
             }
+
             byteSent == 0 -> {
                 throw SocketTimeoutException(ErrorType.ESCLOSED.toString())
             }
+
             else -> return byteSent
         }
     }
@@ -584,9 +598,11 @@ class Socket : Closeable {
             byteSent < 0 -> {
                 throw SocketException(Error.lastErrorMessage)
             }
+
             byteSent == 0 -> {
                 throw SocketTimeoutException(ErrorType.ESCLOSED.toString())
             }
+
             else -> return byteSent
         }
     }
@@ -646,9 +662,11 @@ class Socket : Closeable {
             byteSent < 0 -> {
                 throw SocketException(Error.lastErrorMessage)
             }
+
             byteSent == 0 -> {
                 throw SocketTimeoutException(ErrorType.ESCLOSED.toString())
             }
+
             else -> return byteSent
         }
     }
@@ -673,9 +691,11 @@ class Socket : Closeable {
             byteSent < 0 -> {
                 throw SocketException(Error.lastErrorMessage)
             }
+
             byteSent == 0 -> {
                 throw SocketTimeoutException(ErrorType.ESCLOSED.toString())
             }
+
             else -> return byteSent
         }
     }
@@ -784,9 +804,11 @@ class Socket : Closeable {
             byteReceived < 0 -> {
                 throw SocketException(Error.lastErrorMessage)
             }
+
             byteReceived == 0 -> {
                 throw SocketTimeoutException(ErrorType.ESCLOSED.toString())
             }
+
             else -> return pair
         }
     }
@@ -809,16 +831,22 @@ class Socket : Closeable {
      * @throws SocketException if it has failed to send message
      * @throws SocketTimeoutException if a timeout has been triggered
      */
-    fun recv(buffer: ByteArray, offset: Int = 0, byteCount: Int = buffer.size): Pair<Int, ByteArray> {
+    fun recv(
+        buffer: ByteArray,
+        offset: Int = 0,
+        byteCount: Int = buffer.size
+    ): Pair<Int, ByteArray> {
         val pair = nativeRecv(buffer, offset, byteCount)
         val byteReceived = pair.first
         when {
             byteReceived < 0 -> {
                 throw SocketException(Error.lastErrorMessage)
             }
+
             byteReceived == 0 -> {
                 throw SocketTimeoutException(ErrorType.ESCLOSED.toString())
             }
+
             else -> return pair
         }
     }
@@ -843,9 +871,11 @@ class Socket : Closeable {
             byteReceived < 0 -> {
                 throw SocketException(Error.lastErrorMessage)
             }
+
             byteReceived == 0 -> {
                 throw SocketTimeoutException(ErrorType.ESCLOSED.toString())
             }
+
             else -> return pair
         }
     }
@@ -882,9 +912,11 @@ class Socket : Closeable {
             byteReceived < 0 -> {
                 throw SocketException(Error.lastErrorMessage)
             }
+
             byteReceived == 0 -> {
                 throw SocketTimeoutException(ErrorType.ESCLOSED.toString())
             }
+
             else -> return pair
         }
     }
@@ -970,9 +1002,11 @@ class Socket : Closeable {
             byteSent < 0 -> {
                 throw SocketException(Error.lastErrorMessage)
             }
+
             byteSent == 0L -> {
                 throw SocketTimeoutException(ErrorType.ESCLOSED.toString())
             }
+
             else -> return byteSent
         }
     }
@@ -1036,9 +1070,11 @@ class Socket : Closeable {
             byteReceived < 0 -> {
                 throw SocketException(Error.lastErrorMessage)
             }
+
             byteReceived == 0L -> {
                 throw SocketTimeoutException(ErrorType.ESCLOSED.toString())
             }
+
             else -> return byteReceived
         }
     }
@@ -1098,12 +1134,15 @@ class Socket : Closeable {
                 is InternalRejectReason -> { // Forbidden by SRT
                     value.code.ordinal
                 }
+
                 is PredefinedRejectReason -> {
                     value.code + RejectReasonCode.PREDEFINED_OFFSET
                 }
+
                 is UserDefinedRejectReason -> {
                     value.code + RejectReasonCode.USERDEFINED_OFFSET
                 }
+
                 else -> RejectReasonCode.UNKNOWN.ordinal
             }
             if (nativeSetRejectReason(code) != 0) {

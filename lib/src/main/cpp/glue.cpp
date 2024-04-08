@@ -206,8 +206,8 @@ nativeIsValid(JNIEnv *env, jobject ju) {
     return static_cast<jboolean>(u != SRT_INVALID_SOCK);
 }
 
-jint JNICALL
-nativeSocket(JNIEnv *env, jobject obj,
+static jint JNICALL
+nativeCreateSocketFamily(JNIEnv *env, jobject obj,
              jobject addressFamily,
              jint type,
              jint protocol) {
@@ -220,7 +220,7 @@ nativeSocket(JNIEnv *env, jobject obj,
     return srt_socket(af, type, protocol);
 }
 
-jint JNICALL
+static jint JNICALL
 nativeCreateSocket(JNIEnv *env, jobject obj) {
     return srt_create_socket();
 }
@@ -860,8 +860,8 @@ static JNINativeMethod srtMethods[] = {
 
 static JNINativeMethod socketMethods[] = {
         {"nativeIsValid",           "()Z",                                                           (void *) &nativeIsValid},
-        {"socket",                  "(Ljava/net/StandardProtocolFamily;II)I",                        (void *) &nativeSocket},
-        {"createSocket",            "()I",                                                           (void *) &nativeCreateSocket},
+        {"nativeCreateSocket",      "(Ljava/net/StandardProtocolFamily;II)I",                        (void *) &nativeCreateSocketFamily},
+        {"nativeCreateSocket",      "()I",                                                           (void *) &nativeCreateSocket},
         {"nativeBind",              "(L" INETSOCKETADDRESS_CLASS ";)I",                              (void *) &nativeBind},
         {"nativeGetSockState",      "()L" SOCKSTATUS_CLASS ";",                                      (void *) &nativeGetSockState},
         {"nativeClose",             "()I",                                                           (void *) &nativeClose},
