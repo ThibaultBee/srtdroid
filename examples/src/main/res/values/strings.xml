@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Examples</string>
+    <string name="app_name">srtdroid</string>
     <string name="testclient">TestClient</string>
     <string name="testserver">TestServer</string>
     <string name="launch_test">Launch test</string>
