@@ -5,8 +5,8 @@ buildscript {
         versionCode = 001_007_000
         versionName = "1.7.0"
 
-        kotlin_version = '1.8.22'
-        dokka_version = '1.8.20'
+        kotlin_version = '1.9.22'
+        dokka_version = '1.9.20'
     }
     repositories {
         google()

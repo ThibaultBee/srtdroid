@@ -8,7 +8,7 @@ import java.util.concurrent.ExecutorService
 class TestClient(
     executorService: ExecutorService,
     onSuccess: (String) -> Unit,
-    onError: (String?) -> Unit
+    onError: (String) -> Unit
 ) : Test(executorService, onSuccess, onError) {
     companion object {
         private val TAG = TestClient::class.simpleName

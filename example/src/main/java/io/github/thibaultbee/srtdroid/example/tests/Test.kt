@@ -6,7 +6,7 @@ import java.util.concurrent.ExecutorService
 abstract class Test(
     private val executor: ExecutorService,
     protected val onSuccess: (String) -> Unit,
-    protected val onError: (String?) -> Unit
+    protected val onError: (String) -> Unit
 ) {
     protected abstract val testName: String
     private var socket: Socket? = null

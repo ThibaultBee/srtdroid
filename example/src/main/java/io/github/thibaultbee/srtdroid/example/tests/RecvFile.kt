@@ -16,7 +16,7 @@ class RecvFile(
     private val recvFileDir: File,
     executorService: ExecutorService,
     onSuccess: (String) -> Unit,
-    onError: (String?) -> Unit
+    onError: (String) -> Unit
 ) : Test(executorService, onSuccess, onError) {
     companion object {
         private val TAG = RecvFile::class.simpleName

@@ -14,7 +14,7 @@ class SendFile(
     private val fileSendDir: File,
     executorService: ExecutorService,
     onSuccess: (String) -> Unit,
-    onError: (String?) -> Unit
+    onError: (String) -> Unit
 ) : Test(executorService, onSuccess, onError) {
     companion object {
         private val TAG = SendFile::class.simpleName
