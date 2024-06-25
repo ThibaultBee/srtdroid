@@ -1,56 +1,63 @@
 package io.github.thibaultbee.srtdroid.example.tests
 
 import android.util.Log
+import com.google.common.primitives.Ints
+import com.google.common.primitives.Longs
 import io.github.thibaultbee.srtdroid.enums.SockOpt
 import io.github.thibaultbee.srtdroid.enums.Transtype
 import io.github.thibaultbee.srtdroid.example.Utils
-import io.github.thibaultbee.srtdroid.models.Socket
-import com.google.common.primitives.Ints
-import com.google.common.primitives.Longs
+import io.github.thibaultbee.srtdroid.ktx.CoroutineSocket
+import io.github.thibaultbee.srtdroid.ktx.extensions.connect
+import io.github.thibaultbee.srtdroid.ktx.extensions.recvFile
+import io.github.thibaultbee.srtdroid.ktx.extensions.send
+import kotlinx.coroutines.delay
 import java.io.File
-import java.util.concurrent.ExecutorService
 
 class RecvFile(
     private val sendFileName: String,
     private val recvFileName: String,
     private val recvFileDir: File,
-    executorService: ExecutorService,
-    onSuccess: (String) -> Unit,
-    onError: (String) -> Unit
-) : Test(executorService, onSuccess, onError) {
+) : Test {
     companion object {
         private val TAG = RecvFile::class.simpleName
     }
 
-    override val testName: String = this::class.simpleName!!
+    override val name: String = this::class.simpleName!!
 
-    override fun launchImpl(ip: String, port: Int, socket: Socket) {
+    override suspend fun run(ip: String, port: Int) {
         Log.i(TAG, "Will get file $sendFileName from server")
+        val socket = CoroutineSocket()
 
-        if (!socket.isValid) {
-            throw Exception("Invalid socket")
+        try {
+            socket.setSockFlag(SockOpt.TRANSTYPE, Transtype.FILE)
+            socket.connect(ip, port)
+            Log.i(
+                TAG,
+                "Is connected: ${socket.isConnected}"
+            )
+
+            // Request server file
+            socket.send(Ints.toByteArray(sendFileName.length).reversedArray())
+
+            socket.send(sendFileName)
+
+            val array = socket.recv(Longs.BYTES)
+            val fileSize = Longs.fromByteArray(array.reversedArray())
+
+            // Where file will be written
+            val recvFile = File(recvFileDir, recvFileName)
+            Log.i(TAG, "Receiving file ${recvFile.path}")
+            if (fileSize != socket.recvFile(recvFile, 0, fileSize)) {
+                throw Exception("Failed to recv file: ${Utils.getErrorMessage()}")
+            }
+
+            // If session is close too early, last msg will not be receive by server
+            delay(1000)
+            Log.i(TAG, "Received file $recvFile")
+        } catch (e: Exception) {
+            throw e
+        } finally {
+            socket.close()
         }
-
-        socket.setSockFlag(SockOpt.TRANSTYPE, Transtype.FILE)
-        socket.connect(ip, port)
-
-        // Request server file
-        socket.send(Ints.toByteArray(sendFileName.length).reversedArray())
-
-        socket.send(sendFileName)
-
-        val fileSize = Longs.fromByteArray(socket.recv(Longs.BYTES).reversedArray())
-
-        // Where file will be written
-        val recvFile = File(recvFileDir, recvFileName)
-        if (fileSize != socket.recvFile(recvFile, 0, fileSize)) {
-            throw Exception("Failed to recv file: ${Utils.getErrorMessage()}")
-        }
-
-        // If session is close too early, last msg will not be receive by server
-        Thread.sleep(1000)
-
-        successMsg = "Recv file is in $recvFile"
     }
-
 }
