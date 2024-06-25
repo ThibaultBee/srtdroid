@@ -1,2 +1,3 @@
 include ':srtdroid', ":example"
 rootProject.name='srtdroid'
+include ':srtdroid-ktx'
