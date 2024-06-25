@@ -41,7 +41,7 @@ android {
 }
 
 dependencies {
-    implementation project(':srtdroid')
+    implementation project(':srtdroid-ktx')
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.6.1'

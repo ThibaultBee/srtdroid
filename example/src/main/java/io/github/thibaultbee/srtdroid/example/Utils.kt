@@ -37,10 +37,4 @@ object Utils {
         Error.clearLastError()
         return message
     }
-
-    fun writeFile(file: File, text: String) {
-        FileOutputStream(file).use {
-            it.write(text.toByteArray())
-        }
-    }
 }
