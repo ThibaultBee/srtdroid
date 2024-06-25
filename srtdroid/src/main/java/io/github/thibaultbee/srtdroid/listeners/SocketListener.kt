@@ -35,7 +35,12 @@ interface SocketListener {
      * @param streamId the value set to [SockOpt.STREAMID] option set on the peer side
      * @return return 0, if the connection is to be accepted. If you return -1, this will be understood as a request to reject the incoming connection.
      */
-    fun onListen(ns: Socket, hsVersion: Int, peerAddress: InetSocketAddress, streamId: String): Int
+    fun onListen(
+        ns: Socket,
+        hsVersion: Int,
+        peerAddress: InetSocketAddress,
+        streamId: String
+    ): Int = 0
 
     /**
      * Called just after a pending connection in the background has been resolved and the connection has failed.
@@ -48,5 +53,10 @@ interface SocketListener {
      * @param token the token value, if it was used for group connection, otherwise -1
      * @return return 0, if the connection is to be accepted. If you return -1, this will be understood as a request to reject the incoming connection.
      */
-    fun onConnectionLost(ns: Socket, error: ErrorType, peerAddress: InetSocketAddress, token: Int)
+    fun onConnectionLost(
+        ns: Socket,
+        error: ErrorType,
+        peerAddress: InetSocketAddress,
+        token: Int
+    ) = Unit
 }
