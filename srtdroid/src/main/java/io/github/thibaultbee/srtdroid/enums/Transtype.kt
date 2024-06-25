@@ -20,19 +20,23 @@ package io.github.thibaultbee.srtdroid.enums
  *
  * **See Also:** [srt_transtype](https://github.com/Haivision/srt/blob/master/docs/API/API-socket-options.md#srt_transtype)
  */
-enum class Transtype {
+enum class Transtype(val displayName: String) {
     /**
      * Live mode.
      */
-    LIVE,
+    LIVE("live"),
 
     /**
      * File mode.
      */
-    FILE,
+    FILE("file"),
 
     /**
      * Invalid mode.
      */
-    INVALID
+    INVALID("invalid");
+
+    companion object {
+        fun entryOf(displayName: String) = entries.firstOrNull { it.displayName == displayName } ?: INVALID
+    }
 }
