@@ -793,11 +793,11 @@ private constructor(private val srtsocket: Int) : Closeable {
      * **See Also:** [srt_recv](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_recv)
      *
      * @param size Size of the expected message.
-     * @return a pair containing the number of bytes received and the [ByteArray] message.
+     * @return the [ByteArray] that contains the received message.
      * @throws SocketException if it has failed to send message
      * @throws SocketTimeoutException if a timeout has been triggered
      */
-    fun recv(size: Int): Pair<Int, ByteArray> {
+    fun recv(size: Int): ByteArray {
         val pair = nativeRecv(size)
         val byteReceived = pair.first
         when {
@@ -809,7 +809,7 @@ private constructor(private val srtsocket: Int) : Closeable {
                 throw SocketTimeoutException(ErrorType.ESCLOSED.toString())
             }
 
-            else -> return pair
+            else -> return pair.second.sliceArray(0 until byteReceived)
         }
     }
 
@@ -827,7 +827,7 @@ private constructor(private val srtsocket: Int) : Closeable {
      * @param buffer the [ByteArray] where received data are copied to.
      * @param offset the offset in the specified [buffer].
      * @param byteCount the size of the specified [buffer].
-     * @return a pair containing the number of bytes received and the [ByteArray] message. The [ByteArray] points to the [buffer].
+     * @return the number of bytes received.
      * @throws SocketException if it has failed to send message
      * @throws SocketTimeoutException if a timeout has been triggered
      */
@@ -835,7 +835,7 @@ private constructor(private val srtsocket: Int) : Closeable {
         buffer: ByteArray,
         offset: Int = 0,
         byteCount: Int = buffer.size
-    ): Pair<Int, ByteArray> {
+    ): Int {
         val pair = nativeRecv(buffer, offset, byteCount)
         val byteReceived = pair.first
         when {
@@ -847,7 +847,7 @@ private constructor(private val srtsocket: Int) : Closeable {
                 throw SocketTimeoutException(ErrorType.ESCLOSED.toString())
             }
 
-            else -> return pair
+            else -> return pair.first
         }
     }
 
@@ -860,11 +860,11 @@ private constructor(private val srtsocket: Int) : Closeable {
      *
      * @param size Size of the expected message.
      * @param msgCtrl the [MsgCtrl] that contains extra parameter
-     * @return a pair containing the number of bytes received and the [ByteArray] message.
+     * @return the [ByteArray] that contains the received message.
      * @throws SocketException if it has failed to send message
      * @throws SocketTimeoutException if a timeout has been triggered
      */
-    fun recv(size: Int, msgCtrl: MsgCtrl): Pair<Int, ByteArray> {
+    fun recv(size: Int, msgCtrl: MsgCtrl): ByteArray {
         val pair = nativeRecv(size, msgCtrl)
         val byteReceived = pair.first
         when {
@@ -876,7 +876,7 @@ private constructor(private val srtsocket: Int) : Closeable {
                 throw SocketTimeoutException(ErrorType.ESCLOSED.toString())
             }
 
-            else -> return pair
+            else -> return pair.second
         }
     }
 
@@ -896,7 +896,7 @@ private constructor(private val srtsocket: Int) : Closeable {
      * @param offset the offset in the specified [buffer].
      * @param byteCount the size of the specified [buffer].
      * @param msgCtrl the [MsgCtrl] that contains extra parameter
-     * @return a pair containing the number of bytes received and the [ByteArray] message. The [ByteArray] points to the [buffer].
+     * @return the number of bytes received.
      * @throws SocketException if it has failed to send message
      * @throws SocketTimeoutException if a timeout has been triggered
      */
@@ -905,7 +905,7 @@ private constructor(private val srtsocket: Int) : Closeable {
         offset: Int = 0,
         byteCount: Int = buffer.size,
         msgCtrl: MsgCtrl
-    ): Pair<Int, ByteArray> {
+    ): Int {
         val pair = nativeRecv(buffer, offset, byteCount, msgCtrl)
         val byteReceived = pair.first
         when {
@@ -917,7 +917,7 @@ private constructor(private val srtsocket: Int) : Closeable {
                 throw SocketTimeoutException(ErrorType.ESCLOSED.toString())
             }
 
-            else -> return pair
+            else -> return pair.first
         }
     }
 
@@ -945,32 +945,35 @@ private constructor(private val srtsocket: Int) : Closeable {
         }
 
         override fun read(): Int {
-            val pair = if (msgCtrl != null) {
-                socket.recv(1, msgCtrl)
-            } else {
-                socket.recv(1)
-            }
-            val byteReceived = pair.first
-            val byteArray = pair.second
-            return if (byteReceived > 0) {
-                byteArray[0].toInt()
-            } else {
-                -1
+            try {
+                val array = if (msgCtrl != null) {
+                    socket.recv(1, msgCtrl)
+                } else {
+                    socket.recv(1)
+                }
+                return if (array.isNotEmpty()) {
+                    array[0].toInt()
+                } else {
+                    -1
+                }
+            } catch (e: SocketTimeoutException) {
+                return -1
             }
         }
 
         override fun read(buffer: ByteArray, offset: Int, byteCount: Int): Int {
+            require(byteCount >= 0) { "byteCount must be positive" }
             if (byteCount == 0) {
                 return 0
             }
 
-            val pair = if (msgCtrl != null) {
+            val bytesRead = if (msgCtrl != null) {
                 socket.recv(buffer, offset, byteCount, msgCtrl)
             } else {
                 socket.recv(buffer, offset, byteCount)
             }
 
-            return pair.first
+            return bytesRead
         }
     }
 
@@ -1025,7 +1028,7 @@ private constructor(private val srtsocket: Int) : Closeable {
      * @throws SocketTimeoutException if a timeout has been triggered
      * @see [recvFile]
      */
-    fun sendFile(file: File, offset: Long = 0, size: Long, block: Int = 364000) =
+    fun sendFile(file: File, offset: Long = 0, size: Long = file.length(), block: Int = 364000) =
         sendFile(file.path, offset, size, block)
 
     /**

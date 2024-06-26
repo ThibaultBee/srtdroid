@@ -37,16 +37,15 @@ class SendFile(
         val clientSocket = peer.first
 
         // Get file name length
-        var pair = clientSocket.recv(Ints.BYTES)
-        val res = pair.first
-        val fileNameLength = Ints.fromByteArray(pair.second.reversedArray())
+        var array = clientSocket.recv(Ints.BYTES)
+        val fileNameLength = Ints.fromByteArray(array.reversedArray())
         when {
-            res > 0 -> Log.i(TAG, "File name is $fileNameLength char long")
+            array.isNotEmpty() -> Log.i(TAG, "File name is $fileNameLength char long")
         }
 
         // Get file name
-        pair = clientSocket.recv(fileNameLength)
-        val fileName = String(pair.second)
+        array = clientSocket.recv(fileNameLength)
+        val fileName = String(array)
         Log.i(TAG, "File name is $fileName")
 
         val file = File("$fileSendDir/$fileName")

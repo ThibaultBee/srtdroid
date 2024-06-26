@@ -58,7 +58,7 @@ class SocketRecvTest {
         sleep(1000)
         socket.connect(InetAddress.getLoopbackAddress(), server.port)
 
-        val actualArray = socket.recv(arraySize).second
+        val actualArray = socket.recv(arraySize)
 
         val numOfSentBytes = futureResult.get(1000, TimeUnit.MILLISECONDS)
         Assert.assertEquals(arraySize, numOfSentBytes)
@@ -72,7 +72,7 @@ class SocketRecvTest {
         val futureResult = server.enqueue(expectedArray)
         socket.connect(InetAddress.getLoopbackAddress(), server.port)
 
-        val actualArray = socket.recv(arraySize, msgCtrl = MsgCtrl(ttl = 100)).second
+        val actualArray = socket.recv(arraySize, msgCtrl = MsgCtrl(ttl = 100))
 
         val numOfSentBytes = futureResult.get(1000, TimeUnit.MILLISECONDS)
         Assert.assertEquals(arraySize, numOfSentBytes)

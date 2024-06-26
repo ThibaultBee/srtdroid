@@ -39,7 +39,7 @@ class RecvFile(
 
         socket.send(sendFileName)
 
-        val fileSize = Longs.fromByteArray(socket.recv(Longs.BYTES).second.reversedArray())
+        val fileSize = Longs.fromByteArray(socket.recv(Longs.BYTES).reversedArray())
 
         // Where file will be written
         val recvFile = File(recvFileDir, recvFileName)

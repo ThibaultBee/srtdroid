@@ -32,8 +32,7 @@ class TestServer(
         val clientSocket = peer.first
 
         repeat(numOfMessages) {
-            val pair = clientSocket.recv(2048)
-            val message = pair.second
+            val message = clientSocket.recv(2048)
             Log.i(TAG, "#$it >> Got msg of length ${message.size} << ${String(message)}")
         }
 

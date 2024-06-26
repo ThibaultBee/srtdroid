@@ -206,7 +206,7 @@ class SocketSendTest {
                 serverSocket.listen(1)
                 val pair = serverSocket.accept()
                 val comSocket = pair.first
-                val byteArray = comSocket.recv(receiveByteCount).second
+                val byteArray = comSocket.recv(receiveByteCount)
                 comSocket.close()
                 byteArray
             })
