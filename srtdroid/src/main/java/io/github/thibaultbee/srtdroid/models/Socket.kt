@@ -21,7 +21,6 @@ import io.github.thibaultbee.srtdroid.enums.ErrorType
 import io.github.thibaultbee.srtdroid.enums.RejectReasonCode
 import io.github.thibaultbee.srtdroid.enums.SockOpt
 import io.github.thibaultbee.srtdroid.enums.SockStatus
-import io.github.thibaultbee.srtdroid.listeners.SocketListener
 import io.github.thibaultbee.srtdroid.models.rejectreason.InternalRejectReason
 import io.github.thibaultbee.srtdroid.models.rejectreason.PredefinedRejectReason
 import io.github.thibaultbee.srtdroid.models.rejectreason.RejectReason
@@ -64,13 +63,14 @@ private constructor(private val srtsocket: Int) : Closeable {
     }
 
     /**
-     * Sets up the SRT socket listener. Use it to monitor SRT socket connection.
-     *
-     * **See Also:** [srt_connect_callback](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_connect_callback)
-     *
-     * @see [SocketListener]
+     * Client listeners
      */
-    var listener: SocketListener? = null
+    var clientListener: ClientListener? = null
+
+    /**
+     * Server listeners
+     */
+    var serverListener: ServerListener? = null
 
     /**
      * Deprecated version of [Socket] constructor. Argument is ignored.
@@ -171,9 +171,9 @@ private constructor(private val srtsocket: Int) : Closeable {
 
     // Connecting
     /**
-     * Internal method. Do not use, use [SocketListener.onListen] instead.
+     * Internal method. Do not use, use [ServerListener.onListen] instead.
      *
-     * @see [listener]
+     * @see [ServerListener]
      */
     private fun onListen(
         ns: Socket,
@@ -181,7 +181,7 @@ private constructor(private val srtsocket: Int) : Closeable {
         peerAddress: InetSocketAddress,
         streamId: String
     ): Int {
-        return listener?.onListen(ns, hsVersion, peerAddress, streamId)
+        return serverListener?.onListen(ns, hsVersion, peerAddress, streamId)
             ?: 0 // By default, accept incoming connection
     }
 
@@ -194,7 +194,7 @@ private constructor(private val srtsocket: Int) : Closeable {
      *
      * @param backlog the number of sockets that may be allowed to wait until they are accepted
      * @throws SocketException if listen failed
-     * @see [listener]
+     * @see [ServerListener.onListen]
      */
     fun listen(backlog: Int) {
         if (nativeListen(backlog) != 0) {
@@ -221,9 +221,9 @@ private constructor(private val srtsocket: Int) : Closeable {
     }
 
     /**
-     * Internal method. Do not use, use [SocketListener.onConnectionLost] instead.
+     * Internal method. Do not use, use [ClientListener.onConnectionLost] instead.
      *
-     * @see [listener]
+     * @see [ClientListener]
      */
     private fun onConnect(
         ns: Socket,
@@ -231,7 +231,7 @@ private constructor(private val srtsocket: Int) : Closeable {
         peerAddress: InetSocketAddress,
         token: Int
     ) {
-        listener?.onConnectionLost(ns, error, peerAddress, token)
+        clientListener?.onConnectionLost(ns, error, peerAddress, token)
     }
 
     private external fun nativeConnect(address: InetSocketAddress): Int
@@ -339,7 +339,7 @@ private constructor(private val srtsocket: Int) : Closeable {
         get() = nativeGetPeerName() ?: throw SocketException(Error.lastErrorMessage)
 
     /**
-     * Retrieves the [InetAddress] to which the socket is connected.
+     * Retrieves the remote [InetAddress] to which the socket is connected.
      *
      * **See Also:** [srt_getpeername](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_getpeername)
      *
@@ -1316,4 +1316,50 @@ private constructor(private val srtsocket: Int) : Closeable {
      * @throws IOException if can't get [SockOpt]
      */
     fun available(): Int = getSockFlag(SockOpt.RCVDATA) as Int
+
+    /**
+     * This interface is used by a server [Socket] to notify SRT socket events.
+     */
+    interface ServerListener {
+        /**
+         * Called to handle the incoming connection on the listening socket (and is about to be returned by srt_accept), but before the connection has been accepted.
+         *
+         * **See Also:** [srt_listen_callback](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_listen_callback)
+         *
+         * @param ns the new SRT socket of the new connection
+         * @param hsVersion the handshake version
+         * @param peerAddress the address of the incoming connection
+         * @param streamId the value set to [SockOpt.STREAMID] option set on the peer side
+         * @return return 0, if the connection is to be accepted. If you return -1, this will be understood as a request to reject the incoming connection.
+         */
+        fun onListen(
+            ns: Socket,
+            hsVersion: Int,
+            peerAddress: InetSocketAddress,
+            streamId: String
+        ): Int = 0
+    }
+
+    /**
+     * This interface is used by a client [Socket] to notify SRT socket events.
+     */
+    interface ClientListener {
+        /**
+         * Called just after a pending connection in the background has been resolved and the connection has failed.
+         *
+         * **See Also:** [srt_connect_callback](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_connect_callback)
+         *
+         * @param ns the new SRT socket of the new connection
+         * @param error the reason connect has been lost
+         * @param peerAddress the address of the peer device
+         * @param token the token value, if it was used for group connection, otherwise -1
+         * @return return 0, if the connection is to be accepted. If you return -1, this will be understood as a request to reject the incoming connection.
+         */
+        fun onConnectionLost(
+            ns: Socket,
+            error: ErrorType,
+            peerAddress: InetSocketAddress,
+            token: Int
+        ) = Unit
+    }
 }
