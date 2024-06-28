@@ -27,20 +27,21 @@ import java.security.InvalidParameterException
  *
  * **See Also:** [Asynchronous operations (epoll)](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#asynchronous-operations-epoll-1)
  */
-class Epoll {
+class Epoll
+private constructor(private val eid: Int) {
     companion object {
+        @JvmStatic
+        private external fun nativeCreate(): Int
+
         init {
             Srt.startUp()
         }
     }
-    
-    private var eid: Int
 
-    init {
-        eid = create()
-    }
-
-    private external fun create(): Int
+    /**
+     * Creates an epoll container.
+     */
+    constructor() : this(nativeCreate())
 
     private external fun nativeIsValid(): Boolean
 

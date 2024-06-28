@@ -699,7 +699,7 @@ nativeEpollIsValid(JNIEnv *env, jobject epoll) {
     return static_cast<jboolean>(eid != -1);
 }
 
-jint JNICALL
+static jint JNICALL
 nativeEpollCreate(JNIEnv *env, jobject epoll) {
     return srt_epoll_create();
 }
@@ -911,8 +911,8 @@ static JNINativeMethod timeMethods[] = {
 };
 
 static JNINativeMethod epollMethods[] = {
+        {"nativeCreate",      "()I",                   (void *) &nativeEpollCreate},
         {"nativeIsValid",     "()Z",                   (void *) &nativeEpollIsValid},
-        {"create",            "()I",                   (void *) &nativeEpollCreate},
         {"nativeAddUSock",    "(L" SOCKET_CLASS ";L" LIST_CLASS ";)I", (void *) &nativeEpollAddUSock},
         {"nativeUpdateUSock", "(L" SOCKET_CLASS ";L" LIST_CLASS ";)I", (void *) &nativeEpollUpdateUSock},
         {"nativeRemoveUSock", "(L" SOCKET_CLASS ";)I", (void *) &nativeEpollRemoveUSock},
