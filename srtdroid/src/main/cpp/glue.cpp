@@ -208,9 +208,9 @@ nativeIsValid(JNIEnv *env, jobject ju) {
 
 static jint JNICALL
 nativeCreateSocketFamily(JNIEnv *env, jobject obj,
-             jobject addressFamily,
-             jint type,
-             jint protocol) {
+                         jobject addressFamily,
+                         jint type,
+                         jint protocol) {
     int af = EnumsSingleton::getInstance(env)->addressFamily->getNativeValue(env, addressFamily);
     if (af <= 0) {
         LOGE("Bad value for address family");
@@ -751,7 +751,7 @@ nativeEpollWait(JNIEnv *env, jobject epoll, jobject readFdsList, jobject writeFd
         readfds = Socket::getNativeSockets(env, readFdsList, &nReadFds);
     }
     if (writeFdsList) {
-        writefds =  Socket::getNativeSockets(env, writeFdsList, &nWriteFds);
+        writefds = Socket::getNativeSockets(env, writeFdsList, &nWriteFds);
     }
 
     int res = srt_epoll_wait(eid, readfds, &nReadFds, writefds, &nWriteFds, timeOut, nullptr, 0,
@@ -911,17 +911,17 @@ static JNINativeMethod timeMethods[] = {
 };
 
 static JNINativeMethod epollMethods[] = {
-        {"nativeCreate",      "()I",                   (void *) &nativeEpollCreate},
-        {"nativeIsValid",     "()Z",                   (void *) &nativeEpollIsValid},
+        {"nativeCreate",      "()I",                                   (void *) &nativeEpollCreate},
+        {"nativeIsValid",     "()Z",                                   (void *) &nativeEpollIsValid},
         {"nativeAddUSock",    "(L" SOCKET_CLASS ";L" LIST_CLASS ";)I", (void *) &nativeEpollAddUSock},
         {"nativeUpdateUSock", "(L" SOCKET_CLASS ";L" LIST_CLASS ";)I", (void *) &nativeEpollUpdateUSock},
-        {"nativeRemoveUSock", "(L" SOCKET_CLASS ";)I", (void *) &nativeEpollRemoveUSock},
-        {"nativeWait",        "(L" LIST_CLASS ";L" LIST_CLASS ";J)I", (void *) &nativeEpollWait},
-        {"nativeUWait",       "(L" LIST_CLASS ";J)I", (void *) &nativeEpollUWait},
-        {"nativeClearUSock",  "()I",                   (void *) &nativeEpollClearUSock},
-        {"nativeSetFlags",    "(L" LIST_CLASS ";)L" LIST_CLASS ";", (void *) &nativeEpollSet},
-        {"nativeGetFlags",    "()L" LIST_CLASS ";", (void *) &nativeEpollGet},
-        {"nativeRelease",     "()I",                   (void *) &nativeEpollRelease}
+        {"nativeRemoveUSock", "(L" SOCKET_CLASS ";)I",                 (void *) &nativeEpollRemoveUSock},
+        {"nativeWait",        "(L" LIST_CLASS ";L" LIST_CLASS ";J)I",  (void *) &nativeEpollWait},
+        {"nativeUWait",       "(L" LIST_CLASS ";J)I",                  (void *) &nativeEpollUWait},
+        {"nativeClearUSock",  "()I",                                   (void *) &nativeEpollClearUSock},
+        {"nativeSetFlags",    "(L" LIST_CLASS ";)L" LIST_CLASS ";",    (void *) &nativeEpollSet},
+        {"nativeGetFlags",    "()L" LIST_CLASS ";",                    (void *) &nativeEpollGet},
+        {"nativeRelease",     "()I",                                   (void *) &nativeEpollRelease}
 };
 
 static int registerNativeForClassName(JNIEnv *env, const char *className,
