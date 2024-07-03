@@ -710,7 +710,7 @@ nativeEpollAddUSock(JNIEnv *env, jobject epoll, jobject ju, jobject epollEventLi
     SRTSOCKET u = Socket::getNative(env, ju);
 
     if (epollEventList) {
-        int events = EpollOpts::getNativeEpollOpts(env, epollEventList);
+        int events = EpollOpts::getNative(env, epollEventList);
         return srt_epoll_add_usock(eid, u, &events);
     } else {
         return srt_epoll_add_usock(eid, u, nullptr);
@@ -723,7 +723,7 @@ nativeEpollUpdateUSock(JNIEnv *env, jobject epoll, jobject ju, jobject epollEven
     SRTSOCKET u = Socket::getNative(env, ju);
 
     if (epollEventList) {
-        int events = EpollOpts::getNativeEpollOpts(env, epollEventList);
+        int events = EpollOpts::getNative(env, epollEventList);
         return srt_epoll_update_usock(eid, u, &events);
     } else {
         return srt_epoll_update_usock(eid, u, nullptr);
@@ -738,24 +738,35 @@ nativeEpollRemoveUSock(JNIEnv *env, jobject epoll, jobject ju) {
     return srt_epoll_remove_usock(eid, u);
 }
 
-jint JNICALL
-nativeEpollWait(JNIEnv *env, jobject epoll, jobject readFdsList, jobject writeFdsList,
-                jlong timeOut) {
+jobject JNICALL
+nativeEpollWait(JNIEnv *env, jobject epoll, jlong timeOut, jint rnum, jint wnum) {
     int eid = Epoll::getNative(env, epoll);
-    int nReadFds = 0;
-    int nWriteFds = 0;
     SRTSOCKET *readfds = nullptr;
     SRTSOCKET *writefds = nullptr;
+    jobject jReadfds = List::newJavaList(env);
+    jobject jWritefds = List::newJavaList(env);
 
-    if (readFdsList) {
-        readfds = Socket::getNativeSockets(env, readFdsList, &nReadFds);
+    if (rnum > 0) {
+        readfds = (SRTSOCKET *) malloc(sizeof(SRTSOCKET) * rnum);
     }
-    if (writeFdsList) {
-        writefds = Socket::getNativeSockets(env, writeFdsList, &nWriteFds);
+    if (wnum > 0) {
+        writefds = (SRTSOCKET *) malloc(sizeof(SRTSOCKET) * wnum);
     }
 
-    int res = srt_epoll_wait(eid, readfds, &nReadFds, writefds, &nWriteFds, timeOut, nullptr, 0,
+    int res = srt_epoll_wait(eid, readfds, &rnum, writefds, &wnum, timeOut, nullptr, 0,
                              nullptr, 0);
+
+    if (res > 0) {
+        for (int i = 0; i < rnum; i++) {
+            jobject jSocket = Socket::getJava(env, readfds[i]);
+            List::add(env, jReadfds, jSocket);
+        }
+
+        for (int i = 0; i < wnum; i++) {
+            jobject jSocket = Socket::getJava(env, writefds[i]);
+            List::add(env, jWritefds, jSocket);
+        }
+    }
 
     if (readfds != nullptr) {
         free(readfds);
@@ -764,26 +775,32 @@ nativeEpollWait(JNIEnv *env, jobject epoll, jobject readFdsList, jobject writeFd
         free(writefds);
     }
 
-    return res;
+    return Pair::newJavaPair(env, jReadfds, jWritefds);
 }
 
-jint JNICALL
-nativeEpollUWait(JNIEnv *env, jobject epoll, jobject fdsList, jlong timeOut) {
+jobject JNICALL
+nativeEpollUWait(JNIEnv *env, jobject epoll, jlong timeOut, jint fdsSize) {
     int eid = Epoll::getNative(env, epoll);
     SRT_EPOLL_EVENT *epoll_events = nullptr;
-    int nEpollEvents = 0;
+    jobject jEpollEvents = List::newJavaList(env);
 
-    if (fdsList) {
-        epoll_events = EpollEvent::getNativeEpollEvents(env, fdsList, &nEpollEvents);
+    if (fdsSize > 0) {
+        epoll_events = (SRT_EPOLL_EVENT *) malloc(sizeof(SRT_EPOLL_EVENT) * fdsSize);
     }
 
-    int res = srt_epoll_uwait(eid, epoll_events, nEpollEvents, timeOut);
+    int res = srt_epoll_uwait(eid, epoll_events, fdsSize, timeOut);
+    if (res > 0) {
+        for (int i = 0; i < res; i++) {
+            jobject jEpollEvent = EpollEvent::getJava(env, epoll_events[i]);
+            List::add(env, jEpollEvents, jEpollEvent);
+        }
+    }
 
     if (epoll_events != nullptr) {
         free(epoll_events);
     }
 
-    return res;
+    return Pair::newJavaPair(env, Primitive::newJavaInt(env, res), jEpollEvents);
 }
 
 jint JNICALL
@@ -916,8 +933,8 @@ static JNINativeMethod epollMethods[] = {
         {"nativeAddUSock",    "(L" SOCKET_CLASS ";L" LIST_CLASS ";)I", (void *) &nativeEpollAddUSock},
         {"nativeUpdateUSock", "(L" SOCKET_CLASS ";L" LIST_CLASS ";)I", (void *) &nativeEpollUpdateUSock},
         {"nativeRemoveUSock", "(L" SOCKET_CLASS ";)I",                 (void *) &nativeEpollRemoveUSock},
-        {"nativeWait",        "(L" LIST_CLASS ";L" LIST_CLASS ";J)I",  (void *) &nativeEpollWait},
-        {"nativeUWait",       "(L" LIST_CLASS ";J)I",                  (void *) &nativeEpollUWait},
+        {"nativeWait",        "(JII)L" PAIR_CLASS ";",                 (void *) &nativeEpollWait},
+        {"nativeUWait",       "(JI)L" PAIR_CLASS ";",                  (void *) &nativeEpollUWait},
         {"nativeClearUSock",  "()I",                                   (void *) &nativeEpollClearUSock},
         {"nativeSetFlags",    "(L" LIST_CLASS ";)L" LIST_CLASS ";",    (void *) &nativeEpollSet},
         {"nativeGetFlags",    "()L" LIST_CLASS ";",                    (void *) &nativeEpollGet},

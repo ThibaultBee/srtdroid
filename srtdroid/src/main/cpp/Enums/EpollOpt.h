@@ -29,8 +29,6 @@ public:
                                                       {"IN",       SRT_EPOLL_IN},
                                                       {"OUT",      SRT_EPOLL_OUT},
                                                       {"ERR",      SRT_EPOLL_ERR},
-                                                      {"CONNECT",  SRT_EPOLL_CONNECT},
-                                                      {"ACCEPT",   SRT_EPOLL_ACCEPT},
                                                       {"UPDATE",   SRT_EPOLL_UPDATE},
                                                       {"ET",       SRT_EPOLL_ET}
 

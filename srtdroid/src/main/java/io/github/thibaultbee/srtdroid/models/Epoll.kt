@@ -15,6 +15,7 @@
  */
 package io.github.thibaultbee.srtdroid.models
 
+import android.util.Pair
 import io.github.thibaultbee.srtdroid.Srt
 import io.github.thibaultbee.srtdroid.enums.EpollFlag
 import io.github.thibaultbee.srtdroid.enums.EpollOpt
@@ -104,10 +105,10 @@ private constructor(private val eid: Int) {
     }
 
     private external fun nativeWait(
-        readFds: List<Socket>,
-        writeFds: List<Socket>,
-        timeOut: Long
-    ): Int
+        timeOut: Long,
+        expectedReadReadySocketSize: Int,
+        expectedWriteReadySocketSize: Int,
+    ): Pair<Int, Pair<List<Socket>, List<Socket>>>
 
     /**
      * Blocks the call until any readiness state occurs in the epoll container.
@@ -120,16 +121,21 @@ private constructor(private val eid: Int) {
      * @throws InvalidParameterException if [Epoll] is not valid or timeout is triggered
      */
     fun wait(
-        readFds: List<Socket> = emptyList(),
-        writeFds: List<Socket> = emptyList(),
-        timeout: Long
-    ) {
-        if (nativeWait(readFds, writeFds, timeout) != 0) {
+        timeout: Long,
+        expectedReadReadySocketSize: Int = 2,
+        expectedWriteReadySocketSize: Int = 2
+    ): Pair<List<Socket>, List<Socket>> {
+        val pair = nativeWait(timeout, expectedReadReadySocketSize, expectedWriteReadySocketSize)
+        if (pair.first < 0) {
             throw InvalidParameterException(Error.lastErrorMessage)
         }
+        return pair.second
     }
 
-    private external fun nativeUWait(fdsSet: List<EpollEvent>, timeOut: Long): Int
+    private external fun nativeUWait(
+        timeOut: Long,
+        expectedEpollEventSize: Int
+    ): Pair<Int, List<EpollEvent>>
 
     /**
      * Blocks a call until any readiness state occurs in the epoll container.
@@ -141,11 +147,21 @@ private constructor(private val eid: Int) {
      * @throws InvalidParameterException if [Epoll] is not valid or if fdsSet is invalid
      */
     fun uWait(
-        fdsSet: List<EpollEvent>, timeout: Long
-    ) {
-        if (nativeUWait(fdsSet, timeout) != 0) {
-            throw InvalidParameterException(Error.lastErrorMessage)
+        timeout: Long,
+        expectedEpollEventSize: Int = 2
+    ): List<EpollEvent> {
+        val epollEvents = mutableListOf<EpollEvent>()
+        while (true) {
+            val pair = nativeUWait(timeout, expectedEpollEventSize)
+            if (pair.first < 0) {
+                throw InvalidParameterException(Error.lastErrorMessage)
+            }
+            epollEvents.addAll(pair.second)
+            if (pair.first <= expectedEpollEventSize) {
+                break
+            }
         }
+        return epollEvents
     }
 
     private external fun nativeClearUSock(): Int
@@ -167,7 +183,7 @@ private constructor(private val eid: Int) {
     private external fun nativeGetFlags(): List<EpollFlag>?
 
     /**
-     * Set flags that change the default behavior of the epoll functions. Same as [flags] but returns list of [EpollFlag].
+     * Set flags that change the default behavior of the epoll functions. Same as [flags] but returns the effective list of [EpollFlag].
      *
      * **See Also:** [srt_epoll_set](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_epoll_set)
      *
@@ -197,7 +213,7 @@ private constructor(private val eid: Int) {
          * @throws InvalidParameterException if [Epoll] is not valid
          */
         set(value) {
-            nativeSetFlags(value) ?: throw InvalidParameterException(Error.lastErrorMessage)
+            setFlags(value)
         }
 
     private external fun nativeRelease(): Int

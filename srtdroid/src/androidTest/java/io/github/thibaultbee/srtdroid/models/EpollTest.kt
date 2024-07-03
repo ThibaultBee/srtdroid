@@ -90,24 +90,21 @@ class EpollTest {
 
     @Test
     fun testWaitTest() {
-        val readFds = listOf(Socket(), Socket(), Socket())
         epoll.flags = listOf(EpollFlag.ENABLE_EMPTY)
-        assertEquals(listOf(EpollFlag.ENABLE_EMPTY), epoll.flags)
         try {
-            epoll.wait(readFds, emptyList(), 1000L)
+            epoll.wait(1000L)
             fail()
         } catch (e: Exception) {
         }
         assertEquals(Error.lastError, ErrorType.ETIMEOUT)
         try {
-            epoll.wait(readFds, timeout = 1000L)
+            epoll.wait(timeout = 1000L)
             fail()
         } catch (e: Exception) {
         }
         assertEquals(Error.lastError, ErrorType.ETIMEOUT)
-        val writeFds = listOf(Socket(), Socket())
         try {
-            epoll.wait(readFds, writeFds, 1000L)
+            epoll.wait(1000L)
             fail()
         } catch (e: Exception) {
         }
@@ -117,14 +114,14 @@ class EpollTest {
     @Test
     fun uWaitTest() {
         try {
-            epoll.uWait(listOf(), 1000L)
+            epoll.uWait(1000L)
             fail()
         } catch (e: Exception) {
         }
         epoll.flags = listOf(EpollFlag.ENABLE_EMPTY)
         assertEquals(listOf(EpollFlag.ENABLE_EMPTY), epoll.flags)
         try {
-            epoll.uWait(listOf(EpollEvent(Socket(), listOf(EpollOpt.IN, EpollOpt.ET))), 1000L)
+            epoll.uWait( 1000L)
         } catch (e: Exception) {
             fail()
         }

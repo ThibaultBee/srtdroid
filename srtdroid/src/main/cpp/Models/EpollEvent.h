@@ -47,39 +47,31 @@ public:
         }
         jobject epollOpts = static_cast<jobjectArray>(env->GetObjectField(epollEvent,
                                                                           epollOptsField));
-        srt_event->events = EpollOpts::getNativeEpollOpts(env, epollOpts);
+        srt_event->events = EpollOpts::getNative(env, epollOpts);
 
         env->DeleteLocalRef(epollEventClazz);
 
         return srt_event;
     }
 
-    static SRT_EPOLL_EVENT *
-    getNativeEpollEvents(JNIEnv *env, jobject epollEventList, int *nEvents) {
-        jclass listClazz = env->GetObjectClass(epollEventList);
-        if (!listClazz) {
-            LOGE("Can't get List object class");
+    static jobject getJava(JNIEnv *env, SRT_EPOLL_EVENT epoll_event) {
+        jclass clazz = env->FindClass(EPOLLEVENT_CLASS);
+        if (!clazz) {
+            LOGE("Can't get EpollEvent class");
             return nullptr;
         }
 
-        jmethodID listSizeID = env->GetMethodID(listClazz, "size", "()I");
-        if (!listSizeID) {
-            LOGE("Can't get size method field");
-            env->DeleteLocalRef(listClazz);
+        jmethodID constructor = env->GetMethodID(clazz, "<init>", "(L" SOCKET_CLASS ";L" LIST_CLASS ";)V");
+        if (!constructor) {
+            LOGE("Can't get EpollEvent constructor");
             return nullptr;
         }
-        *nEvents = reinterpret_cast<int>(env->CallIntMethod(epollEventList, listSizeID));
 
-        *nEvents = List::getSize(env, epollEventList);
+        jobject srtSocket = Socket::getJava(env, epoll_event.fd);
+        jobject jevents = EpollOpts::getJava(env, epoll_event.events);
 
-        SRT_EPOLL_EVENT *epoll_events = static_cast<SRT_EPOLL_EVENT *>(malloc(
-                *nEvents * sizeof(SRT_EPOLL_EVENT)));
+        jobject epollEvent = env->NewObject(clazz, constructor, srtSocket, jevents);
 
-        for (int i = 0; i < *nEvents; i++) {
-            jobject epollEvent = List::get(env, epollEventList, i);
-            EpollEvent::getNative(env, epollEvent, &epoll_events[i]);
-        }
-
-        return epoll_events;
+        return epollEvent;
     }
 };

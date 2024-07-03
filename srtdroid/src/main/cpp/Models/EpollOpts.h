@@ -17,7 +17,7 @@
 
 class EpollOpts {
 public:
-    static int getNativeEpollOpts(JNIEnv *env, jobject epollEventList) {
+    static int getNative(JNIEnv *env, jobject epollEventList) {
         int nEvents = List::getSize(env, epollEventList);
         int events = SRT_EPOLL_OPT_NONE;
 
@@ -27,5 +27,28 @@ public:
         }
 
         return events;
+    }
+
+    static jobject getJava(JNIEnv *env, int epoll_opts) {
+        jobject list = List::newJavaList(env);
+        if (!list) {
+            LOGE("Can't create EpollEvent List");
+            env->DeleteLocalRef(list);
+            return nullptr;
+        }
+
+
+        for (int i = 0; i < 32; i++) {
+            SRT_EPOLL_OPT epoll_opt = static_cast<SRT_EPOLL_OPT>(epoll_opts & (1 << i));
+            if (epoll_opt != 0) {
+                jobject epollOpts = EnumsSingleton::getInstance(env)->epollOpt->getJavaValue(env,
+                                                                                             epoll_opt);
+                if (List::add(env, list, epollOpts) == 0) {
+                    LOGE("Can't add epollEvent %d", i);
+                }
+            }
+        }
+
+        return list;
     }
 };
