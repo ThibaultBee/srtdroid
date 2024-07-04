@@ -1321,6 +1321,20 @@ private constructor(private val srtsocket: Int) : Closeable {
     fun available(): Int = getSockFlag(SockOpt.RCVDATA) as Int
 
     /**
+     * Return [true] if internal SRT socket are equals
+     */
+    override fun equals(other: Any?): Boolean {
+        if (other is Socket) {
+            return other.srtsocket == srtsocket
+        }
+        return false
+    }
+
+    override fun hashCode(): Int {
+        return srtsocket.hashCode()
+    }
+
+    /**
      * This interface is used by a server [Socket] to notify SRT socket events.
      */
     interface ServerListener {

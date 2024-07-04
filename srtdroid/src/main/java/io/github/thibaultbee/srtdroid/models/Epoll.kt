@@ -230,4 +230,14 @@ private constructor(private val eid: Int) {
             throw InvalidParameterException(Error.lastErrorMessage)
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is Epoll) return false
+        return eid == other.eid
+    }
+    
+    override fun hashCode(): Int {
+        return eid.hashCode()
+    }
 }
