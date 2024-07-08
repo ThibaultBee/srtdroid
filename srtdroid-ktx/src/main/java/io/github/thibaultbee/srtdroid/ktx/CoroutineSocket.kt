@@ -6,6 +6,7 @@ import io.github.thibaultbee.srtdroid.enums.EpollOpt
 import io.github.thibaultbee.srtdroid.enums.ErrorType
 import io.github.thibaultbee.srtdroid.enums.SockOpt
 import io.github.thibaultbee.srtdroid.enums.SockStatus
+import io.github.thibaultbee.srtdroid.interfaces.ConfigurableSocket
 import io.github.thibaultbee.srtdroid.models.Epoll
 import io.github.thibaultbee.srtdroid.models.Error
 import io.github.thibaultbee.srtdroid.models.MsgCtrl
@@ -48,7 +49,7 @@ class CoroutineSocket
 private constructor(
     private val socket: Socket
 ) :
-    CoroutineScope {
+    ConfigurableSocket, CoroutineScope {
     constructor() : this(Socket())
 
     init {
@@ -292,7 +293,7 @@ private constructor(
      * @throws IOException if can't get [SockOpt]
      * @see [setSockFlag]
      */
-    fun getSockFlag(opt: SockOpt): Any {
+    override fun getSockFlag(opt: SockOpt): Any {
         return socket.getSockFlag(opt)
     }
 
@@ -306,7 +307,7 @@ private constructor(
      * @throws IOException if can't set [SockOpt]
      * @see [getSockFlag]
      */
-    fun setSockFlag(opt: SockOpt, value: Any) {
+    override fun setSockFlag(opt: SockOpt, value: Any) {
         if ((opt == SockOpt.RCVSYN) || (opt == SockOpt.SNDSYN)) {
             throw IllegalArgumentException("Options not supported")
         }

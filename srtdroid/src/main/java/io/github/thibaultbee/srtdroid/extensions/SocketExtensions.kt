@@ -28,7 +28,7 @@ fun Socket.bind(url: String) = bind(SrtUrl(url))
  */
 fun Socket.bind(srtUrl: SrtUrl) {
     if (srtUrl.mode != null) {
-        require(srtUrl.mode != SrtUrl.Mode.CALLER) { "Bind is only for `listener` or `rendezvous` mode but ${srtUrl.mode.value}" }
+        require(srtUrl.mode != SrtUrl.Mode.CALLER) { "Bind is only for `listener` or `rendezvous` mode but ${srtUrl.mode}" }
     }
 
     srtUrl.preApplyTo(this)
@@ -57,7 +57,7 @@ fun Socket.connect(url: String) = connect(SrtUrl(url))
  */
 fun Socket.connect(srtUrl: SrtUrl) {
     if (srtUrl.mode != null) {
-        require(srtUrl.mode != SrtUrl.Mode.LISTENER) { "Connect is only for `caller` or `rendezvous` mode but ${srtUrl.mode.value}" }
+        require(srtUrl.mode != SrtUrl.Mode.LISTENER) { "Connect is only for `caller` or `rendezvous` mode but ${srtUrl.mode}" }
     }
 
     srtUrl.preApplyTo(this)
@@ -87,7 +87,7 @@ fun Socket.rendezVous(
     srtUrl: SrtUrl
 ) {
     if (srtUrl.mode != null) {
-        require(srtUrl.mode == SrtUrl.Mode.RENDEZ_VOUS) { "Connect is only for `caller` or `rendezvous` mode but ${srtUrl.mode.value}" }
+        require(srtUrl.mode == SrtUrl.Mode.RENDEZ_VOUS) { "Connect is only for `caller` or `rendezvous` mode but ${srtUrl.mode}" }
     }
 
     srtUrl.preApplyTo(this)
