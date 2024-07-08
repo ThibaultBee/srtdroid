@@ -1054,7 +1054,7 @@ private constructor(private val srtsocket: Int) : Closeable {
     ): Long
 
     /**
-     * Receives a file. File is create in [path].
+     * Receives a file. File will be located at [path].
      *
      * **See Also:** [srt_recvfile](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_recvfile)
      *
@@ -1083,7 +1083,7 @@ private constructor(private val srtsocket: Int) : Closeable {
     }
 
     /**
-     * Receives a file. File is create in [file].
+     * Receives a file. File will be located at [path].
      *
      * **See Also:** [srt_recvfile](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_recvfile)
      *
