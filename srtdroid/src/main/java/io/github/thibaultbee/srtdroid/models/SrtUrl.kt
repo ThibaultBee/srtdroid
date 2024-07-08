@@ -21,6 +21,7 @@ import io.github.thibaultbee.srtdroid.Srt
 import io.github.thibaultbee.srtdroid.enums.SockOpt
 import io.github.thibaultbee.srtdroid.enums.Transtype
 import io.github.thibaultbee.srtdroid.extensions.toBoolean
+import io.github.thibaultbee.srtdroid.interfaces.ConfigurableSocket
 import java.security.InvalidParameterException
 
 /**
@@ -197,7 +198,11 @@ data class SrtUrl(
         }
     }
 
-    internal fun preBindApplyTo(socket: Socket) {
+    /**
+     * Sets pre configuration for binding socket.
+     * Internal purpose only.
+     */
+    fun preBindApplyTo(socket: ConfigurableSocket) {
         iptos?.let { socket.setSockFlag(SockOpt.IPTOS, it) }
         ipttl?.let { socket.setSockFlag(SockOpt.IPTTL, it) }
         maxSegmentSize?.let { socket.setSockFlag(SockOpt.MSS, it) }
@@ -207,7 +212,11 @@ data class SrtUrl(
         recvBufferSize?.let { socket.setSockFlag(SockOpt.RCVBUF, it) }
     }
 
-    internal fun preApplyTo(socket: Socket) {
+    /**
+     * Sets pre configuration for socket.
+     * Internal purpose only.
+     */
+    fun preApplyTo(socket: ConfigurableSocket) {
         connectTimeoutInMs?.let { socket.setSockFlag(SockOpt.CONNTIMEO, it) }
         flightFlagSize?.let { socket.setSockFlag(SockOpt.FC, it) }
 
@@ -236,7 +245,11 @@ data class SrtUrl(
         enableTimestampBasedPacketDelivery?.let { socket.setSockFlag(SockOpt.TSBPDMODE, it) }
     }
 
-    internal fun postApplyTo(socket: Socket) {
+    /**
+     * Sets post configuration for socket.
+     * Internal purpose only.
+     */
+    fun postApplyTo(socket: ConfigurableSocket) {
         inputBandwidth?.let { socket.setSockFlag(SockOpt.INPUTBW, it) }
         maxBandwidth?.let { socket.setSockFlag(SockOpt.MAXBW, it) }
         overheadBandwidth?.let { socket.setSockFlag(SockOpt.OHEADBW, it) }

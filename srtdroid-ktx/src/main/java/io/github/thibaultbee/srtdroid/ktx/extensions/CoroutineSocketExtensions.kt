@@ -1,7 +1,7 @@
 package io.github.thibaultbee.srtdroid.ktx.extensions
 
-import io.github.thibaultbee.srtdroid.enums.SockStatus
 import io.github.thibaultbee.srtdroid.ktx.CoroutineSocket
+import io.github.thibaultbee.srtdroid.models.SrtUrl
 import java.io.File
 import java.net.BindException
 import java.net.ConnectException
@@ -10,15 +10,36 @@ import java.net.InetSocketAddress
 import java.net.SocketException
 import java.net.SocketTimeoutException
 
+/**
+ * Binds the socket to a local address.
+ *
+ * **See Also:** [srt_bind](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_bind)
+ *
+ * @param url the URL to bind to in FFmpeg format srt://hostname:port[?options]
+ *
+ * @throws BindException if bind has failed
+ */
+suspend fun CoroutineSocket.bind(url: String) = bind(SrtUrl(url))
 
 /**
- * Tests if the SRT socket is connected.
+ * Binds the socket to a local address.
  *
- * @return true if the SRT socket is connected, otherwise false
+ * **See Also:** [srt_bind](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_bind)
+ *
+ * @param srtUrl the URL to bind to in FFmpeg format srt://hostname:port[?options]
+ *
+ * @throws BindException if bind has failed
  */
-val CoroutineSocket.isConnected: Boolean
-    get() = sockState == SockStatus.CONNECTED
+suspend fun CoroutineSocket.bind(srtUrl: SrtUrl) {
+    if (srtUrl.mode != null) {
+        require(srtUrl.mode != SrtUrl.Mode.CALLER) { "Bind is only for `listener` or `rendezvous` mode but ${srtUrl.mode}" }
+    }
 
+    srtUrl.preApplyTo(this)
+    srtUrl.preBindApplyTo(this)
+    bind(srtUrl.hostname, srtUrl.port)
+    srtUrl.postApplyTo(this)
+}
 
 /**
  * Binds the socket to a local address.
@@ -45,6 +66,35 @@ suspend fun CoroutineSocket.bind(address: String, port: Int) =
 suspend fun CoroutineSocket.bind(address: InetAddress, port: Int) =
     bind(InetSocketAddress(address, port))
 
+
+/**
+ * Connects a socket to an URL.
+ *
+ * **See Also:** [srt_connect](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_connect)
+ *
+ * @param url the URL to connect to in FFmpeg format srt://hostname:port[?options]
+ * @throws ConnectException if connection has failed
+ */
+suspend fun CoroutineSocket.connect(url: String) = connect(SrtUrl(url))
+
+/**
+ * Connects a socket to an URL.
+ *
+ * **See Also:** [srt_connect](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_connect)
+ *
+ * @param srtUrl the URL to connect to in FFmpeg format srt://hostname:port[?options]
+ * @throws ConnectException if connection has failed
+ */
+suspend fun CoroutineSocket.connect(srtUrl: SrtUrl) {
+    if (srtUrl.mode != null) {
+        require(srtUrl.mode != SrtUrl.Mode.LISTENER) { "Connect is only for `caller` or `rendezvous` mode but ${srtUrl.mode}" }
+    }
+
+    srtUrl.preApplyTo(this)
+    connect(srtUrl.hostname, srtUrl.port)
+    srtUrl.postApplyTo(this)
+}
+
 /**
  * Connects a socket to a specified address and port.
  *
@@ -69,6 +119,35 @@ suspend fun CoroutineSocket.connect(address: String, port: Int) =
 suspend fun CoroutineSocket.connect(address: InetAddress, port: Int) =
     connect(InetSocketAddress(address, port))
 
+/**
+ * Performs a rendezvous connection.
+ *
+ * **See Also:** [srt_rendezvous](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_rendezvous)
+ *
+ * @param url the URL to rendezvous to in FFmpeg format srt://hostname:port[?options]
+ * @throws SocketException if rendezvous connection has failed
+ */
+suspend fun CoroutineSocket.rendezVous(url: String) = rendezVous(SrtUrl(url))
+
+/**
+ * Performs a rendezvous connection.
+ *
+ * **See Also:** [srt_rendezvous](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_rendezvous)
+ *
+ * @param srtUrl the URL to rendezvous to in FFmpeg format srt://hostname:port[?options]
+ * @throws SocketException if rendezvous connection has failed
+ */
+suspend fun CoroutineSocket.rendezVous(
+    srtUrl: SrtUrl
+) {
+    if (srtUrl.mode != null) {
+        require(srtUrl.mode == SrtUrl.Mode.RENDEZ_VOUS) { "Connect is only for `caller` or `rendezvous` mode but ${srtUrl.mode}" }
+    }
+
+    srtUrl.preApplyTo(this)
+    rendezVous(srtUrl.hostname, srtUrl.hostname, srtUrl.port)
+    srtUrl.postApplyTo(this)
+}
 
 /**
  * Performs a rendezvous connection.

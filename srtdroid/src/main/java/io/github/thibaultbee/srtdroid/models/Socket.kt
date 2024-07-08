@@ -21,6 +21,7 @@ import io.github.thibaultbee.srtdroid.enums.ErrorType
 import io.github.thibaultbee.srtdroid.enums.RejectReasonCode
 import io.github.thibaultbee.srtdroid.enums.SockOpt
 import io.github.thibaultbee.srtdroid.enums.SockStatus
+import io.github.thibaultbee.srtdroid.interfaces.ConfigurableSocket
 import io.github.thibaultbee.srtdroid.models.rejectreason.InternalRejectReason
 import io.github.thibaultbee.srtdroid.models.rejectreason.PredefinedRejectReason
 import io.github.thibaultbee.srtdroid.models.rejectreason.RejectReason
@@ -45,7 +46,7 @@ import java.nio.ByteBuffer
  * Once it has been called, you must release Srt context with [Srt.cleanUp] when application leaves.
  */
 class Socket
-private constructor(private val srtsocket: Int) : Closeable {
+private constructor(private val srtsocket: Int) : ConfigurableSocket, Closeable {
     companion object {
         @JvmStatic
         private external fun nativeCreateSocket(): Int
@@ -412,7 +413,7 @@ private constructor(private val srtsocket: Int) : Closeable {
      * @throws IOException if can't get [SockOpt]
      * @see [setSockFlag]
      */
-    fun getSockFlag(opt: SockOpt): Any {
+    override fun getSockFlag(opt: SockOpt): Any {
         return nativeGetSockFlag(opt) ?: throw IOException(Error.lastErrorMessage)
     }
 
@@ -428,7 +429,7 @@ private constructor(private val srtsocket: Int) : Closeable {
      * @throws IOException if can't set [SockOpt]
      * @see [getSockFlag]
      */
-    fun setSockFlag(opt: SockOpt, value: Any) {
+    override fun setSockFlag(opt: SockOpt, value: Any) {
         if (nativeSetSockFlag(opt, value) != 0) {
             throw IOException(Error.lastErrorMessage)
         }
