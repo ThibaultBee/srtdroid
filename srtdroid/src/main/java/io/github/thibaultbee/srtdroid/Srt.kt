@@ -20,12 +20,6 @@ package io.github.thibaultbee.srtdroid
  */
 object Srt {
     init {
-        /**
-         *  We don't have to load libcrypto and libssl because they are already loaded by
-         *  libsrtdroid. But we force it to be sure. See this [issue](https://github.com/ThibaultBee/StreamPack/issues/99).
-         */
-        System.loadLibrary("crypto")
-        System.loadLibrary("ssl")
         System.loadLibrary("srtdroid")
     }
 
