@@ -2,21 +2,21 @@ package io.github.thibaultbee.srtdroid.ktx
 
 import android.util.Log
 import android.util.Pair
-import io.github.thibaultbee.srtdroid.enums.EpollOpt
-import io.github.thibaultbee.srtdroid.enums.ErrorType
-import io.github.thibaultbee.srtdroid.enums.SockOpt
-import io.github.thibaultbee.srtdroid.enums.SockStatus
-import io.github.thibaultbee.srtdroid.interfaces.ConfigurableSrtSocket
-import io.github.thibaultbee.srtdroid.models.Epoll
-import io.github.thibaultbee.srtdroid.models.Error
-import io.github.thibaultbee.srtdroid.models.MsgCtrl
-import io.github.thibaultbee.srtdroid.models.SrtSocket
-import io.github.thibaultbee.srtdroid.models.SrtSocket.ServerListener
-import io.github.thibaultbee.srtdroid.models.Stats
-import io.github.thibaultbee.srtdroid.models.rejectreason.InternalRejectReason
-import io.github.thibaultbee.srtdroid.models.rejectreason.PredefinedRejectReason
-import io.github.thibaultbee.srtdroid.models.rejectreason.RejectReason
-import io.github.thibaultbee.srtdroid.models.rejectreason.UserDefinedRejectReason
+import io.github.thibaultbee.srtdroid.core.enums.EpollOpt
+import io.github.thibaultbee.srtdroid.core.enums.ErrorType
+import io.github.thibaultbee.srtdroid.core.enums.SockOpt
+import io.github.thibaultbee.srtdroid.core.enums.SockStatus
+import io.github.thibaultbee.srtdroid.core.interfaces.ConfigurableSrtSocket
+import io.github.thibaultbee.srtdroid.core.models.Epoll
+import io.github.thibaultbee.srtdroid.core.models.Error
+import io.github.thibaultbee.srtdroid.core.models.MsgCtrl
+import io.github.thibaultbee.srtdroid.core.models.SrtSocket
+import io.github.thibaultbee.srtdroid.core.models.SrtSocket.ServerListener
+import io.github.thibaultbee.srtdroid.core.models.Stats
+import io.github.thibaultbee.srtdroid.core.models.rejectreason.InternalRejectReason
+import io.github.thibaultbee.srtdroid.core.models.rejectreason.PredefinedRejectReason
+import io.github.thibaultbee.srtdroid.core.models.rejectreason.RejectReason
+import io.github.thibaultbee.srtdroid.core.models.rejectreason.UserDefinedRejectReason
 import kotlinx.coroutines.CompletableJob
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -56,19 +56,20 @@ private constructor(
         socket.setSockFlag(SockOpt.RCVSYN, false)
         socket.setSockFlag(SockOpt.SNDSYN, false)
 
-        socket.clientListener = object : SrtSocket.ClientListener {
-            override fun onConnectionLost(
-                ns: SrtSocket,
-                error: ErrorType,
-                peerAddress: InetSocketAddress,
-                token: Int
-            ) {
-                if (hasBeenConnected) {
-                    socketContext.completeExceptionally(ConnectException(error.toString()))
-                    coroutineContext.cancelChildren()
+        socket.clientListener =
+            object : SrtSocket.ClientListener {
+                override fun onConnectionLost(
+                    ns: SrtSocket,
+                    error: ErrorType,
+                    peerAddress: InetSocketAddress,
+                    token: Int
+                ) {
+                    if (hasBeenConnected) {
+                        socketContext.completeExceptionally(ConnectException(error.toString()))
+                        coroutineContext.cancelChildren()
+                    }
                 }
             }
-        }
     }
 
     private var hasBeenConnected = false

@@ -18,7 +18,7 @@ package io.github.thibaultbee.srtdroid.example
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import io.github.thibaultbee.srtdroid.Srt
+import io.github.thibaultbee.srtdroid.core.Srt
 import io.github.thibaultbee.srtdroid.example.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

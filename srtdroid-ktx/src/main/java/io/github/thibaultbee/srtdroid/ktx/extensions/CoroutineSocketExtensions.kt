@@ -1,7 +1,7 @@
 package io.github.thibaultbee.srtdroid.ktx.extensions
 
+import io.github.thibaultbee.srtdroid.core.models.SrtUrl
 import io.github.thibaultbee.srtdroid.ktx.CoroutineSrtSocket
-import io.github.thibaultbee.srtdroid.models.SrtUrl
 import java.io.File
 import java.net.BindException
 import java.net.ConnectException

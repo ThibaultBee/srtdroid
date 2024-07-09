@@ -1,7 +1,7 @@
 package io.github.thibaultbee.srtdroid.example.tests
 
 import android.util.Log
-import io.github.thibaultbee.srtdroid.enums.SockOpt
+import io.github.thibaultbee.srtdroid.core.enums.SockOpt
 import io.github.thibaultbee.srtdroid.ktx.CoroutineSrtSocket
 import io.github.thibaultbee.srtdroid.ktx.extensions.bind
 import kotlinx.coroutines.delay

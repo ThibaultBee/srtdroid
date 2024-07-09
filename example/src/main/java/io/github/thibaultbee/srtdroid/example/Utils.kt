@@ -18,9 +18,7 @@ package io.github.thibaultbee.srtdroid.example
 import android.content.Context
 import android.content.DialogInterface
 import androidx.appcompat.app.AlertDialog
-import io.github.thibaultbee.srtdroid.models.Error
-import java.io.File
-import java.io.FileOutputStream
+import io.github.thibaultbee.srtdroid.core.models.Error
 
 
 object Utils {

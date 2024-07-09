@@ -3,8 +3,8 @@ package io.github.thibaultbee.srtdroid.example.tests
 import android.util.Log
 import com.google.common.primitives.Ints
 import com.google.common.primitives.Longs
-import io.github.thibaultbee.srtdroid.enums.SockOpt
-import io.github.thibaultbee.srtdroid.enums.Transtype
+import io.github.thibaultbee.srtdroid.core.enums.SockOpt
+import io.github.thibaultbee.srtdroid.core.enums.Transtype
 import io.github.thibaultbee.srtdroid.ktx.CoroutineSrtSocket
 import io.github.thibaultbee.srtdroid.ktx.extensions.bind
 import io.github.thibaultbee.srtdroid.ktx.extensions.sendFile
