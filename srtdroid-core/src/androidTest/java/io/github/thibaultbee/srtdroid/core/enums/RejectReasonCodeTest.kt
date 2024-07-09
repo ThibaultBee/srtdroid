@@ -29,7 +29,7 @@ class RejectReasonCodeTest {
 
     @Test
     fun toStringTest() {
-        RejectReasonCode.values().forEach {
+        RejectReasonCode.entries.forEach {
             assertNotNull(it.toString())
         }
     }

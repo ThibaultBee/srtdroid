@@ -15,7 +15,6 @@
  */
 package io.github.thibaultbee.srtdroid.core.models
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import io.github.thibaultbee.srtdroid.core.Srt
 import io.github.thibaultbee.srtdroid.core.enums.Boundary
@@ -37,7 +36,6 @@ import org.junit.Assert.assertTrue
 import org.junit.Assert.fail
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
 import java.io.File
 import java.io.IOException
 import java.net.SocketException
@@ -48,7 +46,6 @@ import java.nio.ByteBuffer
  * Theses tests are written to check if SRT API can be called from the Kotlin part.
  */
 
-@RunWith(AndroidJUnit4::class)
 class SrtSocketTest {
     private lateinit var socket: SrtSocket
 
@@ -134,7 +131,7 @@ class SrtSocketTest {
         try {
             assertNull(socket.sockName)
             fail()
-        } catch (e: Exception) {
+        } catch (_: Exception) {
         }
     }
 
@@ -143,7 +140,7 @@ class SrtSocketTest {
         try {
             assertNull(socket.sockName)
             fail()
-        } catch (e: Exception) {
+        } catch (_: Exception) {
         }
         socket.bind("127.0.3.1", 1239)
         assertEquals("127.0.3.1", socket.sockName.address.hostAddress)
@@ -155,7 +152,7 @@ class SrtSocketTest {
         try {
             socket.getSockFlag(SockOpt.TRANSTYPE)  // Write only property
             fail()
-        } catch (e: IOException) {
+        } catch (_: IOException) {
         }
         assertEquals(true, socket.getSockFlag(SockOpt.RCVSYN))
         assertEquals(-1, socket.getSockFlag(SockOpt.SNDTIMEO))

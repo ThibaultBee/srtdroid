@@ -15,14 +15,12 @@
  */
 package io.github.thibaultbee.srtdroid.core.models
 
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import io.github.thibaultbee.srtdroid.core.Srt
 import io.github.thibaultbee.srtdroid.core.enums.ErrorType
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.Test
-import org.junit.runner.RunWith
 import java.net.SocketException
 
 
@@ -30,7 +28,6 @@ import java.net.SocketException
  * Theses tests are written to check if SRT API can be called from the Kotlin part.
  */
 
-@RunWith(AndroidJUnit4::class)
 class ErrorTest {
     private var socket = SrtSocket()
 
@@ -45,7 +42,7 @@ class ErrorTest {
     fun getErrorTest() {
         try {
             socket.listen(3)
-        } catch (e: SocketException) {
+        } catch (_: SocketException) {
         }
         assertEquals(Error.lastError, ErrorType.EUNBOUNDSOCK)
         assertEquals(Error.lastErrorMessage, ErrorType.EUNBOUNDSOCK.toString())
@@ -55,7 +52,7 @@ class ErrorTest {
     fun clearErrorTest() {
         try {
             socket.listen(3)
-        } catch (e: SocketException) {
+        } catch (_: SocketException) {
         }
         assertEquals(Error.lastError, ErrorType.EUNBOUNDSOCK)
         Error.clearLastError()
@@ -64,7 +61,7 @@ class ErrorTest {
 
     @Test
     fun allValuesTest() {
-        ErrorType.values().forEach {
+        ErrorType.entries.forEach {
             assertNotNull(it.toString())
         }
     }

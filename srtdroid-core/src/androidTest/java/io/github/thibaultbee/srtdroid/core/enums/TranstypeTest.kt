@@ -22,7 +22,7 @@ class TranstypeTest {
     @Test
     fun nativeConversion() {
         val socket = SrtSocket()
-        Transtype.values()
+        Transtype.entries
             .filter { it != Transtype.INVALID }
             .forEach {
                 socket.setSockFlag(

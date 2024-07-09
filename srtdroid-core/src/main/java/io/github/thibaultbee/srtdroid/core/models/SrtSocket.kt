@@ -1162,7 +1162,7 @@ private constructor(private val srtsocket: Int) : ConfigurableSrtSocket, Closeab
         get() {
             val code = nativeGetRejectReason()
             return when {
-                code < RejectReasonCode.PREDEFINED_OFFSET -> InternalRejectReason(RejectReasonCode.values()[code])
+                code < RejectReasonCode.PREDEFINED_OFFSET -> InternalRejectReason(RejectReasonCode.entries[code])
                 code < RejectReasonCode.USERDEFINED_OFFSET -> PredefinedRejectReason(code - RejectReasonCode.PREDEFINED_OFFSET)
                 else -> UserDefinedRejectReason(
                     code - RejectReasonCode.USERDEFINED_OFFSET
