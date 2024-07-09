@@ -46,7 +46,7 @@ int onListenCallback(JNIEnv *env, jobject ju, jclass sockAddrClazz, SRTSOCKET ns
     }
 
     jmethodID onListenID = env->GetMethodID(socketClazz, "onListen",
-                                            "(L" SOCKET_CLASS ";IL" INETSOCKETADDRESS_CLASS ";Ljava/lang/String;)I");
+                                            "(L" SRTSOCKET_CLASS ";IL" INETSOCKETADDRESS_CLASS ";Ljava/lang/String;)I");
     if (!onListenID) {
         LOGE("Can't get onListen methodID");
         env->DeleteLocalRef(socketClazz);
@@ -106,7 +106,7 @@ void onConnectCallback(JNIEnv *env,
     }
 
     jmethodID onConnectID = env->GetMethodID(socketClazz, "onConnect",
-                                             "(L" SOCKET_CLASS ";L" ERRORTYPE_CLASS ";L" INETSOCKETADDRESS_CLASS ";I)V");
+                                             "(L" SRTSOCKET_CLASS ";L" ERRORTYPE_CLASS ";L" INETSOCKETADDRESS_CLASS ";I)V");
     if (!onConnectID) {
         LOGE("Can't get onConnect methodID");
         env->DeleteLocalRef(socketClazz);
@@ -928,17 +928,17 @@ static JNINativeMethod timeMethods[] = {
 };
 
 static JNINativeMethod epollMethods[] = {
-        {"nativeCreate",      "()I",                                   (void *) &nativeEpollCreate},
-        {"nativeIsValid",     "()Z",                                   (void *) &nativeEpollIsValid},
-        {"nativeAddUSock",    "(L" SOCKET_CLASS ";L" LIST_CLASS ";)I", (void *) &nativeEpollAddUSock},
-        {"nativeUpdateUSock", "(L" SOCKET_CLASS ";L" LIST_CLASS ";)I", (void *) &nativeEpollUpdateUSock},
-        {"nativeRemoveUSock", "(L" SOCKET_CLASS ";)I",                 (void *) &nativeEpollRemoveUSock},
-        {"nativeWait",        "(JII)L" PAIR_CLASS ";",                 (void *) &nativeEpollWait},
-        {"nativeUWait",       "(JI)L" PAIR_CLASS ";",                  (void *) &nativeEpollUWait},
-        {"nativeClearUSock",  "()I",                                   (void *) &nativeEpollClearUSock},
-        {"nativeSetFlags",    "(L" LIST_CLASS ";)L" LIST_CLASS ";",    (void *) &nativeEpollSet},
-        {"nativeGetFlags",    "()L" LIST_CLASS ";",                    (void *) &nativeEpollGet},
-        {"nativeRelease",     "()I",                                   (void *) &nativeEpollRelease}
+        {"nativeCreate",      "()I",                                      (void *) &nativeEpollCreate},
+        {"nativeIsValid",     "()Z",                                      (void *) &nativeEpollIsValid},
+        {"nativeAddUSock",    "(L" SRTSOCKET_CLASS ";L" LIST_CLASS ";)I", (void *) &nativeEpollAddUSock},
+        {"nativeUpdateUSock", "(L" SRTSOCKET_CLASS ";L" LIST_CLASS ";)I", (void *) &nativeEpollUpdateUSock},
+        {"nativeRemoveUSock", "(L" SRTSOCKET_CLASS ";)I",                 (void *) &nativeEpollRemoveUSock},
+        {"nativeWait",        "(JII)L" PAIR_CLASS ";",                    (void *) &nativeEpollWait},
+        {"nativeUWait",       "(JI)L" PAIR_CLASS ";",                     (void *) &nativeEpollUWait},
+        {"nativeClearUSock",  "()I",                                      (void *) &nativeEpollClearUSock},
+        {"nativeSetFlags",    "(L" LIST_CLASS ";)L" LIST_CLASS ";",       (void *) &nativeEpollSet},
+        {"nativeGetFlags",    "()L" LIST_CLASS ";",                       (void *) &nativeEpollGet},
+        {"nativeRelease",     "()I",                                      (void *) &nativeEpollRelease}
 };
 
 static int registerNativeForClassName(JNIEnv *env, const char *className,
@@ -972,7 +972,7 @@ jint JNI_OnLoad(JavaVM *vm, void * /*reserved*/) {
         return -1;
     }
 
-    if ((registerNativeForClassName(env, SOCKET_CLASS, socketMethods,
+    if ((registerNativeForClassName(env, SRTSOCKET_CLASS, socketMethods,
                                     sizeof(socketMethods) / sizeof(socketMethods[0])) !=
          JNI_TRUE)) {
         LOGE("Socket RegisterNatives failed");

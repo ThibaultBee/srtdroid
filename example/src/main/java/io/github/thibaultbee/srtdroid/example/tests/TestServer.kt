@@ -2,7 +2,7 @@ package io.github.thibaultbee.srtdroid.example.tests
 
 import android.util.Log
 import io.github.thibaultbee.srtdroid.enums.SockOpt
-import io.github.thibaultbee.srtdroid.ktx.CoroutineSocket
+import io.github.thibaultbee.srtdroid.ktx.CoroutineSrtSocket
 import io.github.thibaultbee.srtdroid.ktx.extensions.bind
 import kotlinx.coroutines.delay
 
@@ -17,7 +17,7 @@ class TestServer : Test {
 
     override suspend fun run(ip: String, port: Int) {
         Log.i(TAG, "Waiting $numOfMessages messages from the client")
-        val socket = CoroutineSocket()
+        val socket = CoroutineSrtSocket()
 
         try {
             Log.i(TAG, "Will bind on $ip:$port")

@@ -15,13 +15,13 @@
  */
 package io.github.thibaultbee.srtdroid.enums
 
-import io.github.thibaultbee.srtdroid.models.Socket
+import io.github.thibaultbee.srtdroid.models.SrtSocket
 import org.junit.Test
 
 class TranstypeTest {
     @Test
     fun nativeConversion() {
-        val socket = Socket()
+        val socket = SrtSocket()
         Transtype.values()
             .filter { it != Transtype.INVALID }
             .forEach {

@@ -15,10 +15,10 @@
  */
 package io.github.thibaultbee.srtdroid.enums
 
-import io.github.thibaultbee.srtdroid.models.Socket
+import io.github.thibaultbee.srtdroid.models.SrtSocket
 
 /**
- * SRT socket status (from [Socket.sockState]).
+ * SRT socket status (from [SrtSocket.sockState]).
  *
  * **See Also:** [srt_getsockstate](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_getsockstate)
  */

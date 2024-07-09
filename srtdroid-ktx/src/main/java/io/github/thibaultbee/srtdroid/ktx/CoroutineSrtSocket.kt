@@ -6,12 +6,12 @@ import io.github.thibaultbee.srtdroid.enums.EpollOpt
 import io.github.thibaultbee.srtdroid.enums.ErrorType
 import io.github.thibaultbee.srtdroid.enums.SockOpt
 import io.github.thibaultbee.srtdroid.enums.SockStatus
-import io.github.thibaultbee.srtdroid.interfaces.ConfigurableSocket
+import io.github.thibaultbee.srtdroid.interfaces.ConfigurableSrtSocket
 import io.github.thibaultbee.srtdroid.models.Epoll
 import io.github.thibaultbee.srtdroid.models.Error
 import io.github.thibaultbee.srtdroid.models.MsgCtrl
-import io.github.thibaultbee.srtdroid.models.Socket
-import io.github.thibaultbee.srtdroid.models.Socket.ServerListener
+import io.github.thibaultbee.srtdroid.models.SrtSocket
+import io.github.thibaultbee.srtdroid.models.SrtSocket.ServerListener
 import io.github.thibaultbee.srtdroid.models.Stats
 import io.github.thibaultbee.srtdroid.models.rejectreason.InternalRejectReason
 import io.github.thibaultbee.srtdroid.models.rejectreason.PredefinedRejectReason
@@ -45,20 +45,20 @@ import kotlin.math.min
 /**
  * A coroutine-based SRT socket.
  */
-class CoroutineSocket
+class CoroutineSrtSocket
 private constructor(
-    private val socket: Socket
+    private val socket: SrtSocket
 ) :
-    ConfigurableSocket, CoroutineScope {
-    constructor() : this(Socket())
+    ConfigurableSrtSocket, CoroutineScope {
+    constructor() : this(SrtSocket())
 
     init {
         socket.setSockFlag(SockOpt.RCVSYN, false)
         socket.setSockFlag(SockOpt.SNDSYN, false)
 
-        socket.clientListener = object : Socket.ClientListener {
+        socket.clientListener = object : SrtSocket.ClientListener {
             override fun onConnectionLost(
-                ns: Socket,
+                ns: SrtSocket,
                 error: ErrorType,
                 peerAddress: InetSocketAddress,
                 token: Int
@@ -86,12 +86,12 @@ private constructor(
     val incomingSocket = callbackFlow {
         val listener = object : ServerListener {
             override fun onListen(
-                ns: Socket,
+                ns: SrtSocket,
                 hsVersion: Int,
                 peerAddress: InetSocketAddress,
                 streamId: String
             ): Int {
-                val channelResult = trySendBlocking(IncomingSocket(CoroutineSocket(), streamId))
+                val channelResult = trySendBlocking(IncomingSocket(CoroutineSrtSocket(), streamId))
                 return if (channelResult.isSuccess) {
                     0
                 } else {
@@ -276,10 +276,10 @@ private constructor(
      * @return a pair containing the new Socket connection and the IP address and port specification of the remote device.
      * @throws SocketException if returned SRT socket is not valid
      */
-    suspend fun accept(): Pair<CoroutineSocket, InetSocketAddress?> {
+    suspend fun accept(): Pair<CoroutineSrtSocket, InetSocketAddress?> {
         return execute(EpollOpt.IN) {
             val pair = socket.accept()
-            Pair(CoroutineSocket(pair.first), pair.second)
+            Pair(CoroutineSrtSocket(pair.first), pair.second)
         }
     }
 
@@ -852,5 +852,5 @@ private constructor(
      * Listening socket data class.
      * Use to store the socket and the stream ID.
      */
-    data class IncomingSocket(val socket: CoroutineSocket, val streamId: String)
+    data class IncomingSocket(val socket: CoroutineSrtSocket, val streamId: String)
 }

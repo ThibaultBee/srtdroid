@@ -13,12 +13,12 @@ import java.net.InetAddress
 import java.net.InetSocketAddress
 import java.util.concurrent.*
 
-class SocketCallbackTest {
-    private lateinit var socket: Socket
+class SrtSocketCallbackTest {
+    private lateinit var socket: SrtSocket
 
     @Before
     fun setUp() {
-        socket = Socket()
+        socket = SrtSocket()
         assertTrue(socket.isValid)
         socket.setSockFlag(SockOpt.TRANSTYPE, Transtype.FILE)
     }
@@ -35,8 +35,8 @@ class SocketCallbackTest {
         val server = ServerConnectClose()
 
         val futureResult = server.enqueue()
-        socket.clientListener = object : Socket.ClientListener {
-            override fun onConnectionLost(ns: Socket, error: ErrorType, peerAddress: InetSocketAddress, token: Int) {
+        socket.clientListener = object : SrtSocket.ClientListener {
+            override fun onConnectionLost(ns: SrtSocket, error: ErrorType, peerAddress: InetSocketAddress, token: Int) {
                 lock.countDown()
             }
         }
@@ -56,7 +56,7 @@ class SocketCallbackTest {
      */
     internal class ServerConnectClose {
         private val executor = Executors.newCachedThreadPool()
-        private val serverSocket = Socket()
+        private val serverSocket = SrtSocket()
 
         val port: Int
 

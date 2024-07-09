@@ -29,5 +29,5 @@
 #define EPOLL_CLASS "io/github/thibaultbee/srtdroid/models/Epoll"
 #define EPOLLEVENT_CLASS "io/github/thibaultbee/srtdroid/models/EpollEvent"
 #define MSGCTRL_CLASS "io/github/thibaultbee/srtdroid/models/MsgCtrl"
-#define SOCKET_CLASS "io/github/thibaultbee/srtdroid/models/Socket"
+#define SRTSOCKET_CLASS "io/github/thibaultbee/srtdroid/models/SrtSocket"
 #define STATS_CLASS "io/github/thibaultbee/srtdroid/models/Stats"

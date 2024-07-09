@@ -32,7 +32,7 @@ import java.net.SocketException
 
 @RunWith(AndroidJUnit4::class)
 class ErrorTest {
-    private var socket = Socket()
+    private var socket = SrtSocket()
 
     @After
     fun tearDown() {

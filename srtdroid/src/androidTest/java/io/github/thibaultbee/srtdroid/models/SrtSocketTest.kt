@@ -39,12 +39,12 @@ import java.nio.ByteBuffer
  */
 
 @RunWith(AndroidJUnit4::class)
-class SocketTest {
-    private lateinit var socket: Socket
+class SrtSocketTest {
+    private lateinit var socket: SrtSocket
 
     @Before
     fun setUp() {
-        socket = Socket()
+        socket = SrtSocket()
         assertTrue(socket.isValid)
     }
 

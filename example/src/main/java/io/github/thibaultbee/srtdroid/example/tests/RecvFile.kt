@@ -6,7 +6,7 @@ import com.google.common.primitives.Longs
 import io.github.thibaultbee.srtdroid.enums.SockOpt
 import io.github.thibaultbee.srtdroid.enums.Transtype
 import io.github.thibaultbee.srtdroid.example.Utils
-import io.github.thibaultbee.srtdroid.ktx.CoroutineSocket
+import io.github.thibaultbee.srtdroid.ktx.CoroutineSrtSocket
 import io.github.thibaultbee.srtdroid.ktx.extensions.connect
 import io.github.thibaultbee.srtdroid.ktx.extensions.recvFile
 import io.github.thibaultbee.srtdroid.ktx.extensions.send
@@ -26,7 +26,7 @@ class RecvFile(
 
     override suspend fun run(ip: String, port: Int) {
         Log.i(TAG, "Will get file $sendFileName from server")
-        val socket = CoroutineSocket()
+        val socket = CoroutineSrtSocket()
 
         try {
             socket.setSockFlag(SockOpt.TRANSTYPE, Transtype.FILE)

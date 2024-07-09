@@ -19,7 +19,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import io.github.thibaultbee.srtdroid.Srt
 import io.github.thibaultbee.srtdroid.enums.*
 import io.github.thibaultbee.srtdroid.models.rejectreason.InternalRejectReason
-import io.github.thibaultbee.srtdroid.models.Socket
 import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
@@ -33,12 +32,12 @@ import java.net.SocketException
  */
 
 @RunWith(AndroidJUnit4::class)
-class Socket6Test {
-    private lateinit var socket: Socket
+class SrtSocket6Test {
+    private lateinit var socket: SrtSocket
 
     @Before
     fun setUp() {
-        socket = Socket()
+        socket = SrtSocket()
         assertTrue(socket.isValid)
     }
 

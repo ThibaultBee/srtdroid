@@ -26,7 +26,7 @@ import org.junit.Test
 
 class EpollTest {
     private lateinit var epoll: Epoll
-    private lateinit var socket: Socket
+    private lateinit var socket: SrtSocket
 
     @Before
     fun setUp() {
@@ -47,7 +47,7 @@ class EpollTest {
 
     @Test
     fun addUSockTest() {
-        socket = Socket()
+        socket = SrtSocket()
         assertTrue(socket.isValid)
         try {
             epoll.addUSock(socket, listOf(EpollOpt.ERR))
@@ -63,7 +63,7 @@ class EpollTest {
 
     @Test
     fun updateUSockTest() {
-        socket = Socket()
+        socket = SrtSocket()
         assertTrue(socket.isValid)
         try {
             epoll.updateUSock(socket, listOf(EpollOpt.ERR))
@@ -79,7 +79,7 @@ class EpollTest {
 
     @Test
     fun removeUSockTest() {
-        socket = Socket()
+        socket = SrtSocket()
         assertTrue(socket.isValid)
         try {
             epoll.removeUSock(socket)

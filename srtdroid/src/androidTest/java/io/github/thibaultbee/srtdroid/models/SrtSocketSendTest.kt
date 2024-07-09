@@ -15,13 +15,13 @@ import java.util.concurrent.Executors
 import java.util.concurrent.Future
 import java.util.concurrent.TimeUnit
 
-class SocketSendTest {
-    private lateinit var socket: Socket
+class SrtSocketSendTest {
+    private lateinit var socket: SrtSocket
     private val server = ServerRecv()
 
     @Before
     fun setUp() {
-        socket = Socket()
+        socket = SrtSocket()
         assertTrue(socket.isValid)
         socket.setSockFlag(SockOpt.TRANSTYPE, Transtype.FILE)
     }
@@ -190,7 +190,7 @@ class SocketSendTest {
 
     internal class ServerRecv {
         private val executor = Executors.newCachedThreadPool()
-        private val serverSocket = Socket()
+        private val serverSocket = SrtSocket()
 
         val port: Int
 

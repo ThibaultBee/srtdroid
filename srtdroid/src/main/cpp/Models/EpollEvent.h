@@ -28,7 +28,7 @@ public:
 
         jfieldID
                 socketField = env->GetFieldID(epollEventClazz, "socket", "L"
-                                                                         SOCKET_CLASS
+                                                                         SRTSOCKET_CLASS
                                                                          ";");
         if (!socketField) {
             LOGE("Can't get Socket field");
@@ -61,7 +61,7 @@ public:
             return nullptr;
         }
 
-        jmethodID constructor = env->GetMethodID(clazz, "<init>", "(L" SOCKET_CLASS ";L" LIST_CLASS ";)V");
+        jmethodID constructor = env->GetMethodID(clazz, "<init>", "(L" SRTSOCKET_CLASS ";L" LIST_CLASS ";)V");
         if (!constructor) {
             LOGE("Can't get EpollEvent constructor");
             return nullptr;

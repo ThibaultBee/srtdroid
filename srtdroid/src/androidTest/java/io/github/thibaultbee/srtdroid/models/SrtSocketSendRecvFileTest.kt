@@ -17,13 +17,13 @@ import java.util.concurrent.Callable
 import java.util.concurrent.Executors
 import java.util.concurrent.Future
 
-class SocketSendRecvFileTest {
-    private lateinit var socket: Socket
+class SrtSocketSendRecvFileTest {
+    private lateinit var socket: SrtSocket
     private val server = MockSendServer()
 
     @Before
     fun setUp() {
-        socket = Socket()
+        socket = SrtSocket()
         socket.setSockFlag(SockOpt.TRANSTYPE, Transtype.FILE)
         assertTrue(socket.isValid)
     }
@@ -54,7 +54,7 @@ class SocketSendRecvFileTest {
 
     internal class MockSendServer {
         private val executor = Executors.newCachedThreadPool()
-        private val serverSocket = Socket()
+        private val serverSocket = SrtSocket()
         val port: Int
 
         init {

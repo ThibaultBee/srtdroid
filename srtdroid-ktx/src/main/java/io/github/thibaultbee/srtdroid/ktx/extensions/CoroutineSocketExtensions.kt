@@ -1,6 +1,6 @@
 package io.github.thibaultbee.srtdroid.ktx.extensions
 
-import io.github.thibaultbee.srtdroid.ktx.CoroutineSocket
+import io.github.thibaultbee.srtdroid.ktx.CoroutineSrtSocket
 import io.github.thibaultbee.srtdroid.models.SrtUrl
 import java.io.File
 import java.net.BindException
@@ -19,7 +19,7 @@ import java.net.SocketTimeoutException
  *
  * @throws BindException if bind has failed
  */
-suspend fun CoroutineSocket.bind(url: String) = bind(SrtUrl(url))
+suspend fun CoroutineSrtSocket.bind(url: String) = bind(SrtUrl(url))
 
 /**
  * Binds the socket to a local address.
@@ -30,7 +30,7 @@ suspend fun CoroutineSocket.bind(url: String) = bind(SrtUrl(url))
  *
  * @throws BindException if bind has failed
  */
-suspend fun CoroutineSocket.bind(srtUrl: SrtUrl) {
+suspend fun CoroutineSrtSocket.bind(srtUrl: SrtUrl) {
     if (srtUrl.mode != null) {
         require(srtUrl.mode != SrtUrl.Mode.CALLER) { "Bind is only for `listener` or `rendezvous` mode but ${srtUrl.mode}" }
     }
@@ -50,7 +50,7 @@ suspend fun CoroutineSocket.bind(srtUrl: SrtUrl) {
  * @param port the port to bind to
  * @throws BindException if bind has failed
  */
-suspend fun CoroutineSocket.bind(address: String, port: Int) =
+suspend fun CoroutineSrtSocket.bind(address: String, port: Int) =
     bind(InetSocketAddress(address, port))
 
 /**
@@ -63,7 +63,7 @@ suspend fun CoroutineSocket.bind(address: String, port: Int) =
  *
  * @throws BindException if bind has failed
  */
-suspend fun CoroutineSocket.bind(address: InetAddress, port: Int) =
+suspend fun CoroutineSrtSocket.bind(address: InetAddress, port: Int) =
     bind(InetSocketAddress(address, port))
 
 
@@ -75,7 +75,7 @@ suspend fun CoroutineSocket.bind(address: InetAddress, port: Int) =
  * @param url the URL to connect to in FFmpeg format srt://hostname:port[?options]
  * @throws ConnectException if connection has failed
  */
-suspend fun CoroutineSocket.connect(url: String) = connect(SrtUrl(url))
+suspend fun CoroutineSrtSocket.connect(url: String) = connect(SrtUrl(url))
 
 /**
  * Connects a socket to an URL.
@@ -85,7 +85,7 @@ suspend fun CoroutineSocket.connect(url: String) = connect(SrtUrl(url))
  * @param srtUrl the URL to connect to in FFmpeg format srt://hostname:port[?options]
  * @throws ConnectException if connection has failed
  */
-suspend fun CoroutineSocket.connect(srtUrl: SrtUrl) {
+suspend fun CoroutineSrtSocket.connect(srtUrl: SrtUrl) {
     if (srtUrl.mode != null) {
         require(srtUrl.mode != SrtUrl.Mode.LISTENER) { "Connect is only for `caller` or `rendezvous` mode but ${srtUrl.mode}" }
     }
@@ -104,7 +104,7 @@ suspend fun CoroutineSocket.connect(srtUrl: SrtUrl) {
  * @param port the port to connect to
  * @throws ConnectException if connection has failed
  */
-suspend fun CoroutineSocket.connect(address: String, port: Int) =
+suspend fun CoroutineSrtSocket.connect(address: String, port: Int) =
     connect(InetSocketAddress(address, port))
 
 /**
@@ -116,7 +116,7 @@ suspend fun CoroutineSocket.connect(address: String, port: Int) =
  * @param port the port to connect to
  * @throws ConnectException if connection has failed
  */
-suspend fun CoroutineSocket.connect(address: InetAddress, port: Int) =
+suspend fun CoroutineSrtSocket.connect(address: InetAddress, port: Int) =
     connect(InetSocketAddress(address, port))
 
 /**
@@ -127,7 +127,7 @@ suspend fun CoroutineSocket.connect(address: InetAddress, port: Int) =
  * @param url the URL to rendezvous to in FFmpeg format srt://hostname:port[?options]
  * @throws SocketException if rendezvous connection has failed
  */
-suspend fun CoroutineSocket.rendezVous(url: String) = rendezVous(SrtUrl(url))
+suspend fun CoroutineSrtSocket.rendezVous(url: String) = rendezVous(SrtUrl(url))
 
 /**
  * Performs a rendezvous connection.
@@ -137,7 +137,7 @@ suspend fun CoroutineSocket.rendezVous(url: String) = rendezVous(SrtUrl(url))
  * @param srtUrl the URL to rendezvous to in FFmpeg format srt://hostname:port[?options]
  * @throws SocketException if rendezvous connection has failed
  */
-suspend fun CoroutineSocket.rendezVous(
+suspend fun CoroutineSrtSocket.rendezVous(
     srtUrl: SrtUrl
 ) {
     if (srtUrl.mode != null) {
@@ -158,7 +158,7 @@ suspend fun CoroutineSocket.rendezVous(
  * @param remoteAddress the remote address to connect to
  * @throws SocketException if rendezvous connection has failed
  */
-suspend fun CoroutineSocket.rendezVous(localAddress: String, remoteAddress: String, port: Int) =
+suspend fun CoroutineSrtSocket.rendezVous(localAddress: String, remoteAddress: String, port: Int) =
     rendezVous(
         InetSocketAddress(localAddress, port),
         InetSocketAddress(remoteAddress, port)
@@ -173,7 +173,7 @@ suspend fun CoroutineSocket.rendezVous(localAddress: String, remoteAddress: Stri
  * @param remoteAddress the remote [InetAddress] to connect to
  * @throws SocketException if rendezvous connection has failed
  */
-suspend fun CoroutineSocket.rendezVous(
+suspend fun CoroutineSrtSocket.rendezVous(
     localAddress: InetAddress,
     remoteAddress: InetAddress,
     port: Int
@@ -193,7 +193,7 @@ suspend fun CoroutineSocket.rendezVous(
  * @throws SocketTimeoutException if a timeout has been triggered
  * @see [recv]
  */
-suspend fun CoroutineSocket.send(msg: String) = send(msg.toByteArray())
+suspend fun CoroutineSrtSocket.send(msg: String) = send(msg.toByteArray())
 
 /**
  * Sends a specified file.
@@ -209,7 +209,7 @@ suspend fun CoroutineSocket.send(msg: String) = send(msg.toByteArray())
  * @throws SocketTimeoutException if a timeout has been triggered
  * @see [recvFile]
  */
-suspend fun CoroutineSocket.sendFile(
+suspend fun CoroutineSrtSocket.sendFile(
     file: File,
     offset: Long = 0,
     size: Long = file.length(),
@@ -230,7 +230,7 @@ suspend fun CoroutineSocket.sendFile(
  * @throws SocketTimeoutException if a timeout has been triggered
  * @see [sendFile]
  */
-suspend fun CoroutineSocket.recvFile(
+suspend fun CoroutineSrtSocket.recvFile(
     file: File,
     offset: Long = 0,
     size: Long,

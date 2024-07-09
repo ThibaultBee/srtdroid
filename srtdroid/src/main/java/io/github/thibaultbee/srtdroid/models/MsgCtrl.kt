@@ -18,7 +18,7 @@ package io.github.thibaultbee.srtdroid.models
 import io.github.thibaultbee.srtdroid.enums.Boundary
 
 /**
- * This class represents extra parameters for [Socket.send] and [Socket.recv]
+ * This class represents extra parameters for [SrtSocket.send] and [SrtSocket.recv]
  *
  * **See Also:** [srt_msgctrl](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_msgctrl)
  */

@@ -2,7 +2,7 @@ package io.github.thibaultbee.srtdroid.example.tests
 
 import android.util.Log
 import io.github.thibaultbee.srtdroid.enums.SockOpt
-import io.github.thibaultbee.srtdroid.ktx.CoroutineSocket
+import io.github.thibaultbee.srtdroid.ktx.CoroutineSrtSocket
 import io.github.thibaultbee.srtdroid.ktx.extensions.connect
 import io.github.thibaultbee.srtdroid.ktx.extensions.send
 import kotlinx.coroutines.delay
@@ -17,7 +17,7 @@ class TestClient : Test {
     override val name: String = this::class.simpleName!!
 
     override suspend fun run(ip: String, port: Int) {
-        val socket = CoroutineSocket()
+        val socket = CoroutineSrtSocket()
 
         try {
             Log.i(TAG, "Will send $numOfMessages messages to the server")

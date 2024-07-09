@@ -1,6 +1,6 @@
 package io.github.thibaultbee.srtdroid.extensions
 
-import io.github.thibaultbee.srtdroid.models.Socket
+import io.github.thibaultbee.srtdroid.models.SrtSocket
 import io.github.thibaultbee.srtdroid.models.SrtUrl
 import java.net.BindException
 import java.net.ConnectException
@@ -15,7 +15,7 @@ import java.net.SocketException
  *
  * @throws BindException if bind has failed
  */
-fun Socket.bind(url: String) = bind(SrtUrl(url))
+fun SrtSocket.bind(url: String) = bind(SrtUrl(url))
 
 /**
  * Binds the socket to a local address.
@@ -26,7 +26,7 @@ fun Socket.bind(url: String) = bind(SrtUrl(url))
  *
  * @throws BindException if bind has failed
  */
-fun Socket.bind(srtUrl: SrtUrl) {
+fun SrtSocket.bind(srtUrl: SrtUrl) {
     if (srtUrl.mode != null) {
         require(srtUrl.mode != SrtUrl.Mode.CALLER) { "Bind is only for `listener` or `rendezvous` mode but ${srtUrl.mode}" }
     }
@@ -45,7 +45,7 @@ fun Socket.bind(srtUrl: SrtUrl) {
  * @param url the URL to connect to in FFmpeg format srt://hostname:port[?options]
  * @throws ConnectException if connection has failed
  */
-fun Socket.connect(url: String) = connect(SrtUrl(url))
+fun SrtSocket.connect(url: String) = connect(SrtUrl(url))
 
 /**
  * Connects a socket to an URL.
@@ -55,7 +55,7 @@ fun Socket.connect(url: String) = connect(SrtUrl(url))
  * @param srtUrl the URL to connect to in FFmpeg format srt://hostname:port[?options]
  * @throws ConnectException if connection has failed
  */
-fun Socket.connect(srtUrl: SrtUrl) {
+fun SrtSocket.connect(srtUrl: SrtUrl) {
     if (srtUrl.mode != null) {
         require(srtUrl.mode != SrtUrl.Mode.LISTENER) { "Connect is only for `caller` or `rendezvous` mode but ${srtUrl.mode}" }
     }
@@ -73,7 +73,7 @@ fun Socket.connect(srtUrl: SrtUrl) {
  * @param url the URL to rendezvous to in FFmpeg format srt://hostname:port[?options]
  * @throws SocketException if rendezvous connection has failed
  */
-fun Socket.rendezVous(url: String) = rendezVous(SrtUrl(url))
+fun SrtSocket.rendezVous(url: String) = rendezVous(SrtUrl(url))
 
 /**
  * Performs a rendezvous connection.
@@ -83,7 +83,7 @@ fun Socket.rendezVous(url: String) = rendezVous(SrtUrl(url))
  * @param srtUrl the URL to rendezvous to in FFmpeg format srt://hostname:port[?options]
  * @throws SocketException if rendezvous connection has failed
  */
-fun Socket.rendezVous(
+fun SrtSocket.rendezVous(
     srtUrl: SrtUrl
 ) {
     if (srtUrl.mode != null) {

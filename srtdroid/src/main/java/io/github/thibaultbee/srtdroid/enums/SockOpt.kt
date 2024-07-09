@@ -15,10 +15,10 @@
  */
 package io.github.thibaultbee.srtdroid.enums
 
-import io.github.thibaultbee.srtdroid.models.Socket
+import io.github.thibaultbee.srtdroid.models.SrtSocket
 
 /**
- * Parameter or returned value of [Socket.setSockFlag] and [Socket.getSockFlag].
+ * Parameter or returned value of [SrtSocket.setSockFlag] and [SrtSocket.getSockFlag].
  *
  * **See Also:** [API Socket Options](https://github.com/Haivision/srt/blob/master/docs/API/API-socket-options.md)
  */
@@ -79,12 +79,12 @@ enum class SockOpt {
     RENDEZVOUS,
 
     /**
-     * [Socket.send] timeout
+     * [SrtSocket.send] timeout
      */
     SNDTIMEO,
 
     /**
-     * [Socket.recv] timeout
+     * [SrtSocket.recv] timeout
      */
     RCVTIMEO,
 

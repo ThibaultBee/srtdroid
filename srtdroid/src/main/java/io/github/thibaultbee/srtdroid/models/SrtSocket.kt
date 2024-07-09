@@ -21,7 +21,7 @@ import io.github.thibaultbee.srtdroid.enums.ErrorType
 import io.github.thibaultbee.srtdroid.enums.RejectReasonCode
 import io.github.thibaultbee.srtdroid.enums.SockOpt
 import io.github.thibaultbee.srtdroid.enums.SockStatus
-import io.github.thibaultbee.srtdroid.interfaces.ConfigurableSocket
+import io.github.thibaultbee.srtdroid.interfaces.ConfigurableSrtSocket
 import io.github.thibaultbee.srtdroid.models.rejectreason.InternalRejectReason
 import io.github.thibaultbee.srtdroid.models.rejectreason.PredefinedRejectReason
 import io.github.thibaultbee.srtdroid.models.rejectreason.RejectReason
@@ -45,8 +45,8 @@ import java.nio.ByteBuffer
  * To avoid creating an unresponsive UI, don't perform SRT network operations on the main thread.
  * Once it has been called, you must release Srt context with [Srt.cleanUp] when application leaves.
  */
-class Socket
-private constructor(private val srtsocket: Int) : ConfigurableSocket, Closeable {
+class SrtSocket
+private constructor(private val srtsocket: Int) : ConfigurableSrtSocket, Closeable {
     companion object {
         @JvmStatic
         private external fun nativeCreateSocket(): Int
@@ -74,7 +74,7 @@ private constructor(private val srtsocket: Int) : ConfigurableSocket, Closeable 
     var serverListener: ServerListener? = null
 
     /**
-     * Deprecated version of [Socket] constructor. Argument is ignored.
+     * Deprecated version of [SrtSocket] constructor. Argument is ignored.
      * Also, it crashes on old Android version (where [StandardProtocolFamily] does not exist).
      *
      * You shall assert that the SRT socket is valid with [isValid].
@@ -177,7 +177,7 @@ private constructor(private val srtsocket: Int) : ConfigurableSocket, Closeable 
      * @see [ServerListener]
      */
     private fun onListen(
-        ns: Socket,
+        ns: SrtSocket,
         hsVersion: Int,
         peerAddress: InetSocketAddress,
         streamId: String
@@ -203,7 +203,7 @@ private constructor(private val srtsocket: Int) : ConfigurableSocket, Closeable 
         }
     }
 
-    private external fun nativeAccept(): Pair<Socket, InetSocketAddress?>
+    private external fun nativeAccept(): Pair<SrtSocket, InetSocketAddress?>
 
     /**
      * Accepts a pending connection.
@@ -213,7 +213,7 @@ private constructor(private val srtsocket: Int) : ConfigurableSocket, Closeable 
      * @return a pair containing the new Socket connection and the IP address and port specification of the remote device.
      * @throws SocketException if returned SRT socket is not valid
      */
-    fun accept(): Pair<Socket, InetSocketAddress?> {
+    fun accept(): Pair<SrtSocket, InetSocketAddress?> {
         val pair = nativeAccept()
         if (!pair.first.isValid) {
             throw SocketException(Error.lastErrorMessage)
@@ -227,7 +227,7 @@ private constructor(private val srtsocket: Int) : ConfigurableSocket, Closeable 
      * @see [ClientListener]
      */
     private fun onConnect(
-        ns: Socket,
+        ns: SrtSocket,
         error: ErrorType,
         peerAddress: InetSocketAddress,
         token: Int
@@ -741,7 +741,7 @@ private constructor(private val srtsocket: Int) : ConfigurableSocket, Closeable 
     fun getOutputStream(msgCtrl: MsgCtrl? = null) =
         SrtSocketOutputStream(this, msgCtrl) as OutputStream
 
-    private class SrtSocketOutputStream(private val socket: Socket, private val msgCtrl: MsgCtrl?) :
+    private class SrtSocketOutputStream(private val socket: SrtSocket, private val msgCtrl: MsgCtrl?) :
         OutputStream() {
 
         override fun close() {
@@ -934,7 +934,7 @@ private constructor(private val srtsocket: Int) : ConfigurableSocket, Closeable 
     fun getInputStream(msgCtrl: MsgCtrl? = null) =
         SrtSocketInputStream(this, msgCtrl) as InputStream
 
-    private class SrtSocketInputStream(private val socket: Socket, private val msgCtrl: MsgCtrl?) :
+    private class SrtSocketInputStream(private val socket: SrtSocket, private val msgCtrl: MsgCtrl?) :
         InputStream() {
 
         override fun available(): Int {
@@ -1325,7 +1325,7 @@ private constructor(private val srtsocket: Int) : ConfigurableSocket, Closeable 
      * Return [true] if internal SRT socket are equals
      */
     override fun equals(other: Any?): Boolean {
-        if (other is Socket) {
+        if (other is SrtSocket) {
             return other.srtsocket == srtsocket
         }
         return false
@@ -1336,7 +1336,7 @@ private constructor(private val srtsocket: Int) : ConfigurableSocket, Closeable 
     }
 
     /**
-     * This interface is used by a server [Socket] to notify SRT socket events.
+     * This interface is used by a server [SrtSocket] to notify SRT socket events.
      */
     interface ServerListener {
         /**
@@ -1351,7 +1351,7 @@ private constructor(private val srtsocket: Int) : ConfigurableSocket, Closeable 
          * @return return 0, if the connection is to be accepted. If you return -1, this will be understood as a request to reject the incoming connection.
          */
         fun onListen(
-            ns: Socket,
+            ns: SrtSocket,
             hsVersion: Int,
             peerAddress: InetSocketAddress,
             streamId: String
@@ -1359,7 +1359,7 @@ private constructor(private val srtsocket: Int) : ConfigurableSocket, Closeable 
     }
 
     /**
-     * This interface is used by a client [Socket] to notify SRT socket events.
+     * This interface is used by a client [SrtSocket] to notify SRT socket events.
      */
     interface ClientListener {
         /**
@@ -1374,7 +1374,7 @@ private constructor(private val srtsocket: Int) : ConfigurableSocket, Closeable 
          * @return return 0, if the connection is to be accepted. If you return -1, this will be understood as a request to reject the incoming connection.
          */
         fun onConnectionLost(
-            ns: Socket,
+            ns: SrtSocket,
             error: ErrorType,
             peerAddress: InetSocketAddress,
             token: Int

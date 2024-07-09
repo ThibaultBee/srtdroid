@@ -54,7 +54,7 @@ private constructor(private val eid: Int) {
     val isValid: Boolean
         get() = nativeIsValid()
 
-    private external fun nativeAddUSock(socket: Socket, events: List<EpollOpt>?): Int
+    private external fun nativeAddUSock(socket: SrtSocket, events: List<EpollOpt>?): Int
 
     /**
      * Adds a socket to a epoll container.
@@ -65,13 +65,13 @@ private constructor(private val eid: Int) {
      * @param events list of selected [EpollOpt]. Set null if you want to subscribe a socket for all events.
      * @throws InvalidParameterException if [Epoll] is not valid
      */
-    fun addUSock(socket: Socket, events: List<EpollOpt>?) {
+    fun addUSock(socket: SrtSocket, events: List<EpollOpt>?) {
         if (nativeAddUSock(socket, events) != 0) {
             throw InvalidParameterException(Error.lastErrorMessage)
         }
     }
 
-    private external fun nativeUpdateUSock(socket: Socket, events: List<EpollOpt>?): Int
+    private external fun nativeUpdateUSock(socket: SrtSocket, events: List<EpollOpt>?): Int
 
     /**
      * Updates a socket to a epoll container.
@@ -82,13 +82,13 @@ private constructor(private val eid: Int) {
      * @param events list of selected [EpollOpt]. Set null if you want to subscribe a socket for all events.
      * @throws InvalidParameterException if [Epoll] is not valid
      */
-    fun updateUSock(socket: Socket, events: List<EpollOpt>?) {
+    fun updateUSock(socket: SrtSocket, events: List<EpollOpt>?) {
         if (nativeUpdateUSock(socket, events) != 0) {
             throw InvalidParameterException(Error.lastErrorMessage)
         }
     }
 
-    private external fun nativeRemoveUSock(socket: Socket): Int
+    private external fun nativeRemoveUSock(socket: SrtSocket): Int
 
     /**
      * Removes a specified socket from an epoll container.
@@ -98,7 +98,7 @@ private constructor(private val eid: Int) {
      * @param socket the SRT socket to add
      * @throws InvalidParameterException if [Epoll] is not valid
      */
-    fun removeUSock(socket: Socket) {
+    fun removeUSock(socket: SrtSocket) {
         if (nativeRemoveUSock(socket) != 0) {
             throw InvalidParameterException(Error.lastErrorMessage)
         }
@@ -108,7 +108,7 @@ private constructor(private val eid: Int) {
         timeOut: Long,
         expectedReadReadySocketSize: Int,
         expectedWriteReadySocketSize: Int,
-    ): Pair<Int, Pair<List<Socket>, List<Socket>>>
+    ): Pair<Int, Pair<List<SrtSocket>, List<SrtSocket>>>
 
     /**
      * Blocks the call until any readiness state occurs in the epoll container.
@@ -124,7 +124,7 @@ private constructor(private val eid: Int) {
         timeout: Long,
         expectedReadReadySocketSize: Int = 2,
         expectedWriteReadySocketSize: Int = 2
-    ): Pair<List<Socket>, List<Socket>> {
+    ): Pair<List<SrtSocket>, List<SrtSocket>> {
         val pair = nativeWait(timeout, expectedReadReadySocketSize, expectedWriteReadySocketSize)
         if (pair.first < 0) {
             throw InvalidParameterException(Error.lastErrorMessage)

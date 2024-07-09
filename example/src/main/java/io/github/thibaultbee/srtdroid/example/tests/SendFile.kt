@@ -5,7 +5,7 @@ import com.google.common.primitives.Ints
 import com.google.common.primitives.Longs
 import io.github.thibaultbee.srtdroid.enums.SockOpt
 import io.github.thibaultbee.srtdroid.enums.Transtype
-import io.github.thibaultbee.srtdroid.ktx.CoroutineSocket
+import io.github.thibaultbee.srtdroid.ktx.CoroutineSrtSocket
 import io.github.thibaultbee.srtdroid.ktx.extensions.bind
 import io.github.thibaultbee.srtdroid.ktx.extensions.sendFile
 import kotlinx.coroutines.delay
@@ -22,7 +22,7 @@ class SendFile(
 
     override suspend fun run(ip: String, port: Int) {
         Log.i(TAG, "Will send requested file")
-        val socket = CoroutineSocket()
+        val socket = CoroutineSrtSocket()
 
         try {
             socket.setSockFlag(SockOpt.TRANSTYPE, Transtype.FILE)

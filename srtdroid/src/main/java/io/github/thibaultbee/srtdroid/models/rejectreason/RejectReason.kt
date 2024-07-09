@@ -15,10 +15,10 @@
  */
 package io.github.thibaultbee.srtdroid.models.rejectreason
 
-import io.github.thibaultbee.srtdroid.models.Socket
+import io.github.thibaultbee.srtdroid.models.SrtSocket
 
 /**
  * Base class of [InternalRejectReason], [PredefinedRejectReason] and [UserDefinedRejectReason].
- * Do not use it. Its purpose is to get an unique [Socket.rejectReason] API.
+ * Do not use it. Its purpose is to get an unique [SrtSocket.rejectReason] API.
  */
 abstract class RejectReason
