@@ -122,7 +122,7 @@ private constructor(private val srtsocket: Int) : ConfigurableSrtSocket, Closeab
      */
     fun bind(address: InetSocketAddress) {
         if (nativeBind(address) != 0) {
-            throw BindException(Error.lastErrorMessage)
+            throw BindException(SrtError.lastErrorMessage)
         }
     }
 
@@ -172,7 +172,7 @@ private constructor(private val srtsocket: Int) : ConfigurableSrtSocket, Closeab
      */
     override fun close() {
         if (nativeClose() != 0) {
-            throw SocketException(Error.lastErrorMessage)
+            throw SocketException(SrtError.lastErrorMessage)
         }
     }
 
@@ -205,7 +205,7 @@ private constructor(private val srtsocket: Int) : ConfigurableSrtSocket, Closeab
      */
     fun listen(backlog: Int) {
         if (nativeListen(backlog) != 0) {
-            throw SocketException(Error.lastErrorMessage)
+            throw SocketException(SrtError.lastErrorMessage)
         }
     }
 
@@ -222,7 +222,7 @@ private constructor(private val srtsocket: Int) : ConfigurableSrtSocket, Closeab
     fun accept(): Pair<SrtSocket, InetSocketAddress?> {
         val pair = nativeAccept()
         if (!pair.first.isValid) {
-            throw SocketException(Error.lastErrorMessage)
+            throw SocketException(SrtError.lastErrorMessage)
         }
         return pair
     }
@@ -253,7 +253,7 @@ private constructor(private val srtsocket: Int) : ConfigurableSrtSocket, Closeab
      */
     fun connect(address: InetSocketAddress) {
         if (nativeConnect(address) != 0) {
-            throw ConnectException(Error.lastErrorMessage)
+            throw ConnectException(SrtError.lastErrorMessage)
         }
     }
 
@@ -298,7 +298,7 @@ private constructor(private val srtsocket: Int) : ConfigurableSrtSocket, Closeab
         remoteAddress: InetSocketAddress
     ) {
         if (nativeRendezVous(localAddress, remoteAddress) != 0) {
-            throw SocketException(Error.lastErrorMessage)
+            throw SocketException(SrtError.lastErrorMessage)
         }
     }
 
@@ -344,7 +344,7 @@ private constructor(private val srtsocket: Int) : ConfigurableSrtSocket, Closeab
      */
     val peerName: InetSocketAddress
         get() = nativeGetPeerName()
-            ?: throw SocketException(Error.lastErrorMessage)
+            ?: throw SocketException(SrtError.lastErrorMessage)
 
     /**
      * Retrieves the remote [InetAddress] to which the socket is connected.
@@ -383,7 +383,7 @@ private constructor(private val srtsocket: Int) : ConfigurableSrtSocket, Closeab
      */
     val sockName: InetSocketAddress
         get() = nativeGetSockName()
-            ?: throw SocketException(Error.lastErrorMessage)
+            ?: throw SocketException(SrtError.lastErrorMessage)
 
     /**
      * Extracts the [InetAddress] to which the socket was bound.
@@ -423,7 +423,7 @@ private constructor(private val srtsocket: Int) : ConfigurableSrtSocket, Closeab
      */
     override fun getSockFlag(opt: SockOpt): Any {
         return nativeGetSockFlag(opt)
-            ?: throw IOException(Error.lastErrorMessage)
+            ?: throw IOException(SrtError.lastErrorMessage)
     }
 
     private external fun nativeSetSockFlag(opt: SockOpt, value: Any): Int
@@ -440,7 +440,7 @@ private constructor(private val srtsocket: Int) : ConfigurableSrtSocket, Closeab
      */
     override fun setSockFlag(opt: SockOpt, value: Any) {
         if (nativeSetSockFlag(opt, value) != 0) {
-            throw IOException(Error.lastErrorMessage)
+            throw IOException(SrtError.lastErrorMessage)
         }
     }
 
@@ -466,7 +466,7 @@ private constructor(private val srtsocket: Int) : ConfigurableSrtSocket, Closeab
         val byteSent = nativeSend(msg, msg.position(), msg.remaining())
         when {
             byteSent < 0 -> {
-                throw SocketException(Error.lastErrorMessage)
+                throw SocketException(SrtError.lastErrorMessage)
             }
 
             byteSent == 0 -> {
@@ -494,7 +494,7 @@ private constructor(private val srtsocket: Int) : ConfigurableSrtSocket, Closeab
         val byteSent = nativeSend(msg, offset, size)
         when {
             byteSent < 0 -> {
-                throw SocketException(Error.lastErrorMessage)
+                throw SocketException(SrtError.lastErrorMessage)
             }
 
             byteSent == 0 -> {
@@ -570,7 +570,7 @@ private constructor(private val srtsocket: Int) : ConfigurableSrtSocket, Closeab
         val byteSent = nativeSend(msg, msg.position(), msg.remaining(), ttl, inOrder)
         when {
             byteSent < 0 -> {
-                throw SocketException(Error.lastErrorMessage)
+                throw SocketException(SrtError.lastErrorMessage)
             }
 
             byteSent == 0 -> {
@@ -606,7 +606,7 @@ private constructor(private val srtsocket: Int) : ConfigurableSrtSocket, Closeab
         val byteSent = nativeSend(msg, offset, size, ttl, inOrder)
         when {
             byteSent < 0 -> {
-                throw SocketException(Error.lastErrorMessage)
+                throw SocketException(SrtError.lastErrorMessage)
             }
 
             byteSent == 0 -> {
@@ -681,7 +681,7 @@ private constructor(private val srtsocket: Int) : ConfigurableSrtSocket, Closeab
         val byteSent = nativeSend(msg, msg.position(), msg.remaining(), msgCtrl)
         when {
             byteSent < 0 -> {
-                throw SocketException(Error.lastErrorMessage)
+                throw SocketException(SrtError.lastErrorMessage)
             }
 
             byteSent == 0 -> {
@@ -715,7 +715,7 @@ private constructor(private val srtsocket: Int) : ConfigurableSrtSocket, Closeab
         val byteSent = nativeSend(msg, offset, size, msgCtrl)
         when {
             byteSent < 0 -> {
-                throw SocketException(Error.lastErrorMessage)
+                throw SocketException(SrtError.lastErrorMessage)
             }
 
             byteSent == 0 -> {
@@ -836,7 +836,7 @@ private constructor(private val srtsocket: Int) : ConfigurableSrtSocket, Closeab
         val byteReceived = pair.first
         when {
             byteReceived < 0 -> {
-                throw SocketException(Error.lastErrorMessage)
+                throw SocketException(SrtError.lastErrorMessage)
             }
 
             byteReceived == 0 -> {
@@ -874,7 +874,7 @@ private constructor(private val srtsocket: Int) : ConfigurableSrtSocket, Closeab
         val byteReceived = pair.first
         when {
             byteReceived < 0 -> {
-                throw SocketException(Error.lastErrorMessage)
+                throw SocketException(SrtError.lastErrorMessage)
             }
 
             byteReceived == 0 -> {
@@ -906,7 +906,7 @@ private constructor(private val srtsocket: Int) : ConfigurableSrtSocket, Closeab
         val byteReceived = pair.first
         when {
             byteReceived < 0 -> {
-                throw SocketException(Error.lastErrorMessage)
+                throw SocketException(SrtError.lastErrorMessage)
             }
 
             byteReceived == 0 -> {
@@ -947,7 +947,7 @@ private constructor(private val srtsocket: Int) : ConfigurableSrtSocket, Closeab
         val byteReceived = pair.first
         when {
             byteReceived < 0 -> {
-                throw SocketException(Error.lastErrorMessage)
+                throw SocketException(SrtError.lastErrorMessage)
             }
 
             byteReceived == 0 -> {
@@ -1046,7 +1046,7 @@ private constructor(private val srtsocket: Int) : ConfigurableSrtSocket, Closeab
         val byteSent = nativeSendFile(path, offset, size, block)
         when {
             byteSent < 0 -> {
-                throw SocketException(Error.lastErrorMessage)
+                throw SocketException(SrtError.lastErrorMessage)
             }
 
             byteSent == 0L -> {
@@ -1114,7 +1114,7 @@ private constructor(private val srtsocket: Int) : ConfigurableSrtSocket, Closeab
         val byteReceived = nativeRecvFile(path, offset, size, block)
         when {
             byteReceived < 0 -> {
-                throw SocketException(Error.lastErrorMessage)
+                throw SocketException(SrtError.lastErrorMessage)
             }
 
             byteReceived == 0L -> {
@@ -1194,7 +1194,7 @@ private constructor(private val srtsocket: Int) : ConfigurableSrtSocket, Closeab
                 else -> RejectReasonCode.UNKNOWN.ordinal
             }
             if (nativeSetRejectReason(code) != 0) {
-                throw SocketException(Error.lastErrorMessage)
+                throw SocketException(SrtError.lastErrorMessage)
             }
         }
 
@@ -1238,7 +1238,7 @@ private constructor(private val srtsocket: Int) : ConfigurableSrtSocket, Closeab
         get() {
             val connectionTime = nativeGetConnectionTime()
             if (connectionTime < 0) {
-                throw SocketException(Error.lastErrorMessage)
+                throw SocketException(SrtError.lastErrorMessage)
             }
             return connectionTime
         }

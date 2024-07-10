@@ -8,7 +8,7 @@ import io.github.thibaultbee.srtdroid.core.enums.SockOpt
 import io.github.thibaultbee.srtdroid.core.enums.SockStatus
 import io.github.thibaultbee.srtdroid.core.interfaces.ConfigurableSrtSocket
 import io.github.thibaultbee.srtdroid.core.models.Epoll
-import io.github.thibaultbee.srtdroid.core.models.Error
+import io.github.thibaultbee.srtdroid.core.models.SrtError
 import io.github.thibaultbee.srtdroid.core.models.MsgCtrl
 import io.github.thibaultbee.srtdroid.core.models.SrtSocket
 import io.github.thibaultbee.srtdroid.core.models.SrtSocket.ServerListener
@@ -803,7 +803,7 @@ private constructor(
                 val epollEvents = try {
                     epoll.uWait(POLLING_TIMEOUT_IN_MS)
                 } catch (e: Exception) {
-                    continuation.resumeWithException(SocketException(Error.lastErrorMessage))
+                    continuation.resumeWithException(SocketException(SrtError.lastErrorMessage))
                     return@suspendCancellableCoroutine
                 }
                 if (epollEvents.isEmpty()) {
@@ -819,8 +819,8 @@ private constructor(
                     if (sockState == SockStatus.BROKEN) {
                         continuation.resumeWithException(SocketException("Socket is broken. Maybe due to timeout?"))
                     } else {
-                        if (Error.lastError != ErrorType.SUCCESS) {
-                            continuation.resumeWithException(SocketException(Error.lastErrorMessage))
+                        if (SrtError.lastError != ErrorType.SUCCESS) {
+                            continuation.resumeWithException(SocketException(SrtError.lastErrorMessage))
                         } else {
                             continuation.resumeWithException(SocketException("Epoll returned an unknown error"))
                         }

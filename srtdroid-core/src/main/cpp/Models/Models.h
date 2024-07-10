@@ -23,7 +23,7 @@
 #define LIST_CLASS "java/util/List"
 
 
-#define ERROR_CLASS "io/github/thibaultbee/srtdroid/core/models/Error"
+#define ERROR_CLASS "io/github/thibaultbee/srtdroid/core/models/SrtError"
 #define SRT_CLASS "io/github/thibaultbee/srtdroid/core/Srt"
 #define TIME_CLASS "io/github/thibaultbee/srtdroid/core/models/Time"
 #define EPOLL_CLASS "io/github/thibaultbee/srtdroid/core/models/Epoll"

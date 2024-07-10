@@ -18,7 +18,7 @@ package io.github.thibaultbee.srtdroid.example
 import android.content.Context
 import android.content.DialogInterface
 import androidx.appcompat.app.AlertDialog
-import io.github.thibaultbee.srtdroid.core.models.Error
+import io.github.thibaultbee.srtdroid.core.models.SrtError
 
 
 object Utils {
@@ -31,8 +31,8 @@ object Utils {
     }
 
     fun getErrorMessage(): String {
-        val message = Error.lastErrorMessage
-        Error.clearLastError()
+        val message = SrtError.lastErrorMessage
+        SrtError.clearLastError()
         return message
     }
 }

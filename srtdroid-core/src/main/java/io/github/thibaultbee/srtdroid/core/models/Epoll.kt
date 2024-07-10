@@ -73,7 +73,7 @@ private constructor(private val eid: Int) {
         events: List<EpollOpt>?
     ) {
         if (nativeAddUSock(socket, events) != 0) {
-            throw InvalidParameterException(Error.lastErrorMessage)
+            throw InvalidParameterException(SrtError.lastErrorMessage)
         }
     }
 
@@ -96,7 +96,7 @@ private constructor(private val eid: Int) {
         events: List<EpollOpt>?
     ) {
         if (nativeUpdateUSock(socket, events) != 0) {
-            throw InvalidParameterException(Error.lastErrorMessage)
+            throw InvalidParameterException(SrtError.lastErrorMessage)
         }
     }
 
@@ -112,7 +112,7 @@ private constructor(private val eid: Int) {
      */
     fun removeUSock(socket: SrtSocket) {
         if (nativeRemoveUSock(socket) != 0) {
-            throw InvalidParameterException(Error.lastErrorMessage)
+            throw InvalidParameterException(SrtError.lastErrorMessage)
         }
     }
 
@@ -139,7 +139,7 @@ private constructor(private val eid: Int) {
     ): Pair<List<SrtSocket>, List<SrtSocket>> {
         val pair = nativeWait(timeout, expectedReadReadySocketSize, expectedWriteReadySocketSize)
         if (pair.first < 0) {
-            throw InvalidParameterException(Error.lastErrorMessage)
+            throw InvalidParameterException(SrtError.lastErrorMessage)
         }
         return pair.second
     }
@@ -166,7 +166,7 @@ private constructor(private val eid: Int) {
         while (true) {
             val pair = nativeUWait(timeout, expectedEpollEventSize)
             if (pair.first < 0) {
-                throw InvalidParameterException(Error.lastErrorMessage)
+                throw InvalidParameterException(SrtError.lastErrorMessage)
             }
             epollEvents.addAll(pair.second)
             if (pair.first <= expectedEpollEventSize) {
@@ -187,7 +187,7 @@ private constructor(private val eid: Int) {
      */
     fun clearUSock() {
         if (nativeClearUSock() != 0) {
-            throw InvalidParameterException(Error.lastErrorMessage)
+            throw InvalidParameterException(SrtError.lastErrorMessage)
         }
     }
 
@@ -203,7 +203,7 @@ private constructor(private val eid: Int) {
      * @see [flags]
      */
     fun setFlags(events: List<EpollFlag>) =
-        nativeSetFlags(events) ?: throw InvalidParameterException(Error.lastErrorMessage)
+        nativeSetFlags(events) ?: throw InvalidParameterException(SrtError.lastErrorMessage)
 
     /**
      * Set or retrieves flags that change the default behavior of the epoll functions.
@@ -217,7 +217,7 @@ private constructor(private val eid: Int) {
          * @return the current [EpollFlag]
          * @throws InvalidParameterException if [Epoll] is not valid
          */
-        get() = nativeGetFlags() ?: throw InvalidParameterException(Error.lastErrorMessage)
+        get() = nativeGetFlags() ?: throw InvalidParameterException(SrtError.lastErrorMessage)
         /**
          * Get [Epoll] function flag.
          *
@@ -239,7 +239,7 @@ private constructor(private val eid: Int) {
      */
     fun release() {
         if (nativeRelease() != 0) {
-            throw InvalidParameterException(Error.lastErrorMessage)
+            throw InvalidParameterException(SrtError.lastErrorMessage)
         }
     }
 

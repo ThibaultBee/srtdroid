@@ -99,19 +99,19 @@ class EpollTest {
             fail()
         } catch (e: Exception) {
         }
-        assertEquals(Error.lastError, ErrorType.ETIMEOUT)
+        assertEquals(SrtError.lastError, ErrorType.ETIMEOUT)
         try {
             epoll.wait(timeout = 1000L)
             fail()
         } catch (e: Exception) {
         }
-        assertEquals(Error.lastError, ErrorType.ETIMEOUT)
+        assertEquals(SrtError.lastError, ErrorType.ETIMEOUT)
         try {
             epoll.wait(1000L)
             fail()
         } catch (e: Exception) {
         }
-        assertEquals(Error.lastError, ErrorType.ETIMEOUT)
+        assertEquals(SrtError.lastError, ErrorType.ETIMEOUT)
     }
 
     @Test

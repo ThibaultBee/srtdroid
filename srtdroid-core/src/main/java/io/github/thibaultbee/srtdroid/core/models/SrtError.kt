@@ -22,7 +22,7 @@ import io.github.thibaultbee.srtdroid.core.enums.ErrorType
  * This class contains API to manage errors.
  * Once it has been called, you must release Srt context with [Srt.cleanUp] when application leaves.
  */
-object Error {
+object SrtError {
     init {
         Srt.startUp()
     }

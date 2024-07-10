@@ -28,7 +28,7 @@ import java.net.SocketException
  * Theses tests are written to check if SRT API can be called from the Kotlin part.
  */
 
-class ErrorTest {
+class SrtErrorTest {
     private var socket = SrtSocket()
 
     @After
@@ -44,8 +44,8 @@ class ErrorTest {
             socket.listen(3)
         } catch (_: SocketException) {
         }
-        assertEquals(Error.lastError, ErrorType.EUNBOUNDSOCK)
-        assertEquals(Error.lastErrorMessage, ErrorType.EUNBOUNDSOCK.toString())
+        assertEquals(SrtError.lastError, ErrorType.EUNBOUNDSOCK)
+        assertEquals(SrtError.lastErrorMessage, ErrorType.EUNBOUNDSOCK.toString())
     }
 
     @Test
@@ -54,9 +54,9 @@ class ErrorTest {
             socket.listen(3)
         } catch (_: SocketException) {
         }
-        assertEquals(Error.lastError, ErrorType.EUNBOUNDSOCK)
-        Error.clearLastError()
-        assertEquals(Error.lastError, ErrorType.SUCCESS)
+        assertEquals(SrtError.lastError, ErrorType.EUNBOUNDSOCK)
+        SrtError.clearLastError()
+        assertEquals(SrtError.lastError, ErrorType.SUCCESS)
     }
 
     @Test
