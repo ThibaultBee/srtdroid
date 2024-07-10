@@ -51,4 +51,11 @@ class SrtUrlTest {
         srtUrl.preApplyTo(socket)
         assertEquals(1234, socket.getSockFlag(SockOpt.CONNTIMEO))
     }
+
+    @Test
+    fun srtUrlToUri() {
+        val srtUrl = SrtUrl(hostname = "127.0.0.1", port = 9000, connectTimeoutInMs = 1234)
+        val uri = srtUrl.uri
+        assertEquals(1234, uri.getQueryParameter("connect_timeout")?.toInt())
+    }
 }

@@ -21,19 +21,27 @@ import io.github.thibaultbee.srtdroid.core.Srt
 import io.github.thibaultbee.srtdroid.core.enums.SockOpt
 import io.github.thibaultbee.srtdroid.core.enums.Transtype
 import io.github.thibaultbee.srtdroid.core.extensions.toBoolean
+import io.github.thibaultbee.srtdroid.core.extensions.toInt
 import io.github.thibaultbee.srtdroid.core.interfaces.ConfigurableSrtSocket
 import java.security.InvalidParameterException
 
 /**
- * Extracts [SrtUrl] from a FFmpeg format: srt://hostname:port[?options]
+ * Extracts [SrtUrl] from a FFmpeg format [String]: srt://hostname:port[?options]
  */
 fun SrtUrl(url: String): SrtUrl {
     val uri = Uri.parse(url)
+    return SrtUrl(uri)
+}
+
+/**
+ * Extracts [SrtUrl] from a FFmpeg format [Uri].
+ */
+fun SrtUrl(uri: Uri): SrtUrl {
     if (uri.scheme != SrtUrl.SRT_SCHEME) {
-        throw InvalidParameterException("URL $url is not an srt URL")
+        throw InvalidParameterException("URL $uri is not an srt URL")
     }
     val hostname = uri.host
-        ?: throw InvalidParameterException("Failed to parse URL $url: unknown host")
+        ?: throw InvalidParameterException("Failed to parse URL $uri: unknown host")
     val port = uri.port
 
     val connectTimeoutInMs =
@@ -94,7 +102,7 @@ fun SrtUrl(url: String): SrtUrl {
     val unknownParameters =
         uri.queryParameterNames.find { SrtUrl.supportedQueryParameterList.contains(it).not() }
     if (unknownParameters != null) {
-        throw InvalidParameterException("Failed to parse URL $url: unknown parameter(s): $unknownParameters")
+        throw InvalidParameterException("Failed to parse URL $uri: unknown parameter(s): $unknownParameters")
     }
 
     return SrtUrl(
@@ -143,7 +151,7 @@ fun SrtUrl(url: String): SrtUrl {
  *
  * If a value is null, FFmpeg default values will be used. If default values are not defined, SRT default values will be used.
  *
- * [listenTimeoutInUs] and [timeoutInMs] are not used.
+ * [listenTimeoutInMs] and [timeoutInMs] are not used.
  */
 data class SrtUrl(
     val hostname: String,
@@ -196,6 +204,183 @@ data class SrtUrl(
         if (listenTimeoutInMs != null) {
             Log.w(TAG, "listenTimeoutInMs is not used")
         }
+    }
+
+    val uri: Uri by lazy {
+        buildUri()
+    }
+
+    private fun buildUri(): Uri {
+        val uriBuilder = Uri.Builder()
+            .scheme(SRT_SCHEME)
+            .encodedAuthority("$hostname:$port")
+        connectTimeoutInMs?.let {
+            uriBuilder.appendQueryParameter(
+                CONNECTION_TIMEOUT_QUERY_PARAMETER,
+                it.toString()
+            )
+        }
+        flightFlagSize?.let { uriBuilder.appendQueryParameter(FFS_QUERY_PARAMETER, it.toString()) }
+        inputBandwidth?.let {
+            uriBuilder.appendQueryParameter(
+                INPUT_BANDWIDTH_QUERY_PARAMETER,
+                it.toString()
+            )
+        }
+        iptos?.let { uriBuilder.appendQueryParameter(IPTOS_QUERY_PARAMETER, it.toString()) }
+        ipttl?.let { uriBuilder.appendQueryParameter(IPTTL_QUERY_PARAMETER, it.toString()) }
+        latencyInMs?.let {
+            uriBuilder.appendQueryParameter(
+                LATENCY_QUERY_PARAMETER,
+                it.times(1000).toString()
+            )
+        }
+        listenTimeoutInMs?.let {
+            uriBuilder.appendQueryParameter(
+                LISTEN_TIMEOUT_QUERY_PARAMETER,
+                it.times(1000).toString()
+            )
+        }
+        maxBandwidth?.let {
+            uriBuilder.appendQueryParameter(
+                MAX_BANDWIDTH_QUERY_PARAMETER,
+                it.toString()
+            )
+        }
+        mode?.let { uriBuilder.appendQueryParameter(MODE_QUERY_PARAMETER, it.value) }
+        maxSegmentSize?.let {
+            uriBuilder.appendQueryParameter(
+                MAX_SEGMENT_SIZE_QUERY_PARAMETER,
+                it.toString()
+            )
+        }
+        nakReport?.let {
+            uriBuilder.appendQueryParameter(
+                NAK_REPORT_QUERY_PARAMETER,
+                it.toInt().toString()
+            )
+        }
+        overheadBandwidth?.let {
+            uriBuilder.appendQueryParameter(
+                OVERHEAD_BANDWIDTH_QUERY_PARAMETER,
+                it.toString()
+            )
+        }
+        passphrase?.let { uriBuilder.appendQueryParameter(PASS_PHRASE_QUERY_PARAMETER, it) }
+        enforcedEncryption?.let {
+            uriBuilder.appendQueryParameter(
+                ENFORCED_ENCRYPTION_QUERY_PARAMETER,
+                it.toInt().toString()
+            )
+        }
+        kmRefreshRate?.let {
+            uriBuilder.appendQueryParameter(
+                KM_REFRESH_RATE_QUERY_PARAMETER,
+                it.toString()
+            )
+        }
+        kmPreannounce?.let {
+            uriBuilder.appendQueryParameter(
+                KM_PREANNOUNCE_QUERY_PARAMETER,
+                it.toString()
+            )
+        }
+        senderDropDelayInMs?.let {
+            uriBuilder.appendQueryParameter(
+                SENDER_DROP_DELAY_QUERY_PARAMETER,
+                it.times(1000).toString()
+            )
+        }
+        payloadSize?.let {
+            uriBuilder.appendQueryParameter(
+                PAYLOAD_SIZE_QUERY_PARAMETER,
+                it.toString()
+            )
+        }
+        peerLatencyInMs?.let {
+            uriBuilder.appendQueryParameter(
+                PEER_LATENCY_QUERY_PARAMETER,
+                it.times(1000).toString()
+            )
+        }
+        pbKeyLength?.let {
+            uriBuilder.appendQueryParameter(
+                PB_KEY_LENGTH_QUERY_PARAMETER,
+                it.toString()
+            )
+        }
+        receiverLatencyInMs?.let {
+            uriBuilder.appendQueryParameter(
+                RECEIVER_LATENCY_QUERY_PARAMETER,
+                it.times(1000).toString()
+            )
+        }
+        receiveUDPBufferSize?.let {
+            uriBuilder.appendQueryParameter(
+                RECEIVE_UDP_BUFFER_SIZE_QUERY_PARAMETER,
+                it.toString()
+            )
+        }
+        sendUDPBufferSize?.let {
+            uriBuilder.appendQueryParameter(
+                SEND_UDP_BUFFER_SIZE_QUERY_PARAMETER,
+                it.toString()
+            )
+        }
+        timeoutInMs?.let {
+            uriBuilder.appendQueryParameter(
+                TIMEOUT_QUERY_PARAMETER,
+                it.times(1000).toString()
+            )
+        }
+        enableTooLatePacketDrop?.let {
+            uriBuilder.appendQueryParameter(
+                ENABLE_TOO_LATE_PACKET_DROP_QUERY_PARAMETER,
+                it.toInt().toString()
+            )
+        }
+        sendBufferSize?.let {
+            uriBuilder.appendQueryParameter(
+                SEND_BUFFER_SIZE_QUERY_PARAMETER,
+                it.toString()
+            )
+        }
+        recvBufferSize?.let {
+            uriBuilder.appendQueryParameter(
+                RECV_BUFFER_SIZE_QUERY_PARAMETER,
+                it.toString()
+            )
+        }
+        lossMaxTTL?.let {
+            uriBuilder.appendQueryParameter(
+                LOSS_MAX_TTL_QUERY_PARAMETER,
+                it.toString()
+            )
+        }
+        minVersion?.let {
+            uriBuilder.appendQueryParameter(
+                MIN_VERSION_QUERY_PARAMETER,
+                it.toString()
+            )
+        }
+        streamId?.let { uriBuilder.appendQueryParameter(STREAM_ID_QUERY_PARAMETER, it) }
+        smoother?.let { uriBuilder.appendQueryParameter(SMOOTHER_QUERY_PARAMETER, it.value) }
+        enableMessageApi?.let {
+            uriBuilder.appendQueryParameter(
+                ENABLE_MESSAGE_API_QUERY_PARAMETER,
+                it.toInt().toString()
+            )
+        }
+        transtype?.let { uriBuilder.appendQueryParameter(TRANSTYPE_QUERY_PARAMETER, it.value) }
+        lingerInS?.let { uriBuilder.appendQueryParameter(LINGER_QUERY_PARAMETER, it.toString()) }
+        enableTimestampBasedPacketDelivery?.let {
+            uriBuilder.appendQueryParameter(
+                ENABLE_TIMESTAMP_BASED_PACKET_DELIVERY_QUERY_PARAMETER,
+                it.toInt().toString()
+            )
+        }
+
+        return uriBuilder.build()
     }
 
     /**
