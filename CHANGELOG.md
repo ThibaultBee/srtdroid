@@ -1,5 +1,40 @@
-Change Log
+Changelog
 ==========
+
+Version 1.8.0
+-------------
+
+From `1.8.0`, packages are available in `io.github.thibaultbee.srtdroid` instead
+of `io.github.thibaultbee`.
+
+```gradle
+dependencies {
+    implementation 'io.github.thibaultbee.srtdroid:srtdroid-core:1.8.0'
+    // If you use Kotlin Coroutines, you can use srtdroid-ktx
+    implementation 'io.github.thibaultbee.srtdroid:srtdroid-ktx:1.8.0'
+}
+```
+
+`Socket` class has been renamed `SrtSocket` to avoid confusion with `Socket` from `java.net`. Same
+for `Error`, it has been renamed `SrtError`.
+
+## Dependencies:
+
+- srt 1.5.3
+- openssl 3.0.9
+
+## Features:
+
+- Add a Kotlin package with socket based on coroutine
+- core: add an API to parse ffmpeg like URL. See `SrtUrl` class.
+- core: split listener in 2 interfaces: `ClientListener` and `ServerListener`
+- core: recv(int) only returns a `ByteArray` instead of a Pair<Int, ByteArray>
+- core: implement `Epoll` and `Socket` `equals` and `hashCode`
+- Upgrade dependencies (AGP, Kotlin, NDK,...)
+
+## Bug fixes:
+
+- Fix Epoll APIs
 
 Version 1.7.0
 -------------
