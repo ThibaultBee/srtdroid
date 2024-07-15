@@ -1,6 +1,6 @@
 enum class Property(val key: String) {
-    SonatypeUsername("NEXUS_USERNAME"),
-    SonatypePassword("NEXUS_PASSWORD"),
+    SonatypeUsername("MAVEN_USERNAME"),
+    SonatypePassword("MAVEN_PASSWORD"),
     GpgKey("GPG_KEY"),
     GpgKeyId("GPG_KEY_ID"),
     GpgPassword("GPG_PASSWORD");

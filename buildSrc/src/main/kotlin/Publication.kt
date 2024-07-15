@@ -30,10 +30,10 @@ fun Project.configurePublication() {
         repositories {
             maven {
                 if (isRelease) {
-                    setUrl("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
+                    setUrl("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
                 } else {
                     println("Using SNAPSHOT repository")
-                    setUrl("https://oss.sonatype.org/content/repositories/snapshots/")
+                    setUrl("https://s01.oss.sonatype.org/content/repositories/snapshots/")
                 }
 
                 credentials {
@@ -49,10 +49,15 @@ fun Project.configurePublication() {
         apply(plugin = "signing")
 
         the<SigningExtension>().apply {
+            val keyId =
+                Publication.Signing.keyId ?: throw IllegalStateException("No signing key ID found")
+            val key = Publication.Signing.key ?: throw IllegalStateException("No signing key found")
+            val password = Publication.Signing.password
+                ?: throw IllegalStateException("No signing key password found")
             useInMemoryPgpKeys(
-                Publication.Signing.keyId,
-                Publication.Signing.key,
-                Publication.Signing.password
+                keyId,
+                key,
+                password
             )
             sign(the<PublishingExtension>().publications)
         }

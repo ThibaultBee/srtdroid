@@ -23,14 +23,11 @@ jobs:
           git config --global user.email "<>"
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
-      - name: Decode the secret key
-        run: echo $GPG_KEYRING_FILE_CONTENT | base64 --decode > ~/secring.gpg
-        env:
-          GPG_KEYRING_FILE_CONTENT: "${{ secrets.GPG_KEYRING_FILE_CONTENT }}"
       - name: Publish package
-        run: ./gradlew publish -Psigning.secretKeyRingFile=$(echo ~/secring.gpg) -Psigning.password=$GPG_PASSPHRASE -Psigning.keyId=$GPG_KEY_ID
+        run: ./gradlew publish
         env:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
+          GPG_KEY: ${{ secrets.GPG_KEY }}
           GPG_KEY_ID: ${{ secrets.GPG_KEY_ID }}
-          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+          GPG_PASSWORD: ${{ secrets.GPG_PASSWORD }}
