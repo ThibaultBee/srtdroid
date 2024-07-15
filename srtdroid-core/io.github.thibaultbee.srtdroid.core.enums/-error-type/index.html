@@ -1,0 +1,817 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>ErrorType</title>
+<link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">    <script>var pathToRoot = "../../../";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async></script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer></script></head>
+<body>
+    <div class="root">
+<nav class="navigation" id="navigation-wrapper">
+    <div class="navigation--inner">
+        <div class="navigation-title">
+            <button class="menu-toggle" id="menu-toggle" type="button">toggle menu</button>
+            <div class="library-name">
+<a class="library-name--link" href="../../../index.html">
+                            srtdroid
+                    </a>            </div>
+            <div class="library-version">1.8.0
+            </div>
+        </div>
+        <div class="filter-section" id="filter-section">
+                <button class="platform-tag platform-selector jvm-like" data-active="" data-filter=":srtdroid-core:dokkaHtmlPartial/release">androidJvm</button>
+        </div>
+    </div>
+    <div class="navigation-controls">
+        <button class="navigation-controls--btn navigation-controls--theme" id="theme-toggle-button" type="button">switch theme</button>
+        <div class="navigation-controls--btn navigation-controls--search" id="searchBar" role="button">search in API</div>
+    </div>
+</nav>
+        <div id="container">
+            <div class="sidebar" id="leftColumn">
+                <div class="sidebar--inner" id="sideMenu"></div>
+            </div>
+            <div id="main">
+<div class="main-content" data-page-type="classlike" id="content" pageids="srtdroid-core::io.github.thibaultbee.srtdroid.core.enums/ErrorType///PointingToDeclaration//1390755456">
+  <div class="breadcrumbs"><a href="../../index.html">srtdroid-core</a><span class="delimiter">/</span><a href="../index.html">io.github.thibaultbee.srtdroid.core.enums</a><span class="delimiter">/</span><span class="current">ErrorType</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Error</span><wbr><span><span>Type</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">enum </span><a href="index.html">ErrorType</a> : <a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-enum/index.html">Enum</a><span class="token operator">&lt;</span><a href="index.html">ErrorType</a><span class="token operator">&gt; </span></div><p class="paragraph">SRT error codes. Once it has been called, you must release Srt context with <a href="../../io.github.thibaultbee.srtdroid.core/-srt/clean-up.html">Srt.cleanUp</a> when application leaves.</p><p class="paragraph"><strong>See Also:</strong> <a href="https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#error-codes">Error Codes</a></p></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button><button class="section-tab" data-togglable="ENTRY">Entries</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="ENTRY">
+        <h2 class="">Entries</h2>
+        <div class="table"><a data-name="14507810%2FClasslikes%2F1390755456" anchor-label="EUNKNOWN" id="14507810%2FClasslikes%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-e-u-n-k-n-o-w-n/index.html">EUNKNOWN</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="14507810%2FClasslikes%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><div class="block"><a href="-e-u-n-k-n-o-w-n/index.html">EUNKNOWN</a></div></div><div class="brief "><p class="paragraph">Internal error when setting the right error code</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1139130638%2FClasslikes%2F1390755456" anchor-label="SUCCESS" id="1139130638%2FClasslikes%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-s-u-c-c-e-s-s/index.html">SUCCESS</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1139130638%2FClasslikes%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><div class="block"><a href="-s-u-c-c-e-s-s/index.html">SUCCESS</a></div></div><div class="brief "><p class="paragraph">SRT_SUCCESS 	The value set when the last error was cleared and no error has occurred since then</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-654886295%2FClasslikes%2F1390755456" anchor-label="ECONNSETUP" id="-654886295%2FClasslikes%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-e-c-o-n-n-s-e-t-u-p/index.html">ECONNSETUP</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-654886295%2FClasslikes%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><div class="block"><a href="-e-c-o-n-n-s-e-t-u-p/index.html">ECONNSETUP</a></div></div><div class="brief "><p class="paragraph">General setup error resulting from internal system state</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-138252172%2FClasslikes%2F1390755456" anchor-label="ENOSERVER" id="-138252172%2FClasslikes%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-e-n-o-s-e-r-v-e-r/index.html">ENOSERVER</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-138252172%2FClasslikes%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><div class="block"><a href="-e-n-o-s-e-r-v-e-r/index.html">ENOSERVER</a></div></div><div class="brief "><p class="paragraph">Connection timed out while attempting to connect to the remote address</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="780288259%2FClasslikes%2F1390755456" anchor-label="ECONNREJ" id="780288259%2FClasslikes%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-e-c-o-n-n-r-e-j/index.html">ECONNREJ</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="780288259%2FClasslikes%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><div class="block"><a href="-e-c-o-n-n-r-e-j/index.html">ECONNREJ</a></div></div><div class="brief "><p class="paragraph">Connection has been rejected</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="58015890%2FClasslikes%2F1390755456" anchor-label="ESOCKFAIL" id="58015890%2FClasslikes%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-e-s-o-c-k-f-a-i-l/index.html">ESOCKFAIL</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="58015890%2FClasslikes%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><div class="block"><a href="-e-s-o-c-k-f-a-i-l/index.html">ESOCKFAIL</a></div></div><div class="brief "><p class="paragraph">An error occurred when trying to call a system function on an internally used UDP socket</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="404540167%2FClasslikes%2F1390755456" anchor-label="ESECFAIL" id="404540167%2FClasslikes%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-e-s-e-c-f-a-i-l/index.html">ESECFAIL</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="404540167%2FClasslikes%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><div class="block"><a href="-e-s-e-c-f-a-i-l/index.html">ESECFAIL</a></div></div><div class="brief "><p class="paragraph">A possible tampering with the handshake packets was detected</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1519563703%2FClasslikes%2F1390755456" anchor-label="ESCLOSED" id="1519563703%2FClasslikes%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-e-s-c-l-o-s-e-d/index.html">ESCLOSED</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1519563703%2FClasslikes%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><div class="block"><a href="-e-s-c-l-o-s-e-d/index.html">ESCLOSED</a></div></div><div class="brief "><p class="paragraph">A socket that was vital for an operation called in blocking mode has been closed</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="883835386%2FClasslikes%2F1390755456" anchor-label="ECONNFAIL" id="883835386%2FClasslikes%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-e-c-o-n-n-f-a-i-l/index.html">ECONNFAIL</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="883835386%2FClasslikes%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><div class="block"><a href="-e-c-o-n-n-f-a-i-l/index.html">ECONNFAIL</a></div></div><div class="brief "><p class="paragraph">General connection failure of unknown details</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="201005952%2FClasslikes%2F1390755456" anchor-label="ECONNLOST" id="201005952%2FClasslikes%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-e-c-o-n-n-l-o-s-t/index.html">ECONNLOST</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="201005952%2FClasslikes%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><div class="block"><a href="-e-c-o-n-n-l-o-s-t/index.html">ECONNLOST</a></div></div><div class="brief "><p class="paragraph">The socket was properly connected, but the connection has been broken</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1434853923%2FClasslikes%2F1390755456" anchor-label="ENOCONN" id="-1434853923%2FClasslikes%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-e-n-o-c-o-n-n/index.html">ENOCONN</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1434853923%2FClasslikes%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><div class="block"><a href="-e-n-o-c-o-n-n/index.html">ENOCONN</a></div></div><div class="brief "><p class="paragraph">The socket is not connected</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1596926274%2FClasslikes%2F1390755456" anchor-label="ERESOURCE" id="-1596926274%2FClasslikes%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-e-r-e-s-o-u-r-c-e/index.html">ERESOURCE</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1596926274%2FClasslikes%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><div class="block"><a href="-e-r-e-s-o-u-r-c-e/index.html">ERESOURCE</a></div></div><div class="brief "><p class="paragraph">System or standard library error reported unexpectedly for unknown purpose</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2083777210%2FClasslikes%2F1390755456" anchor-label="ETHREAD" id="2083777210%2FClasslikes%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-e-t-h-r-e-a-d/index.html">ETHREAD</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2083777210%2FClasslikes%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><div class="block"><a href="-e-t-h-r-e-a-d/index.html">ETHREAD</a></div></div><div class="brief "><p class="paragraph">System was unable to spawn a new thread when requried</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="424425194%2FClasslikes%2F1390755456" anchor-label="ENOBUF" id="424425194%2FClasslikes%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-e-n-o-b-u-f/index.html">ENOBUF</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="424425194%2FClasslikes%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><div class="block"><a href="-e-n-o-b-u-f/index.html">ENOBUF</a></div></div><div class="brief "><p class="paragraph">System was unable to allocate memory for buffers</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2046786490%2FClasslikes%2F1390755456" anchor-label="ESYSOBJ" id="2046786490%2FClasslikes%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-e-s-y-s-o-b-j/index.html">ESYSOBJ</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2046786490%2FClasslikes%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><div class="block"><a href="-e-s-y-s-o-b-j/index.html">ESYSOBJ</a></div></div><div class="brief "><p class="paragraph">System was unable to allocate system specific objects</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="389210540%2FClasslikes%2F1390755456" anchor-label="EFILE" id="389210540%2FClasslikes%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-e-f-i-l-e/index.html">EFILE</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="389210540%2FClasslikes%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><div class="block"><a href="-e-f-i-l-e/index.html">EFILE</a></div></div><div class="brief "><p class="paragraph">General filesystem error</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-625601828%2FClasslikes%2F1390755456" anchor-label="EINVRDOFF" id="-625601828%2FClasslikes%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-e-i-n-v-r-d-o-f-f/index.html">EINVRDOFF</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-625601828%2FClasslikes%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><div class="block"><a href="-e-i-n-v-r-d-o-f-f/index.html">EINVRDOFF</a></div></div><div class="brief "><p class="paragraph">Failure when trying to read from a given position in the file</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1726159570%2FClasslikes%2F1390755456" anchor-label="ERDPERM" id="1726159570%2FClasslikes%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-e-r-d-p-e-r-m/index.html">ERDPERM</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1726159570%2FClasslikes%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><div class="block"><a href="-e-r-d-p-e-r-m/index.html">ERDPERM</a></div></div><div class="brief "><p class="paragraph">Read permission was denied when trying to read from file</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1556629677%2FClasslikes%2F1390755456" anchor-label="EINVWROFF" id="-1556629677%2FClasslikes%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-e-i-n-v-w-r-o-f-f/index.html">EINVWROFF</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1556629677%2FClasslikes%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><div class="block"><a href="-e-i-n-v-w-r-o-f-f/index.html">EINVWROFF</a></div></div><div class="brief "><p class="paragraph">Failed to set position in the written file</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1365899973%2FClasslikes%2F1390755456" anchor-label="EWRPERM" id="-1365899973%2FClasslikes%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-e-w-r-p-e-r-m/index.html">EWRPERM</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1365899973%2FClasslikes%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><div class="block"><a href="-e-w-r-p-e-r-m/index.html">EWRPERM</a></div></div><div class="brief "><p class="paragraph">Write permission was denied when trying to write to a file</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-2007255190%2FClasslikes%2F1390755456" anchor-label="EINVOP" id="-2007255190%2FClasslikes%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-e-i-n-v-o-p/index.html">EINVOP</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2007255190%2FClasslikes%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><div class="block"><a href="-e-i-n-v-o-p/index.html">EINVOP</a></div></div><div class="brief "><p class="paragraph">Invalid operation performed for the current state of a socket</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="269904410%2FClasslikes%2F1390755456" anchor-label="EBOUNDSOCK" id="269904410%2FClasslikes%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-e-b-o-u-n-d-s-o-c-k/index.html">EBOUNDSOCK</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="269904410%2FClasslikes%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><div class="block"><a href="-e-b-o-u-n-d-s-o-c-k/index.html">EBOUNDSOCK</a></div></div><div class="brief "><p class="paragraph">The socket is currently bound and the required operation cannot be performed in this state</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="607580192%2FClasslikes%2F1390755456" anchor-label="ECONNSOCK" id="607580192%2FClasslikes%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-e-c-o-n-n-s-o-c-k/index.html">ECONNSOCK</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="607580192%2FClasslikes%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><div class="block"><a href="-e-c-o-n-n-s-o-c-k/index.html">ECONNSOCK</a></div></div><div class="brief "><p class="paragraph">The socket is currently connected and therefore performing the required operation is not possible</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1720579436%2FClasslikes%2F1390755456" anchor-label="EINVPARAM" id="1720579436%2FClasslikes%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-e-i-n-v-p-a-r-a-m/index.html">EINVPARAM</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1720579436%2FClasslikes%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><div class="block"><a href="-e-i-n-v-p-a-r-a-m/index.html">EINVPARAM</a></div></div><div class="brief "><p class="paragraph">Call parameters for API functions have some requirements that were not satisfied</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1270682419%2FClasslikes%2F1390755456" anchor-label="EINVSOCK" id="-1270682419%2FClasslikes%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-e-i-n-v-s-o-c-k/index.html">EINVSOCK</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1270682419%2FClasslikes%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><div class="block"><a href="-e-i-n-v-s-o-c-k/index.html">EINVSOCK</a></div></div><div class="brief "><p class="paragraph">The API function required an ID of an entity (socket or group) and it was invalid</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="782768225%2FClasslikes%2F1390755456" anchor-label="EUNBOUNDSOCK" id="782768225%2FClasslikes%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-e-u-n-b-o-u-n-d-s-o-c-k/index.html">EUNBOUNDSOCK</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="782768225%2FClasslikes%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><div class="block"><a href="-e-u-n-b-o-u-n-d-s-o-c-k/index.html">EUNBOUNDSOCK</a></div></div><div class="brief "><p class="paragraph">The operation to be performed on a socket requires that it first be explicitly bound</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2063261688%2FClasslikes%2F1390755456" anchor-label="ENOLISTEN" id="2063261688%2FClasslikes%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-e-n-o-l-i-s-t-e-n/index.html">ENOLISTEN</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2063261688%2FClasslikes%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><div class="block"><a href="-e-n-o-l-i-s-t-e-n/index.html">ENOLISTEN</a></div></div><div class="brief "><p class="paragraph">The socket passed for the operation is required to be in the listen state</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1672787725%2FClasslikes%2F1390755456" anchor-label="ERDVNOSERV" id="-1672787725%2FClasslikes%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-e-r-d-v-n-o-s-e-r-v/index.html">ERDVNOSERV</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1672787725%2FClasslikes%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><div class="block"><a href="-e-r-d-v-n-o-s-e-r-v/index.html">ERDVNOSERV</a></div></div><div class="brief "><p class="paragraph">The required operation cannot be performed when the socket is set to rendezvous mode</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1379535375%2FClasslikes%2F1390755456" anchor-label="ERDVUNBOUND" id="-1379535375%2FClasslikes%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-e-r-d-v-u-n-b-o-u-n-d/index.html">ERDVUNBOUND</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1379535375%2FClasslikes%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><div class="block"><a href="-e-r-d-v-u-n-b-o-u-n-d/index.html">ERDVUNBOUND</a></div></div><div class="brief "><p class="paragraph">An attempt was made to connect to a socket set to rendezvous mode that was not first bound</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1848970605%2FClasslikes%2F1390755456" anchor-label="EINVALMSGAPI" id="1848970605%2FClasslikes%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-e-i-n-v-a-l-m-s-g-a-p-i/index.html">EINVALMSGAPI</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1848970605%2FClasslikes%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><div class="block"><a href="-e-i-n-v-a-l-m-s-g-a-p-i/index.html">EINVALMSGAPI</a></div></div><div class="brief "><p class="paragraph">The function was used incorrectly in the message API</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1457006382%2FClasslikes%2F1390755456" anchor-label="EINVALBUFFERAPI" id="1457006382%2FClasslikes%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-e-i-n-v-a-l-b-u-f-f-e-r-a-p-i/index.html">EINVALBUFFERAPI</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1457006382%2FClasslikes%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><div class="block"><a href="-e-i-n-v-a-l-b-u-f-f-e-r-a-p-i/index.html">EINVALBUFFERAPI</a></div></div><div class="brief "><p class="paragraph">The function was used incorrectly in the stream (buffer) API</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1387627870%2FClasslikes%2F1390755456" anchor-label="EDUPLISTEN" id="1387627870%2FClasslikes%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-e-d-u-p-l-i-s-t-e-n/index.html">EDUPLISTEN</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1387627870%2FClasslikes%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><div class="block"><a href="-e-d-u-p-l-i-s-t-e-n/index.html">EDUPLISTEN</a></div></div><div class="brief "><p class="paragraph">The port tried to be bound for listening is already bus</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="714680086%2FClasslikes%2F1390755456" anchor-label="ELARGEMSG" id="714680086%2FClasslikes%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-e-l-a-r-g-e-m-s-g/index.html">ELARGEMSG</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="714680086%2FClasslikes%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><div class="block"><a href="-e-l-a-r-g-e-m-s-g/index.html">ELARGEMSG</a></div></div><div class="brief "><p class="paragraph">Size exceeded</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-2020779421%2FClasslikes%2F1390755456" anchor-label="EINVPOLLID" id="-2020779421%2FClasslikes%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-e-i-n-v-p-o-l-l-i-d/index.html">EINVPOLLID</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2020779421%2FClasslikes%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><div class="block"><a href="-e-i-n-v-p-o-l-l-i-d/index.html">EINVPOLLID</a></div></div><div class="brief "><p class="paragraph">The epoll ID passed to an epoll function is invalid</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1649087430%2FClasslikes%2F1390755456" anchor-label="EPOLLEMPTY" id="1649087430%2FClasslikes%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-e-p-o-l-l-e-m-p-t-y/index.html">EPOLLEMPTY</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1649087430%2FClasslikes%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><div class="block"><a href="-e-p-o-l-l-e-m-p-t-y/index.html">EPOLLEMPTY</a></div></div><div class="brief "><p class="paragraph">The epoll container currently has no subscribed sockets</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-241345166%2FClasslikes%2F1390755456" anchor-label="EASYNCFAIL" id="-241345166%2FClasslikes%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-e-a-s-y-n-c-f-a-i-l/index.html">EASYNCFAIL</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-241345166%2FClasslikes%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><div class="block"><a href="-e-a-s-y-n-c-f-a-i-l/index.html">EASYNCFAIL</a></div></div><div class="brief "><p class="paragraph">General asynchronous failure (not in use currently)</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1990051805%2FClasslikes%2F1390755456" anchor-label="EASYNCSND" id="1990051805%2FClasslikes%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-e-a-s-y-n-c-s-n-d/index.html">EASYNCSND</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1990051805%2FClasslikes%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><div class="block"><a href="-e-a-s-y-n-c-s-n-d/index.html">EASYNCSND</a></div></div><div class="brief "><p class="paragraph">Sending operation is not ready to perform</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1769771481%2FClasslikes%2F1390755456" anchor-label="EASYNCRCV" id="1769771481%2FClasslikes%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-e-a-s-y-n-c-r-c-v/index.html">EASYNCRCV</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1769771481%2FClasslikes%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><div class="block"><a href="-e-a-s-y-n-c-r-c-v/index.html">EASYNCRCV</a></div></div><div class="brief "><p class="paragraph">Receiving operation is not ready to perform</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1251338745%2FClasslikes%2F1390755456" anchor-label="ETIMEOUT" id="1251338745%2FClasslikes%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-e-t-i-m-e-o-u-t/index.html">ETIMEOUT</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1251338745%2FClasslikes%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><div class="block"><a href="-e-t-i-m-e-o-u-t/index.html">ETIMEOUT</a></div></div><div class="brief "><p class="paragraph">The operation timed out</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="461119705%2FClasslikes%2F1390755456" anchor-label="ECONGEST" id="461119705%2FClasslikes%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-e-c-o-n-g-e-s-t/index.html">ECONGEST</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="461119705%2FClasslikes%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><div class="block"><a href="-e-c-o-n-g-e-s-t/index.html">ECONGEST</a></div></div><div class="brief "><p class="paragraph">With <a href="../-sock-opt/-t-s-b-p-d-m-o-d-e/index.html">SockOpt.TSBPDMODE</a> and <a href="../-sock-opt/-t-l-p-k-t-d-r-o-p/index.html">SockOpt.TLPKTDROP</a> set to true, some packets were dropped by sender</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1829302747%2FClasslikes%2F1390755456" anchor-label="EPEERERR" id="1829302747%2FClasslikes%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-togglable="ENTRY" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-e-p-e-e-r-e-r-r/index.html">EPEERERR</a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1829302747%2FClasslikes%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><div class="block"><a href="-e-p-e-e-r-e-r-r/index.html">EPEERERR</a></div></div><div class="brief "><p class="paragraph">Receiver peer is writing to a file that the agent is sending</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="TYPE">
+        <h2 class="">Types</h2>
+        <div class="table"><a data-name="379166542%2FClasslikes%2F1390755456" anchor-label="Companion" id="379166542%2FClasslikes%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-companion/index.html"><span><span>Companion</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="379166542%2FClasslikes%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">object </span><a href="-companion/index.html">Companion</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="PROPERTY">
+        <h2 class="">Properties</h2>
+        <div class="table"><a data-name="55547383%2FProperties%2F1390755456" anchor-label="entries" id="55547383%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="entries.html"><span><span>entries</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="55547383%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="entries.html">entries</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.enums/-enum-entries/index.html">EnumEntries</a><span class="token operator">&lt;</span><a href="index.html">ErrorType</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Returns a representation of an immutable list of all enum entries, in the order they're declared.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-372974862%2FProperties%2F1390755456" anchor-label="name" id="-372974862%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../io.github.thibaultbee.srtdroid.core.models/-srt-url/-mode/-r-e-n-d-e-z_-v-o-u-s/index.html#-372974862%2FProperties%2F1390755456"><span><span>name</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-372974862%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="../../io.github.thibaultbee.srtdroid.core.models/-srt-url/-mode/-r-e-n-d-e-z_-v-o-u-s/index.html#-372974862%2FProperties%2F1390755456">name</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-739389684%2FProperties%2F1390755456" anchor-label="ordinal" id="-739389684%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../io.github.thibaultbee.srtdroid.core.models/-srt-url/-mode/-r-e-n-d-e-z_-v-o-u-s/index.html#-739389684%2FProperties%2F1390755456"><span><span>ordinal</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-739389684%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="../../io.github.thibaultbee.srtdroid.core.models/-srt-url/-mode/-r-e-n-d-e-z_-v-o-u-s/index.html#-739389684%2FProperties%2F1390755456">ordinal</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="FUNCTION">
+        <h2 class="">Functions</h2>
+        <div class="table"><a data-name="-42465465%2FFunctions%2F1390755456" anchor-label="toString" id="-42465465%2FFunctions%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="to-string.html"><span>to</span><wbr><span><span>String</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-42465465%2FFunctions%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">external override </span><span class="token keyword">fun </span><a href="to-string.html"><span class="token function">toString</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></div><div class="brief "><p class="paragraph">Returns a string message that represents a given SRT error code</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="372502789%2FFunctions%2F1390755456" anchor-label="valueOf" id="372502789%2FFunctions%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="value-of.html"><span>value</span><wbr><span><span>Of</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="372502789%2FFunctions%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="value-of.html"><span class="token function">valueOf</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">value<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="index.html">ErrorType</a></div><div class="brief "><p class="paragraph">Returns the enum constant of this type with the specified name. The string must match exactly an identifier used to declare an enum constant in this type. (Extraneous whitespace characters are not permitted.)</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1449900753%2FFunctions%2F1390755456" anchor-label="values" id="1449900753%2FFunctions%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="values.html"><span><span>values</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1449900753%2FFunctions%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="values.html"><span class="token function">values</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-array/index.html">Array</a><span class="token operator">&lt;</span><a href="index.html">ErrorType</a><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Returns an array containing the constants of this enum type, in the order they're declared.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2024 Copyright</span><span class="pull-right"><span>Generated by </span><a href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

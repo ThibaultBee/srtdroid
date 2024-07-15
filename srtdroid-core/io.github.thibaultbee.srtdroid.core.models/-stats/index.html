@@ -1,0 +1,1334 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>Stats</title>
+<link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">    <script>var pathToRoot = "../../../";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async></script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer></script></head>
+<body>
+    <div class="root">
+<nav class="navigation" id="navigation-wrapper">
+    <div class="navigation--inner">
+        <div class="navigation-title">
+            <button class="menu-toggle" id="menu-toggle" type="button">toggle menu</button>
+            <div class="library-name">
+<a class="library-name--link" href="../../../index.html">
+                            srtdroid
+                    </a>            </div>
+            <div class="library-version">1.8.0
+            </div>
+        </div>
+        <div class="filter-section" id="filter-section">
+                <button class="platform-tag platform-selector jvm-like" data-active="" data-filter=":srtdroid-core:dokkaHtmlPartial/release">androidJvm</button>
+        </div>
+    </div>
+    <div class="navigation-controls">
+        <button class="navigation-controls--btn navigation-controls--theme" id="theme-toggle-button" type="button">switch theme</button>
+        <div class="navigation-controls--btn navigation-controls--search" id="searchBar" role="button">search in API</div>
+    </div>
+</nav>
+        <div id="container">
+            <div class="sidebar" id="leftColumn">
+                <div class="sidebar--inner" id="sideMenu"></div>
+            </div>
+            <div id="main">
+<div class="main-content" data-page-type="classlike" id="content" pageids="srtdroid-core::io.github.thibaultbee.srtdroid.core.models/Stats///PointingToDeclaration//1390755456">
+  <div class="breadcrumbs"><a href="../../index.html">srtdroid-core</a><span class="delimiter">/</span><a href="../index.html">io.github.thibaultbee.srtdroid.core.models</a><span class="delimiter">/</span><span class="current">Stats</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span><span>Stats</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">data </span><span class="token keyword">class </span><a href="index.html">Stats</a><span class="token punctuation">(</span><span class="parameters "><span class="parameter "><span class="token keyword">val </span>msTimeStamp<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>pktSentTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>pktRecvTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>pktSndLossTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>pktRcvLossTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>pktRetransTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>pktSentACKTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>pktRecvACKTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>pktSentNAKTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>pktRecvNAKTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>usSndDurationTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>pktSndDropTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>pktRcvDropTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>pktRcvUndecryptTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>byteSentTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>byteRecvTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>byteRcvLossTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>byteRetransTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>byteSndDropTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>byteRcvDropTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>byteRcvUndecryptTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>pktSent<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>pktRecv<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>pktSndLoss<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>pktRcvLoss<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>pktRetrans<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>pktRcvRetrans<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>pktSentACK<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>pktRecvACK<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>pktSentNAK<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>pktRecvNAK<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>mbpsSendRate<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>mbpsRecvRate<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>usSndDuration<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>pktReorderDistance<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>pktRcvAvgBelatedTime<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>pktRcvBelated<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>pktSndDrop<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>pktRcvDrop<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>pktRcvUndecrypt<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>byteSent<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>byteRecv<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>byteRcvLoss<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>byteRetrans<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>byteSndDrop<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>byteRcvDrop<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>byteRcvUndecrypt<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>usPktSndPeriod<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>pktFlowWindow<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>pktCongestionWindow<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>pktFlightSize<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>msRTT<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>mbpsBandwidth<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>byteAvailSndBuf<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>byteAvailRcvBuf<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>mbpsMaxBW<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>byteMSS<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>pktSndBuf<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>byteSndBuf<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>msSndBuf<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>msSndTsbPdDelay<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>pktRcvBuf<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>byteRcvBuf<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>msRcvBuf<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>msRcvTsbPdDelay<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>pktSndFilterExtraTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>pktRcvFilterExtraTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>pktRcvFilterSupplyTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>pktRcvFilterLossTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>pktSndFilterExtra<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>pktRcvFilterExtra<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>pktRcvFilterSupply<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>pktRcvFilterLoss<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>pktReorderTolerance<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>pktSentUniqueTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>pktRecvUniqueTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>byteSentUniqueTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>byteRecvUniqueTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>pktSentUnique<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>pktRecvUnique<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>byteSentUnique<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter "><span class="token keyword">val </span>byteRecvUnique<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a></span></span><span class="token punctuation">)</span></div><p class="paragraph">This class represents SRT statistics</p><p class="paragraph"><strong>See Also:</strong> <a href="https://github.com/Haivision/srt/blob/master/docs/statistics.md">statistics.md</a></p></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="CONSTRUCTOR">
+        <h2 class="">Constructors</h2>
+        <div class="table"><a data-name="-761317614%2FConstructors%2F1390755456" anchor-label="Stats" id="-761317614%2FConstructors%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-togglable="CONSTRUCTOR" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-stats.html"><span><span>Stats</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-761317614%2FConstructors%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">msTimeStamp<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter ">pktSentTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter ">pktRecvTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter ">pktSndLossTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">pktRcvLossTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">pktRetransTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">pktSentACKTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">pktRecvACKTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">pktSentNAKTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">pktRecvNAKTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">usSndDurationTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter ">pktSndDropTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">pktRcvDropTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">pktRcvUndecryptTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">byteSentTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter ">byteRecvTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter ">byteRcvLossTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter ">byteRetransTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter ">byteSndDropTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter ">byteRcvDropTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter ">byteRcvUndecryptTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter ">pktSent<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter ">pktRecv<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter ">pktSndLoss<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">pktRcvLoss<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">pktRetrans<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">pktRcvRetrans<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">pktSentACK<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">pktRecvACK<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">pktSentNAK<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">pktRecvNAK<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">mbpsSendRate<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a><span class="token punctuation">, </span></span><span class="parameter ">mbpsRecvRate<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a><span class="token punctuation">, </span></span><span class="parameter ">usSndDuration<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter ">pktReorderDistance<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">pktRcvAvgBelatedTime<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a><span class="token punctuation">, </span></span><span class="parameter ">pktRcvBelated<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter ">pktSndDrop<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">pktRcvDrop<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">pktRcvUndecrypt<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">byteSent<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter ">byteRecv<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter ">byteRcvLoss<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter ">byteRetrans<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter ">byteSndDrop<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter ">byteRcvDrop<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter ">byteRcvUndecrypt<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter ">usPktSndPeriod<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a><span class="token punctuation">, </span></span><span class="parameter ">pktFlowWindow<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">pktCongestionWindow<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">pktFlightSize<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">msRTT<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a><span class="token punctuation">, </span></span><span class="parameter ">mbpsBandwidth<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a><span class="token punctuation">, </span></span><span class="parameter ">byteAvailSndBuf<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">byteAvailRcvBuf<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">mbpsMaxBW<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a><span class="token punctuation">, </span></span><span class="parameter ">byteMSS<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">pktSndBuf<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">byteSndBuf<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">msSndBuf<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">msSndTsbPdDelay<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">pktRcvBuf<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">byteRcvBuf<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">msRcvBuf<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">msRcvTsbPdDelay<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">pktSndFilterExtraTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">pktRcvFilterExtraTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">pktRcvFilterSupplyTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">pktRcvFilterLossTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">pktSndFilterExtra<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">pktRcvFilterExtra<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">pktRcvFilterSupply<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">pktRcvFilterLoss<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">pktReorderTolerance<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">pktSentUniqueTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter ">pktRecvUniqueTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter ">byteSentUniqueTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter ">byteRecvUniqueTotal<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter ">pktSentUnique<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter ">pktRecvUnique<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter ">byteSentUnique<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter ">byteRecvUnique<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a></span></span><span class="token punctuation">)</span></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="PROPERTY">
+        <h2 class="">Properties</h2>
+        <div class="table"><a data-name="841233597%2FProperties%2F1390755456" anchor-label="byteAvailRcvBuf" id="841233597%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="byte-avail-rcv-buf.html"><span>byte</span><wbr><span>Avail</span><wbr><span>Rcv</span><wbr><span><span>Buf</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="841233597%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="byte-avail-rcv-buf.html">byteAvailRcvBuf</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The available UDT receiver buffer size</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1725582273%2FProperties%2F1390755456" anchor-label="byteAvailSndBuf" id="1725582273%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="byte-avail-snd-buf.html"><span>byte</span><wbr><span>Avail</span><wbr><span>Snd</span><wbr><span><span>Buf</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1725582273%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="byte-avail-snd-buf.html">byteAvailSndBuf</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The available UDT sender buffer size</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1557030349%2FProperties%2F1390755456" anchor-label="byteMSS" id="1557030349%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="byte-m-s-s.html"><span>byte</span><wbr><span><span>MSS</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1557030349%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="byte-m-s-s.html">byteMSS</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The MTU</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1898149266%2FProperties%2F1390755456" anchor-label="byteRcvBuf" id="1898149266%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="byte-rcv-buf.html"><span>byte</span><wbr><span>Rcv</span><wbr><span><span>Buf</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1898149266%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="byte-rcv-buf.html">byteRcvBuf</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The Undelivered bytes of UDT receiver</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1893682234%2FProperties%2F1390755456" anchor-label="byteRcvDrop" id="-1893682234%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="byte-rcv-drop.html"><span>byte</span><wbr><span>Rcv</span><wbr><span><span>Drop</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1893682234%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="byte-rcv-drop.html">byteRcvDrop</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a></div><div class="brief "><p class="paragraph">The number of too-late-to play missing bytes (estimate based on average packet size)</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="931026608%2FProperties%2F1390755456" anchor-label="byteRcvDropTotal" id="931026608%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="byte-rcv-drop-total.html"><span>byte</span><wbr><span>Rcv</span><wbr><span>Drop</span><wbr><span><span>Total</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="931026608%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="byte-rcv-drop-total.html">byteRcvDropTotal</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a></div><div class="brief "><p class="paragraph">The number of too-late-to play missing bytes (estimate based on average packet size)</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-235078126%2FProperties%2F1390755456" anchor-label="byteRcvLoss" id="-235078126%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="byte-rcv-loss.html"><span>byte</span><wbr><span>Rcv</span><wbr><span><span>Loss</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-235078126%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="byte-rcv-loss.html">byteRcvLoss</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a></div><div class="brief "><p class="paragraph">The number of lost bytes</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="108043236%2FProperties%2F1390755456" anchor-label="byteRcvLossTotal" id="108043236%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="byte-rcv-loss-total.html"><span>byte</span><wbr><span>Rcv</span><wbr><span>Loss</span><wbr><span><span>Total</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="108043236%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="byte-rcv-loss-total.html">byteRcvLossTotal</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a></div><div class="brief "><p class="paragraph">The total number of lost bytes</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="869632081%2FProperties%2F1390755456" anchor-label="byteRcvUndecrypt" id="869632081%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="byte-rcv-undecrypt.html"><span>byte</span><wbr><span>Rcv</span><wbr><span><span>Undecrypt</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="869632081%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="byte-rcv-undecrypt.html">byteRcvUndecrypt</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a></div><div class="brief "><p class="paragraph">The number of undecrypted bytes</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="333422853%2FProperties%2F1390755456" anchor-label="byteRcvUndecryptTotal" id="333422853%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="byte-rcv-undecrypt-total.html"><span>byte</span><wbr><span>Rcv</span><wbr><span>Undecrypt</span><wbr><span><span>Total</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="333422853%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="byte-rcv-undecrypt-total.html">byteRcvUndecryptTotal</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a></div><div class="brief "><p class="paragraph">The number of undecrypted bytes</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-231179462%2FProperties%2F1390755456" anchor-label="byteRecv" id="-231179462%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="byte-recv.html"><span>byte</span><wbr><span><span>Recv</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-231179462%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="byte-recv.html">byteRecv</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a></div><div class="brief "><p class="paragraph">The number of received bytes</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-2061690948%2FProperties%2F1390755456" anchor-label="byteRecvTotal" id="-2061690948%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="byte-recv-total.html"><span>byte</span><wbr><span>Recv</span><wbr><span><span>Total</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2061690948%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="byte-recv-total.html">byteRecvTotal</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a></div><div class="brief "><p class="paragraph">The total number of received bytes</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1061825879%2FProperties%2F1390755456" anchor-label="byteRecvUnique" id="-1061825879%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="byte-recv-unique.html"><span>byte</span><wbr><span>Recv</span><wbr><span><span>Unique</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1061825879%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="byte-recv-unique.html">byteRecvUnique</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a></div><div class="brief "><p class="paragraph">The number of data bytes to be received by the application</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1875381677%2FProperties%2F1390755456" anchor-label="byteRecvUniqueTotal" id="1875381677%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="byte-recv-unique-total.html"><span>byte</span><wbr><span>Recv</span><wbr><span>Unique</span><wbr><span><span>Total</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1875381677%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="byte-recv-unique-total.html">byteRecvUniqueTotal</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a></div><div class="brief "><p class="paragraph">The total number of data bytes to be received by the application</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-229808251%2FProperties%2F1390755456" anchor-label="byteRetrans" id="-229808251%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="byte-retrans.html"><span>byte</span><wbr><span><span>Retrans</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-229808251%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="byte-retrans.html">byteRetrans</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a></div><div class="brief "><p class="paragraph">The number of retransmitted bytes</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1456004527%2FProperties%2F1390755456" anchor-label="byteRetransTotal" id="-1456004527%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="byte-retrans-total.html"><span>byte</span><wbr><span>Retrans</span><wbr><span><span>Total</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1456004527%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="byte-retrans-total.html">byteRetransTotal</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a></div><div class="brief "><p class="paragraph">The total number of retransmitted bytes</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1907265080%2FProperties%2F1390755456" anchor-label="byteSent" id="-1907265080%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="byte-sent.html"><span>byte</span><wbr><span><span>Sent</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1907265080%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="byte-sent.html">byteSent</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a></div><div class="brief "><p class="paragraph">The number of sent data bytes, including retransmissions</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1920862702%2FProperties%2F1390755456" anchor-label="byteSentTotal" id="1920862702%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="byte-sent-total.html"><span>byte</span><wbr><span>Sent</span><wbr><span><span>Total</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1920862702%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="byte-sent-total.html">byteSentTotal</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a></div><div class="brief "><p class="paragraph">The total number of sent data bytes, including retransmissions</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2138252983%2FProperties%2F1390755456" anchor-label="byteSentUnique" id="2138252983%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="byte-sent-unique.html"><span>byte</span><wbr><span>Sent</span><wbr><span><span>Unique</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2138252983%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="byte-sent-unique.html">byteSentUnique</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a></div><div class="brief "><p class="paragraph">The number of data bytes, sent by the application</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-836562337%2FProperties%2F1390755456" anchor-label="byteSentUniqueTotal" id="-836562337%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="byte-sent-unique-total.html"><span>byte</span><wbr><span>Sent</span><wbr><span>Unique</span><wbr><span><span>Total</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-836562337%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="byte-sent-unique-total.html">byteSentUniqueTotal</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a></div><div class="brief "><p class="paragraph">The total number of data bytes, sent by the application</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1512469354%2FProperties%2F1390755456" anchor-label="byteSndBuf" id="-1512469354%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="byte-snd-buf.html"><span>byte</span><wbr><span>Snd</span><wbr><span><span>Buf</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1512469354%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="byte-snd-buf.html">byteSndBuf</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The UnACKed bytes in UDT sender</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-248677054%2FProperties%2F1390755456" anchor-label="byteSndDrop" id="-248677054%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="byte-snd-drop.html"><span>byte</span><wbr><span>Snd</span><wbr><span><span>Drop</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-248677054%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="byte-snd-drop.html">byteSndDrop</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a></div><div class="brief "><p class="paragraph">The number of too-late-to-send dropped bytes</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="245373620%2FProperties%2F1390755456" anchor-label="byteSndDropTotal" id="245373620%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="byte-snd-drop-total.html"><span>byte</span><wbr><span>Snd</span><wbr><span>Drop</span><wbr><span><span>Total</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="245373620%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="byte-snd-drop-total.html">byteSndDropTotal</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a></div><div class="brief "><p class="paragraph">The number of too-late-to-send dropped bytes</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1558741831%2FProperties%2F1390755456" anchor-label="mbpsBandwidth" id="-1558741831%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="mbps-bandwidth.html"><span>mbps</span><wbr><span><span>Bandwidth</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1558741831%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="mbps-bandwidth.html">mbpsBandwidth</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a></div><div class="brief "><p class="paragraph">The estimated bandwidth, in Mb/s</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1215414321%2FProperties%2F1390755456" anchor-label="mbpsMaxBW" id="1215414321%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="mbps-max-b-w.html"><span>mbps</span><wbr><span>Max</span><wbr><span><span>BW</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1215414321%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="mbps-max-b-w.html">mbpsMaxBW</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a></div><div class="brief "><p class="paragraph">The Transmit Bandwidth ceiling (Mbps)</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-268659606%2FProperties%2F1390755456" anchor-label="mbpsRecvRate" id="-268659606%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="mbps-recv-rate.html"><span>mbps</span><wbr><span>Recv</span><wbr><span><span>Rate</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-268659606%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="mbps-recv-rate.html">mbpsRecvRate</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a></div><div class="brief "><p class="paragraph">The receiving rate in Mb/s</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1202772488%2FProperties%2F1390755456" anchor-label="mbpsSendRate" id="1202772488%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="mbps-send-rate.html"><span>mbps</span><wbr><span>Send</span><wbr><span><span>Rate</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1202772488%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="mbps-send-rate.html">mbpsSendRate</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a></div><div class="brief "><p class="paragraph">The sending rate in Mb/s</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="769539060%2FProperties%2F1390755456" anchor-label="msRcvBuf" id="769539060%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="ms-rcv-buf.html"><span>ms</span><wbr><span>Rcv</span><wbr><span><span>Buf</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="769539060%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="ms-rcv-buf.html">msRcvBuf</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The Undelivered timespan (msec) of UDT receiver</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1421434375%2FProperties%2F1390755456" anchor-label="msRcvTsbPdDelay" id="1421434375%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="ms-rcv-tsb-pd-delay.html"><span>ms</span><wbr><span>Rcv</span><wbr><span>Tsb</span><wbr><span>Pd</span><wbr><span><span>Delay</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1421434375%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="ms-rcv-tsb-pd-delay.html">msRcvTsbPdDelay</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The Timestamp-based Packet Delivery Delay</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1457886054%2FProperties%2F1390755456" anchor-label="msRTT" id="1457886054%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="ms-r-t-t.html"><span>ms</span><wbr><span><span>RTT</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1457886054%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="ms-r-t-t.html">msRTT</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a></div><div class="brief "><p class="paragraph">The RTT, in milliseconds</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1653887736%2FProperties%2F1390755456" anchor-label="msSndBuf" id="1653887736%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="ms-snd-buf.html"><span>ms</span><wbr><span>Snd</span><wbr><span><span>Buf</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1653887736%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="ms-snd-buf.html">msSndBuf</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The UnACKed timespan (msec) of UDT sender</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1641028227%2FProperties%2F1390755456" anchor-label="msSndTsbPdDelay" id="1641028227%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="ms-snd-tsb-pd-delay.html"><span>ms</span><wbr><span>Snd</span><wbr><span>Tsb</span><wbr><span>Pd</span><wbr><span><span>Delay</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1641028227%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="ms-snd-tsb-pd-delay.html">msSndTsbPdDelay</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The Timestamp-based Packet Delivery Delay</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="904797474%2FProperties%2F1390755456" anchor-label="msTimeStamp" id="904797474%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="ms-time-stamp.html"><span>ms</span><wbr><span>Time</span><wbr><span><span>Stamp</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="904797474%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="ms-time-stamp.html">msTimeStamp</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a></div><div class="brief "><p class="paragraph">The time since the UDT entity is started, in milliseconds</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1170117410%2FProperties%2F1390755456" anchor-label="pktCongestionWindow" id="1170117410%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="pkt-congestion-window.html"><span>pkt</span><wbr><span>Congestion</span><wbr><span><span>Window</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1170117410%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="pkt-congestion-window.html">pktCongestionWindow</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The congestion window size, in number of packets</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1017792456%2FProperties%2F1390755456" anchor-label="pktFlightSize" id="1017792456%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="pkt-flight-size.html"><span>pkt</span><wbr><span>Flight</span><wbr><span><span>Size</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1017792456%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="pkt-flight-size.html">pktFlightSize</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The number of packets on flight</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1711270341%2FProperties%2F1390755456" anchor-label="pktFlowWindow" id="-1711270341%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="pkt-flow-window.html"><span>pkt</span><wbr><span>Flow</span><wbr><span><span>Window</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1711270341%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="pkt-flow-window.html">pktFlowWindow</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The flow window size, in number of packets</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="727205382%2FProperties%2F1390755456" anchor-label="pktRcvAvgBelatedTime" id="727205382%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="pkt-rcv-avg-belated-time.html"><span>pkt</span><wbr><span>Rcv</span><wbr><span>Avg</span><wbr><span>Belated</span><wbr><span><span>Time</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="727205382%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="pkt-rcv-avg-belated-time.html">pktRcvAvgBelatedTime</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a></div><div class="brief "><p class="paragraph">The average time of packet delay for belated packets (packets with sequence past the ACK)</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1063983107%2FProperties%2F1390755456" anchor-label="pktRcvBelated" id="1063983107%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="pkt-rcv-belated.html"><span>pkt</span><wbr><span>Rcv</span><wbr><span><span>Belated</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1063983107%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="pkt-rcv-belated.html">pktRcvBelated</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a></div><div class="brief "><p class="paragraph">The number of received AND IGNORED packets due to having come too late</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="139787563%2FProperties%2F1390755456" anchor-label="pktRcvBuf" id="139787563%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="pkt-rcv-buf.html"><span>pkt</span><wbr><span>Rcv</span><wbr><span><span>Buf</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="139787563%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="pkt-rcv-buf.html">pktRcvBuf</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The Undelivered packets in UDT receiver</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-568320179%2FProperties%2F1390755456" anchor-label="pktRcvDrop" id="-568320179%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="pkt-rcv-drop.html"><span>pkt</span><wbr><span>Rcv</span><wbr><span><span>Drop</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-568320179%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="pkt-rcv-drop.html">pktRcvDrop</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The number of too-late-to play missing packets</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-322435191%2FProperties%2F1390755456" anchor-label="pktRcvDropTotal" id="-322435191%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="pkt-rcv-drop-total.html"><span>pkt</span><wbr><span>Rcv</span><wbr><span>Drop</span><wbr><span><span>Total</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-322435191%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="pkt-rcv-drop-total.html">pktRcvDropTotal</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The number of too-late-to play missing packets</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="494954182%2FProperties%2F1390755456" anchor-label="pktRcvFilterExtra" id="494954182%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="pkt-rcv-filter-extra.html"><span>pkt</span><wbr><span>Rcv</span><wbr><span>Filter</span><wbr><span><span>Extra</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="494954182%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="pkt-rcv-filter-extra.html">pktRcvFilterExtra</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The number of control packets received and not supplied back</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1073120176%2FProperties%2F1390755456" anchor-label="pktRcvFilterExtraTotal" id="1073120176%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="pkt-rcv-filter-extra-total.html"><span>pkt</span><wbr><span>Rcv</span><wbr><span>Filter</span><wbr><span>Extra</span><wbr><span><span>Total</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1073120176%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="pkt-rcv-filter-extra-total.html">pktRcvFilterExtraTotal</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The number of control packets received and not supplied back</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="101117377%2FProperties%2F1390755456" anchor-label="pktRcvFilterLoss" id="101117377%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="pkt-rcv-filter-loss.html"><span>pkt</span><wbr><span>Rcv</span><wbr><span>Filter</span><wbr><span><span>Loss</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="101117377%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="pkt-rcv-filter-loss.html">pktRcvFilterLoss</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The number of packet loss not coverable by filter</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="283386261%2FProperties%2F1390755456" anchor-label="pktRcvFilterLossTotal" id="283386261%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="pkt-rcv-filter-loss-total.html"><span>pkt</span><wbr><span>Rcv</span><wbr><span>Filter</span><wbr><span>Loss</span><wbr><span><span>Total</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="283386261%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="pkt-rcv-filter-loss-total.html">pktRcvFilterLossTotal</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The number of packet loss not coverable by filter</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="223253429%2FProperties%2F1390755456" anchor-label="pktRcvFilterSupply" id="223253429%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="pkt-rcv-filter-supply.html"><span>pkt</span><wbr><span>Rcv</span><wbr><span>Filter</span><wbr><span><span>Supply</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="223253429%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="pkt-rcv-filter-supply.html">pktRcvFilterSupply</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The number of packets that the filter supplied extra (e.g. FEC rebuilt)</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1376119775%2FProperties%2F1390755456" anchor-label="pktRcvFilterSupplyTotal" id="-1376119775%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="pkt-rcv-filter-supply-total.html"><span>pkt</span><wbr><span>Rcv</span><wbr><span>Filter</span><wbr><span>Supply</span><wbr><span><span>Total</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1376119775%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="pkt-rcv-filter-supply-total.html">pktRcvFilterSupplyTotal</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The number of packets that the filter supplied extra (e.g. FEC rebuilt)</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1090283929%2FProperties%2F1390755456" anchor-label="pktRcvLoss" id="1090283929%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="pkt-rcv-loss.html"><span>pkt</span><wbr><span>Rcv</span><wbr><span><span>Loss</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1090283929%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="pkt-rcv-loss.html">pktRcvLoss</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The number of lost packets (receiver side)</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1145418563%2FProperties%2F1390755456" anchor-label="pktRcvLossTotal" id="-1145418563%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="pkt-rcv-loss-total.html"><span>pkt</span><wbr><span>Rcv</span><wbr><span>Loss</span><wbr><span><span>Total</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1145418563%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="pkt-rcv-loss-total.html">pktRcvLossTotal</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The total number of lost packets (receiver side)</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-969635575%2FProperties%2F1390755456" anchor-label="pktRcvRetrans" id="-969635575%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="pkt-rcv-retrans.html"><span>pkt</span><wbr><span>Rcv</span><wbr><span><span>Retrans</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-969635575%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="pkt-rcv-retrans.html">pktRcvRetrans</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The number of retransmitted packets received</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-383829718%2FProperties%2F1390755456" anchor-label="pktRcvUndecrypt" id="-383829718%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="pkt-rcv-undecrypt.html"><span>pkt</span><wbr><span>Rcv</span><wbr><span><span>Undecrypt</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-383829718%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="pkt-rcv-undecrypt.html">pktRcvUndecrypt</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The number of undecrypted packets</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="191860684%2FProperties%2F1390755456" anchor-label="pktRcvUndecryptTotal" id="191860684%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="pkt-rcv-undecrypt-total.html"><span>pkt</span><wbr><span>Rcv</span><wbr><span>Undecrypt</span><wbr><span><span>Total</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="191860684%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="pkt-rcv-undecrypt-total.html">pktRcvUndecryptTotal</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The number of undecrypted packets</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="53024019%2FProperties%2F1390755456" anchor-label="pktRecv" id="53024019%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="pkt-recv.html"><span>pkt</span><wbr><span><span>Recv</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="53024019%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="pkt-recv.html">pktRecv</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a></div><div class="brief "><p class="paragraph">The number of received packets</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-698268066%2FProperties%2F1390755456" anchor-label="pktRecvACK" id="-698268066%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="pkt-recv-a-c-k.html"><span>pkt</span><wbr><span>Recv</span><wbr><span><span>ACK</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-698268066%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="pkt-recv-a-c-k.html">pktRecvACK</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The number of received ACK packets</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1624661224%2FProperties%2F1390755456" anchor-label="pktRecvACKTotal" id="-1624661224%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="pkt-recv-a-c-k-total.html"><span>pkt</span><wbr><span>Recv</span><wbr><span><span>ACKTotal</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1624661224%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="pkt-recv-a-c-k-total.html">pktRecvACKTotal</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The total number of received ACK packets</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1638103889%2FProperties%2F1390755456" anchor-label="pktRecvNAK" id="-1638103889%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="pkt-recv-n-a-k.html"><span>pkt</span><wbr><span>Recv</span><wbr><span><span>NAK</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1638103889%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="pkt-recv-n-a-k.html">pktRecvNAK</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The number of received NAK packets</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-222449817%2FProperties%2F1390755456" anchor-label="pktRecvNAKTotal" id="-222449817%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="pkt-recv-n-a-k-total.html"><span>pkt</span><wbr><span>Recv</span><wbr><span><span>NAKTotal</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-222449817%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="pkt-recv-n-a-k-total.html">pktRecvNAKTotal</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The total number of received NAK packets</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="300924291%2FProperties%2F1390755456" anchor-label="pktRecvTotal" id="300924291%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="pkt-recv-total.html"><span>pkt</span><wbr><span>Recv</span><wbr><span><span>Total</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="300924291%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="pkt-recv-total.html">pktRecvTotal</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a></div><div class="brief "><p class="paragraph">The total number of received packets</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-835197502%2FProperties%2F1390755456" anchor-label="pktRecvUnique" id="-835197502%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="pkt-recv-unique.html"><span>pkt</span><wbr><span>Recv</span><wbr><span><span>Unique</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-835197502%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="pkt-recv-unique.html">pktRecvUnique</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a></div><div class="brief "><p class="paragraph">The number of packets to be received by the application</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="440599092%2FProperties%2F1390755456" anchor-label="pktRecvUniqueTotal" id="440599092%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="pkt-recv-unique-total.html"><span>pkt</span><wbr><span>Recv</span><wbr><span>Unique</span><wbr><span><span>Total</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="440599092%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="pkt-recv-unique-total.html">pktRecvUniqueTotal</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a></div><div class="brief "><p class="paragraph">The total number of packets to be received by the application</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-347861583%2FProperties%2F1390755456" anchor-label="pktReorderDistance" id="-347861583%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="pkt-reorder-distance.html"><span>pkt</span><wbr><span>Reorder</span><wbr><span><span>Distance</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-347861583%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="pkt-reorder-distance.html">pktReorderDistance</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The size of order discrepancy in received sequences</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1804430631%2FProperties%2F1390755456" anchor-label="pktReorderTolerance" id="1804430631%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="pkt-reorder-tolerance.html"><span>pkt</span><wbr><span>Reorder</span><wbr><span><span>Tolerance</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1804430631%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="pkt-reorder-tolerance.html">pktReorderTolerance</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The packet reorder tolerance value</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1095553804%2FProperties%2F1390755456" anchor-label="pktRetrans" id="1095553804%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="pkt-retrans.html"><span>pkt</span><wbr><span><span>Retrans</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1095553804%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="pkt-retrans.html">pktRetrans</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The number of retransmitted packets</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1585500970%2FProperties%2F1390755456" anchor-label="pktRetransTotal" id="1585500970%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="pkt-retrans-total.html"><span>pkt</span><wbr><span>Retrans</span><wbr><span><span>Total</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1585500970%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="pkt-retrans-total.html">pktRetransTotal</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The total number of retransmitted packets</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1623061599%2FProperties%2F1390755456" anchor-label="pktSent" id="-1623061599%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="pkt-sent.html"><span>pkt</span><wbr><span><span>Sent</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1623061599%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="pkt-sent.html">pktSent</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a></div><div class="brief "><p class="paragraph">The number of sent data packets, including retransmissions</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="324869392%2FProperties%2F1390755456" anchor-label="pktSentACK" id="324869392%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="pkt-sent-a-c-k.html"><span>pkt</span><wbr><span>Sent</span><wbr><span><span>ACK</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="324869392%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="pkt-sent-a-c-k.html">pktSentACK</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The number of sent ACK packets</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1545458778%2FProperties%2F1390755456" anchor-label="pktSentACKTotal" id="-1545458778%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="pkt-sent-a-c-k-total.html"><span>pkt</span><wbr><span>Sent</span><wbr><span><span>ACKTotal</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1545458778%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="pkt-sent-a-c-k-total.html">pktSentACKTotal</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The total number of sent ACK packets</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-614966431%2FProperties%2F1390755456" anchor-label="pktSentNAK" id="-614966431%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="pkt-sent-n-a-k.html"><span>pkt</span><wbr><span>Sent</span><wbr><span><span>NAK</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-614966431%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="pkt-sent-n-a-k.html">pktSentNAK</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The number of sent NAK packets</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-143247371%2FProperties%2F1390755456" anchor-label="pktSentNAKTotal" id="-143247371%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="pkt-sent-n-a-k-total.html"><span>pkt</span><wbr><span>Sent</span><wbr><span><span>NAKTotal</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-143247371%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="pkt-sent-n-a-k-total.html">pktSentNAKTotal</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The total number of sent NAK packets</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-11489355%2FProperties%2F1390755456" anchor-label="pktSentTotal" id="-11489355%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="pkt-sent-total.html"><span>pkt</span><wbr><span>Sent</span><wbr><span><span>Total</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-11489355%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="pkt-sent-total.html">pktSentTotal</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a></div><div class="brief "><p class="paragraph">The total number of sent data packets, including retransmissions</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1930085936%2FProperties%2F1390755456" anchor-label="pktSentUnique" id="-1930085936%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="pkt-sent-unique.html"><span>pkt</span><wbr><span>Sent</span><wbr><span><span>Unique</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1930085936%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="pkt-sent-unique.html">pktSentUnique</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a></div><div class="brief "><p class="paragraph">The number of data packets sent by the application</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2023622374%2FProperties%2F1390755456" anchor-label="pktSentUniqueTotal" id="2023622374%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="pkt-sent-unique-total.html"><span>pkt</span><wbr><span>Sent</span><wbr><span>Unique</span><wbr><span><span>Total</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2023622374%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="pkt-sent-unique-total.html">pktSentUniqueTotal</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a></div><div class="brief "><p class="paragraph">The total number of data packets sent by the application</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1024136239%2FProperties%2F1390755456" anchor-label="pktSndBuf" id="1024136239%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="pkt-snd-buf.html"><span>pkt</span><wbr><span>Snd</span><wbr><span><span>Buf</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1024136239%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="pkt-snd-buf.html">pktSndBuf</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The UnACKed packets in UDT sender</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1076685001%2FProperties%2F1390755456" anchor-label="pktSndDrop" id="1076685001%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="pkt-snd-drop.html"><span>pkt</span><wbr><span>Snd</span><wbr><span><span>Drop</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1076685001%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="pkt-snd-drop.html">pktSndDrop</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The number of too-late-to-send dropped packets</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1008088179%2FProperties%2F1390755456" anchor-label="pktSndDropTotal" id="-1008088179%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="pkt-snd-drop-total.html"><span>pkt</span><wbr><span>Snd</span><wbr><span>Drop</span><wbr><span><span>Total</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1008088179%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="pkt-snd-drop-total.html">pktSndDropTotal</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The number of too-late-to-send dropped packets</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1287570998%2FProperties%2F1390755456" anchor-label="pktSndFilterExtra" id="-1287570998%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="pkt-snd-filter-extra.html"><span>pkt</span><wbr><span>Snd</span><wbr><span>Filter</span><wbr><span><span>Extra</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1287570998%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="pkt-snd-filter-extra.html">pktSndFilterExtra</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The number of control packets supplied by packet filter</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1469379372%2FProperties%2F1390755456" anchor-label="pktSndFilterExtraTotal" id="1469379372%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="pkt-snd-filter-extra-total.html"><span>pkt</span><wbr><span>Snd</span><wbr><span>Filter</span><wbr><span>Extra</span><wbr><span><span>Total</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1469379372%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="pkt-snd-filter-extra-total.html">pktSndFilterExtraTotal</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The number of control packets supplied by packet filter</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1559678187%2FProperties%2F1390755456" anchor-label="pktSndLoss" id="-1559678187%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="pkt-snd-loss.html"><span>pkt</span><wbr><span>Snd</span><wbr><span><span>Loss</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1559678187%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="pkt-snd-loss.html">pktSndLoss</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The number of lost packets (sender side)</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1831071551%2FProperties%2F1390755456" anchor-label="pktSndLossTotal" id="-1831071551%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="pkt-snd-loss-total.html"><span>pkt</span><wbr><span>Snd</span><wbr><span>Loss</span><wbr><span><span>Total</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1831071551%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="pkt-snd-loss-total.html">pktSndLossTotal</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">The total number of lost packets (sender side)</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1341031239%2FProperties%2F1390755456" anchor-label="usPktSndPeriod" id="-1341031239%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="us-pkt-snd-period.html"><span>us</span><wbr><span>Pkt</span><wbr><span>Snd</span><wbr><span><span>Period</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1341031239%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="us-pkt-snd-period.html">usPktSndPeriod</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-double/index.html">Double</a></div><div class="brief "><p class="paragraph">The packet sending period, in microseconds</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-512715757%2FProperties%2F1390755456" anchor-label="usSndDuration" id="-512715757%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="us-snd-duration.html"><span>us</span><wbr><span>Snd</span><wbr><span><span>Duration</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-512715757%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="us-snd-duration.html">usSndDuration</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a></div><div class="brief "><p class="paragraph">The busy sending time (i.e., idle time exclusive)</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1082155389%2FProperties%2F1390755456" anchor-label="usSndDurationTotal" id="-1082155389%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="us-snd-duration-total.html"><span>us</span><wbr><span>Snd</span><wbr><span>Duration</span><wbr><span><span>Total</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1082155389%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="us-snd-duration-total.html">usSndDurationTotal</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a></div><div class="brief "><p class="paragraph">The total time duration when UDT is sending data (idle time exclusive)</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2024 Copyright</span><span class="pull-right"><span>Generated by </span><a href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

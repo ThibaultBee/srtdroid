@@ -1,1 +1,1 @@
-sourceset_dependencies='{":lib:dokkaHtml/androidTestRelease":[],":lib:dokkaHtml/debug":[],":lib:dokkaHtml/main":[],":lib:dokkaHtml/release":[]}'
+sourceset_dependencies = '{":srtdroid-core:dokkaHtmlPartial/debug":[],":srtdroid-core:dokkaHtmlPartial/main":[],":srtdroid-core:dokkaHtmlPartial/release":[],":srtdroid-ktx:dokkaHtmlPartial/debug":[],":srtdroid-ktx:dokkaHtmlPartial/main":[],":srtdroid-ktx:dokkaHtmlPartial/release":[],":example:dokkaHtmlPartial/debug":[],":example:dokkaHtmlPartial/main":[],":example:dokkaHtmlPartial/release":[]}'

@@ -1,0 +1,772 @@
+<!doctype html>
+<html class="no-js">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title>SrtSocket</title>
+<link href="../../../images/logo-icon.svg" rel="icon" type="image/svg">    <script>var pathToRoot = "../../../";</script>
+    <script>document.documentElement.classList.replace("no-js","js");</script>
+    <script>const storage = localStorage.getItem("dokka-dark-mode")
+    if (storage == null) {
+        const osDarkSchemePreferred = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
+        if (osDarkSchemePreferred === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    } else {
+        const savedDarkMode = JSON.parse(storage)
+        if(savedDarkMode === true) {
+            document.getElementsByTagName("html")[0].classList.add("theme-dark")
+        }
+    }
+    </script>
+<script type="text/javascript" src="https://unpkg.com/kotlin-playground@1/dist/playground.min.js" async></script>
+<script type="text/javascript" src="../../../scripts/sourceset_dependencies.js" async></script>
+<link href="../../../styles/style.css" rel="Stylesheet">
+<link href="../../../styles/main.css" rel="Stylesheet">
+<link href="../../../styles/prism.css" rel="Stylesheet">
+<link href="../../../styles/logo-styles.css" rel="Stylesheet">
+<link href="../../../styles/font-jb-sans-auto.css" rel="Stylesheet">
+<script type="text/javascript" src="../../../scripts/clipboard.js" async></script>
+<script type="text/javascript" src="../../../scripts/navigation-loader.js" async></script>
+<script type="text/javascript" src="../../../scripts/platform-content-handler.js" async></script>
+<script type="text/javascript" src="../../../scripts/main.js" defer></script>
+<script type="text/javascript" src="../../../scripts/prism.js" async></script>
+<script type="text/javascript" src="../../../scripts/symbol-parameters-wrapper_deferred.js" defer></script></head>
+<body>
+    <div class="root">
+<nav class="navigation" id="navigation-wrapper">
+    <div class="navigation--inner">
+        <div class="navigation-title">
+            <button class="menu-toggle" id="menu-toggle" type="button">toggle menu</button>
+            <div class="library-name">
+<a class="library-name--link" href="../../../index.html">
+                            srtdroid
+                    </a>            </div>
+            <div class="library-version">1.8.0
+            </div>
+        </div>
+        <div class="filter-section" id="filter-section">
+                <button class="platform-tag platform-selector jvm-like" data-active="" data-filter=":srtdroid-core:dokkaHtmlPartial/release">androidJvm</button>
+        </div>
+    </div>
+    <div class="navigation-controls">
+        <button class="navigation-controls--btn navigation-controls--theme" id="theme-toggle-button" type="button">switch theme</button>
+        <div class="navigation-controls--btn navigation-controls--search" id="searchBar" role="button">search in API</div>
+    </div>
+</nav>
+        <div id="container">
+            <div class="sidebar" id="leftColumn">
+                <div class="sidebar--inner" id="sideMenu"></div>
+            </div>
+            <div id="main">
+<div class="main-content" data-page-type="classlike" id="content" pageids="srtdroid-core::io.github.thibaultbee.srtdroid.core.models/SrtSocket///PointingToDeclaration//1390755456">
+  <div class="breadcrumbs"><a href="../../index.html">srtdroid-core</a><span class="delimiter">/</span><a href="../index.html">io.github.thibaultbee.srtdroid.core.models</a><span class="delimiter">/</span><span class="current">SrtSocket</span></div>
+  <div class="cover ">
+    <h1 class="cover"><span>Srt</span><wbr><span><span>Socket</span></span></h1>
+    <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">class </span><a href="index.html">SrtSocket</a> : <a href="../../io.github.thibaultbee.srtdroid.core.interfaces/-configurable-srt-socket/index.html">ConfigurableSrtSocket</a>, <a href="https://developer.android.com/reference/kotlin/java/io/Closeable.html">Closeable</a></div><p class="paragraph">This class represents a SRT socket. To avoid creating an unresponsive UI, don't perform SRT network operations on the main thread. Once it has been called, you must release Srt context with <a href="../../io.github.thibaultbee.srtdroid.core/-srt/clean-up.html">Srt.cleanUp</a> when application leaves.</p></div></div>
+  </div>
+  <div class="tabbedcontent">
+    <div class="tabs-section" tabs-section="tabs-section"><button class="section-tab" data-active="" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION">Members</button><button class="section-tab" data-togglable="CONSTRUCTOR,TYPE,PROPERTY,FUNCTION,EXTENSION_PROPERTY,EXTENSION_FUNCTION">Members &amp; Extensions</button></div>
+    <div class="tabs-section-body">
+      <div data-togglable="CONSTRUCTOR">
+        <h2 class="">Constructors</h2>
+        <div class="table"><a data-name="1232000448%2FConstructors%2F1390755456" anchor-label="SrtSocket" id="1232000448%2FConstructors%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-togglable="CONSTRUCTOR" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-srt-socket.html"><span>Srt</span><wbr><span><span>Socket</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1232000448%2FConstructors%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">af<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/java/net/StandardProtocolFamily.html">StandardProtocolFamily</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Deprecated version of <a href="index.html">SrtSocket</a> constructor. Argument is ignored. Also, it crashes on old Android version (where <a href="https://developer.android.com/reference/kotlin/java/net/StandardProtocolFamily.html">StandardProtocolFamily</a> does not exist).</p></div><div class="symbol monospace"><span class="token keyword">constructor</span><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Creates an SRT socket.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="TYPE">
+        <h2 class="">Types</h2>
+        <div class="table"><a data-name="-2116659801%2FClasslikes%2F1390755456" anchor-label="ClientListener" id="-2116659801%2FClasslikes%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-client-listener/index.html"><span>Client</span><wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2116659801%2FClasslikes%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-client-listener/index.html">ClientListener</a></div><div class="brief "><p class="paragraph">This interface is used by a client <a href="index.html">SrtSocket</a> to notify SRT socket events.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="253250384%2FClasslikes%2F1390755456" anchor-label="Companion" id="253250384%2FClasslikes%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-companion/index.html"><span><span>Companion</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="253250384%2FClasslikes%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">object </span><a href="-companion/index.html">Companion</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1176606417%2FClasslikes%2F1390755456" anchor-label="ServerListener" id="-1176606417%2FClasslikes%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="-server-listener/index.html"><span>Server</span><wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1176606417%2FClasslikes%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">interface </span><a href="-server-listener/index.html">ServerListener</a></div><div class="brief "><p class="paragraph">This interface is used by a server <a href="index.html">SrtSocket</a> to notify SRT socket events.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="PROPERTY">
+        <h2 class="">Properties</h2>
+        <div class="table"><a data-name="687897650%2FProperties%2F1390755456" anchor-label="clientListener" id="687897650%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="client-listener.html"><span>client</span><wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="687897650%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">var </span><a href="client-listener.html">clientListener</a><span class="token operator">: </span><a href="-client-listener/index.html">SrtSocket.ClientListener</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Client listeners</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1428168570%2FProperties%2F1390755456" anchor-label="connectionTime" id="-1428168570%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="connection-time.html"><span>connection</span><wbr><span><span>Time</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1428168570%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="connection-time.html">connectionTime</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a></div><div class="brief "><p class="paragraph">Gets the time when SRT socket was open to establish a connection.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1712401993%2FProperties%2F1390755456" anchor-label="inetAddress" id="1712401993%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="inet-address.html"><span>inet</span><wbr><span><span>Address</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1712401993%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="inet-address.html">inetAddress</a><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/java/net/InetAddress.html">InetAddress</a></div><div class="brief "><p class="paragraph">Retrieves the remote <a href="https://developer.android.com/reference/kotlin/java/net/InetAddress.html">InetAddress</a> to which the socket is connected.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-642047723%2FProperties%2F1390755456" anchor-label="isBound" id="-642047723%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="is-bound.html"><span>is</span><wbr><span><span>Bound</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-642047723%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="is-bound.html">isBound</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><p class="paragraph">Tests if the SRT socket is bound.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-637494821%2FProperties%2F1390755456" anchor-label="isClose" id="-637494821%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="is-close.html"><span>is</span><wbr><span><span>Close</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-637494821%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="is-close.html">isClose</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><p class="paragraph">Tests if the SRT socket is closed.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="159657706%2FProperties%2F1390755456" anchor-label="isConnected" id="159657706%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="is-connected.html"><span>is</span><wbr><span><span>Connected</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="159657706%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="is-connected.html">isConnected</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><p class="paragraph">Tests if the SRT socket is connected.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="250311767%2FProperties%2F1390755456" anchor-label="isValid" id="250311767%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="is-valid.html"><span>is</span><wbr><span><span>Valid</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="250311767%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="is-valid.html">isValid</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><p class="paragraph">Check if the SRT socket is a valid SRT socket.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2053902344%2FProperties%2F1390755456" anchor-label="localAddress" id="2053902344%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="local-address.html"><span>local</span><wbr><span><span>Address</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2053902344%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="local-address.html">localAddress</a><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/java/net/InetAddress.html">InetAddress</a></div><div class="brief "><p class="paragraph">Extracts the <a href="https://developer.android.com/reference/kotlin/java/net/InetAddress.html">InetAddress</a> to which the socket was bound.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1886286077%2FProperties%2F1390755456" anchor-label="localPort" id="1886286077%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="local-port.html"><span>local</span><wbr><span><span>Port</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1886286077%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="local-port.html">localPort</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">Extracts the port to which the socket was bound.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-78770812%2FProperties%2F1390755456" anchor-label="peerName" id="-78770812%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="peer-name.html"><span>peer</span><wbr><span><span>Name</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-78770812%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="peer-name.html">peerName</a><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/java/net/InetSocketAddress.html">InetSocketAddress</a></div><div class="brief "><p class="paragraph">Retrieves the remote <a href="https://developer.android.com/reference/kotlin/java/net/InetSocketAddress.html">InetSocketAddress</a> to which the SRT socket is connected.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1276422000%2FProperties%2F1390755456" anchor-label="port" id="-1276422000%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="port.html"><span><span>port</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1276422000%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="port.html">port</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">Retrieves the port to which the SRT socket is connected.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-2056227099%2FProperties%2F1390755456" anchor-label="receiveBufferSize" id="-2056227099%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="receive-buffer-size.html"><span>receive</span><wbr><span>Buffer</span><wbr><span><span>Size</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-2056227099%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">var </span><a href="receive-buffer-size.html">receiveBufferSize</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">Sets/gets the value of the <a href="../../io.github.thibaultbee.srtdroid.core.enums/-sock-opt/-r-c-v-b-u-f/index.html">SockOpt.RCVBUF</a> option for this SRT socket.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-431870834%2FProperties%2F1390755456" anchor-label="rejectReason" id="-431870834%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="reject-reason.html"><span>reject</span><wbr><span><span>Reason</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-431870834%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">var </span><a href="reject-reason.html">rejectReason</a><span class="token operator">: </span><a href="../../io.github.thibaultbee.srtdroid.core.models.rejectreason/-reject-reason/index.html">RejectReason</a></div><div class="brief "><p class="paragraph">Set/get detailed reason for a failed connection attempt.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2088104721%2FProperties%2F1390755456" anchor-label="reuseAddress" id="2088104721%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="reuse-address.html"><span>reuse</span><wbr><span><span>Address</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2088104721%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">var </span><a href="reuse-address.html">reuseAddress</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><p class="paragraph">Tests if <a href="../../io.github.thibaultbee.srtdroid.core.enums/-sock-opt/-r-e-u-s-e-a-d-d-r/index.html">SockOpt.REUSEADDR</a> is enabled.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1763549432%2FProperties%2F1390755456" anchor-label="sendBufferSize" id="-1763549432%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="send-buffer-size.html"><span>send</span><wbr><span>Buffer</span><wbr><span><span>Size</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1763549432%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">var </span><a href="send-buffer-size.html">sendBufferSize</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">Sets/gets the value of the <a href="../../io.github.thibaultbee.srtdroid.core.enums/-sock-opt/-s-n-d-b-u-f/index.html">SockOpt.SNDBUF</a> option for this SRT socket.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1627951034%2FProperties%2F1390755456" anchor-label="serverListener" id="1627951034%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="server-listener.html"><span>server</span><wbr><span><span>Listener</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1627951034%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">var </span><a href="server-listener.html">serverListener</a><span class="token operator">: </span><a href="-server-listener/index.html">SrtSocket.ServerListener</a><span class="token operator">?</span></div><div class="brief "><p class="paragraph">Server listeners</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1741848990%2FProperties%2F1390755456" anchor-label="sockName" id="-1741848990%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="sock-name.html"><span>sock</span><wbr><span><span>Name</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1741848990%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="sock-name.html">sockName</a><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/java/net/InetSocketAddress.html">InetSocketAddress</a></div><div class="brief "><p class="paragraph">Extracts the <a href="https://developer.android.com/reference/kotlin/java/net/InetSocketAddress.html">InetSocketAddress</a> to which the socket was bound.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-683943044%2FProperties%2F1390755456" anchor-label="sockState" id="-683943044%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="sock-state.html"><span>sock</span><wbr><span><span>State</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-683943044%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">val </span><a href="sock-state.html">sockState</a><span class="token operator">: </span><a href="../../io.github.thibaultbee.srtdroid.core.enums/-sock-status/index.html">SockStatus</a></div><div class="brief "><p class="paragraph">Gets the current status of the socket.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-766666702%2FProperties%2F1390755456" anchor-label="soLinger" id="-766666702%2FProperties%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="so-linger.html"><span>so</span><wbr><span><span>Linger</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-766666702%2FProperties%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">var </span><a href="so-linger.html">soLinger</a><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">Returns setting for <a href="../../io.github.thibaultbee.srtdroid.core.enums/-sock-opt/-l-i-n-g-e-r/index.html">SockOpt.LINGER</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-togglable="FUNCTION">
+        <h2 class="">Functions</h2>
+        <div class="table"><a data-name="-1642539799%2FFunctions%2F1390755456" anchor-label="accept" id="-1642539799%2FFunctions%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="accept.html"><span><span>accept</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1642539799%2FFunctions%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="accept.html"><span class="token function">accept</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/android/util/Pair.html">Pair</a><span class="token operator">&lt;</span><a href="index.html">SrtSocket</a><span class="token punctuation">, </span><a href="https://developer.android.com/reference/kotlin/java/net/InetSocketAddress.html">InetSocketAddress</a><span class="token operator">?</span><span class="token operator">&gt;</span></div><div class="brief "><p class="paragraph">Accepts a pending connection.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-403999904%2FFunctions%2F1390755456" anchor-label="available" id="-403999904%2FFunctions%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="available.html"><span><span>available</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-403999904%2FFunctions%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="available.html"><span class="token function">available</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">Get the size of the available data in the receive buffer.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="851324197%2FFunctions%2F1390755456" anchor-label="bind" id="851324197%2FFunctions%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="bind.html"><span><span>bind</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="851324197%2FFunctions%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="bind.html"><span class="token function">bind</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">address<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/java/net/InetSocketAddress.html">InetSocketAddress</a></span></span><span class="token punctuation">)</span></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="bind.html"><span class="token function">bind</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">address<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/java/net/InetAddress.html">InetAddress</a><span class="token punctuation">, </span></span><span class="parameter ">port<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="bind.html"><span class="token function">bind</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">address<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">port<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Binds the socket to a local address.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1057535420%2FFunctions%2F1390755456" anchor-label="bind" id="1057535420%2FFunctions%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../io.github.thibaultbee.srtdroid.core.extensions/bind.html"><span><span>bind</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1057535420%2FFunctions%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="index.html">SrtSocket</a><span class="token punctuation">.</span><a href="../../io.github.thibaultbee.srtdroid.core.extensions/bind.html"><span class="token function">bind</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">srtUrl<span class="token operator">: </span><a href="../-srt-url/index.html">SrtUrl</a></span></span><span class="token punctuation">)</span></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="index.html">SrtSocket</a><span class="token punctuation">.</span><a href="../../io.github.thibaultbee.srtdroid.core.extensions/bind.html"><span class="token function">bind</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">url<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Binds the socket to a local address.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1950631954%2FFunctions%2F1390755456" anchor-label="bistats" id="-1950631954%2FFunctions%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="bistats.html"><span><span>bistats</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1950631954%2FFunctions%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">external </span><span class="token keyword">fun </span><a href="bistats.html"><span class="token function">bistats</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">clear<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token punctuation">, </span></span><span class="parameter ">instantaneous<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../-stats/index.html">Stats</a></div><div class="brief "><p class="paragraph">Reports the current statistics.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-180155815%2FFunctions%2F1390755456" anchor-label="bstats" id="-180155815%2FFunctions%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="bstats.html"><span><span>bstats</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-180155815%2FFunctions%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">external </span><span class="token keyword">fun </span><a href="bstats.html"><span class="token function">bstats</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">clear<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="../-stats/index.html">Stats</a></div><div class="brief "><p class="paragraph">Reports the current statistics.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2088749329%2FFunctions%2F1390755456" anchor-label="close" id="2088749329%2FFunctions%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="close.html"><span><span>close</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2088749329%2FFunctions%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="close.html"><span class="token function">close</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Closes the socket or group and frees all used resources.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-590036310%2FFunctions%2F1390755456" anchor-label="connect" id="-590036310%2FFunctions%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="connect.html"><span><span>connect</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-590036310%2FFunctions%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="connect.html"><span class="token function">connect</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">address<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/java/net/InetSocketAddress.html">InetSocketAddress</a></span></span><span class="token punctuation">)</span></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="connect.html"><span class="token function">connect</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">address<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/java/net/InetAddress.html">InetAddress</a><span class="token punctuation">, </span></span><span class="parameter ">port<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="connect.html"><span class="token function">connect</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">address<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">port<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Connects a socket to a specified address and port.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-991394292%2FFunctions%2F1390755456" anchor-label="connect" id="-991394292%2FFunctions%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../io.github.thibaultbee.srtdroid.core.extensions/connect.html"><span><span>connect</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-991394292%2FFunctions%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="index.html">SrtSocket</a><span class="token punctuation">.</span><a href="../../io.github.thibaultbee.srtdroid.core.extensions/connect.html"><span class="token function">connect</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">srtUrl<span class="token operator">: </span><a href="../-srt-url/index.html">SrtUrl</a></span></span><span class="token punctuation">)</span></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="index.html">SrtSocket</a><span class="token punctuation">.</span><a href="../../io.github.thibaultbee.srtdroid.core.extensions/connect.html"><span class="token function">connect</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">url<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Connects a socket to an URL.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1617856848%2FFunctions%2F1390755456" anchor-label="equals" id="-1617856848%2FFunctions%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="equals.html"><span><span>equals</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1617856848%2FFunctions%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">operator override </span><span class="token keyword">fun </span><a href="equals.html"><span class="token function">equals</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">other<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html">Any</a><span class="token operator">?</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a></div><div class="brief "><p class="paragraph">Return true if internal SRT socket are equals</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-71429714%2FFunctions%2F1390755456" anchor-label="getInputStream" id="-71429714%2FFunctions%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-input-stream.html"><span>get</span><wbr><span>Input</span><wbr><span><span>Stream</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-71429714%2FFunctions%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="get-input-stream.html"><span class="token function">getInputStream</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">msgCtrl<span class="token operator">: </span><a href="../-msg-ctrl/index.html">MsgCtrl</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/java/io/InputStream.html">InputStream</a></div><div class="brief "><p class="paragraph">Returns an input stream for this socket.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1901685177%2FFunctions%2F1390755456" anchor-label="getOutputStream" id="1901685177%2FFunctions%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-output-stream.html"><span>get</span><wbr><span>Output</span><wbr><span><span>Stream</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1901685177%2FFunctions%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="get-output-stream.html"><span class="token function">getOutputStream</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">msgCtrl<span class="token operator">: </span><a href="../-msg-ctrl/index.html">MsgCtrl</a><span class="token operator">?</span><span class="token operator"> = </span>null</span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/java/io/OutputStream.html">OutputStream</a></div><div class="brief "><p class="paragraph">Returns an output stream for this socket.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="448368428%2FFunctions%2F1390755456" anchor-label="getSockFlag" id="448368428%2FFunctions%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="get-sock-flag.html"><span>get</span><wbr><span>Sock</span><wbr><span><span>Flag</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="448368428%2FFunctions%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="get-sock-flag.html"><span class="token function">getSockFlag</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">opt<span class="token operator">: </span><a href="../../io.github.thibaultbee.srtdroid.core.enums/-sock-opt/index.html">SockOpt</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html">Any</a></div><div class="brief "><p class="paragraph">Gets the value of the given socket option.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1794206774%2FFunctions%2F1390755456" anchor-label="hashCode" id="1794206774%2FFunctions%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="hash-code.html"><span>hash</span><wbr><span><span>Code</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1794206774%2FFunctions%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="hash-code.html"><span class="token function">hashCode</span></a><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1329018408%2FFunctions%2F1390755456" anchor-label="listen" id="1329018408%2FFunctions%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="listen.html"><span><span>listen</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1329018408%2FFunctions%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="listen.html"><span class="token function">listen</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">backlog<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Sets up the listening state on a socket.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="526280172%2FFunctions%2F1390755456" anchor-label="recv" id="526280172%2FFunctions%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="recv.html"><span><span>recv</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="526280172%2FFunctions%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="recv.html"><span class="token function">recv</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">size<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html">ByteArray</a></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="recv.html"><span class="token function">recv</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">size<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">msgCtrl<span class="token operator">: </span><a href="../-msg-ctrl/index.html">MsgCtrl</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html">ByteArray</a></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="recv.html"><span class="token function">recv</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">buffer<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html">ByteArray</a><span class="token punctuation">, </span></span><span class="parameter ">offset<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span><span class="token constant">0</span><span class="token punctuation">, </span></span><span class="parameter ">byteCount<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span>buffer.size</span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="recv.html"><span class="token function">recv</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">buffer<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html">ByteArray</a><span class="token punctuation">, </span></span><span class="parameter ">offset<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span><span class="token constant">0</span><span class="token punctuation">, </span></span><span class="parameter ">byteCount<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span>buffer.size<span class="token punctuation">, </span></span><span class="parameter ">msgCtrl<span class="token operator">: </span><a href="../-msg-ctrl/index.html">MsgCtrl</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">Received a message from a remote device</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-1111209094%2FFunctions%2F1390755456" anchor-label="recvFile" id="-1111209094%2FFunctions%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="recv-file.html"><span>recv</span><wbr><span><span>File</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-1111209094%2FFunctions%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="recv-file.html"><span class="token function">recvFile</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">file<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/java/io/File.html">File</a><span class="token punctuation">, </span></span><span class="parameter ">offset<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token operator"> = </span><span class="token constant">0</span><span class="token punctuation">, </span></span><span class="parameter ">size<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter ">block<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span><span class="token constant">7280000</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a></div><div class="brief "><p class="paragraph">Receives a file. File will be located at path.</p></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="recv-file.html"><span class="token function">recvFile</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">path<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">offset<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token operator"> = </span><span class="token constant">0</span><span class="token punctuation">, </span></span><span class="parameter ">size<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter ">block<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span><span class="token constant">7280000</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a></div><div class="brief "><p class="paragraph">Receives a file. File will be located at <a href="recv-file.html">path</a>.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-471615047%2FFunctions%2F1390755456" anchor-label="rendezVous" id="-471615047%2FFunctions%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="rendez-vous.html"><span>rendez</span><wbr><span><span>Vous</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-471615047%2FFunctions%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="rendez-vous.html"><span class="token function">rendezVous</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">localAddress<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/java/net/InetSocketAddress.html">InetSocketAddress</a><span class="token punctuation">, </span></span><span class="parameter ">remoteAddress<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/java/net/InetSocketAddress.html">InetSocketAddress</a></span></span><span class="token punctuation">)</span></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="rendez-vous.html"><span class="token function">rendezVous</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">localAddress<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/java/net/InetAddress.html">InetAddress</a><span class="token punctuation">, </span></span><span class="parameter ">remoteAddress<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/java/net/InetAddress.html">InetAddress</a><span class="token punctuation">, </span></span><span class="parameter ">port<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="rendez-vous.html"><span class="token function">rendezVous</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">localAddress<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">remoteAddress<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">port<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Performs a rendezvous connection.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-61283604%2FFunctions%2F1390755456" anchor-label="rendezVous" id="-61283604%2FFunctions%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-togglable="EXTENSION_FUNCTION" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="../../io.github.thibaultbee.srtdroid.core.extensions/rendez-vous.html"><span>rendez</span><wbr><span><span>Vous</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-61283604%2FFunctions%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="index.html">SrtSocket</a><span class="token punctuation">.</span><a href="../../io.github.thibaultbee.srtdroid.core.extensions/rendez-vous.html"><span class="token function">rendezVous</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">srtUrl<span class="token operator">: </span><a href="../-srt-url/index.html">SrtUrl</a></span></span><span class="token punctuation">)</span></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="index.html">SrtSocket</a><span class="token punctuation">.</span><a href="../../io.github.thibaultbee.srtdroid.core.extensions/rendez-vous.html"><span class="token function">rendezVous</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">url<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Performs a rendezvous connection.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="1752516960%2FFunctions%2F1390755456" anchor-label="send" id="1752516960%2FFunctions%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="send.html"><span><span>send</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="1752516960%2FFunctions%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="send.html"><span class="token function">send</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">msg<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/java/nio/ByteBuffer.html">ByteBuffer</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="send.html"><span class="token function">send</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">msg<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html">ByteArray</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="send.html"><span class="token function">send</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">msg<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="send.html"><span class="token function">send</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">msg<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/java/nio/ByteBuffer.html">ByteBuffer</a><span class="token punctuation">, </span></span><span class="parameter ">msgCtrl<span class="token operator">: </span><a href="../-msg-ctrl/index.html">MsgCtrl</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="send.html"><span class="token function">send</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">msg<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html">ByteArray</a><span class="token punctuation">, </span></span><span class="parameter ">msgCtrl<span class="token operator">: </span><a href="../-msg-ctrl/index.html">MsgCtrl</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="send.html"><span class="token function">send</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">msg<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">msgCtrl<span class="token operator">: </span><a href="../-msg-ctrl/index.html">MsgCtrl</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="send.html"><span class="token function">send</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">msg<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/java/nio/ByteBuffer.html">ByteBuffer</a><span class="token punctuation">, </span></span><span class="parameter ">ttl<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span>-1<span class="token punctuation">, </span></span><span class="parameter ">inOrder<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">false</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="send.html"><span class="token function">send</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">msg<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html">ByteArray</a><span class="token punctuation">, </span></span><span class="parameter ">ttl<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span>-1<span class="token punctuation">, </span></span><span class="parameter ">inOrder<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">false</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="send.html"><span class="token function">send</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">msg<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html">ByteArray</a><span class="token punctuation">, </span></span><span class="parameter ">offset<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">size<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="send.html"><span class="token function">send</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">msg<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">ttl<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span>-1<span class="token punctuation">, </span></span><span class="parameter ">inOrder<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">false</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="send.html"><span class="token function">send</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">msg<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html">ByteArray</a><span class="token punctuation">, </span></span><span class="parameter ">offset<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">size<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">msgCtrl<span class="token operator">: </span><a href="../-msg-ctrl/index.html">MsgCtrl</a></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="send.html"><span class="token function">send</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">msg<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-byte-array/index.html">ByteArray</a><span class="token punctuation">, </span></span><span class="parameter ">offset<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">size<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token punctuation">, </span></span><span class="parameter ">ttl<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span>-1<span class="token punctuation">, </span></span><span class="parameter ">inOrder<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-boolean/index.html">Boolean</a><span class="token operator"> = </span><span class="token boolean">false</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a></div><div class="brief "><p class="paragraph">Sends a message to a remote party.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="-506741186%2FFunctions%2F1390755456" anchor-label="sendFile" id="-506741186%2FFunctions%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="send-file.html"><span>send</span><wbr><span><span>File</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="-506741186%2FFunctions%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">fun </span><a href="send-file.html"><span class="token function">sendFile</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">file<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/java/io/File.html">File</a><span class="token punctuation">, </span></span><span class="parameter ">block<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span><span class="token constant">364000</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="send-file.html"><span class="token function">sendFile</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">file<span class="token operator">: </span><a href="https://developer.android.com/reference/kotlin/java/io/File.html">File</a><span class="token punctuation">, </span></span><span class="parameter ">offset<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token operator"> = </span><span class="token constant">0</span><span class="token punctuation">, </span></span><span class="parameter ">size<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token operator"> = </span>file.length()<span class="token punctuation">, </span></span><span class="parameter ">block<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span><span class="token constant">364000</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a></div><div class="symbol monospace"><span class="token keyword">fun </span><a href="send-file.html"><span class="token function">sendFile</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">path<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html">String</a><span class="token punctuation">, </span></span><span class="parameter ">offset<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token operator"> = </span><span class="token constant">0</span><span class="token punctuation">, </span></span><span class="parameter ">size<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a><span class="token punctuation">, </span></span><span class="parameter ">block<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-int/index.html">Int</a><span class="token operator"> = </span><span class="token constant">364000</span></span></span><span class="token punctuation">)</span><span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-long/index.html">Long</a></div><div class="brief "><p class="paragraph">Sends a specified file.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+<a data-name="2097064584%2FFunctions%2F1390755456" anchor-label="setSockFlag" id="2097064584%2FFunctions%2F1390755456" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release"></a>
+          <div class="table-row" data-filterable-current=":srtdroid-core:dokkaHtmlPartial/release" data-filterable-set=":srtdroid-core:dokkaHtmlPartial/release">
+            <div class="main-subrow keyValue ">
+              <div class=""><span class="inline-flex">
+                  <div><a href="set-sock-flag.html"><span>set</span><wbr><span>Sock</span><wbr><span><span>Flag</span></span></a></div>
+<span class="anchor-wrapper"><span class="anchor-icon" pointing-to="2097064584%2FFunctions%2F1390755456"></span>
+                    <div class="copy-popup-wrapper "><span class="copy-popup-icon"></span><span>Link copied to clipboard</span></div>
+                  </span></span></div>
+              <div>
+                <div class="title">
+                  <div class="platform-hinted " data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":srtdroid-core:dokkaHtmlPartial/release"><div class="symbol monospace"><span class="token keyword">open </span><span class="token keyword">override </span><span class="token keyword">fun </span><a href="set-sock-flag.html"><span class="token function">setSockFlag</span></a><span class="token punctuation">(</span><span class="parameters "><span class="parameter ">opt<span class="token operator">: </span><a href="../../io.github.thibaultbee.srtdroid.core.enums/-sock-opt/index.html">SockOpt</a><span class="token punctuation">, </span></span><span class="parameter ">value<span class="token operator">: </span><a href="https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-any/index.html">Any</a></span></span><span class="token punctuation">)</span></div><div class="brief "><p class="paragraph">Sets the value of the given socket option.</p></div></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      <div class="footer">
+        <span class="go-to-top-icon"><a href="#content" id="go-to-top-link"></a></span><span>© 2024 Copyright</span><span class="pull-right"><span>Generated by </span><a href="https://github.com/Kotlin/dokka"><span>dokka</span><span class="padded-icon"></span></a></span>
+      </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

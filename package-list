@@ -1,0 +1,16 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+
+module:example
+io.github.thibaultbee.srtdroid.example
+io.github.thibaultbee.srtdroid.example.tests
+module:srtdroid-core
+io.github.thibaultbee.srtdroid.core
+io.github.thibaultbee.srtdroid.core.enums
+io.github.thibaultbee.srtdroid.core.extensions
+io.github.thibaultbee.srtdroid.core.interfaces
+io.github.thibaultbee.srtdroid.core.models
+io.github.thibaultbee.srtdroid.core.models.rejectreason
+module:srtdroid-ktx
+io.github.thibaultbee.srtdroid.ktx
+io.github.thibaultbee.srtdroid.ktx.extensions
