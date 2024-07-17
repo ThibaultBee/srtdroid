@@ -1,6 +1,6 @@
 plugins {
-    alias(libs.plugins.jetbrainsKotlinAndroid)
-    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.android.library)
 }
 
 description = "Secure Reliable Transport (SRT) Protocol for Android"
@@ -47,14 +47,13 @@ android {
 }
 
 dependencies {
-    implementation(libs.kotlin.stdlib.jdk7)
-    implementation(libs.core.ktx)
+    implementation(libs.androidx.core.ktx)
 
     testImplementation(libs.junit)
 
     androidTestImplementation(libs.junit)
-    androidTestImplementation(libs.runner)
-    androidTestImplementation(libs.rules)
-    androidTestImplementation(libs.espresso.core)
+    androidTestImplementation(libs.androidx.runner)
+    androidTestImplementation(libs.androidx.rules)
+    androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.guava)
 }

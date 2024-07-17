@@ -1,6 +1,6 @@
 plugins {
-    alias(libs.plugins.jetbrainsKotlinAndroid)
-    alias(libs.plugins.androidLibrary)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.android.library)
 }
 
 description = "Secure Reliable Transport (SRT) Protocol with Kotlin coroutines for Android"
@@ -43,11 +43,11 @@ android {
 dependencies {
     api(project(":srtdroid-core"))
 
-    implementation(libs.core.ktx)
+    implementation(libs.androidx.core.ktx)
 
     testImplementation(libs.junit)
 
-    androidTestImplementation(libs.ext.junit)
-    androidTestImplementation(libs.espresso.core)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
 }
 

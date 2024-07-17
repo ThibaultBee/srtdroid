@@ -1,6 +1,6 @@
 plugins {
-    alias(libs.plugins.jetbrainsKotlinAndroid)
-    alias(libs.plugins.androidApplication)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.android.application)
 }
 
 android {
@@ -35,25 +35,22 @@ android {
     buildFeatures {
         viewBinding = true
     }
-
-    namespace = "io.github.thibaultbee.srtdroid.example"
 }
 
 dependencies {
     implementation(project(":srtdroid-ktx"))
-    implementation(libs.kotlin.stdlib.jdk7)
-    implementation(libs.appcompat)
-    implementation(libs.core.ktx)
-    implementation(libs.constraintlayout)
-    implementation(libs.multidex)
-    implementation(libs.preference.ktx)
-    implementation(libs.navigation.fragment.ktx)
-    implementation(libs.navigation.ui.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.multidex)
+    implementation(libs.androidx.preference.ktx)
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.guava)
 
     testImplementation(libs.junit)
 
-    androidTestImplementation(libs.ext.junit)
-    androidTestImplementation(libs.espresso.core)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
 }
 
