@@ -1,6 +1,19 @@
 Changelog
 ==========
 
+Version 1.8.1
+-------------
+
+## Dependencies:
+
+- srt 1.5.3
+- openssl 3.0.9
+
+## Bug fixes:
+
+- Fix `SrtUrl` parsing when stream id
+  has [stream id syntax](https://github.com/Haivision/srt/blob/master/docs/features/access-control.md?plain=1)
+
 Version 1.8.0
 -------------
 
