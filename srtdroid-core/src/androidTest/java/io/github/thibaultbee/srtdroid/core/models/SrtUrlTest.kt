@@ -3,6 +3,7 @@ package io.github.thibaultbee.srtdroid.core.models
 import io.github.thibaultbee.srtdroid.core.enums.SockOpt
 import io.github.thibaultbee.srtdroid.core.enums.Transtype
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class SrtUrlTest {
@@ -45,6 +46,33 @@ class SrtUrlTest {
     }
 
     @Test
+    fun srtUrlWithStreamId() {
+        var srtUrl =
+            SrtUrl("srt://host:9000?srt_streamid=abcde")
+        assertEquals("abcde", srtUrl.streamId)
+
+        srtUrl =
+            SrtUrl("srt://host:9000?streamid=abcde")
+        assertEquals("abcde", srtUrl.streamId)
+    }
+
+    @Test
+    fun srtUrlWithStreamIdFormat() {
+        var srtUrl =
+            SrtUrl("srt://host:9000?srt_streamid=#!::u=admin,r=bluesbrothers1_hi")
+        assertEquals("#!::u=admin,r=bluesbrothers1_hi", srtUrl.streamId)
+
+        srtUrl =
+            SrtUrl("srt://host:9000?streamid=#!::u=admin,r=bluesbrothers1_hi")
+        assertEquals("#!::u=admin,r=bluesbrothers1_hi", srtUrl.streamId)
+
+        srtUrl =
+            SrtUrl("srt://host:9000?streamid=#!::u=admin,r=bluesbrothers1_hi&transtype=live")
+        assertEquals("#!::u=admin,r=bluesbrothers1_hi", srtUrl.streamId)
+        assertEquals(Transtype.LIVE, srtUrl.transtype)
+    }
+
+    @Test
     fun srtUrlApplyToSocket() {
         val srtUrl = SrtUrl(hostname = "127.0.0.1", port = 9000, connectTimeoutInMs = 1234)
         val socket = SrtSocket()
@@ -55,7 +83,18 @@ class SrtUrlTest {
     @Test
     fun srtUrlToUri() {
         val srtUrl = SrtUrl(hostname = "127.0.0.1", port = 9000, connectTimeoutInMs = 1234)
-        val uri = srtUrl.uri
+        val uri = srtUrl.srtUri
         assertEquals(1234, uri.getQueryParameter("connect_timeout")?.toInt())
+    }
+
+    @Test
+    fun srtUrlWithStreamIdFormatToUri() {
+        val srtUrl = SrtUrl(
+            hostname = "127.0.0.1",
+            port = 9000,
+            streamId = "#!::u=admin,r=bluesbrothers1_hi"
+        )
+        val uri = srtUrl.srtUri
+        assertTrue(uri.toString().contains("streamid=#!::u=admin,r=bluesbrothers1_hi"))
     }
 }

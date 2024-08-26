@@ -28,15 +28,17 @@ import java.security.InvalidParameterException
 /**
  * Extracts [SrtUrl] from a FFmpeg format [String]: srt://hostname:port[?options]
  */
-fun SrtUrl(url: String): SrtUrl {
-    val uri = Uri.parse(url)
-    return SrtUrl(uri)
-}
+fun SrtUrl(url: String) = SrtUrl(Uri.parse(url))
 
 /**
  * Extracts [SrtUrl] from a FFmpeg format [Uri].
  */
-fun SrtUrl(uri: Uri): SrtUrl {
+fun SrtUrl(uri: Uri) = SrtUrl(SrtUri(uri))
+
+/**
+ * Extracts [SrtUrl] from a FFmpeg format [SrtUri].
+ */
+internal fun SrtUrl(uri: SrtUri): SrtUrl {
     if (uri.scheme != SrtUrl.SRT_SCHEME) {
         throw InvalidParameterException("URL $uri is not an srt URL")
     }
@@ -44,32 +46,44 @@ fun SrtUrl(uri: Uri): SrtUrl {
         ?: throw InvalidParameterException("Failed to parse URL $uri: unknown host")
     val port = uri.port
 
+    val streamId = uri.streamId
+
     val connectTimeoutInMs =
         uri.getQueryParameter(SrtUrl.CONNECTION_TIMEOUT_QUERY_PARAMETER)?.toLong()
     val flightFlagSize = uri.getQueryParameter(SrtUrl.FFS_QUERY_PARAMETER)?.toInt()
-    val inputBandwidth = uri.getQueryParameter(SrtUrl.INPUT_BANDWIDTH_QUERY_PARAMETER)?.toInt()
+    val inputBandwidth =
+        uri.getQueryParameter(SrtUrl.INPUT_BANDWIDTH_QUERY_PARAMETER)?.toInt()
     val iptos = uri.getQueryParameter(SrtUrl.IPTOS_QUERY_PARAMETER)?.toInt()
     val ipttl = uri.getQueryParameter(SrtUrl.IPTTL_QUERY_PARAMETER)?.toInt()
     val latencyInUs = uri.getQueryParameter(SrtUrl.LATENCY_QUERY_PARAMETER)?.toLong()
-    val listenTimeoutInUs = uri.getQueryParameter(SrtUrl.LISTEN_TIMEOUT_QUERY_PARAMETER)?.toLong()
-    val maxBandwidth = uri.getQueryParameter(SrtUrl.MAX_BANDWIDTH_QUERY_PARAMETER)?.toLong()
-    val mode = uri.getQueryParameter(SrtUrl.MODE_QUERY_PARAMETER)?.let { SrtUrl.Mode.entryOf(it) }
-    val maxSegmentSize = uri.getQueryParameter(SrtUrl.MAX_SEGMENT_SIZE_QUERY_PARAMETER)?.toInt()
-    val nakReport = uri.getQueryParameter(SrtUrl.NAK_REPORT_QUERY_PARAMETER)?.toInt()?.toBoolean()
+    val listenTimeoutInUs =
+        uri.getQueryParameter(SrtUrl.LISTEN_TIMEOUT_QUERY_PARAMETER)?.toLong()
+    val maxBandwidth =
+        uri.getQueryParameter(SrtUrl.MAX_BANDWIDTH_QUERY_PARAMETER)?.toLong()
+    val mode =
+        uri.getQueryParameter(SrtUrl.MODE_QUERY_PARAMETER)?.let { SrtUrl.Mode.entryOf(it) }
+    val maxSegmentSize =
+        uri.getQueryParameter(SrtUrl.MAX_SEGMENT_SIZE_QUERY_PARAMETER)?.toInt()
+    val nakReport =
+        uri.getQueryParameter(SrtUrl.NAK_REPORT_QUERY_PARAMETER)?.toInt()?.toBoolean()
     val overheadBandwidth =
         uri.getQueryParameter(SrtUrl.OVERHEAD_BANDWIDTH_QUERY_PARAMETER)?.toInt()
     val passphrase = uri.getQueryParameter(SrtUrl.PASS_PHRASE_QUERY_PARAMETER)
     val enforcedEncryption =
-        uri.getQueryParameter(SrtUrl.ENFORCED_ENCRYPTION_QUERY_PARAMETER)?.toInt()?.toBoolean()
-    val kmRefreshRate = uri.getQueryParameter(SrtUrl.KM_REFRESH_RATE_QUERY_PARAMETER)?.toInt()
-    val kmPreannounce = uri.getQueryParameter(SrtUrl.KM_PREANNOUNCE_QUERY_PARAMETER)?.toInt()
+        uri.getQueryParameter(SrtUrl.ENFORCED_ENCRYPTION_QUERY_PARAMETER)?.toInt()
+            ?.toBoolean()
+    val kmRefreshRate =
+        uri.getQueryParameter(SrtUrl.KM_REFRESH_RATE_QUERY_PARAMETER)?.toInt()
+    val kmPreannounce =
+        uri.getQueryParameter(SrtUrl.KM_PREANNOUNCE_QUERY_PARAMETER)?.toInt()
     val senderDropDelayInUs =
         uri.getQueryParameter(SrtUrl.SENDER_DROP_DELAY_QUERY_PARAMETER)?.toLong()
     val payloadSize = uri.getQueryParameter(SrtUrl.PAYLOAD_SIZE_QUERY_PARAMETER)?.toInt()
         ?: uri.getQueryParameter(
             SrtUrl.PACKET_SIZE_QUERY_PARAMETER
         )?.toInt()
-    val peerLatencyInUs = uri.getQueryParameter(SrtUrl.PEER_LATENCY_QUERY_PARAMETER)?.toLong()
+    val peerLatencyInUs =
+        uri.getQueryParameter(SrtUrl.PEER_LATENCY_QUERY_PARAMETER)?.toLong()
     val pbKeyLength = uri.getQueryParameter(SrtUrl.PB_KEY_LENGTH_QUERY_PARAMETER)?.toInt()
     val receiverLatencyInUs =
         uri.getQueryParameter(SrtUrl.RECEIVER_LATENCY_QUERY_PARAMETER)?.toLong()
@@ -81,26 +95,31 @@ fun SrtUrl(uri: Uri): SrtUrl {
     val enableTooLatePacketDrop =
         uri.getQueryParameter(SrtUrl.ENABLE_TOO_LATE_PACKET_DROP_QUERY_PARAMETER)?.toInt()
             ?.toBoolean()
-    val sendBufferSize = uri.getQueryParameter(SrtUrl.SEND_BUFFER_SIZE_QUERY_PARAMETER)?.toInt()
-    val recvBufferSize = uri.getQueryParameter(SrtUrl.RECV_BUFFER_SIZE_QUERY_PARAMETER)?.toInt()
+    val sendBufferSize =
+        uri.getQueryParameter(SrtUrl.SEND_BUFFER_SIZE_QUERY_PARAMETER)?.toInt()
+    val recvBufferSize =
+        uri.getQueryParameter(SrtUrl.RECV_BUFFER_SIZE_QUERY_PARAMETER)?.toInt()
     val lossMaxTTL = uri.getQueryParameter(SrtUrl.LOSS_MAX_TTL_QUERY_PARAMETER)?.toInt()
     val minVersion = uri.getQueryParameter(SrtUrl.MIN_VERSION_QUERY_PARAMETER)?.toInt()
-    val streamId = uri.getQueryParameter(SrtUrl.STREAM_ID_QUERY_PARAMETER) ?: uri.getQueryParameter(
-        SrtUrl.SRT_STREAM_ID_QUERY_PARAMETER
-    )
+
     val smoother =
-        uri.getQueryParameter(SrtUrl.SMOOTHER_QUERY_PARAMETER)?.let { Transtype.entryOf(it) }
+        uri.getQueryParameter(SrtUrl.SMOOTHER_QUERY_PARAMETER)
+            ?.let { Transtype.entryOf(it) }
     val enableMessageApi =
-        uri.getQueryParameter(SrtUrl.ENABLE_MESSAGE_API_QUERY_PARAMETER)?.toInt()?.toBoolean()
+        uri.getQueryParameter(SrtUrl.ENABLE_MESSAGE_API_QUERY_PARAMETER)?.toInt()
+            ?.toBoolean()
     val transtype =
-        uri.getQueryParameter(SrtUrl.TRANSTYPE_QUERY_PARAMETER)?.let { Transtype.entryOf(it) }
+        uri.getQueryParameter(SrtUrl.TRANSTYPE_QUERY_PARAMETER)
+            ?.let { Transtype.entryOf(it) }
     val lingerInS = uri.getQueryParameter(SrtUrl.LINGER_QUERY_PARAMETER)?.toInt()
     val enableTimestampBasedPacketDelivery =
         uri.getQueryParameter(SrtUrl.ENABLE_TIMESTAMP_BASED_PACKET_DELIVERY_QUERY_PARAMETER)
             ?.toInt()?.toBoolean()
 
     val unknownParameters =
-        uri.queryParameterNames.find { SrtUrl.supportedQueryParameterList.contains(it).not() }
+        uri.queryParameterNames.find {
+            SrtUrl.supportedQueryParameterList.contains(it).not()
+        }
     if (unknownParameters != null) {
         throw InvalidParameterException("Failed to parse URL $uri: unknown parameter(s): $unknownParameters")
     }
@@ -206,13 +225,12 @@ data class SrtUrl(
         }
     }
 
-    val uri: Uri by lazy {
+    val srtUri: SrtUri by lazy {
         buildUri()
     }
 
-    private fun buildUri(): Uri {
-        val uriBuilder = Uri.Builder()
-            .scheme(SRT_SCHEME)
+    private fun buildUri(): SrtUri {
+        val uriBuilder = SrtUri.Builder()
             .encodedAuthority("$hostname:$port")
         connectTimeoutInMs?.let {
             uriBuilder.appendQueryParameter(
@@ -363,7 +381,7 @@ data class SrtUrl(
                 it.toString()
             )
         }
-        streamId?.let { uriBuilder.appendQueryParameter(STREAM_ID_QUERY_PARAMETER, it) }
+        streamId?.let { uriBuilder.streamId(it) }
         smoother?.let { uriBuilder.appendQueryParameter(SMOOTHER_QUERY_PARAMETER, it.value) }
         enableMessageApi?.let {
             uriBuilder.appendQueryParameter(
