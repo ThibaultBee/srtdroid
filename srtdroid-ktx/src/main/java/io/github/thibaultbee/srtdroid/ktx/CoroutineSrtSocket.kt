@@ -8,8 +8,8 @@ import io.github.thibaultbee.srtdroid.core.enums.SockOpt
 import io.github.thibaultbee.srtdroid.core.enums.SockStatus
 import io.github.thibaultbee.srtdroid.core.interfaces.ConfigurableSrtSocket
 import io.github.thibaultbee.srtdroid.core.models.Epoll
-import io.github.thibaultbee.srtdroid.core.models.SrtError
 import io.github.thibaultbee.srtdroid.core.models.MsgCtrl
+import io.github.thibaultbee.srtdroid.core.models.SrtError
 import io.github.thibaultbee.srtdroid.core.models.SrtSocket
 import io.github.thibaultbee.srtdroid.core.models.SrtSocket.ServerListener
 import io.github.thibaultbee.srtdroid.core.models.Stats
@@ -756,6 +756,7 @@ private constructor(
         block: () -> T
     ): T {
         val epoll = Epoll()
+        //  flags = listOf(EpollFlag.ENABLE_EMPTY)
         epoll.addUSock(socket, listOf(EpollOpt.ERR, epollOpt))
 
         try {
@@ -803,7 +804,9 @@ private constructor(
                 val epollEvents = try {
                     epoll.uWait(POLLING_TIMEOUT_IN_MS)
                 } catch (e: Exception) {
-                    continuation.resumeWithException(SocketException(SrtError.lastErrorMessage))
+                    if (SrtError.lastError != ErrorType.EPOLLEMPTY) {
+                        continuation.resumeWithException(SocketException(SrtError.lastErrorMessage))
+                    }
                     return@suspendCancellableCoroutine
                 }
                 if (epollEvents.isEmpty()) {
