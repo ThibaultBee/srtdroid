@@ -1,6 +1,18 @@
 Changelog
 ==========
 
+Version 1.8.2
+-------------
+
+## Dependencies:
+
+- srt 1.5.3
+- openssl 3.0.9
+
+## Bug fixes:
+
+- Coroutine socket: epoll must not throw an exception when the socket is closed
+
 Version 1.8.1
 -------------
 
