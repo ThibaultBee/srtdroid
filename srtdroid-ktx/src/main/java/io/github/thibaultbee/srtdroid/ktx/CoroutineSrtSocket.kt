@@ -742,7 +742,7 @@ private constructor(
     fun available(): Int = socket.available()
 
     override fun equals(other: Any?): Boolean {
-        return socket == other
+        return other is CoroutineSrtSocket && socket == other.socket
     }
 
     override fun hashCode(): Int {
