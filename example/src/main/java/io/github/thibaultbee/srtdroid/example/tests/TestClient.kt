@@ -3,8 +3,8 @@ package io.github.thibaultbee.srtdroid.example.tests
 import android.util.Log
 import io.github.thibaultbee.srtdroid.core.enums.SockOpt
 import io.github.thibaultbee.srtdroid.ktx.CoroutineSrtSocket
-import io.github.thibaultbee.srtdroid.ktx.extensions.connect
-import io.github.thibaultbee.srtdroid.ktx.extensions.send
+import io.github.thibaultbee.srtdroid.ktx.connect
+import io.github.thibaultbee.srtdroid.ktx.send
 import kotlinx.coroutines.delay
 
 class TestClient : Test {

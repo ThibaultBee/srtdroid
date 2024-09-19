@@ -7,9 +7,9 @@ import io.github.thibaultbee.srtdroid.core.enums.SockOpt
 import io.github.thibaultbee.srtdroid.core.enums.Transtype
 import io.github.thibaultbee.srtdroid.example.Utils
 import io.github.thibaultbee.srtdroid.ktx.CoroutineSrtSocket
-import io.github.thibaultbee.srtdroid.ktx.extensions.connect
-import io.github.thibaultbee.srtdroid.ktx.extensions.recvFile
-import io.github.thibaultbee.srtdroid.ktx.extensions.send
+import io.github.thibaultbee.srtdroid.ktx.connect
+import io.github.thibaultbee.srtdroid.ktx.recvFile
+import io.github.thibaultbee.srtdroid.ktx.send
 import kotlinx.coroutines.delay
 import java.io.File
 
