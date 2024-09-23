@@ -1,6 +1,24 @@
 Changelog
 ==========
 
+Version 1.8.3
+-------------
+
+## Dependencies:
+
+- srt 1.5.3
+- openssl 3.0.9
+
+## Features:
+
+- Coroutine socket: move extension functions to `CoroutineSrtSocket` file
+
+## Bug fixes:
+
+- Coroutine socket: fix `equals` implementation
+- Coroutine socket: fix remote disconnect detection
+
+
 Version 1.8.2
 -------------
 
