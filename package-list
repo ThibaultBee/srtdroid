@@ -13,4 +13,3 @@ io.github.thibaultbee.srtdroid.core.models
 io.github.thibaultbee.srtdroid.core.models.rejectreason
 module:srtdroid-ktx
 io.github.thibaultbee.srtdroid.ktx
-io.github.thibaultbee.srtdroid.ktx.extensions
