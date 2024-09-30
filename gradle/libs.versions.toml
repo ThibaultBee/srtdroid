@@ -1,6 +1,8 @@
 [versions]
-agp = "8.5.0"
+agp = "8.6.1"
 androidxJunit = "1.2.1"
+androidxTestRules = "1.6.1"
+androidxTestRunner = "1.6.2"
 appcompat = "1.7.0"
 constraintlayout = "2.1.4"
 coreKtx = "1.13.1"
@@ -8,11 +10,10 @@ dokka = "1.9.20"
 espressoCore = "3.6.1"
 guava = "32.1.3-jre"
 junit = "4.13.2"
-kotlin = "2.0.0"
+kotlin = "2.0.20"
 multidex = "2.0.1"
-navigationFragmentKtx = "2.7.7"
+navigationFragmentKtx = "2.8.1"
 preferenceKtx = "1.2.1"
-runner = "1.6.1"
 
 [libraries]
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
@@ -24,8 +25,8 @@ androidx-multidex = { module = "androidx.multidex:multidex", version.ref = "mult
 androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigationFragmentKtx" }
 androidx-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigationFragmentKtx" }
 androidx-preference-ktx = { module = "androidx.preference:preference-ktx", version.ref = "preferenceKtx" }
-androidx-rules = { module = "androidx.test:rules", version.ref = "runner" }
-androidx-runner = { module = "androidx.test:runner", version.ref = "runner" }
+androidx-rules = { module = "androidx.test:rules", version.ref = "androidxTestRules" }
+androidx-runner = { module = "androidx.test:runner", version.ref = "androidxTestRunner" }
 guava = { module = "com.google.guava:guava", version.ref = "guava" }
 junit = { module = "junit:junit", version.ref = "junit" }
 
