@@ -1,9 +1,11 @@
+import com.android.build.api.variant.AndroidComponentsExtension
 import org.gradle.api.Project
 import org.gradle.api.publish.PublishingExtension
 import org.gradle.api.publish.maven.MavenPom
 import org.gradle.api.publish.maven.MavenPublication
 import org.gradle.kotlin.dsl.apply
-import org.gradle.kotlin.dsl.create
+import org.gradle.kotlin.dsl.configure
+import org.gradle.kotlin.dsl.register
 import org.gradle.kotlin.dsl.the
 import org.gradle.plugins.signing.SigningExtension
 
@@ -11,19 +13,23 @@ fun Project.configurePublication() {
     apply(plugin = "maven-publish")
     apply(plugin = "com.android.library")
 
-    the<PublishingExtension>().apply {
-        publications.create<MavenPublication>("release") {
-            afterEvaluate {
-                if (isAndroid) {
-                    from(components.getByName("release"))
-                } else {
-                    from(components.getByName("java"))
-                }
-            }
+    val androidComponents = project.extensions.getByType(AndroidComponentsExtension::class.java)
 
-            createPom {
-                name.set(project.name)
-                description.set(project.description)
+    configure<PublishingExtension> {
+        publications {
+            androidComponents.onVariants(
+                androidComponents.selector().withBuildType("release")
+            ) { variant ->
+                register<MavenPublication>(variant.name) {
+                    afterEvaluate {
+                        from(components.getByName(variant.name))
+                    }
+
+                    createPom {
+                        name.set(project.name)
+                        description.set(project.description)
+                    }
+                }
             }
         }
 
@@ -50,8 +56,10 @@ fun Project.configurePublication() {
 
         the<SigningExtension>().apply {
             val keyId =
-                Publication.Signing.keyId ?: throw IllegalStateException("No signing key ID found")
-            val key = Publication.Signing.key ?: throw IllegalStateException("No signing key found")
+                Publication.Signing.keyId
+                    ?: throw IllegalStateException("No signing key ID found")
+            val key =
+                Publication.Signing.key ?: throw IllegalStateException("No signing key found")
             val password = Publication.Signing.password
                 ?: throw IllegalStateException("No signing key password found")
             useInMemoryPgpKeys(
@@ -69,11 +77,8 @@ fun Project.configurePublication() {
 val Project.isRelease: Boolean
     get() = version.toString().endsWith("-SNAPSHOT").not()
 
-val Project.isAndroid: Boolean
-    get() = project.hasProperty("android")
-
-fun MavenPublication.createPom(
-    configure: MavenPom.() -> Unit = {}
+private fun MavenPublication.createPom(
+    configure: MavenPom.() -> Unit = {},
 ): Unit =
     pom {
         url.set(Publication.Pom.URL)

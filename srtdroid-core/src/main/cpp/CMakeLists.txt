@@ -8,24 +8,28 @@ find_program(GIT "git")
 set(OPENSSL_VERSION "openssl-3.0.9")
 set(SRT_VERSION "1.5.3")
 
+set(ENABLE_SHARED OFF)
+set(OPENSSL_FEATURES no-shared)
+set(LIBRARY_FORMAT STATIC)
+set(LIBRARY_EXTENSION a)
+
 # OpenSSL - needs few executable such as perl and mv in PATH
 ExternalProject_Add(openssl_project
         GIT_REPOSITORY https://github.com/openssl/openssl.git
         GIT_TAG ${OPENSSL_VERSION}
-        CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env PATH=${ANDROID_TOOLCHAIN_ROOT}/bin:$ENV{PATH} CC=${CMAKE_C_COMPILER} ANDROID_NDK_ROOT=${ANDROID_NDK} perl <SOURCE_DIR>/Configure android-${ANDROID_ARCH_NAME} --openssldir=${CMAKE_LIBRARY_OUTPUT_DIRECTORY} --libdir="" --prefix=${CMAKE_LIBRARY_OUTPUT_DIRECTORY}
+        CONFIGURE_COMMAND ${CMAKE_COMMAND} -E env PATH=${ANDROID_TOOLCHAIN_ROOT}/bin:$ENV{PATH} CC=${CMAKE_C_COMPILER} ANDROID_NDK_ROOT=${ANDROID_NDK} perl <SOURCE_DIR>/Configure android-${ANDROID_ARCH_NAME} --openssldir=${CMAKE_LIBRARY_OUTPUT_DIRECTORY} --libdir="" --prefix=${CMAKE_LIBRARY_OUTPUT_DIRECTORY} no-tests ${OPENSSL_FEATURES} -D__ANDROID_API__=${ANDROID_PLATFORM_LEVEL}
         BUILD_COMMAND ${CMAKE_COMMAND} -E env PATH=${ANDROID_TOOLCHAIN_ROOT}/bin:$ENV{PATH} ANDROID_NDK_ROOT=${ANDROID_NDK} make
-        BUILD_BYPRODUCTS ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/libssl.so ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/libcrypto.so
+        BUILD_BYPRODUCTS ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/libssl.${LIBRARY_EXTENSION} ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/libcrypto.${LIBRARY_EXTENSION}
         BUILD_IN_SOURCE 1
         )
 
-add_library(ssl SHARED IMPORTED)
+add_library(ssl ${LIBRARY_FORMAT} IMPORTED)
 add_dependencies(ssl openssl_project)
-set_target_properties(ssl PROPERTIES IMPORTED_LOCATION ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/libssl.so)
+set_target_properties(ssl PROPERTIES IMPORTED_LOCATION ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/libssl.${LIBRARY_EXTENSION})
 
-add_library(crypto SHARED IMPORTED)
+add_library(crypto ${LIBRARY_FORMAT} IMPORTED)
 add_dependencies(crypto openssl_project)
-set_target_properties(crypto PROPERTIES IMPORTED_LOCATION ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/libcrypto.so)
-
+set_target_properties(crypto PROPERTIES IMPORTED_LOCATION ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/libcrypto.${LIBRARY_EXTENSION})
 
 # SRT
 ExternalProject_Add(srt_project
@@ -36,8 +40,9 @@ ExternalProject_Add(srt_project
         -DENABLE_STDCXX_SYNC=ON
         -DENABLE_APPS=OFF
         -DOPENSSL_INCLUDE_DIR=${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/include
-        -DOPENSSL_CRYPTO_LIBRARY=${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/libcrypto.so
-        -DOPENSSL_SSL_LIBRARY=${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/libssl.so
+        -DOPENSSL_CRYPTO_LIBRARY=${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/libcrypto.${LIBRARY_EXTENSION}
+        -DOPENSSL_SSL_LIBRARY=${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/libssl.${LIBRARY_EXTENSION}
+        -DENABLE_SHARED=${ENABLE_SHARED}
         -DCMAKE_TOOLCHAIN_FILE=${CMAKE_TOOLCHAIN_FILE}
         -DCMAKE_PREFIX_PATH=${CMAKE_LIBRARY_OUTPUT_DIRECTORY}
         -DCMAKE_INSTALL_PREFIX=${CMAKE_LIBRARY_OUTPUT_DIRECTORY}
@@ -57,16 +62,17 @@ ExternalProject_Add(srt_project
         -DANDROID_DISABLE_FORMAT_STRING_CHECKS=${ANDROID_DISABLE_FORMAT_STRING_CHECKS}
         -DANDROID_CCACHE=${ANDROID_CCACHE}
         -DANDROID_SANITIZE=${ANDROID_SANITIZE}
-        BUILD_BYPRODUCTS ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/libsrt.so
+        #-DENABLE_ENCRYPTION=OFF
+        BUILD_BYPRODUCTS ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/libsrt.${LIBRARY_EXTENSION}
         DEPENDS crypto ssl
         BUILD_IN_SOURCE 1
         )
 
-add_library(srt SHARED IMPORTED)
+add_library(srt ${LIBRARY_FORMAT} IMPORTED)
 add_dependencies(srt srt_project)
-set_target_properties(srt PROPERTIES IMPORTED_LOCATION ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/libsrt.so)
+set_target_properties(srt PROPERTIES IMPORTED_LOCATION ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/libsrt.${LIBRARY_EXTENSION})
 
 # Target library
 add_library(srtdroid SHARED glue.cpp CallbackContext.cpp)
 include_directories(${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/include)
-target_link_libraries(srtdroid log android srt)
+target_link_libraries(srtdroid log android srt crypto ssl z)

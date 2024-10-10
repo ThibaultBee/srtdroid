@@ -1,9 +1,10 @@
 plugins {
+    id(libs.plugins.android.library.get().pluginId)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.android.library)
 }
 
 description = "Secure Reliable Transport (SRT) Protocol for Android"
+
 configurePublication()
 
 android {
@@ -17,6 +18,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -26,18 +28,22 @@ android {
             )
         }
     }
+
     externalNativeBuild {
         cmake {
             path = File("src/main/cpp/CMakeLists.txt")
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
     publishing {
         singleVariant("release") {
             withJavadocJar()

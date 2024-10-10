@@ -4,9 +4,9 @@ import org.jetbrains.dokka.gradle.DokkaTaskPartial
 import java.net.URL
 
 plugins {
-    alias(libs.plugins.android.application).apply(false)
+    id(libs.plugins.android.application.get().pluginId).apply(false)
+    id(libs.plugins.android.library.get().pluginId).apply(false)
     alias(libs.plugins.kotlin.android).apply(false)
-    alias(libs.plugins.android.library).apply(false)
     alias(libs.plugins.dokka)
 }
 
