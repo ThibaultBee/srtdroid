@@ -23,6 +23,17 @@ android {
         }
     }
 
+    flavorDimensions += "packaging"
+    productFlavors {
+        create("packed") {
+            dimension = "packaging"
+            version = "$version-packed"
+        }
+        create("unpacked") {
+            dimension = "packaging"
+        }
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8

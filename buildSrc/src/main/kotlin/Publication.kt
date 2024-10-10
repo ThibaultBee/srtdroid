@@ -12,18 +12,28 @@ fun Project.configurePublication() {
     apply(plugin = "com.android.library")
 
     the<PublishingExtension>().apply {
-        publications.create<MavenPublication>("release") {
-            afterEvaluate {
-                if (isAndroid) {
-                    from(components.getByName("release"))
-                } else {
-                    from(components.getByName("java"))
-                }
-            }
+        afterEvaluate {
+            if (isAndroid) {
+                components.names.filter { it.lowercase().contains("release") }.forEach {
+                    println("Adding variant $it")
+                    publications.create<MavenPublication>(it) {
+                        from(components.getByName(it))
 
-            createPom {
-                name.set(project.name)
-                description.set(project.description)
+                        createPom {
+                            name.set(project.name)
+                            description.set(project.description)
+                        }
+                    }
+                }
+            } else {
+                publications.create<MavenPublication>("release") {
+                    from(components.getByName("java"))
+
+                    createPom {
+                        name.set(project.name)
+                        description.set(project.description)
+                    }
+                }
             }
         }
 
