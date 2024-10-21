@@ -1,5 +1,5 @@
 [versions]
-agp = "8.7.0"
+agp = "8.7.1"
 androidxJunit = "1.2.1"
 androidxTestRules = "1.6.1"
 androidxTestRunner = "1.6.2"
@@ -27,6 +27,7 @@ androidx-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx",
 androidx-preference-ktx = { module = "androidx.preference:preference-ktx", version.ref = "preferenceKtx" }
 androidx-rules = { module = "androidx.test:rules", version.ref = "androidxTestRules" }
 androidx-runner = { module = "androidx.test:runner", version.ref = "androidxTestRunner" }
+android-gradle = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 guava = { module = "com.google.guava:guava", version.ref = "guava" }
 junit = { module = "junit:junit", version.ref = "junit" }
 
