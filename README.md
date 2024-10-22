@@ -16,9 +16,9 @@ Get srtdroid latest artifacts on MavenCentral.
 
 ```gradle
 dependencies {
-    implementation 'io.github.thibaultbee.srtdroid:srtdroid-core:1.8.3'
+    implementation 'io.github.thibaultbee.srtdroid:srtdroid-core:1.8.4'
     // If you use Kotlin Coroutines, you can use srtdroid-ktx
-    implementation 'io.github.thibaultbee.srtdroid:srtdroid-ktx:1.8.3'
+    implementation 'io.github.thibaultbee.srtdroid:srtdroid-ktx:1.8.4'
 }
 ```
 

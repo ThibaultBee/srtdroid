@@ -1,6 +1,18 @@
 Changelog
 ==========
 
+Version 1.8.4
+-------------
+
+## Dependencies:
+
+- srt 1.5.3
+- openssl 3.0.9
+
+## Refactor:
+
+- Put the native libraries in a single fat library to avoid conflicts with other libraries
+
 Version 1.8.3
 -------------
 
@@ -17,7 +29,6 @@ Version 1.8.3
 
 - Coroutine socket: fix `equals` implementation
 - Coroutine socket: fix remote disconnect detection
-
 
 Version 1.8.2
 -------------
