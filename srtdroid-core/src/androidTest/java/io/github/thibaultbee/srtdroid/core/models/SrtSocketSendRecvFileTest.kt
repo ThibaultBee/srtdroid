@@ -11,6 +11,7 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import java.io.File
+import java.lang.Thread.sleep
 import java.net.InetAddress
 import java.util.UUID
 import java.util.concurrent.Callable
@@ -41,13 +42,14 @@ class SrtSocketSendRecvFileTest {
         val message = UUID.randomUUID().toString()
         val sendFile = Utils.createTestFile(message = message)
 
-        val futureResult = server.enqueue(sendFile)
-        socket.connect(InetAddress.getLoopbackAddress(), server.port)
-
         val recvFile = File(
             InstrumentationRegistry.getInstrumentation().context.externalCacheDir,
             UUID.randomUUID().toString()
         )
+
+        val futureResult = server.enqueue(sendFile)
+        socket.connect(InetAddress.getLoopbackAddress(), server.port)
+
         assertEquals(sendFile.length(), socket.recvFile(recvFile, size = sendFile.length()))
         assertEquals(sendFile.length(), futureResult.get())
     }
@@ -69,6 +71,7 @@ class SrtSocketSendRecvFileTest {
                 serverSocket.listen(1)
                 val pair = serverSocket.accept()
                 val comSocket = pair.first
+                sleep(1000)
                 val numOfSentBytes = comSocket.sendFile(file)
                 comSocket.close()
                 numOfSentBytes
