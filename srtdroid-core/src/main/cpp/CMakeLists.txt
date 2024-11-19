@@ -6,7 +6,7 @@ include(ExternalProject)
 find_program(GIT "git")
 
 set(OPENSSL_VERSION "openssl-3.0.9")
-set(SRT_VERSION "1.5.3")
+set(SRT_VERSION "1.5.4")
 
 set(ENABLE_SHARED OFF)
 set(OPENSSL_FEATURES no-shared)
