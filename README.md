@@ -16,9 +16,9 @@ Get srtdroid latest artifacts on MavenCentral.
 
 ```gradle
 dependencies {
-    implementation 'io.github.thibaultbee.srtdroid:srtdroid-core:1.8.4'
+    implementation 'io.github.thibaultbee.srtdroid:srtdroid-core:1.8.5'
     // If you use Kotlin Coroutines, you can use srtdroid-ktx
-    implementation 'io.github.thibaultbee.srtdroid:srtdroid-ktx:1.8.4'
+    implementation 'io.github.thibaultbee.srtdroid:srtdroid-ktx:1.8.5'
 }
 ```
 
@@ -47,11 +47,13 @@ can use the `InputStream` API.
 ## Permissions
 
 To use, `sendFile` and `recvFile`, you need to add `READ_EXTERNAL_STORAGE` (
-or [`READ_MEDIA_*`](https://developer.android.com/about/versions/13/behavior-changes-13#granular-media-permissions)
+or [
+`READ_MEDIA_*`](https://developer.android.com/about/versions/13/behavior-changes-13#granular-media-permissions)
 if your app targets Android 13 or higher)
 and `WRITE_EXTERNAL_STORAGE` to your `AndroidManifest.xml`:
 
 ```xml
+
 <manifest>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!-- If your app targets Android < 13 -->
