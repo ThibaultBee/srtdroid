@@ -52,8 +52,6 @@ private constructor(
     ConfigurableSrtSocket, CoroutineScope {
     constructor() : this(SrtSocket())
 
-    private var hasBeenConnected = false
-
     val socketContext: CompletableJob = Job()
 
     override val coroutineContext = socketContext
@@ -174,24 +172,24 @@ private constructor(
     val localPort: Int
         get() = socket.localPort
 
+    /**
+     * Internal listener to handle connection lost
+     */
+    private val clientListener = object : SrtSocket.ClientListener {
+        override fun onConnectionLost(
+            ns: SrtSocket,
+            error: ErrorType,
+            peerAddress: InetSocketAddress,
+            token: Int
+        ) {
+            socket.close()
+            complete(ConnectException(error.toString()))
+        }
+    }
+
     init {
         socket.setSockFlag(SockOpt.RCVSYN, false)
         socket.setSockFlag(SockOpt.SNDSYN, false)
-
-        socket.clientListener =
-            object : SrtSocket.ClientListener {
-                override fun onConnectionLost(
-                    ns: SrtSocket,
-                    error: ErrorType,
-                    peerAddress: InetSocketAddress,
-                    token: Int
-                ) {
-                    if (hasBeenConnected) {
-                        socket.close()
-                        complete(ConnectException(error.toString()))
-                    }
-                }
-            }
     }
 
     private fun complete(t: Throwable? = null) {
@@ -230,8 +228,14 @@ private constructor(
      * @throws BindException if bind has failed
      */
     suspend fun bind(address: InetSocketAddress) = withContext(Dispatchers.IO) {
-        socket.bind(address)
-        hasBeenConnected = true
+        try {
+            socket.bind(address)
+            socket.clientListener = clientListener
+        } catch (t: Throwable) {
+            socket.close()
+            complete(t)
+            throw t
+        }
     }
 
     /**
@@ -243,10 +247,16 @@ private constructor(
      * @throws ConnectException if connection has failed
      */
     suspend fun connect(address: InetSocketAddress) {
-        execute(EpollOpt.OUT, onContinuation = { socket.connect(address) }) {
-            null
+        try {
+            execute(EpollOpt.OUT, onContinuation = { socket.connect(address) }) {
+                null
+            }
+            socket.clientListener = clientListener
+        } catch (t: Throwable) {
+            socket.close()
+            complete(t)
+            throw t
         }
-        hasBeenConnected = true
     }
 
     /**
@@ -262,10 +272,18 @@ private constructor(
         localAddress: InetSocketAddress,
         remoteAddress: InetSocketAddress
     ) {
-        execute(EpollOpt.OUT, onContinuation = { socket.rendezVous(localAddress, remoteAddress) }) {
-            null
+        try {
+            execute(
+                EpollOpt.OUT,
+                onContinuation = { socket.rendezVous(localAddress, remoteAddress) }) {
+                null
+            }
+            socket.clientListener = clientListener
+        } catch (t: Throwable) {
+            socket.close()
+            complete(t)
+            throw t
         }
-        hasBeenConnected = true
     }
 
     /**
