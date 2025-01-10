@@ -1,6 +1,14 @@
 Changelog
 ==========
 
+Version 1.9.0
+-------------
+
+## Dependencies:
+
+- srt 1.5.4
+- openssl 3.0.9
+
 Version 1.8.5
 -------------
 
