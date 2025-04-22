@@ -1,6 +1,19 @@
 Changelog
 ==========
 
+
+Version 1.9.1
+-------------
+
+## Dependencies:
+
+- srt 1.5.4
+- openssl 3.0.9
+
+## Bug fixes:
+
+- Fix the exception when `CoroutineSrtSocket` is closed during a connection
+
 Version 1.9.0
 -------------
 
