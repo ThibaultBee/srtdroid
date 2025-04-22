@@ -848,27 +848,35 @@ private constructor(
                         // Ignore
                     }
 
-                    if (socketEvents.any { it.events.contains(EpollOpt.ERR) }) {
-                        if ((SrtError.lastError != ErrorType.SUCCESS) && (SrtError.lastError != ErrorType.EPOLLEMPTY)) {
-                            throw SocketException(SrtError.lastErrorMessage)
-                        } else {
-                            if ((sockState == SockStatus.BROKEN) || (sockState == SockStatus.CLOSED)) {
-                                throw SocketException("Connection was broken")
+                    try {
+                        if (socketEvents.any { it.events.contains(EpollOpt.ERR) }) {
+                            if ((SrtError.lastError != ErrorType.SUCCESS) && (SrtError.lastError != ErrorType.EPOLLEMPTY)) {
+                                throw SocketException(SrtError.lastErrorMessage)
                             } else {
-                                throw SocketException("Epoll returned an unknown error (sockState = $sockState)")
+                                if ((sockState == SockStatus.BROKEN) || (sockState == SockStatus.CLOSED)) {
+                                    throw SocketException("Connection was broken")
+                                } else {
+                                    throw SocketException("Epoll returned an unknown error (sockState = $sockState)")
+                                }
                             }
+                        } else if (socketEvents.any {
+                                it.events.contains(EpollOpt.IN) || it.events.contains(
+                                    EpollOpt.OUT
+                                )
+                            }) {
+                            continuation.resumeWith(Result.success(block()))
+                        } else {
+                            throw SocketException("Epoll returned an unknown event: $socketEvents")
                         }
-                    } else if (socketEvents.any {
-                            it.events.contains(EpollOpt.IN) || it.events.contains(
-                                EpollOpt.OUT
-                            )
-                        }) {
-                        continuation.resumeWith(Result.success(block()))
-                    } else {
-                        throw SocketException("Epoll returned an unknown event: $socketEvents")
+                    } catch (t: Throwable) {
+                        continuation.resumeWithException(t)
                     }
-                } catch (e: Exception) {
-                    continuation.resumeWithException(e)
+                } catch (t: Throwable) {
+                    if ((sockState == SockStatus.BROKEN) || (sockState == SockStatus.CLOSED)) {
+                        throw SocketException("Connection was broken")
+                    } else {
+                        continuation.resumeWithException(t)
+                    }
                 }
                 return@suspendCancellableCoroutine
             }
