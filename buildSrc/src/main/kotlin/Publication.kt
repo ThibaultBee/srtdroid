@@ -36,10 +36,12 @@ fun Project.configurePublication() {
         repositories {
             maven {
                 if (isRelease) {
-                    setUrl("https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/")
+                    name = "centralPortal"
+                    setUrl("https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/")
                 } else {
+                    name = "centralPortalSnapshots"
                     println("Using SNAPSHOT repository")
-                    setUrl("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+                    setUrl("https://central.sonatype.com/repository/maven-snapshots/")
                 }
 
                 credentials {

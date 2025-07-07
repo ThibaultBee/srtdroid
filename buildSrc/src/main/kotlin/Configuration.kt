@@ -7,9 +7,9 @@ object AndroidVersions {
 object Publication {
     object Repository {
         val username: String?
-            get() = Property.get(Property.SonatypeUsername)
+            get() = Property.get(Property.CentralPortalUsername)
         val password: String?
-            get() = Property.get(Property.SonatypePassword)
+            get() = Property.get(Property.CentralPortalPassword)
     }
 
     object Pom {
