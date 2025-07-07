@@ -75,4 +75,5 @@ set_target_properties(srt PROPERTIES IMPORTED_LOCATION ${CMAKE_LIBRARY_OUTPUT_DI
 # Target library
 add_library(srtdroid SHARED glue.cpp CallbackContext.cpp)
 include_directories(${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/include)
+target_link_options(srtdroid PRIVATE "-Wl,-z,max-page-size=16384")
 target_link_libraries(srtdroid log android srt crypto ssl z)
