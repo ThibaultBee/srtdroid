@@ -1,6 +1,21 @@
 Changelog
 ==========
 
+Version 1.9.2
+-------------
+
+## Dependencies:
+
+- srt 1.5.4
+- openssl 3.5.1
+
+## Bug fixes:
+
+- Add support for 16 KB page size
+
+## Features:
+
+- Move Maven packages to new Maven Central portal
 
 Version 1.9.1
 -------------
