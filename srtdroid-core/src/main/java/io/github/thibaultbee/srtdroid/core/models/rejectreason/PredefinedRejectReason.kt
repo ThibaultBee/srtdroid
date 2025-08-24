@@ -20,4 +20,4 @@ package io.github.thibaultbee.srtdroid.core.models.rejectreason
  *
  * @param code an Application-defined rejection reason
  */
-class PredefinedRejectReason(val code: Int): RejectReason()
+data class PredefinedRejectReason(val code: Int): RejectReason()

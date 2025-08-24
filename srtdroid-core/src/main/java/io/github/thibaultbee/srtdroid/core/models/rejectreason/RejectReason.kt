@@ -21,4 +21,4 @@ import io.github.thibaultbee.srtdroid.core.models.SrtSocket
  * Base class of [InternalRejectReason], [PredefinedRejectReason] and [UserDefinedRejectReason].
  * Do not use it. Its purpose is to get an unique [SrtSocket.rejectReason] API.
  */
-abstract class RejectReason
+sealed class RejectReason
