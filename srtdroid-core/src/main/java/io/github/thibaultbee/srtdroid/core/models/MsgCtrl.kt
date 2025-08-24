@@ -38,7 +38,7 @@ data class MsgCtrl(
     /**
      * Reserved for future use. Should be [Boundary.SUBSEQUENT].
      */
-    val boundary: io.github.thibaultbee.srtdroid.core.enums.Boundary = io.github.thibaultbee.srtdroid.core.enums.Boundary.SUBSEQUENT,
+    val boundary: Boundary = Boundary.SUBSEQUENT,
     /**
      * Receiver: specifies the time when the packet was intended to be delivered to the receiving application (in microseconds since SRT clock epoch).
      * Sender: specifies the application-provided timestamp to be associated with the packet.

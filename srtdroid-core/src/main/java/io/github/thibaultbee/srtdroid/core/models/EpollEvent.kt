@@ -25,4 +25,4 @@ import io.github.thibaultbee.srtdroid.core.enums.EpollOpt
  * @param socket the SRT socket
  * @param events list of [EpollOpt] that report readiness of this socket
  */
-class EpollEvent(val socket: io.github.thibaultbee.srtdroid.core.models.SrtSocket, val events: List<EpollOpt>)
+class EpollEvent(val socket: SrtSocket, val events: List<EpollOpt>)
