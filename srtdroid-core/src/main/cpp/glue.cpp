@@ -1013,5 +1013,8 @@ jint JNI_OnLoad(JavaVM *vm, void * /*reserved*/) {
         return -1;
     }
 
+    // Force to load enums when we get the real JNI environment (does not work in callback)
+    EnumsSingleton::getInstance(env);
+
     return JNI_VERSION_1_6;
 }

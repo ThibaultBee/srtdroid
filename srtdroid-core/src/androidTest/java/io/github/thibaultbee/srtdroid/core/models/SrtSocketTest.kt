@@ -24,6 +24,7 @@ import io.github.thibaultbee.srtdroid.core.enums.RejectReasonCode
 import io.github.thibaultbee.srtdroid.core.enums.SockOpt
 import io.github.thibaultbee.srtdroid.core.enums.SockStatus
 import io.github.thibaultbee.srtdroid.core.enums.Transtype
+import io.github.thibaultbee.srtdroid.core.extensions.connect
 import io.github.thibaultbee.srtdroid.core.models.rejectreason.InternalRejectReason
 import io.github.thibaultbee.srtdroid.core.models.rejectreason.PredefinedRejectReason
 import io.github.thibaultbee.srtdroid.core.utils.Utils.createTestFile
@@ -115,6 +116,18 @@ class SrtSocketTest {
         }
         assertEquals(InternalRejectReason(RejectReasonCode.TIMEOUT), socket.rejectReason)
     }
+
+    @Test
+    fun connectUriTest() {
+        try {
+            socket.connect(SrtUrl("srt://192.168.1.12:9998"))
+            fail()
+        } catch (e: SocketException) {
+            assertEquals(e.message, ErrorType.ENOSERVER.toString())
+        }
+        assertEquals(InternalRejectReason(RejectReasonCode.TIMEOUT), socket.rejectReason)
+    }
+
 
     @Test
     fun rendezVousTest() {
