@@ -29,6 +29,7 @@ private:
     Bimap<string, ValueType> biMap;
     ValueType defaultError;
     const char *clazzIdentifier;
+    const char *clazzSignature;
     jclass clazz;
     JavaVM *vm;
 
@@ -72,13 +73,16 @@ private:
 
 public:
     EnumConverter(JNIEnv *env, map<string, ValueType> map, ValueType fallbackError,
-                  const char *clazzIdentifier) : EnumConverter(map, fallbackError) {
-        this->clazzIdentifier = clazzIdentifier;
+            const char *clazzIdentifier) : EnumConverter(map, fallbackError) {
         this->clazz = static_cast<jclass>(env->NewGlobalRef(env->FindClass(clazzIdentifier)));
         env->GetJavaVM(&(this->vm));
+
+        this->clazzIdentifier = clazzIdentifier;
+        this->clazzSignature = (char *) malloc(strlen(clazzIdentifier) + 3);
+        sprintf((char *) this->clazzSignature, "L%s;", clazzIdentifier);
     }
 
-    EnumConverter(map<string, ValueType> map, ValueType fallbackError) {
+    EnumConverter(map <string, ValueType> map, ValueType fallbackError) {
         populatesBimap(map);
         this->defaultError = fallbackError;
     }
@@ -89,6 +93,9 @@ public:
         vm->GetEnv((void **) &env, JNI_VERSION_1_6);
         if (env != nullptr) {
             env->DeleteGlobalRef(this->clazz);
+        }
+        if (this->clazzSignature) {
+            free((void *) this->clazzSignature);
         }
     }
 
@@ -106,22 +113,14 @@ public:
     }
 
     jobject getJavaValue(JNIEnv *env, const ValueType value) {
-        char *sig = nullptr;
-
         if (!clazz) {
             LOGE("Can't get %s class", clazzIdentifier);
             return nullptr;
         }
 
         auto fieldName = biMap.keysForValue(value).begin();
-        asprintf(&sig, "L%s;", clazzIdentifier);
-        if (sig == nullptr) {
-            LOGE("Can't allocate sig for %s", clazzIdentifier);
-            return nullptr;
-        }
         jfieldID enumField = env->GetStaticFieldID(clazz, fieldName->c_str(),
-                                                   sig);
-        free(sig);
+                clazzSignature);
         if (!enumField) {
             LOGE("Can't get field for %s", clazzIdentifier);
             return nullptr;
