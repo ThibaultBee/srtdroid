@@ -24,10 +24,10 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: lib
-          path: lib/build/outputs/aar
+          path: srtdroid-*/build/outputs/aar
       - name: Upload APKs
         uses: actions/upload-artifact@v4
         with:
           name: apks
           path: |
-            examples/build/outputs/apk/debug/examples-debug.apk
+            example/build/outputs/apk/debug/example-debug.apk
