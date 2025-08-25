@@ -34,9 +34,9 @@ server device IP. The port must be the same value for both.
 ## API
 
 As srtdroid is a simple wrapper, it provides a
-minimalist [API documentation](https://thibaultbee.github.io/srtdroid/dokka/lib). For an extensive
+minimalist [API documentation](https://thibaultbee.github.io/srtdroid/). For an extensive
 SRT API documentation refers to the
-official [SRT API documentation](https://github.com/Haivision/srt/blob/master/docs/API.md).
+official [SRT API documentation](https://github.com/Haivision/srt/blob/master/docs/).
 
 ### Send/recv
 
