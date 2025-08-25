@@ -24,11 +24,12 @@ import io.github.thibaultbee.srtdroid.core.extensions.toBoolean
 import io.github.thibaultbee.srtdroid.core.extensions.toInt
 import io.github.thibaultbee.srtdroid.core.interfaces.ConfigurableSrtSocket
 import java.security.InvalidParameterException
+import androidx.core.net.toUri
 
 /**
  * Extracts [SrtUrl] from a FFmpeg format [String]: srt://hostname:port[?options]
  */
-fun SrtUrl(url: String) = SrtUrl(Uri.parse(url))
+fun SrtUrl(urlString: String) = SrtUrl(urlString.toUri())
 
 /**
  * Extracts [SrtUrl] from a FFmpeg format [Uri].
