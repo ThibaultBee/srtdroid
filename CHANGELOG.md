@@ -1,6 +1,24 @@
 Changelog
 ==========
 
+Version 1.9.3
+-------------
+
+## Dependencies:
+
+- srt 1.5.4
+- openssl 3.5.1
+
+## Bug fixes:
+
+- Fix a crash when connection callback was called without enum converters
+- CI: Fix uploading library and application to GitHub actions
+
+## Features:
+
+- Upgrade gradle and Android gradle plugin
+- Upgrade dependencies
+
 Version 1.9.2
 -------------
 
