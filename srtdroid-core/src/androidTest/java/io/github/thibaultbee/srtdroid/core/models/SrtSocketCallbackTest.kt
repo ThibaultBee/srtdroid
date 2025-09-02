@@ -31,7 +31,6 @@ class SrtSocketCallbackTest {
     @After
     fun tearDown() {
         socket.close()
-        Srt.cleanUp()
     }
 
     @Test

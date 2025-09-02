@@ -48,7 +48,6 @@ class SrtSocket6Test {
     fun tearDown() {
         if (socket.isValid)
             socket.close()
-        assertEquals(Srt.cleanUp(), 0)
     }
 
     @Test

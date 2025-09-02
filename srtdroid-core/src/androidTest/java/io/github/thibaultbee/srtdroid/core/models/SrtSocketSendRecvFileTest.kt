@@ -32,7 +32,6 @@ class SrtSocketSendRecvFileTest {
     fun tearDown() {
         socket.close()
         server.shutdown()
-        assertEquals(Srt.cleanUp(), 0)
     }
 
     @Test

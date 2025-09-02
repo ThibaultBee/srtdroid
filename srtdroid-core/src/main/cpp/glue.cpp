@@ -181,18 +181,7 @@ void srt_logger_cb(void *opaque, int level, const char *file, int line, const ch
     __android_log_print(android_log_level, "libsrt", "%s@%d:%s %s", file, line, area, message);
 }
 
-// Library Initialization
-jint JNICALL
-nativeStartUp(JNIEnv *env, jobject obj) {
-    srt_setloghandler(nullptr, srt_logger_cb);
-    return srt_startup();
-}
-
-jint JNICALL
-nativeCleanUp(JNIEnv *env, jobject obj) {
-    return srt_cleanup();
-}
-
+// Library Initialization and Versioning
 jint JNICALL
 nativeGetVersion(JNIEnv *env, jobject obj) {
     return srt_getversion();
@@ -869,8 +858,6 @@ nativeGetConnectionTime(JNIEnv *env,
 
 // Register natives API
 static JNINativeMethod srtMethods[] = {
-        {"startUp",          "()I",  (void *) &nativeStartUp},
-        {"cleanUp",          "()I",  (void *) &nativeCleanUp},
         {"nativeGetVersion", "()I",  (void *) &nativeGetVersion},
         {"setLogLevel",      "(I)V", (void *) &nativeSetLogLevel}
 };

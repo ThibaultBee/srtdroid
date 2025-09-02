@@ -17,14 +17,13 @@ package io.github.thibaultbee.srtdroid.core.models
 
 import android.net.Uri
 import android.util.Log
-import io.github.thibaultbee.srtdroid.core.Srt
+import androidx.core.net.toUri
 import io.github.thibaultbee.srtdroid.core.enums.SockOpt
 import io.github.thibaultbee.srtdroid.core.enums.Transtype
 import io.github.thibaultbee.srtdroid.core.extensions.toBoolean
 import io.github.thibaultbee.srtdroid.core.extensions.toInt
 import io.github.thibaultbee.srtdroid.core.interfaces.ConfigurableSrtSocket
 import java.security.InvalidParameterException
-import androidx.core.net.toUri
 
 /**
  * Extracts [SrtUrl] from a FFmpeg format [String]: srt://hostname:port[?options]
@@ -557,9 +556,5 @@ data class SrtUrl(
             LINGER_QUERY_PARAMETER,
             ENABLE_TIMESTAMP_BASED_PACKET_DELIVERY_QUERY_PARAMETER
         )
-
-        init {
-            Srt.startUp()
-        }
     }
 }

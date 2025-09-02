@@ -57,10 +57,6 @@ private constructor(private val srtsocket: Int) : ConfigurableSrtSocket, Closeab
             type: Int,
             protocol: Int
         ): Int
-
-        init {
-            Srt.startUp()
-        }
     }
 
     /**

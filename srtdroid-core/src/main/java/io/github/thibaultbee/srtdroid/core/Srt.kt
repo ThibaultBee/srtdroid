@@ -23,26 +23,6 @@ object Srt {
         System.loadLibrary("srtdroid")
     }
 
-    /**
-     * Uses to create an SRT context. It is automatically called by other class. You don't have to call it anymore.
-     *
-     * **See Also:** [srt_startup](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_startup)
-     *
-     * @return a value >= 0 on success, otherwise -1
-     * @see [cleanUp]
-     */
-    external fun startUp(): Int
-
-    /**
-     * Cleans up all global SRT resources and shall be called just before exiting the application (for example, in your main activity onRelease()).
-     *
-     * **See Also:** [srt_cleanup](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_cleanup)
-     *
-     * @return a reserved for future use value
-     * @see [startUp]
-     */
-    external fun cleanUp(): Int
-
     private external fun nativeGetVersion(): Int
 
     /**

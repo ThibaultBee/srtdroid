@@ -23,11 +23,6 @@ import org.junit.Test
 
 
 class TimeTest {
-    @After
-    fun tearDown() {
-        assertEquals(Srt.cleanUp(), 0)
-    }
-
     @Test
     fun nowTest() {
         assertNotEquals(0, Time.now())

@@ -23,10 +23,6 @@ import io.github.thibaultbee.srtdroid.core.enums.ErrorType
  * Once it has been called, you must release Srt context with [Srt.cleanUp] when application leaves.
  */
 object SrtError {
-    init {
-        Srt.startUp()
-    }
-
     private external fun nativeGetLastErrorMessage(): String
 
     /**

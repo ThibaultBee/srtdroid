@@ -33,10 +33,6 @@ private constructor(private val eid: Int) {
     companion object {
         @JvmStatic
         private external fun nativeCreate(): Int
-
-        init {
-            Srt.startUp()
-        }
     }
 
     /**

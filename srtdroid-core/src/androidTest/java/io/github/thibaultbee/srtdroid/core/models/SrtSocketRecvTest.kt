@@ -30,7 +30,6 @@ class SrtSocketRecvTest {
     fun tearDown() {
         server.shutdown()
         socket.close()
-        Srt.cleanUp()
     }
 
     @Test

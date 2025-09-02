@@ -22,10 +22,6 @@ import io.github.thibaultbee.srtdroid.core.Srt
  * Once it has been called, you must release Srt context with [Srt.cleanUp] when application leaves.
  */
 object Time {
-    init {
-        Srt.startUp()
-    }
-
     /**
      * Gets time in microseconds elapsed since epoch using SRT internal clock.
      *

@@ -240,10 +240,4 @@ enum class ErrorType {
      * @return the string message that represents a given SRT error code.
      */
     external override fun toString(): String
-
-    companion object {
-        init {
-            Srt.startUp()
-        }
-    }
 }

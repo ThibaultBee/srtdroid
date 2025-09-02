@@ -15,22 +15,11 @@
  */
 package io.github.thibaultbee.srtdroid.core
 
-import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class SrtTest {
-
-    @Test
-    fun startCleanTest() {
-        assert(Srt.startUp() >= 0)
-        Srt.setLogLevel(3)
-        assertEquals(0, Srt.cleanUp())
-    }
-
     @Test
     fun getVersionTest() {
-        assert(Srt.startUp() >= 0)
         assert(Srt.version > 0)
-        assertEquals(0, Srt.cleanUp())
     }
 }

@@ -45,7 +45,6 @@ class EpollTest {
             if (socket.isValid)
                 socket.close()
         }
-        assertEquals(Srt.cleanUp(), 0)
     }
 
     @Test

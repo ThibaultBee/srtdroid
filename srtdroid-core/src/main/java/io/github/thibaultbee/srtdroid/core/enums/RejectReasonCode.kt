@@ -129,9 +129,5 @@ enum class RejectReasonCode {
          * User defined error codes offset
          */
         const val USERDEFINED_OFFSET = 2000 //  SRT_REJC_USERDEFINED
-
-        init {
-            Srt.startUp()
-        }
     }
 }

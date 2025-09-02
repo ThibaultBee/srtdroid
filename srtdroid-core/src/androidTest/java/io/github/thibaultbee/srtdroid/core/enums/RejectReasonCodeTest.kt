@@ -22,11 +22,6 @@ import org.junit.Assert.assertNotNull
 import org.junit.Test
 
 class RejectReasonCodeTest {
-    @After
-    fun tearDown() {
-        assertEquals(Srt.cleanUp(), 0)
-    }
-
     @Test
     fun toStringTest() {
         RejectReasonCode.entries.forEach {

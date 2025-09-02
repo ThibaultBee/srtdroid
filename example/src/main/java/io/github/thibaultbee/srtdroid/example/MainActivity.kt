@@ -102,10 +102,4 @@ class MainActivity : AppCompatActivity() {
             binding.sendFileButton.isChecked = false
         }
     }
-
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Srt.cleanUp()
-    }
 }
