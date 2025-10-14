@@ -421,6 +421,9 @@ data class SrtUrl(
      * Internal purpose only.
      */
     fun preApplyTo(socket: ConfigurableSrtSocket) {
+        transtype?.let { socket.setSockFlag(SockOpt.TRANSTYPE, it) }
+        enableTimestampBasedPacketDelivery?.let { socket.setSockFlag(SockOpt.TSBPDMODE, it) }
+
         connectTimeoutInMs?.let { socket.setSockFlag(SockOpt.CONNTIMEO, it) }
         flightFlagSize?.let { socket.setSockFlag(SockOpt.FC, it) }
 
@@ -444,9 +447,6 @@ data class SrtUrl(
         streamId?.let { socket.setSockFlag(SockOpt.STREAMID, it) }
         smoother?.let { socket.setSockFlag(SockOpt.CONGESTION, it) }
         enableMessageApi?.let { socket.setSockFlag(SockOpt.MESSAGEAPI, it) }
-        transtype?.let { socket.setSockFlag(SockOpt.TRANSTYPE, it) }
-
-        enableTimestampBasedPacketDelivery?.let { socket.setSockFlag(SockOpt.TSBPDMODE, it) }
     }
 
     /**
