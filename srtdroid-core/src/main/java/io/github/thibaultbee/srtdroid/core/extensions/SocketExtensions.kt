@@ -61,6 +61,7 @@ fun SrtSocket.connect(srtUrl: SrtUrl) {
     }
 
     srtUrl.preApplyTo(this)
+    srtUrl.preBindApplyTo(this)
     connect(srtUrl.hostname, srtUrl.port)
     srtUrl.postApplyTo(this)
 }
@@ -91,6 +92,7 @@ fun SrtSocket.rendezVous(
     }
 
     srtUrl.preApplyTo(this)
+    srtUrl.preBindApplyTo(this)
     rendezVous(srtUrl.hostname, srtUrl.hostname, srtUrl.port)
     srtUrl.postApplyTo(this)
 }
