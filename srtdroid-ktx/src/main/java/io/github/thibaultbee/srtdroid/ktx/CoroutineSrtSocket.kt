@@ -20,6 +20,7 @@ import io.github.thibaultbee.srtdroid.core.models.rejectreason.RejectReason
 import io.github.thibaultbee.srtdroid.core.models.rejectreason.UserDefinedRejectReason
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CompletableJob
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -47,10 +48,14 @@ import kotlin.math.min
  */
 class CoroutineSrtSocket
 private constructor(
-    private val socket: SrtSocket
+    private val socket: SrtSocket,
+    private val coroutineDispatcher: CoroutineDispatcher
 ) :
     ConfigurableSrtSocket, CoroutineScope {
-    constructor() : this(SrtSocket())
+    constructor(coroutineDispatcher: CoroutineDispatcher = Dispatchers.IO) : this(
+        SrtSocket(),
+        coroutineDispatcher
+    )
 
     val socketContext: CompletableJob = Job()
 
@@ -227,7 +232,7 @@ private constructor(
      *
      * @throws BindException if bind has failed
      */
-    suspend fun bind(address: InetSocketAddress) = withContext(Dispatchers.IO) {
+    suspend fun bind(address: InetSocketAddress) = withContext(coroutineDispatcher) {
         try {
             socket.bind(address)
             socket.clientListener = clientListener
@@ -295,8 +300,10 @@ private constructor(
      * @throws SocketException if listen failed
      * @see [ServerListener.onListen]
      */
-    fun listen(backlog: Int) {
-        socket.listen(backlog)
+    suspend fun listen(backlog: Int) {
+        withContext(coroutineDispatcher) {
+            socket.listen(backlog)
+        }
     }
 
     /**
@@ -305,12 +312,13 @@ private constructor(
      * **See Also:** [srt_accept](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_accept)
      *
      * @return a pair containing the new Socket connection and the IP address and port specification of the remote device.
+     * @param coroutineDispatcher the [CoroutineDispatcher] to use. Default to the one provided in constructor.
      * @throws SocketException if returned SRT socket is not valid
      */
-    suspend fun accept(): Pair<CoroutineSrtSocket, InetSocketAddress?> {
+    suspend fun accept(coroutineDispatcher: CoroutineDispatcher = this.coroutineDispatcher): Pair<CoroutineSrtSocket, InetSocketAddress?> {
         return execute(EpollOpt.IN) {
             val pair = socket.accept()
-            Pair(CoroutineSrtSocket(pair.first), pair.second)
+            Pair(CoroutineSrtSocket(pair.first, coroutineDispatcher), pair.second)
         }
     }
 
@@ -790,7 +798,7 @@ private constructor(
         epoll.addUSock(socket, listOf(EpollOpt.ERR, epollOpt))
 
         try {
-            return withContext(Dispatchers.IO) {
+            return withContext(coroutineDispatcher) {
                 if (timeoutInMs == null) {
                     executeEpoll(epoll, onContinuation, block)
                 } else {
