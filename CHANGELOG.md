@@ -1,6 +1,20 @@
 Changelog
 ==========
 
+Version 1.9.4
+-------------
+
+## Dependencies:
+
+- srt 1.5.4
+- openssl 3.5.1
+
+## Bug fixes:
+
+- Fix the order the SrtUrl parameters are set.
+  See [#37](https://github.com/ThibaultBee/srtdroid/issues/37)
+- Do not create a `CoroutineDispatcher` on each execute calls in `CoroutineSrtSocket`
+
 Version 1.9.3
 -------------
 
