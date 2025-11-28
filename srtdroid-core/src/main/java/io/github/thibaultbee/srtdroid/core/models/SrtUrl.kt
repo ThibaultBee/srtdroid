@@ -17,6 +17,7 @@ package io.github.thibaultbee.srtdroid.core.models
 
 import android.net.Uri
 import android.util.Log
+import androidx.core.net.toUri
 import io.github.thibaultbee.srtdroid.core.Srt
 import io.github.thibaultbee.srtdroid.core.enums.SockOpt
 import io.github.thibaultbee.srtdroid.core.enums.Transtype
@@ -24,7 +25,6 @@ import io.github.thibaultbee.srtdroid.core.extensions.toBoolean
 import io.github.thibaultbee.srtdroid.core.extensions.toInt
 import io.github.thibaultbee.srtdroid.core.interfaces.ConfigurableSrtSocket
 import java.security.InvalidParameterException
-import androidx.core.net.toUri
 
 /**
  * Extracts [SrtUrl] from a FFmpeg format [String]: srt://hostname:port[?options]
@@ -116,6 +116,7 @@ internal fun SrtUrl(uri: SrtUri): SrtUrl {
     val enableTimestampBasedPacketDelivery =
         uri.getQueryParameter(SrtUrl.ENABLE_TIMESTAMP_BASED_PACKET_DELIVERY_QUERY_PARAMETER)
             ?.toInt()?.toBoolean()
+    val packetFilter = uri.getQueryParameter(SrtUrl.PACKET_FILTER_QUERY_PARAMETER)
 
     val unknownParameters =
         uri.queryParameterNames.find {
@@ -162,7 +163,8 @@ internal fun SrtUrl(uri: SrtUri): SrtUrl {
         enableMessageApi,
         transtype,
         lingerInS,
-        enableTimestampBasedPacketDelivery
+        enableTimestampBasedPacketDelivery,
+        packetFilter
     )
 }
 
@@ -211,6 +213,7 @@ data class SrtUrl(
     val transtype: Transtype? = null,
     val lingerInS: Int? = null,
     val enableTimestampBasedPacketDelivery: Boolean? = null,
+    val packetFilter: String? = null
 ) {
     init {
         hostname.removePrefix(SRT_PREFIX)
@@ -447,6 +450,8 @@ data class SrtUrl(
         streamId?.let { socket.setSockFlag(SockOpt.STREAMID, it) }
         smoother?.let { socket.setSockFlag(SockOpt.CONGESTION, it) }
         enableMessageApi?.let { socket.setSockFlag(SockOpt.MESSAGEAPI, it) }
+
+        packetFilter?.let { socket.setSockFlag(SockOpt.PACKETFILTER, it) }
     }
 
     /**
@@ -517,6 +522,7 @@ data class SrtUrl(
         internal const val TRANSTYPE_QUERY_PARAMETER = "transtype"
         internal const val LINGER_QUERY_PARAMETER = "linger"
         internal const val ENABLE_TIMESTAMP_BASED_PACKET_DELIVERY_QUERY_PARAMETER = "tsbpd"
+        internal const val PACKET_FILTER_QUERY_PARAMETER = "packetfilter"
 
         internal val supportedQueryParameterList = listOf(
             CONNECTION_TIMEOUT_QUERY_PARAMETER,
@@ -555,7 +561,8 @@ data class SrtUrl(
             ENABLE_MESSAGE_API_QUERY_PARAMETER,
             TRANSTYPE_QUERY_PARAMETER,
             LINGER_QUERY_PARAMETER,
-            ENABLE_TIMESTAMP_BASED_PACKET_DELIVERY_QUERY_PARAMETER
+            ENABLE_TIMESTAMP_BASED_PACKET_DELIVERY_QUERY_PARAMETER,
+            PACKET_FILTER_QUERY_PARAMETER
         )
 
         init {
