@@ -1,6 +1,6 @@
 object AndroidVersions {
     const val MIN_SDK = 21
-    const val COMPILE_SDK = 35
+    const val COMPILE_SDK = 36
 }
 
 object Publication {

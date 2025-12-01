@@ -8,7 +8,7 @@ android {
     compileSdk = AndroidVersions.COMPILE_SDK
 
     defaultConfig {
-        minSdk = 21
+        minSdk = AndroidVersions.MIN_SDK
         versionCode = 1
         versionName = "$version"
 

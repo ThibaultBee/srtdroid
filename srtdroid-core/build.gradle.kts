@@ -10,7 +10,7 @@ configurePublication()
 android {
     namespace = "io.github.thibaultbee.srtdroid.core"
     compileSdk = AndroidVersions.COMPILE_SDK
-    ndkVersion = "26.3.11579264"
+    ndkVersion = "29.0.14206865"
 
     defaultConfig {
         minSdk = AndroidVersions.MIN_SDK
