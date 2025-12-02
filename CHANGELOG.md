@@ -1,6 +1,21 @@
 Changelog
 ==========
 
+Version 1.9.5
+-------------
+
+## Dependencies:
+
+- srt 1.5.4
+- openssl 3.5.1
+
+## Features:
+
+- Add a `packetfilter` parameter to `SrtUrl` to set SRT packet filter option.
+- Upgrade gradle and Android gradle plugin
+- Upgrade dependencies
+- Upgrade ndk version
+
 Version 1.9.4
 -------------
 

@@ -12,7 +12,7 @@ plugins {
 
 allprojects {
     group = "io.github.thibaultbee.srtdroid"
-    version = "1.9.4"
+    version = "1.9.5"
 }
 
 subprojects {
