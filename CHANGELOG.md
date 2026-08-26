@@ -1,6 +1,14 @@
 Changelog
 ==========
 
+Version 1.10.0
+-------------
+
+## Dependencies:
+
+- srt 1.5.7
+- openssl 3.5.1
+
 Version 1.9.5
 -------------
 
