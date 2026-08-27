@@ -138,12 +138,12 @@ class SrtSocketRecvTest {
             serverSocket.reuseAddress = true
             serverSocket.setSockFlag(SockOpt.TRANSTYPE, Transtype.FILE)
             serverSocket.bind(InetAddress.getLoopbackAddress(), 0)
+            serverSocket.listen(1)
             port = serverSocket.localPort
         }
 
         fun enqueue(array: ByteArray): Future<Int> {
             return executor.submit(Callable {
-                serverSocket.listen(1)
                 val pair = serverSocket.accept()
                 val comSocket = pair.first
                 val numOfSentBytes = comSocket.send(array)

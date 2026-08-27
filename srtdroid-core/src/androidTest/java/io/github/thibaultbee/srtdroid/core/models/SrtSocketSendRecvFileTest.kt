@@ -37,7 +37,6 @@ class SrtSocketSendRecvFileTest {
 
     @Test
     fun recvFileTest() {
-        val server = MockSendServer()
         val message = UUID.randomUUID().toString()
         val sendFile = Utils.createTestFile(message = message)
 
@@ -61,12 +60,12 @@ class SrtSocketSendRecvFileTest {
             serverSocket.reuseAddress = true
             serverSocket.setSockFlag(SockOpt.TRANSTYPE, Transtype.FILE)
             serverSocket.bind(InetAddress.getLoopbackAddress(), 0)
+            serverSocket.listen(1)
             port = serverSocket.localPort
         }
 
         fun enqueue(file: File): Future<*> {
             return executor.submit(Callable {
-                serverSocket.listen(1)
                 val pair = serverSocket.accept()
                 val comSocket = pair.first
                 val numOfSentBytes = comSocket.sendFile(file)
