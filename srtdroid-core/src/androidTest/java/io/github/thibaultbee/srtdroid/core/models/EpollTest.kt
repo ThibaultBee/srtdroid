@@ -19,15 +19,20 @@ import io.github.thibaultbee.srtdroid.core.Srt
 import io.github.thibaultbee.srtdroid.core.enums.EpollFlag
 import io.github.thibaultbee.srtdroid.core.enums.EpollOpt
 import io.github.thibaultbee.srtdroid.core.enums.ErrorType
+import io.github.thibaultbee.srtdroid.core.utils.ConditionalLocalNetworkPermissionRule
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Assert.fail
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 
 class EpollTest {
+    @get:Rule
+    val permissionRule = ConditionalLocalNetworkPermissionRule()
+
     private lateinit var epoll: Epoll
     private lateinit var socket: SrtSocket
 

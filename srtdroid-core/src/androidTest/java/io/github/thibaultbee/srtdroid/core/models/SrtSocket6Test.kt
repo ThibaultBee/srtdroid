@@ -15,6 +15,7 @@
  */
 package io.github.thibaultbee.srtdroid.core.models
 
+import androidx.test.rule.GrantPermissionRule
 import io.github.thibaultbee.srtdroid.core.Srt
 import io.github.thibaultbee.srtdroid.core.enums.ErrorType
 import io.github.thibaultbee.srtdroid.core.enums.RejectReasonCode
@@ -22,20 +23,24 @@ import io.github.thibaultbee.srtdroid.core.enums.SockOpt
 import io.github.thibaultbee.srtdroid.core.enums.SockStatus
 import io.github.thibaultbee.srtdroid.core.enums.Transtype
 import io.github.thibaultbee.srtdroid.core.models.rejectreason.InternalRejectReason
+import io.github.thibaultbee.srtdroid.core.utils.ConditionalLocalNetworkPermissionRule
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Assert.fail
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import java.net.SocketException
 
-
 /*
- * Theses tests are written to check if SRT API can be called from the Kotlin part.
+ * These tests are written to check if SRT API can be called from the Kotlin part.
  */
 class SrtSocket6Test {
+    @get:Rule
+    val permissionRule = ConditionalLocalNetworkPermissionRule()
+
     private lateinit var socket: SrtSocket
 
     @Before

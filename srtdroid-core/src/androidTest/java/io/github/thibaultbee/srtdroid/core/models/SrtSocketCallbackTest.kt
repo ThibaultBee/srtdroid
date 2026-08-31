@@ -4,10 +4,12 @@ import io.github.thibaultbee.srtdroid.core.Srt
 import io.github.thibaultbee.srtdroid.core.enums.ErrorType
 import io.github.thibaultbee.srtdroid.core.enums.SockOpt
 import io.github.thibaultbee.srtdroid.core.enums.Transtype
+import io.github.thibaultbee.srtdroid.core.utils.ConditionalLocalNetworkPermissionRule
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import java.lang.Thread.sleep
 import java.net.InetAddress
@@ -19,6 +21,9 @@ import java.util.concurrent.Future
 import java.util.concurrent.TimeUnit
 
 class SrtSocketCallbackTest {
+    @get:Rule
+    val permissionRule = ConditionalLocalNetworkPermissionRule()
+
     private lateinit var socket: SrtSocket
 
     @Before

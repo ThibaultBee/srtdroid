@@ -15,8 +15,14 @@
  */
 package io.github.thibaultbee.srtdroid.example
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import io.github.thibaultbee.srtdroid.core.Srt
 import io.github.thibaultbee.srtdroid.example.databinding.ActivityMainBinding
@@ -29,6 +35,34 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val viewModel: MainViewModel by lazy {
         ViewModelProvider(this)[MainViewModel::class.java]
+    }
+
+    private var pendingAction: (() -> Unit)? = null
+
+    private val requestPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+            Log.e(TAG, "Local network permission is granted $isGranted")
+            if (isGranted) {
+                pendingAction?.invoke()
+            }
+            pendingAction = null
+        }
+
+    private fun runWithLocalNetworkPermission(action: () -> Unit) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.CINNAMON_BUN) {
+            if (ContextCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.ACCESS_LOCAL_NETWORK
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
+                action()
+            } else {
+                pendingAction = action
+                requestPermissionLauncher.launch(Manifest.permission.ACCESS_LOCAL_NETWORK)
+            }
+        } else {
+            action()
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,35 +79,40 @@ class MainActivity : AppCompatActivity() {
         bindProperties()
     }
 
+
     private fun bindProperties() {
         binding.testClientButton.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                viewModel.launchTestClient()
+                runWithLocalNetworkPermission { viewModel.launchTestClient() }
             } else {
+                pendingAction = null
                 viewModel.cancelTestClient()
             }
         }
 
         binding.testServerButton.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                viewModel.launchTestServer()
+                runWithLocalNetworkPermission { viewModel.launchTestServer() }
             } else {
+                pendingAction = null
                 viewModel.cancelTestServer()
             }
         }
 
         binding.recvFileButton.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                viewModel.launchRecvFile()
+                runWithLocalNetworkPermission { viewModel.launchRecvFile() }
             } else {
+                pendingAction = null
                 viewModel.cancelRecvFile()
             }
         }
 
         binding.sendFileButton.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                viewModel.launchSendFile()
+                runWithLocalNetworkPermission { viewModel.launchSendFile() }
             } else {
+                pendingAction = null
                 viewModel.cancelSendFile()
             }
         }

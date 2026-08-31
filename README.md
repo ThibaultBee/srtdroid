@@ -46,14 +46,27 @@ can use the `InputStream` API.
 
 ## Permissions
 
-To use, `sendFile` and `recvFile`, you need to add `READ_EXTERNAL_STORAGE` (
-or [
-`READ_MEDIA_*`](https://developer.android.com/about/versions/13/behavior-changes-13#granular-media-permissions)
+### Local network (Android 17+)
+
+For Android 17 (API 37) and higher, for local network communication (like `0.0.0.0` or local IPs), you need to add the following permissions to your `AndroidManifest.xml`:
+
+```xml
+<manifest>
+    <!-- For Android 17 (API 37) and higher to access the local network -->
+    <uses-permission android:name="android.permission.ACCESS_LOCAL_NETWORK" />
+</manifest>
+```
+
+You must also request the `ACCESS_LOCAL_NETWORK` permission at runtime.
+
+### recvFile and sendFile
+
+To use `sendFile` and `recvFile`, you need to add `READ_EXTERNAL_STORAGE` (
+or [`READ_MEDIA_*`](https://developer.android.com/about/versions/13/behavior-changes-13#granular-media-permissions)
 if your app targets Android 13 or higher)
 and `WRITE_EXTERNAL_STORAGE` to your `AndroidManifest.xml`:
 
 ```xml
-
 <manifest>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!-- If your app targets Android < 13 -->
