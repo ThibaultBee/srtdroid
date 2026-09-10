@@ -354,6 +354,42 @@ private constructor(
     }
 
     /**
+     * Sends a message to a remote party asynchronously.
+     *
+     * Returns -1 if the socket is non-blocking and the send buffer is full.
+     */
+    fun trySend(msg: ByteBuffer): Int {
+        return socket.send(msg)
+    }
+
+    /**
+     * Sends a message to a remote party asynchronously.
+     *
+     * Returns -1 if the socket is non-blocking and the send buffer is full.
+     */
+    fun trySend(msg: ByteBuffer, msgCtrl: MsgCtrl): Int {
+        return socket.send(msg, msgCtrl)
+    }
+
+    /**
+     * Sends a message to a remote party asynchronously.
+     *
+     * Returns -1 if the socket is non-blocking and the send buffer is full.
+     */
+    fun trySend(msg: ByteArray, offset: Int = 0, size: Int = msg.size): Int {
+        return socket.send(msg, offset, size)
+    }
+
+    /**
+     * Sends a message to a remote party asynchronously.
+     *
+     * Returns -1 if the socket is non-blocking and the send buffer is full.
+     */
+    fun trySend(msg: ByteArray, offset: Int, size: Int, msgCtrl: MsgCtrl): Int {
+        return socket.send(msg, offset, size, msgCtrl)
+    }
+
+    /**
      * Sends a message to a remote party.
      *
      * It waits till it is possible to write on the socket. When this method is returned, it does

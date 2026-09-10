@@ -466,6 +466,10 @@ private constructor(private val srtsocket: Int) : ConfigurableSrtSocket, Closeab
         val byteSent = nativeSend(msg, msg.position(), msg.remaining())
         when {
             byteSent < 0 -> {
+                if (SrtError.lastError == ErrorType.EASYNCSND) {
+                    SrtError.clearLastError()
+                    return -1
+                }
                 throw SocketException(SrtError.lastErrorMessage)
             }
 
@@ -681,6 +685,10 @@ private constructor(private val srtsocket: Int) : ConfigurableSrtSocket, Closeab
         val byteSent = nativeSend(msg, msg.position(), msg.remaining(), msgCtrl)
         when {
             byteSent < 0 -> {
+                if (SrtError.lastError == ErrorType.EASYNCSND) {
+                    SrtError.clearLastError()
+                    return -1
+                }
                 throw SocketException(SrtError.lastErrorMessage)
             }
 
