@@ -448,6 +448,88 @@ private constructor(
     }
 
     /**
+     * Tries to send a message to a remote party asynchronously without suspending.
+     *
+     * This method does not throw a [SocketException] if the asynchronous send queue is full ([ErrorType.EASYNCSND]).
+     * Instead, it returns `-1` immediately, making it suitable for high-performance non-blocking loops.
+     * Fatal errors, such as a dropped connection, will still throw a [SocketException].
+     *
+     * **See Also:** [srt_send](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_send)
+     *
+     * @param msg the [ByteBuffer] to send. It must be allocate with [ByteBuffer.allocateDirect]. It sends ByteBuffer from [ByteBuffer.position] to [ByteBuffer.limit].
+     * @return the number of bytes sent, or `-1` if the packet hasn't been sent (buffer full).
+     * @throws SocketException if a fatal error occurs (e.g. connection lost).
+     * @throws SocketTimeoutException if the socket is closed.
+     * @see [send]
+     */
+    fun trySend(msg: ByteBuffer): Int {
+        return socket.trySend(msg)
+    }
+
+    /**
+     * Tries to send a message to a remote party asynchronously without suspending.
+     *
+     * This method does not throw a [SocketException] if the asynchronous send queue is full ([ErrorType.EASYNCSND]).
+     * Instead, it returns `-1` immediately, making it suitable for high-performance non-blocking loops.
+     * Fatal errors, such as a dropped connection, will still throw a [SocketException].
+     *
+     * **See Also:** [srt_sendmsg2](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_sendmsg2)
+     *
+     * @param msg the [ByteBuffer] to send. It must be allocate with [ByteBuffer.allocateDirect]. It sends ByteBuffer from [ByteBuffer.position] to [ByteBuffer.limit].
+     * @param msgCtrl the [MsgCtrl] that contains extra parameter
+     * @return the number of bytes sent, or `-1` if the packet hasn't been sent (buffer full).
+     * @throws SocketException if a fatal error occurs (e.g. connection lost).
+     * @throws SocketTimeoutException if the socket is closed.
+     * @see [send]
+     */
+    fun trySend(msg: ByteBuffer, msgCtrl: MsgCtrl): Int {
+        return socket.trySend(msg, msgCtrl)
+    }
+
+    /**
+     * Tries to send a message to a remote party asynchronously without suspending.
+     *
+     * This method does not throw a [SocketException] if the asynchronous send queue is full ([ErrorType.EASYNCSND]).
+     * Instead, it returns `-1` immediately, making it suitable for high-performance non-blocking loops.
+     * Fatal errors, such as a dropped connection, will still throw a [SocketException].
+     *
+     * **See Also:** [srt_send](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_send)
+     *
+     * @param msg the [ByteArray] to send
+     * @param offset the offset of the [msg]
+     * @param size the size of the [msg] to send
+     * @return the number of bytes sent, or `-1` if the packet hasn't been sent (buffer full).
+     * @throws SocketException if a fatal error occurs (e.g. connection lost).
+     * @throws SocketTimeoutException if the socket is closed.
+     * @see [send]
+     */
+    fun trySend(msg: ByteArray, offset: Int = 0, size: Int = msg.size): Int {
+        return socket.trySend(msg, offset, size)
+    }
+
+    /**
+     * Tries to send a message to a remote party asynchronously without suspending.
+     *
+     * This method does not throw a [SocketException] if the asynchronous send queue is full ([ErrorType.EASYNCSND]).
+     * Instead, it returns `-1` immediately, making it suitable for high-performance non-blocking loops.
+     * Fatal errors, such as a dropped connection, will still throw a [SocketException].
+     *
+     * **See Also:** [srt_sendmsg2](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_sendmsg2)
+     *
+     * @param msg the [ByteArray] to send
+     * @param offset the offset of the [msg]
+     * @param size the size of the [msg] to send
+     * @param msgCtrl the [MsgCtrl] that contains extra parameter
+     * @return the number of bytes sent, or `-1` if the packet hasn't been sent (buffer full).
+     * @throws SocketException if a fatal error occurs (e.g. connection lost).
+     * @throws SocketTimeoutException if the socket is closed.
+     * @see [send]
+     */
+    fun trySend(msg: ByteArray, offset: Int, size: Int, msgCtrl: MsgCtrl): Int {
+        return socket.trySend(msg, offset, size, msgCtrl)
+    }
+    
+    /**
      * Received a message from a remote device
      *
      * It waits till it is possible to write on the socket.
@@ -1089,6 +1171,23 @@ suspend fun CoroutineSrtSocket.rendezVous(
  * @see [recv]
  */
 suspend fun CoroutineSrtSocket.send(msg: String) = send(msg.toByteArray())
+
+/**
+ * Tries to send a message to a remote party asynchronously without suspending.
+     *
+     * This method does not throw a [SocketException] if the asynchronous send queue is full ([ErrorType.EASYNCSND]).
+     * Instead, it returns `-1` immediately, making it suitable for high-performance non-blocking loops.
+     * Fatal errors, such as a dropped connection, will still throw a [SocketException].
+ *
+ * **See Also:** [srt_send](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_send)
+ *
+ * @param msg the [String] to send
+ * @return the number of bytes sent, or `-1` if the packet hasn't been sent (buffer full).
+ * @throws SocketException if a fatal error occurs (e.g. connection lost).
+     * @throws SocketTimeoutException if the socket is closed.
+ * @see [recv]
+ */
+fun CoroutineSrtSocket.trySend(msg: String) = trySend(msg.toByteArray())
 
 /**
  * Sends a specified file.

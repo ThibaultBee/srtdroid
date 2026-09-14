@@ -446,6 +446,21 @@ private constructor(private val srtsocket: Int) : ConfigurableSrtSocket, Closeab
 
     // Transmission
     // Send
+    /**
+     * Centralizes error handling for native send operations.
+     */
+    private fun handleSendResult(byteSent: Int, throwOnAsync: Boolean): Int {
+        if (byteSent < 0) {
+            if (!throwOnAsync && SrtError.lastError == ErrorType.EASYNCSND) {
+                return -1 // Safe fast-path for trySend
+            }
+            throw SocketException(SrtError.lastErrorMessage) // Fatal error for both, or EASYNCSND for classic send
+        } else if (byteSent == 0) {
+            throw SocketTimeoutException(ErrorType.ESCLOSED.toString())
+        }
+        return byteSent
+    }
+
     private external fun nativeSend(msg: ByteArray, offset: Int, size: Int): Int
     private external fun nativeSend(msg: ByteBuffer, offset: Int, size: Int): Int
 
@@ -463,18 +478,10 @@ private constructor(private val srtsocket: Int) : ConfigurableSrtSocket, Closeab
     fun send(msg: ByteBuffer): Int {
         require(msg.isDirect) { "msg must be a direct ByteBuffer" }
 
-        val byteSent = nativeSend(msg, msg.position(), msg.remaining())
-        when {
-            byteSent < 0 -> {
-                throw SocketException(SrtError.lastErrorMessage)
-            }
-
-            byteSent == 0 -> {
-                throw SocketTimeoutException(ErrorType.ESCLOSED.toString())
-            }
-
-            else -> return byteSent
-        }
+        return handleSendResult(
+            nativeSend(msg, msg.position(), msg.remaining()),
+            throwOnAsync = true
+        )
     }
 
     /**
@@ -491,18 +498,7 @@ private constructor(private val srtsocket: Int) : ConfigurableSrtSocket, Closeab
      * @see [recv]
      */
     fun send(msg: ByteArray, offset: Int, size: Int): Int {
-        val byteSent = nativeSend(msg, offset, size)
-        when {
-            byteSent < 0 -> {
-                throw SocketException(SrtError.lastErrorMessage)
-            }
-
-            byteSent == 0 -> {
-                throw SocketTimeoutException(ErrorType.ESCLOSED.toString())
-            }
-
-            else -> return byteSent
-        }
+        return handleSendResult(nativeSend(msg, offset, size), throwOnAsync = true)
     }
 
     /**
@@ -567,18 +563,10 @@ private constructor(private val srtsocket: Int) : ConfigurableSrtSocket, Closeab
     ): Int {
         require(msg.isDirect) { "msg must be a direct ByteBuffer" }
 
-        val byteSent = nativeSend(msg, msg.position(), msg.remaining(), ttl, inOrder)
-        when {
-            byteSent < 0 -> {
-                throw SocketException(SrtError.lastErrorMessage)
-            }
-
-            byteSent == 0 -> {
-                throw SocketTimeoutException(ErrorType.ESCLOSED.toString())
-            }
-
-            else -> return byteSent
-        }
+        return handleSendResult(
+            nativeSend(msg, msg.position(), msg.remaining(), ttl, inOrder),
+            throwOnAsync = true
+        )
     }
 
     /**
@@ -603,18 +591,7 @@ private constructor(private val srtsocket: Int) : ConfigurableSrtSocket, Closeab
         ttl: Int = -1,
         inOrder: Boolean = false
     ): Int {
-        val byteSent = nativeSend(msg, offset, size, ttl, inOrder)
-        when {
-            byteSent < 0 -> {
-                throw SocketException(SrtError.lastErrorMessage)
-            }
-
-            byteSent == 0 -> {
-                throw SocketTimeoutException(ErrorType.ESCLOSED.toString())
-            }
-
-            else -> return byteSent
-        }
+        return handleSendResult(nativeSend(msg, offset, size, ttl, inOrder), throwOnAsync = true)
     }
 
     /**
@@ -678,18 +655,10 @@ private constructor(private val srtsocket: Int) : ConfigurableSrtSocket, Closeab
     fun send(msg: ByteBuffer, msgCtrl: MsgCtrl): Int {
         require(msg.isDirect) { "msg must be a direct ByteBuffer" }
 
-        val byteSent = nativeSend(msg, msg.position(), msg.remaining(), msgCtrl)
-        when {
-            byteSent < 0 -> {
-                throw SocketException(SrtError.lastErrorMessage)
-            }
-
-            byteSent == 0 -> {
-                throw SocketTimeoutException(ErrorType.ESCLOSED.toString())
-            }
-
-            else -> return byteSent
-        }
+        return handleSendResult(
+            nativeSend(msg, msg.position(), msg.remaining(), msgCtrl),
+            throwOnAsync = true
+        )
     }
 
     /**
@@ -712,18 +681,7 @@ private constructor(private val srtsocket: Int) : ConfigurableSrtSocket, Closeab
         size: Int,
         msgCtrl: MsgCtrl
     ): Int {
-        val byteSent = nativeSend(msg, offset, size, msgCtrl)
-        when {
-            byteSent < 0 -> {
-                throw SocketException(SrtError.lastErrorMessage)
-            }
-
-            byteSent == 0 -> {
-                throw SocketTimeoutException(ErrorType.ESCLOSED.toString())
-            }
-
-            else -> return byteSent
-        }
+        return handleSendResult(nativeSend(msg, offset, size, msgCtrl), throwOnAsync = true)
     }
 
     /**
@@ -755,6 +713,230 @@ private constructor(private val srtsocket: Int) : ConfigurableSrtSocket, Closeab
      */
     fun send(msg: String, msgCtrl: MsgCtrl) =
         send(msg.toByteArray(), msgCtrl)
+
+    /**
+     * Tries to send a message to a remote party asynchronously.
+     * 
+     * This method does not throw a [SocketException] if the asynchronous send queue is full ([ErrorType.EASYNCSND]).
+     * Instead, it returns `-1` immediately, making it suitable for high-performance non-blocking loops.
+     * Fatal errors, such as a dropped connection, will still throw a [SocketException].
+     *
+     * **See Also:** [srt_send](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_send)
+     *
+     * @param msg the [ByteBuffer] to send. It must be allocate with [ByteBuffer.allocateDirect]. It sends ByteBuffer from [ByteBuffer.position] to [ByteBuffer.limit].
+     * @return the number of bytes sent, or `-1` if the packet hasn't been sent (buffer full).
+     * @throws SocketException if a fatal error occurs (e.g. connection lost).
+     * @throws SocketTimeoutException if the socket is closed.
+     * @see [send]
+     */
+    fun trySend(msg: ByteBuffer): Int {
+        require(msg.isDirect) { "msg must be a direct ByteBuffer" }
+        return handleSendResult(
+            nativeSend(msg, msg.position(), msg.remaining()),
+            throwOnAsync = false
+        )
+    }
+
+    /**
+     * Tries to send a message to a remote party asynchronously.
+     *
+     * This method does not throw a [SocketException] if the asynchronous send queue is full ([ErrorType.EASYNCSND]).
+     * Instead, it returns `-1` immediately, making it suitable for high-performance non-blocking loops.
+     * Fatal errors, such as a dropped connection, will still throw a [SocketException].
+     *
+     * **See Also:** [srt_send](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_send)
+     *
+     * @param msg the [ByteArray] to send
+     * @param offset the offset of the [msg]
+     * @param size the size of the [msg] to send
+     * @return the number of bytes sent, or `-1` if the packet hasn't been sent (buffer full).
+     * @throws SocketException if a fatal error occurs (e.g. connection lost).
+     * @throws SocketTimeoutException if the socket is closed.
+     * @see [send]
+     */
+    fun trySend(msg: ByteArray, offset: Int, size: Int): Int {
+        return handleSendResult(nativeSend(msg, offset, size), throwOnAsync = false)
+    }
+
+    /**
+     * Tries to send a message to a remote party asynchronously.
+     *
+     * @param msg the [ByteArray] to send
+     * @return the number of bytes sent, or `-1` if the packet hasn't been sent (buffer full).
+     * @throws SocketException if a fatal error occurs (e.g. connection lost).
+     * @throws SocketTimeoutException if the socket is closed.
+     * @see [send]
+     */
+    internal fun trySend(msg: ByteArray) = trySend(msg, 0, msg.size)
+    internal fun trySend(msg: ByteArray) = trySend(msg, 0, msg.size)
+
+    /**
+     * Tries to send a message to a remote party asynchronously.
+     *
+     * @param msg the [String] to send
+     * @return the number of bytes sent, or `-1` if the packet hasn't been sent (buffer full).
+     * @throws SocketException if a fatal error occurs (e.g. connection lost).
+     * @throws SocketTimeoutException if the socket is closed.
+     * @see [send]
+     */
+    internal fun trySend(msg: String) = trySend(msg.toByteArray())
+
+    /**
+     * Tries to send a message to a remote party asynchronously.
+     *
+     * This method does not throw a [SocketException] if the asynchronous send queue is full ([ErrorType.EASYNCSND]).
+     * Instead, it returns `-1` immediately, making it suitable for high-performance non-blocking loops.
+     *
+     * **See Also:** [srt_sendmsg](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_sendmsg)
+     *
+     * @param msg the [ByteBuffer] to send. It must be allocate with [ByteBuffer.allocateDirect]. It sends ByteBuffer from [ByteBuffer.position] to [ByteBuffer.limit].
+     * @param ttl the time (in ms) to wait for a successful delivery. -1 means no time limitation.
+     * @param inOrder Required to be received in the order of sending.
+     * @return the number of bytes sent, or `-1` if the packet hasn't been sent (buffer full).
+     * @throws SocketException if a fatal error occurs (e.g. connection lost).
+     * @throws SocketTimeoutException if the socket is closed.
+     * @see [send]
+     */
+    internal fun trySend(
+        msg: ByteBuffer,
+        ttl: Int = -1,
+        inOrder: Boolean = false
+    ): Int {
+        require(msg.isDirect) { "msg must be a direct ByteBuffer" }
+        return handleSendResult(
+            nativeSend(msg, msg.position(), msg.remaining(), ttl, inOrder),
+            throwOnAsync = false
+        )
+    }
+
+    /**
+     * Tries to send a message to a remote party asynchronously.
+     *
+     * This method does not throw a [SocketException] if the asynchronous send queue is full ([ErrorType.EASYNCSND]).
+     * Instead, it returns `-1` immediately, making it suitable for high-performance non-blocking loops.
+     *
+     * **See Also:** [srt_sendmsg](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_sendmsg)
+     *
+     * @param msg the [ByteArray] to send
+     * @param offset the offset of the [msg]
+     * @param size the size of the [msg] to send
+     * @param ttl the time (in ms) to wait for a successful delivery. -1 means no time limitation.
+     * @param inOrder Required to be received in the order of sending.
+     * @return the number of bytes sent, or `-1` if the packet hasn't been sent (buffer full).
+     * @throws SocketException if a fatal error occurs (e.g. connection lost).
+     * @throws SocketTimeoutException if the socket is closed.
+     * @see [send]
+     */
+    internal fun trySend(
+        msg: ByteArray,
+        offset: Int,
+        size: Int,
+        ttl: Int = -1,
+        inOrder: Boolean = false
+    ): Int {
+        return handleSendResult(nativeSend(msg, offset, size, ttl, inOrder), throwOnAsync = false)
+    }
+
+    /**
+     * Tries to send a message to a remote party asynchronously.
+     *
+     * @param msg the [ByteArray] to send
+     * @param ttl the time (in ms) to wait for a successful delivery. -1 means no time limitation.
+     * @param inOrder Required to be received in the order of sending.
+     * @return the number of bytes sent, or `-1` if the packet hasn't been sent (buffer full).
+     * @throws SocketException if a fatal error occurs (e.g. connection lost).
+     * @throws SocketTimeoutException if the socket is closed.
+     * @see [send]
+     */
+    internal fun trySend(msg: ByteArray, ttl: Int = -1, inOrder: Boolean = false) =
+        trySend(msg, 0, msg.size, ttl, inOrder)
+
+    /**
+     * Tries to send a message to a remote party asynchronously.
+     *
+     * @param msg the [String] to send
+     * @param ttl the time (in ms) to wait for a successful delivery. -1 means no time limitation.
+     * @param inOrder Required to be received in the order of sending.
+     * @return the number of bytes sent, or `-1` if the packet hasn't been sent (buffer full).
+     * @throws SocketException if a fatal error occurs (e.g. connection lost).
+     * @throws SocketTimeoutException if the socket is closed.
+     * @see [send]
+     */
+    internal fun trySend(msg: String, ttl: Int = -1, inOrder: Boolean = false) =
+        trySend(msg.toByteArray(), ttl, inOrder)
+
+    /**
+     * Tries to send a message to a remote party asynchronously.
+     *
+     * This method does not throw a [SocketException] if the asynchronous send queue is full ([ErrorType.EASYNCSND]).
+     * Instead, it returns `-1` immediately, making it suitable for high-performance non-blocking loops.
+     *
+     * **See Also:** [srt_sendmsg2](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_sendmsg2)
+     *
+     * @param msg the [ByteBuffer] to send. It must be allocate with [ByteBuffer.allocateDirect]. It sends ByteBuffer from [ByteBuffer.position] to [ByteBuffer.limit].
+     * @param msgCtrl the [MsgCtrl] that contains extra parameter
+     * @return the number of bytes sent, or `-1` if the packet hasn't been sent (buffer full).
+     * @throws SocketException if a fatal error occurs (e.g. connection lost).
+     * @throws SocketTimeoutException if the socket is closed.
+     * @see [send]
+     */
+    fun trySend(msg: ByteBuffer, msgCtrl: MsgCtrl): Int {
+        require(msg.isDirect) { "msg must be a direct ByteBuffer" }
+        return handleSendResult(
+            nativeSend(msg, msg.position(), msg.remaining(), msgCtrl),
+            throwOnAsync = false
+        )
+    }
+
+    /**
+     * Tries to send a message to a remote party asynchronously.
+     *
+     * This method does not throw a [SocketException] if the asynchronous send queue is full ([ErrorType.EASYNCSND]).
+     * Instead, it returns `-1` immediately, making it suitable for high-performance non-blocking loops.
+     *
+     * **See Also:** [srt_sendmsg2](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_sendmsg2)
+     *
+     * @param msg the [ByteArray] to send
+     * @param offset the offset of the [msg]
+     * @param size the size of the [msg] to send
+     * @param msgCtrl the [MsgCtrl] that contains extra parameter
+     * @return the number of bytes sent, or `-1` if the packet hasn't been sent (buffer full).
+     * @throws SocketException if a fatal error occurs (e.g. connection lost).
+     * @throws SocketTimeoutException if the socket is closed.
+     * @see [send]
+     */
+    fun trySend(
+        msg: ByteArray,
+        offset: Int,
+        size: Int,
+        msgCtrl: MsgCtrl
+    ): Int {
+        return handleSendResult(nativeSend(msg, offset, size, msgCtrl), throwOnAsync = false)
+    }
+
+    /**
+     * Tries to send a message to a remote party asynchronously.
+     *
+     * @param msg the [ByteArray] to send
+     * @param msgCtrl the [MsgCtrl] that contains extra parameter
+     * @return the number of bytes sent, or `-1` if the packet hasn't been sent (buffer full).
+     * @throws SocketException if a fatal error occurs (e.g. connection lost).
+     * @throws SocketTimeoutException if the socket is closed.
+     * @see [send]
+     */
+    internal fun trySend(msg: ByteArray, msgCtrl: MsgCtrl) = trySend(msg, 0, msg.size, msgCtrl)
+
+    /**
+     * Tries to send a message to a remote party asynchronously.
+     *
+     * @param msg the [String] to send
+     * @param msgCtrl the [MsgCtrl] that contains extra parameter
+     * @return the number of bytes sent, or `-1` if the packet hasn't been sent (buffer full).
+     * @throws SocketException if a fatal error occurs (e.g. connection lost).
+     * @throws SocketTimeoutException if the socket is closed.
+     * @see [send]
+     */
+    internal fun trySend(msg: String, msgCtrl: MsgCtrl) = trySend(msg.toByteArray(), msgCtrl)
 
     /**
      * Returns an output stream for this socket.
