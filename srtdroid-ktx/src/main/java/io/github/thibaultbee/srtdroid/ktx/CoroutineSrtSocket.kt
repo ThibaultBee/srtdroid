@@ -448,6 +448,21 @@ private constructor(
     }
 
     /**
+     * Centralizes error handling for trySend operations.
+     */
+    private fun handleTrySendResult(byteSent: Int): Int {
+        if (byteSent < 0) {
+            if (SrtError.lastError == ErrorType.EASYNCSND) {
+                return -1 // Safe fast-path for trySend
+            }
+            throw SocketException(SrtError.lastErrorMessage) // Fatal error
+        } else if (byteSent == 0) {
+            throw SocketTimeoutException(ErrorType.ESCLOSED.toString())
+        }
+        return byteSent
+    }
+
+    /**
      * Tries to send a message to a remote party asynchronously without suspending.
      *
      * This method does not throw a [SocketException] if the asynchronous send queue is full ([ErrorType.EASYNCSND]).
@@ -463,7 +478,7 @@ private constructor(
      * @see [send]
      */
     fun trySend(msg: ByteBuffer): Int {
-        return socket.trySend(msg)
+        return handleTrySendResult(socket.trySend(msg))
     }
 
     /**
@@ -483,7 +498,7 @@ private constructor(
      * @see [send]
      */
     fun trySend(msg: ByteBuffer, msgCtrl: MsgCtrl): Int {
-        return socket.trySend(msg, msgCtrl)
+        return handleTrySendResult(socket.trySend(msg, msgCtrl))
     }
 
     /**
@@ -504,7 +519,7 @@ private constructor(
      * @see [send]
      */
     fun trySend(msg: ByteArray, offset: Int = 0, size: Int = msg.size): Int {
-        return socket.trySend(msg, offset, size)
+        return handleTrySendResult(socket.trySend(msg, offset, size))
     }
 
     /**
@@ -526,7 +541,7 @@ private constructor(
      * @see [send]
      */
     fun trySend(msg: ByteArray, offset: Int, size: Int, msgCtrl: MsgCtrl): Int {
-        return socket.trySend(msg, offset, size, msgCtrl)
+        return handleTrySendResult(socket.trySend(msg, offset, size, msgCtrl))
     }
     
     /**
