@@ -478,10 +478,14 @@ private constructor(private val srtsocket: Int) : ConfigurableSrtSocket, Closeab
     fun send(msg: ByteBuffer): Int {
         require(msg.isDirect) { "msg must be a direct ByteBuffer" }
 
-        return handleSendResult(
+        val byteSent = handleSendResult(
             nativeSend(msg, msg.position(), msg.remaining()),
             throwOnAsync = true
         )
+        if (byteSent > 0) {
+            msg.position(msg.position() + byteSent)
+        }
+        return byteSent
     }
 
     /**
@@ -563,10 +567,14 @@ private constructor(private val srtsocket: Int) : ConfigurableSrtSocket, Closeab
     ): Int {
         require(msg.isDirect) { "msg must be a direct ByteBuffer" }
 
-        return handleSendResult(
+        val byteSent = handleSendResult(
             nativeSend(msg, msg.position(), msg.remaining(), ttl, inOrder),
             throwOnAsync = true
         )
+        if (byteSent > 0) {
+            msg.position(msg.position() + byteSent)
+        }
+        return byteSent
     }
 
     /**
@@ -655,10 +663,14 @@ private constructor(private val srtsocket: Int) : ConfigurableSrtSocket, Closeab
     fun send(msg: ByteBuffer, msgCtrl: MsgCtrl): Int {
         require(msg.isDirect) { "msg must be a direct ByteBuffer" }
 
-        return handleSendResult(
+        val byteSent = handleSendResult(
             nativeSend(msg, msg.position(), msg.remaining(), msgCtrl),
             throwOnAsync = true
         )
+        if (byteSent > 0) {
+            msg.position(msg.position() + byteSent)
+        }
+        return byteSent
     }
 
     /**
@@ -731,10 +743,14 @@ private constructor(private val srtsocket: Int) : ConfigurableSrtSocket, Closeab
      */
     fun trySend(msg: ByteBuffer): Int {
         require(msg.isDirect) { "msg must be a direct ByteBuffer" }
-        return handleSendResult(
+        val byteSent = handleSendResult(
             nativeSend(msg, msg.position(), msg.remaining()),
             throwOnAsync = false
         )
+        if (byteSent > 0) {
+            msg.position(msg.position() + byteSent)
+        }
+        return byteSent
     }
 
     /**
@@ -803,10 +819,14 @@ private constructor(private val srtsocket: Int) : ConfigurableSrtSocket, Closeab
         inOrder: Boolean = false
     ): Int {
         require(msg.isDirect) { "msg must be a direct ByteBuffer" }
-        return handleSendResult(
+        val byteSent = handleSendResult(
             nativeSend(msg, msg.position(), msg.remaining(), ttl, inOrder),
             throwOnAsync = false
         )
+        if (byteSent > 0) {
+            msg.position(msg.position() + byteSent)
+        }
+        return byteSent
     }
 
     /**
@@ -882,10 +902,14 @@ private constructor(private val srtsocket: Int) : ConfigurableSrtSocket, Closeab
      */
     fun trySend(msg: ByteBuffer, msgCtrl: MsgCtrl): Int {
         require(msg.isDirect) { "msg must be a direct ByteBuffer" }
-        return handleSendResult(
+        val byteSent = handleSendResult(
             nativeSend(msg, msg.position(), msg.remaining(), msgCtrl),
             throwOnAsync = false
         )
+        if (byteSent > 0) {
+            msg.position(msg.position() + byteSent)
+        }
+        return byteSent
     }
 
     /**
