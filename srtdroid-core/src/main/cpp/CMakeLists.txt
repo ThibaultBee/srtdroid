@@ -32,10 +32,17 @@ add_dependencies(crypto openssl_project)
 set_target_properties(crypto PROPERTIES IMPORTED_LOCATION ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/libcrypto.${LIBRARY_EXTENSION})
 
 # SRT
+if (CMAKE_BUILD_TYPE MATCHES "^[Dd]ebug")
+    set(SRT_DEBUG_FLAG "-DENABLE_DEBUG=ON")
+else()
+    set(SRT_DEBUG_FLAG "-DENABLE_DEBUG=OFF")
+endif()
+
 ExternalProject_Add(srt_project
         GIT_REPOSITORY https://github.com/Haivision/srt.git
         GIT_TAG v${SRT_VERSION}
         CMAKE_ARGS -DUSE_OPENSSL_PC=OFF
+        ${SRT_DEBUG_FLAG}
         -DENABLE_MONOTONIC_CLOCK=ON
         -DENABLE_STDCXX_SYNC=ON
         -DENABLE_APPS=OFF
