@@ -54,11 +54,15 @@ class SrtSocketSendRecvFileTest {
         )
         assertEquals(sendFile.length(), socket.recvFile(recvFile, size = sendFile.length()))
         assertEquals(sendFile.length(), futureResult.get())
+        assertEquals(sendFile.readText(), recvFile.readText())
+        sendFile.delete()
+        recvFile.delete()
     }
 
     internal class MockSendServer {
         private val executor = Executors.newCachedThreadPool()
         private val serverSocket = SrtSocket()
+        private val clientSockets = mutableListOf<SrtSocket>()
         val port: Int
 
         init {
@@ -69,17 +73,22 @@ class SrtSocketSendRecvFileTest {
             port = serverSocket.localPort
         }
 
-        fun enqueue(file: File): Future<*> {
+        fun enqueue(file: File): Future<Long> {
             return executor.submit(Callable {
                 val pair = serverSocket.accept()
                 val comSocket = pair.first
-                val numOfSentBytes = comSocket.sendFile(file)
-                comSocket.close()
-                numOfSentBytes
+                synchronized(clientSockets) {
+                    clientSockets.add(comSocket)
+                }
+                comSocket.sendFile(file)
             })
         }
 
         fun shutdown() {
+            synchronized(clientSockets) {
+                clientSockets.forEach { it.close() }
+                clientSockets.clear()
+            }
             serverSocket.close()
             executor.shutdown()
         }
