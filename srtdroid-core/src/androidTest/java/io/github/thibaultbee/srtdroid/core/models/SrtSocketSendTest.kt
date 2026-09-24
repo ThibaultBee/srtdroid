@@ -61,6 +61,7 @@ class SrtSocketSendTest {
 
         val expectedBuffer = Utils.generateRandomDirectBuffer(bufferSize)
         socket.send(expectedBuffer)
+        expectedBuffer.position(0)
         val actualArray = futureResult.get(1000, TimeUnit.MILLISECONDS)
         Utils.assertByteBufferEquals(expectedBuffer, ByteBuffer.wrap(actualArray))
     }
@@ -75,6 +76,7 @@ class SrtSocketSendTest {
         val expectedBuffer = Utils.generateRandomDirectBuffer(bufferSize)
         expectedBuffer.position(offset)
         socket.send(expectedBuffer)
+        expectedBuffer.position(offset)
         val actualArray = futureResult.get(1000, TimeUnit.MILLISECONDS)
         Utils.assertByteBufferEquals(expectedBuffer, ByteBuffer.wrap(actualArray))
     }
@@ -91,6 +93,7 @@ class SrtSocketSendTest {
         expectedBuffer.position(offset)
         expectedBuffer.limit(offset + length)
         socket.send(expectedBuffer)
+        expectedBuffer.position(offset)
         val actualArray = futureResult.get(1000, TimeUnit.MILLISECONDS)
         Utils.assertByteBufferEquals(expectedBuffer, ByteBuffer.wrap(actualArray))
     }
@@ -107,6 +110,7 @@ class SrtSocketSendTest {
         expectedBuffer.position(offset)
         expectedBuffer.limit(offset + length)
         socket.send(expectedBuffer, ttl = 1000, inOrder = false)
+        expectedBuffer.position(offset)
         val actualArray = futureResult.get(1000, TimeUnit.MILLISECONDS)
         Utils.assertByteBufferEquals(expectedBuffer, ByteBuffer.wrap(actualArray))
     }
@@ -123,6 +127,7 @@ class SrtSocketSendTest {
         expectedBuffer.position(offset)
         expectedBuffer.limit(offset + length)
         socket.send(expectedBuffer, MsgCtrl(inOrder = false))
+        expectedBuffer.position(offset)
         val actualArray = futureResult.get(1000, TimeUnit.MILLISECONDS)
         Utils.assertByteBufferEquals(expectedBuffer, ByteBuffer.wrap(actualArray))
     }
