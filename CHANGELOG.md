@@ -1,6 +1,24 @@
 Changelog
 ==========
 
+Version 1.10.1
+-------------
+
+## Dependencies:
+
+- srt 1.5.7
+- openssl 3.5.1
+
+## Bug fixes:
+
+- Send: Consume the provided `ByteBuffer`. The position in the `ByteBuffer` is updated according to
+  the number of bytes send.
+
+## Features:
+
+- Introducing a `trySend` API for Coroutine socket.
+- Example: request local network access permission for Android 37+
+
 Version 1.10.0
 -------------
 
