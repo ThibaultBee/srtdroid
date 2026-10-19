@@ -1369,6 +1369,8 @@ private constructor(private val srtsocket: Int) : ConfigurableSrtSocket, Closeab
         }
 
     // Performance tracking
+    private external fun nativeBstats(clear: Boolean): Stats?
+
     /**
      * Reports the current statistics.
      *
@@ -1376,8 +1378,15 @@ private constructor(private val srtsocket: Int) : ConfigurableSrtSocket, Closeab
      *
      * @param clear true if the statistics should be cleared after retrieval
      * @return the current [Stats]
+     * @throws SocketException if SRT statistics retrieval has failed
      */
-    external fun bstats(clear: Boolean): Stats
+    fun bstats(clear: Boolean): Stats =
+        nativeBstats(clear) ?: throw SocketException(SrtError.lastErrorMessage)
+
+    private external fun nativeBistats(
+        clear: Boolean,
+        instantaneous: Boolean
+    ): Stats?
 
     /**
      * Reports the current statistics.
@@ -1387,11 +1396,13 @@ private constructor(private val srtsocket: Int) : ConfigurableSrtSocket, Closeab
      * @param clear true if the statistics should be cleared after retrieval
      * @param instantaneous true if the statistics should use instant data, not moving averages
      * @return the current [Stats]
+     * @throws SocketException if SRT statistics retrieval has failed
      */
-    external fun bistats(
+    fun bistats(
         clear: Boolean,
         instantaneous: Boolean
-    ): Stats
+    ): Stats =
+        nativeBistats(clear, instantaneous) ?: throw SocketException(SrtError.lastErrorMessage)
 
     // Time access
     private external fun nativeGetConnectionTime(): Long

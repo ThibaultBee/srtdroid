@@ -325,12 +325,22 @@ class SrtSocketTest {
 
     @Test
     fun bstatsTest() {
-        socket.bstats(true)
+        try {
+            socket.bstats(true)
+            fail()
+        } catch (e: SocketException) {
+            assertEquals(e.message, ErrorType.ENOCONN.toString())
+        }
     }
 
     @Test
     fun bistatsTest() {
-        socket.bistats(clear = true, instantaneous = false)
+        try {
+            socket.bistats(clear = true, instantaneous = false)
+            fail()
+        } catch (e: SocketException) {
+            assertEquals(e.message, ErrorType.ENOCONN.toString())
+        }
     }
 
     @Test

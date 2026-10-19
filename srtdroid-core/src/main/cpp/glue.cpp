@@ -672,21 +672,27 @@ nativeSetRejectReason(JNIEnv *env, jobject ju, jint rejectReason) {
 
 // Performance tracking
 jobject JNICALL
-nativebstats(JNIEnv *env, jobject ju, jboolean clear) {
+nativeBstats(JNIEnv *env, jobject ju, jboolean clear) {
     SRTSOCKET u = Socket::getNative(env, ju);
-    SRT_TRACEBSTATS tracebstats;
+    SRT_TRACEBSTATS tracebstats = {};
 
-    srt_bstats(u, &tracebstats, clear);
+    int res = srt_bstats(u, &tracebstats, clear);
+    if (res != 0) {
+        return nullptr;
+    }
 
     return Stats::getJava(env, tracebstats);
 }
 
 jobject JNICALL
-nativebistats(JNIEnv *env, jobject ju, jboolean clear, jboolean instantaneous) {
+nativeBistats(JNIEnv *env, jobject ju, jboolean clear, jboolean instantaneous) {
     SRTSOCKET u = Socket::getNative(env, ju);
-    SRT_TRACEBSTATS tracebstats;
+    SRT_TRACEBSTATS tracebstats = {};
 
-    srt_bistats(u, &tracebstats, clear, instantaneous);
+    int res = srt_bistats(u, &tracebstats, clear, instantaneous);
+    if (res != 0) {
+        return nullptr;
+    }
 
     return Stats::getJava(env, tracebstats);
 }
@@ -904,8 +910,8 @@ static JNINativeMethod socketMethods[] = {
         {"nativeRecvFile",          "(Ljava/lang/String;JJI)J",                                      (void *) &nativeRecvFile},
         {"nativeGetRejectReason",   "()I",                                                           (void *) &nativeGetRejectReason},
         {"nativeSetRejectReason",   "(I)I",                                                          (void *) &nativeSetRejectReason},
-        {"bstats",                  "(Z)L" STATS_CLASS ";",                                          (void *) &nativebstats},
-        {"bistats",                 "(ZZ)L" STATS_CLASS ";",                                         (void *) &nativebistats},
+        {"nativeBstats",            "(Z)L" STATS_CLASS ";",                                          (void *) &nativeBstats},
+        {"nativeBistats",           "(ZZ)L" STATS_CLASS ";",                                         (void *) &nativeBistats},
         {"nativeGetConnectionTime", "()J",                                                           (void *) &nativeGetConnectionTime}
 };
 
