@@ -3,11 +3,13 @@ package io.github.thibaultbee.srtdroid.core.models
 import io.github.thibaultbee.srtdroid.core.Srt
 import io.github.thibaultbee.srtdroid.core.enums.ErrorType
 import io.github.thibaultbee.srtdroid.core.enums.SockOpt
+import io.github.thibaultbee.srtdroid.core.enums.SockStatus
 import io.github.thibaultbee.srtdroid.core.enums.Transtype
 import io.github.thibaultbee.srtdroid.core.utils.ConditionalLocalNetworkPermissionRule
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
+import org.junit.Assert.fail
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -65,6 +67,52 @@ class SrtSocketCallbackTest {
         assertEquals(0, lock.count)
 
         server.shutdown()
+    }
+
+    @Test
+    fun onListenRejectAfterSecondListenTest() {
+        val server = listenTwice(-1)
+
+        socket.setSockFlag(SockOpt.CONNTIMEO, 1000)
+        try {
+            socket.connect(InetAddress.getLoopbackAddress(), server.localPort)
+            fail("Connection must be rejected by the server listener")
+        } catch (e: Exception) {
+        }
+
+        server.close()
+    }
+
+    @Test
+    fun onListenAcceptAfterSecondListenTest() {
+        val server = listenTwice(0)
+
+        socket.setSockFlag(SockOpt.CONNTIMEO, 1000)
+        socket.connect(InetAddress.getLoopbackAddress(), server.localPort)
+        assertEquals(SockStatus.CONNECTED, socket.sockState)
+
+        server.close()
+    }
+
+    /**
+     * Create a server that listens twice and answers every connection with [verdict].
+     */
+    private fun listenTwice(verdict: Int): SrtSocket {
+        val server = SrtSocket()
+        server.setSockFlag(SockOpt.TRANSTYPE, Transtype.FILE)
+        server.serverListener =
+            object : SrtSocket.ServerListener {
+                override fun onListen(
+                    ns: SrtSocket,
+                    hsVersion: Int,
+                    peerAddress: InetSocketAddress,
+                    streamId: String
+                ) = verdict
+            }
+        server.bind(InetAddress.getLoopbackAddress(), 0)
+        server.listen(1)
+        server.listen(1)
+        return server
     }
 
     /**
