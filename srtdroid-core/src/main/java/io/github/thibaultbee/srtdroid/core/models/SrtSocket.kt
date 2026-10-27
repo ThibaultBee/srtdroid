@@ -1380,6 +1380,7 @@ private constructor(private val srtsocket: Int) : ConfigurableSrtSocket, Closeab
      * @return the current [Stats]
      * @throws SocketException if SRT statistics retrieval has failed
      */
+    @Throws(SocketException::class)
     fun bstats(clear: Boolean): Stats =
         nativeBstats(clear) ?: throw SocketException(SrtError.lastErrorMessage)
 
@@ -1398,6 +1399,7 @@ private constructor(private val srtsocket: Int) : ConfigurableSrtSocket, Closeab
      * @return the current [Stats]
      * @throws SocketException if SRT statistics retrieval has failed
      */
+    @Throws(SocketException::class)
     fun bistats(
         clear: Boolean,
         instantaneous: Boolean
