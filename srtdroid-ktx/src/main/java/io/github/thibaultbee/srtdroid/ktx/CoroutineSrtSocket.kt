@@ -24,9 +24,9 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.channels.trySendBlocking
-import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.currentCoroutineContext
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
@@ -40,6 +40,7 @@ import java.net.InetSocketAddress
 import java.net.SocketException
 import java.net.SocketTimeoutException
 import java.nio.ByteBuffer
+import java.util.concurrent.atomic.AtomicBoolean
 import kotlin.coroutines.resumeWithException
 import kotlin.math.min
 
@@ -61,31 +62,7 @@ private constructor(
 
     override val coroutineContext = socketContext
 
-    /**
-     * Flow of incoming sockets.
-     * It is a hook before returning from accept. Reject an incoming connection by throwing an exception.
-     * Only for server sockets.
-     */
-    val incomingSocket = callbackFlow {
-        val listener = object : ServerListener {
-            override fun onListen(
-                ns: SrtSocket,
-                hsVersion: Int,
-                peerAddress: InetSocketAddress,
-                streamId: String
-            ): Int {
-                val channelResult = trySendBlocking(IncomingSocket(CoroutineSrtSocket(), streamId))
-                return if (channelResult.isSuccess) {
-                    0
-                } else {
-                    Log.e(TAG, "Rejected incoming socket")
-                    -1
-                }
-            }
-        }
-        socket.serverListener = listener
-        awaitClose { socket.serverListener = null }
-    }
+    private val isAccepting = AtomicBoolean(false)
 
     /**
      * Check if the SRT socket is a valid SRT socket.
@@ -298,7 +275,7 @@ private constructor(
      *
      * @param backlog the number of sockets that may be allowed to wait until they are accepted
      * @throws SocketException if listen failed
-     * @see [ServerListener.onListen]
+     * @see [acceptFlow]
      */
     suspend fun listen(backlog: Int) {
         withContext(coroutineDispatcher) {
@@ -315,10 +292,65 @@ private constructor(
      * @param coroutineDispatcher the [CoroutineDispatcher] to use. Default to the one provided in constructor.
      * @throws SocketException if returned SRT socket is not valid
      */
-    suspend fun accept(coroutineDispatcher: CoroutineDispatcher = this.coroutineDispatcher): Pair<CoroutineSrtSocket, InetSocketAddress?> {
+    private suspend fun accept(coroutineDispatcher: CoroutineDispatcher = this.coroutineDispatcher): Pair<CoroutineSrtSocket, InetSocketAddress?> {
         return execute(EpollOpt.IN) {
             val pair = socket.accept()
             Pair(CoroutineSrtSocket(pair.first, coroutineDispatcher), pair.second)
+        }
+    }
+
+    /**
+     * Flow of accepted client sockets.
+     * Continuously accepts incoming connections until the socket is closed or the coroutine scope is cancelled.
+     *
+     * **See Also:** [srt_accept](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_accept)
+     *
+     * @param coroutineDispatcher the [CoroutineDispatcher] to use for the accepted sockets. Default to the one provided in constructor.
+     * @param onIncomingConnection hook called during the handshake to validate or configure
+     *                             the incoming connection, returning a [ConnectionDecision]. Defaults to [ConnectionDecision.Accept].
+     * @return a [Flow] of pairs containing the accepted [CoroutineSrtSocket] and the remote [InetSocketAddress].
+     */
+    fun acceptFlow(
+        coroutineDispatcher: CoroutineDispatcher = this.coroutineDispatcher,
+        onIncomingConnection: (IncomingConnection) -> ConnectionDecision = { ConnectionDecision.Accept }
+    ): Flow<Pair<CoroutineSrtSocket, InetSocketAddress?>> = flow {
+        check(isAccepting.compareAndSet(false, true)) {
+            "acceptFlow can only be collected by one coroutine at a time"
+        }
+
+        socket.serverListener = object : ServerListener {
+            override fun onListen(
+                ns: SrtSocket,
+                hsVersion: Int,
+                peerAddress: InetSocketAddress,
+                streamId: String
+            ): Int {
+                val incoming = IncomingConnection(ns, streamId, peerAddress, hsVersion)
+                val decision = try {
+                    onIncomingConnection(incoming)
+                } catch (t: Throwable) {
+                    Log.e(TAG, "Exception in onIncomingConnection hook, rejecting connection", t)
+                    ConnectionDecision.Reject()
+                }
+                return when (decision) {
+                    is ConnectionDecision.Accept -> 0
+                    is ConnectionDecision.Reject -> {
+                        decision.reason?.let {
+                            runCatching { ns.rejectReason = it }
+                        }
+                        -1
+                    }
+                }
+            }
+        }
+
+        try {
+            while (currentCoroutineContext().isActive && !isClose) {
+                emit(accept(coroutineDispatcher))
+            }
+        } finally {
+            socket.serverListener = null
+            isAccepting.set(false)
         }
     }
 
@@ -996,10 +1028,36 @@ private constructor(
     }
 
     /**
-     * Listening socket data class.
-     * Use to store the socket and the stream ID.
+     * Incoming connection representation passed to the validation hook during handshake.
+     *
+     * @property socket the incoming [SrtSocket]
+     * @property streamId the stream ID requested by the peer
+     * @property peerAddress the remote address of the incoming connection
+     * @property hsVersion the SRT handshake version
      */
-    data class IncomingSocket(val socket: CoroutineSrtSocket, val streamId: String)
+    data class IncomingConnection(
+        val socket: SrtSocket,
+        val streamId: String,
+        val peerAddress: InetSocketAddress,
+        val hsVersion: Int
+    )
+
+    /**
+     * Decision returned by the connection validation hook during handshake.
+     */
+    sealed interface ConnectionDecision {
+        /**
+         * Accepts the incoming connection.
+         */
+        data object Accept : ConnectionDecision
+
+        /**
+         * Rejects the incoming connection with an optional [RejectReason].
+         *
+         * @property reason optional reason describing why the connection was rejected.
+         */
+        data class Reject(val reason: RejectReason? = null) : ConnectionDecision
+    }
 }
 
 /**

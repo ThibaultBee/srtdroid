@@ -1,10 +1,13 @@
 package io.github.thibaultbee.srtdroid.example.tests
 
 import android.util.Log
+import androidx.core.util.component1
+import androidx.core.util.component2
 import io.github.thibaultbee.srtdroid.core.enums.SockOpt
 import io.github.thibaultbee.srtdroid.ktx.CoroutineSrtSocket
 import io.github.thibaultbee.srtdroid.ktx.bind
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.first
 
 class TestServer : Test {
     private val numOfMessages = 100
@@ -25,10 +28,9 @@ class TestServer : Test {
             socket.listen(10)
 
             Log.i(TAG, "Waiting for incoming socket on $ip:$port")
-            val peer = socket.accept()
+            val (clientSocket, _) = socket.acceptFlow().first()
 
             Log.i(TAG, "Get an incoming connection")
-            val clientSocket = peer.first
 
             clientSocket.setSockFlag(SockOpt.RCVTIMEO, 3000)
             repeat(numOfMessages) {

@@ -1,6 +1,8 @@
 package io.github.thibaultbee.srtdroid.example.tests
 
 import android.util.Log
+import androidx.core.util.component1
+import androidx.core.util.component2
 import com.google.common.primitives.Ints
 import com.google.common.primitives.Longs
 import io.github.thibaultbee.srtdroid.core.enums.SockOpt
@@ -9,6 +11,7 @@ import io.github.thibaultbee.srtdroid.ktx.CoroutineSrtSocket
 import io.github.thibaultbee.srtdroid.ktx.bind
 import io.github.thibaultbee.srtdroid.ktx.sendFile
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.first
 import java.io.File
 
 class SendFile(
@@ -32,8 +35,7 @@ class SendFile(
             socket.listen(10)
 
             Log.i(TAG, "Waiting for incoming socket on $ip:$port")
-            val peer = socket.accept()
-            val clientSocket = peer.first
+            val (clientSocket, _) = socket.acceptFlow().first()
 
             Log.i(TAG, "Get an incoming connection")
             // Get file name length
