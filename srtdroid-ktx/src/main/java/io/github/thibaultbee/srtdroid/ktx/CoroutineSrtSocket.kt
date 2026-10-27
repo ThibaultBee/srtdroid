@@ -725,7 +725,9 @@ private constructor(
      *
      * @param clear true if the statistics should be cleared after retrieval
      * @return the current [Stats]
+     * @throws SocketException if SRT statistics retrieval has failed
      */
+    @Throws(SocketException::class)
     fun bstats(clear: Boolean) = socket.bstats(clear)
 
     /**
@@ -736,7 +738,9 @@ private constructor(
      * @param clear true if the statistics should be cleared after retrieval
      * @param instantaneous true if the statistics should use instant data, not moving averages
      * @return the current [Stats]
+     * @throws SocketException if SRT statistics retrieval has failed
      */
+    @Throws(SocketException::class)
     fun bistats(clear: Boolean, instantaneous: Boolean) = socket.bistats(clear, instantaneous)
 
     // Time access
