@@ -187,7 +187,7 @@ private constructor(
             peerAddress: InetSocketAddress,
             token: Int
         ) {
-            socket.close()
+            runCatching { socket.close() }
             complete(ConnectException(error.toString()))
         }
     }
@@ -543,7 +543,7 @@ private constructor(
     fun trySend(msg: ByteArray, offset: Int, size: Int, msgCtrl: MsgCtrl): Int {
         return handleTrySendResult(socket.trySend(msg, offset, size, msgCtrl))
     }
-    
+
     /**
      * Received a message from a remote device
      *
@@ -1189,17 +1189,17 @@ suspend fun CoroutineSrtSocket.send(msg: String) = send(msg.toByteArray())
 
 /**
  * Tries to send a message to a remote party asynchronously without suspending.
-     *
-     * This method does not throw a [SocketException] if the asynchronous send queue is full ([ErrorType.EASYNCSND]).
-     * Instead, it returns `-1` immediately, making it suitable for high-performance non-blocking loops.
-     * Fatal errors, such as a dropped connection, will still throw a [SocketException].
+ *
+ * This method does not throw a [SocketException] if the asynchronous send queue is full ([ErrorType.EASYNCSND]).
+ * Instead, it returns `-1` immediately, making it suitable for high-performance non-blocking loops.
+ * Fatal errors, such as a dropped connection, will still throw a [SocketException].
  *
  * **See Also:** [srt_send](https://github.com/Haivision/srt/blob/master/docs/API/API-functions.md#srt_send)
  *
  * @param msg the [String] to send
  * @return the number of bytes sent, or `-1` if the packet hasn't been sent (buffer full).
  * @throws SocketException if a fatal error occurs (e.g. connection lost).
-     * @throws SocketTimeoutException if the socket is closed.
+ * @throws SocketTimeoutException if the socket is closed.
  * @see [recv]
  */
 fun CoroutineSrtSocket.trySend(msg: String) = trySend(msg.toByteArray())
