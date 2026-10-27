@@ -13,6 +13,7 @@ import io.github.thibaultbee.srtdroid.ktx.sendFile
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.first
 import java.io.File
+import kotlin.time.Duration.Companion.seconds
 
 class SendFile(
     private val fileSendDir: File,
@@ -68,7 +69,7 @@ class SendFile(
 
             // If session is close too early, last msg will not be receive by server
             clientSocket.close()
-            delay(1000)
+            delay(1.seconds)
 
             Log.i(TAG, "Sent file ${file.path}")
         } catch (e: Exception) {

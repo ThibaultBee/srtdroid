@@ -12,6 +12,7 @@ import io.github.thibaultbee.srtdroid.ktx.recvFile
 import io.github.thibaultbee.srtdroid.ktx.send
 import kotlinx.coroutines.delay
 import java.io.File
+import kotlin.time.Duration.Companion.seconds
 
 class RecvFile(
     private val sendFileName: String,
@@ -52,7 +53,7 @@ class RecvFile(
             }
 
             // If session is close too early, last msg will not be receive by server
-            delay(1000)
+            delay(1.seconds)
             Log.i(TAG, "Received file $recvFile")
         } catch (e: Exception) {
             throw e

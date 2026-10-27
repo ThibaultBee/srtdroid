@@ -6,6 +6,7 @@ import io.github.thibaultbee.srtdroid.ktx.CoroutineSrtSocket
 import io.github.thibaultbee.srtdroid.ktx.connect
 import io.github.thibaultbee.srtdroid.ktx.send
 import kotlinx.coroutines.delay
+import kotlin.time.Duration.Companion.seconds
 
 class TestClient : Test {
     private val numOfMessages = 100
@@ -33,7 +34,7 @@ class TestClient : Test {
                 socket.send("This message should be sent to the other side")
             }
             // If session is close too early, last msg will not be receive by server
-            delay(1000)
+            delay(1.seconds)
 
             Log.i(TAG, "Sent $numOfMessages messages")
         } catch (e: Exception) {
