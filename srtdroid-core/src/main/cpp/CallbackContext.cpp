@@ -38,6 +38,12 @@ ScopedJniEnv::ScopedJniEnv(JavaVM *vm) : vm(vm) {
 
 ScopedJniEnv::~ScopedJniEnv() {
     if (attached) {
+        // Detaching with an exception pending aborts under CheckJNI.
+        if (env != nullptr && env->ExceptionCheck()) {
+            LOGE("Clearing a pending exception before detaching");
+            env->ExceptionDescribe();
+            env->ExceptionClear();
+        }
         vm->DetachCurrentThread();
     }
 }

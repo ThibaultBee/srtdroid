@@ -74,6 +74,16 @@ static CallbackRegistry *const connectContexts = new CallbackRegistry();
 
 static const jint CALLBACK_LOCAL_FRAME = 16;
 
+// A callback must not return to libsrt with a Java exception pending: the thread is detached
+// next, or makes its next JNI call, and either aborts under CheckJNI.
+static void clearPendingException(JNIEnv *env, const char *where) {
+    if (env->ExceptionCheck()) {
+        LOGE("%s: Java exception, cleared", where);
+        env->ExceptionDescribe();
+        env->ExceptionClear();
+    }
+}
+
 int srt_listen_cb(void *opaque, SRTSOCKET ns, int hs_version,
                   const struct sockaddr *peeraddr, const char *streamid) {
     std::shared_ptr<CallbackContext> cbCtx = listenContexts->find(opaque);
@@ -85,12 +95,19 @@ int srt_listen_cb(void *opaque, SRTSOCKET ns, int hs_version,
 
     ScopedJniEnv scopedEnv(cbCtx->vm);
     JNIEnv *env = scopedEnv.get();
-    if (env == nullptr || env->PushLocalFrame(CALLBACK_LOCAL_FRAME) != JNI_OK) {
+    if (env == nullptr) {
+        LOGE("Listen callback: no JNIEnv for socket %d", ns);
+        return 0;
+    }
+    if (env->PushLocalFrame(CALLBACK_LOCAL_FRAME) != JNI_OK) {
+        LOGE("Listen callback: failed to push a local frame for socket %d", ns);
+        clearPendingException(env, "Listen callback");
         return 0;
     }
 
     int res = onListenCallback(env, cbCtx->callingSocket, cbCtx->sockAddrClazz, ns, hs_version,
                                peeraddr, streamid);
+    clearPendingException(env, "Listen callback");
 
     env->PopLocalFrame(nullptr);
     cbCtx.reset();
@@ -142,9 +159,15 @@ void srt_connect_cb(void *opaque, SRTSOCKET ns, int errorcode, const struct sock
 
     ScopedJniEnv scopedEnv(cbCtx->vm);
     JNIEnv *env = scopedEnv.get();
-    if (env != nullptr && env->PushLocalFrame(CALLBACK_LOCAL_FRAME) == JNI_OK) {
+    if (env == nullptr) {
+        LOGE("Connect callback: no JNIEnv for socket %d", ns);
+    } else if (env->PushLocalFrame(CALLBACK_LOCAL_FRAME) != JNI_OK) {
+        LOGE("Connect callback: failed to push a local frame for socket %d", ns);
+        clearPendingException(env, "Connect callback");
+    } else {
         onConnectCallback(env, cbCtx.get(), ns, errorcode,
                           peeraddr, token);
+        clearPendingException(env, "Connect callback");
         env->PopLocalFrame(nullptr);
     }
 
@@ -251,12 +274,13 @@ jint JNICALL
 nativeClose(JNIEnv *env, jobject ju) {
     SRTSOCKET u = Socket::getNative(env, ju);
 
-    int res = srt_close((SRTSOCKET) u);
-
+    // Released first, so no hook reaches Java once close() has started. libsrt only calls the hooks
+    // from its own threads (a broken connection, a peer shutdown, a timeout), never from srt_close,
+    // and a hook already running keeps its context alive until it returns.
     listenContexts->release(u);
     connectContexts->release(u);
 
-    return res;
+    return srt_close((SRTSOCKET) u);
 }
 
 // Connecting
@@ -269,6 +293,9 @@ nativeListen(JNIEnv *env, jobject ju, jint backlog) {
     auto cbCtx = std::make_shared<CallbackContext>(env, ju);
     if (srt_listen_callback(u, srt_listen_cb, token) == 0) {
         listenContexts->install(u, token, std::move(cbCtx));
+    } else {
+        LOGW("srt_listen_callback refused for socket %d (%s), keeping the current hook", u,
+             srt_getlasterror_str());
     }
 
     return srt_listen((SRTSOCKET) u, (int) backlog);
@@ -305,6 +332,9 @@ nativeConnect(JNIEnv *env, jobject ju, jobject inetSocketAddress) {
     auto cbCtx = std::make_shared<CallbackContext>(env, ju);
     if (srt_connect_callback(u, srt_connect_cb, token) == 0) {
         connectContexts->install(u, token, std::move(cbCtx));
+    } else {
+        LOGW("srt_connect_callback refused for socket %d (%s), keeping the current hook", u,
+             srt_getlasterror_str());
     }
 
     int res = srt_connect((SRTSOCKET) u, reinterpret_cast<const sockaddr *>(ss), size);
