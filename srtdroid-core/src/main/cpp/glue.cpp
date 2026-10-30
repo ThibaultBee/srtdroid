@@ -23,6 +23,7 @@
 
 #include "log.h"
 #include "CallbackContext.h"
+#include "JniUtils.h"
 #include "Enums/EnumsSingleton.h"
 #include "Enums/ErrorType.h"
 #include "Enums/ErrorType.h"
@@ -73,16 +74,6 @@ static CallbackRegistry *const listenContexts = new CallbackRegistry();
 static CallbackRegistry *const connectContexts = new CallbackRegistry();
 
 static const jint CALLBACK_LOCAL_FRAME = 16;
-
-// A callback must not return to libsrt with a Java exception pending: the thread is detached
-// next, or makes its next JNI call, and either aborts under CheckJNI.
-static void clearPendingException(JNIEnv *env, const char *where) {
-    if (env->ExceptionCheck()) {
-        LOGE("%s: Java exception, cleared", where);
-        env->ExceptionDescribe();
-        env->ExceptionClear();
-    }
-}
 
 int srt_listen_cb(void *opaque, SRTSOCKET ns, int hs_version,
                   const struct sockaddr *peeraddr, const char *streamid) {
