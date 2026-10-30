@@ -16,11 +16,14 @@
 
 #include <jni.h>
 
+#include <memory>
+
 #include "srt/srt.h"
 #include "srt/logging_api.h"
 
 #include "log.h"
 #include "CallbackContext.h"
+#include "JniUtils.h"
 #include "Enums/EnumsSingleton.h"
 #include "Enums/ErrorType.h"
 #include "Enums/ErrorType.h"
@@ -66,29 +69,39 @@ int onListenCallback(JNIEnv *env, jobject ju, jclass sockAddrClazz, SRTSOCKET ns
     return res;
 }
 
+// Never destroyed: libsrt threads may still call a hook while the process exits.
+static CallbackRegistry *const listenContexts = new CallbackRegistry();
+static CallbackRegistry *const connectContexts = new CallbackRegistry();
+
+static const jint CALLBACK_LOCAL_FRAME = 16;
+
 int srt_listen_cb(void *opaque, SRTSOCKET ns, int hs_version,
                   const struct sockaddr *peeraddr, const char *streamid) {
-    auto *cbCtx = static_cast<CallbackContext *>(opaque);
+    std::shared_ptr<CallbackContext> cbCtx = listenContexts->find(opaque);
 
     if (cbCtx == nullptr) {
         LOGE("Failed to get CallbackContext");
         return 0;
     }
 
-    JavaVM *vm = cbCtx->vm;
-    JNIEnv *env = nullptr;
-    if (vm->GetEnv((void **) &env, JNI_VERSION_1_6) == JNI_EDETACHED) {
-        if (vm->AttachCurrentThread(&env, nullptr) != JNI_OK) {
-            LOGE("Failed to attach current thread");
-        }
-    } else {
-        LOGE("Failed to get env");
+    ScopedJniEnv scopedEnv(cbCtx->vm);
+    JNIEnv *env = scopedEnv.get();
+    if (env == nullptr) {
+        LOGE("Listen callback: no JNIEnv for socket %d", ns);
+        return 0;
+    }
+    if (env->PushLocalFrame(CALLBACK_LOCAL_FRAME) != JNI_OK) {
+        LOGE("Listen callback: failed to push a local frame for socket %d", ns);
+        clearPendingException(env, "Listen callback");
+        return 0;
     }
 
     int res = onListenCallback(env, cbCtx->callingSocket, cbCtx->sockAddrClazz, ns, hs_version,
                                peeraddr, streamid);
+    clearPendingException(env, "Listen callback");
 
-    vm->DetachCurrentThread();
+    env->PopLocalFrame(nullptr);
+    cbCtx.reset();
 
     return res;
 }
@@ -128,29 +141,29 @@ void onConnectCallback(JNIEnv *env,
 
 void srt_connect_cb(void *opaque, SRTSOCKET ns, int errorcode, const struct sockaddr *peeraddr,
                     int token) {
-    auto *cbCtx = static_cast<CallbackContext *>(opaque);
+    std::shared_ptr<CallbackContext> cbCtx = connectContexts->take(opaque);
 
     if (cbCtx == nullptr) {
-        LOGE("Failed to get CallbackContext");
+        LOGD("No CallbackContext for socket %d: closed or replaced", ns);
         return;
     }
 
-    JavaVM *vm = cbCtx->vm;
-    JNIEnv *env = nullptr;
-    if (vm->GetEnv((void **) &env, JNI_VERSION_1_6) == JNI_EDETACHED) {
-        if (vm->AttachCurrentThread(&env, nullptr) != JNI_OK) {
-            LOGE("Failed to attach current thread");
-        }
+    ScopedJniEnv scopedEnv(cbCtx->vm);
+    JNIEnv *env = scopedEnv.get();
+    if (env == nullptr) {
+        LOGE("Connect callback: no JNIEnv for socket %d", ns);
+    } else if (env->PushLocalFrame(CALLBACK_LOCAL_FRAME) != JNI_OK) {
+        LOGE("Connect callback: failed to push a local frame for socket %d", ns);
+        clearPendingException(env, "Connect callback");
     } else {
-        LOGE("Failed to get env");
+        onConnectCallback(env, cbCtx.get(), ns, errorcode,
+                          peeraddr, token);
+        clearPendingException(env, "Connect callback");
+        env->PopLocalFrame(nullptr);
     }
 
-    onConnectCallback(env, cbCtx, ns, errorcode,
-                      peeraddr, token);
-
-    vm->DetachCurrentThread();
-
-    delete cbCtx;
+    // Free the context before the thread is detached, so its global references can be deleted.
+    cbCtx.reset();
 }
 
 // SRT Logger callback
@@ -252,7 +265,13 @@ jint JNICALL
 nativeClose(JNIEnv *env, jobject ju) {
     SRTSOCKET u = Socket::getNative(env, ju);
 
-    return (srt_close((SRTSOCKET) u));
+    // Released first, so no hook reaches Java once close() has started. libsrt only calls the hooks
+    // from its own threads (a broken connection, a peer shutdown, a timeout), never from srt_close,
+    // and a hook already running keeps its context alive until it returns.
+    listenContexts->release(u);
+    connectContexts->release(u);
+
+    return srt_close((SRTSOCKET) u);
 }
 
 // Connecting
@@ -260,10 +279,15 @@ jint JNICALL
 nativeListen(JNIEnv *env, jobject ju, jint backlog) {
     SRTSOCKET u = Socket::getNative(env, ju);
 
-    // Add callback hook
-    auto *cbCtx = new CallbackContext(env, ju);
-    srt_listen_callback(u, srt_listen_cb,
-                        (void *) cbCtx); // TODO: free cbCtx but could not find a way to free callback opaque parameter
+    // Add callback hook. If libsrt refuses it, it keeps calling the current one, so keep its context.
+    void *token = CallbackRegistry::newToken();
+    auto cbCtx = std::make_shared<CallbackContext>(env, ju);
+    if (srt_listen_callback(u, srt_listen_cb, token) == 0) {
+        listenContexts->install(u, token, std::move(cbCtx));
+    } else {
+        LOGW("srt_listen_callback refused for socket %d (%s), keeping the current hook", u,
+             srt_getlasterror_str());
+    }
 
     return srt_listen((SRTSOCKET) u, (int) backlog);
 }
@@ -293,9 +317,16 @@ nativeConnect(JNIEnv *env, jobject ju, jobject inetSocketAddress) {
     int size = 0;
     const struct sockaddr_storage *ss = InetSocketAddress::getNative(env, inetSocketAddress, &size);
 
-    // Add callback hook
-    auto *cbCtx = new CallbackContext(env, ju);
-    srt_connect_callback(u, srt_connect_cb, (void *) cbCtx);
+    // Add callback hook. libsrt does not call it on success, so the context is also freed on close.
+    // If libsrt refuses it, it keeps calling the current one, so keep its context.
+    void *token = CallbackRegistry::newToken();
+    auto cbCtx = std::make_shared<CallbackContext>(env, ju);
+    if (srt_connect_callback(u, srt_connect_cb, token) == 0) {
+        connectContexts->install(u, token, std::move(cbCtx));
+    } else {
+        LOGW("srt_connect_callback refused for socket %d (%s), keeping the current hook", u,
+             srt_getlasterror_str());
+    }
 
     int res = srt_connect((SRTSOCKET) u, reinterpret_cast<const sockaddr *>(ss), size);
 
