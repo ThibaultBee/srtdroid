@@ -16,30 +16,42 @@
 #include "log.h"
 #include "JniUtils.h"
 
-void clearPendingException(JNIEnv *env, const char *where) {
-    jthrowable exception = env->ExceptionOccurred();
-    if (exception == nullptr) {
-        return;
-    }
-    // Calling into the JVM with the exception still pending is not allowed.
-    env->ExceptionClear();
-
-    jclass objectClazz = nullptr;
+/**
+ * Returns `exception.toString()`, or nullptr when it cannot be had. Must be called with no
+ * exception pending, and leaves none pending: FindClass, GetMethodID and toString() itself can all
+ * throw.
+ */
+static jstring describeException(JNIEnv *env, jthrowable exception) {
     jstring description = nullptr;
-    const char *chars = nullptr;
-
-    objectClazz = env->FindClass("java/lang/Object");
+    jclass objectClazz = env->FindClass("java/lang/Object");
     if (objectClazz != nullptr) {
         jmethodID toStringID = env->GetMethodID(objectClazz, "toString", "()Ljava/lang/String;");
         if (toStringID != nullptr) {
             description = static_cast<jstring>(env->CallObjectMethod(exception, toStringID));
         }
     }
-    // FindClass, GetMethodID and toString() itself can throw: never leave that one pending.
     if (env->ExceptionCheck()) {
         env->ExceptionClear();
+        // Only reachable with a result when toString() threw, and a call that throws gives no
+        // usable return value, so it is dropped.
         description = nullptr;
     }
+    if (objectClazz != nullptr) {
+        env->DeleteLocalRef(objectClazz);
+    }
+    return description;
+}
+
+void clearPendingException(JNIEnv *env, const char *where) {
+    if (!env->ExceptionCheck()) {
+        return;
+    }
+    jthrowable exception = env->ExceptionOccurred();
+    // Describing the exception calls into the JVM, which is not allowed while it is pending.
+    env->ExceptionClear();
+
+    jstring description = describeException(env, exception);
+    const char *chars = nullptr;
     if (description != nullptr) {
         chars = env->GetStringUTFChars(description, nullptr);
         if (chars == nullptr && env->ExceptionCheck()) {
@@ -56,9 +68,6 @@ void clearPendingException(JNIEnv *env, const char *where) {
 
     if (description != nullptr) {
         env->DeleteLocalRef(description);
-    }
-    if (objectClazz != nullptr) {
-        env->DeleteLocalRef(objectClazz);
     }
     env->DeleteLocalRef(exception);
 }
